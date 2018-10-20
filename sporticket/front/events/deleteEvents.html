@@ -1,0 +1,18 @@
+{% extends 'base/base.html' %}
+<head>
+	
+</head>
+
+{% block content %}
+<div class="w3-main" >
+<form method="post">
+    {% csrf_token %}
+    <header class="w3-container">
+        <h5 style="color: black;"><b><i class="fa fa-list" style="color: black;"></i> ¿Desea cancelar el evento {{event.name}}?</b></h5>
+    </header>
+    <button class="w3-button w3-padding-16 w3-dark-grey w3-circle" type="submit"><i class="fa fa-save"></i></button>
+    <a class="w3-button w3-padding-16 w3-dark-grey w3-circle" href="{% url 'evento_listar' %}"><i class="fa fa-repeat"></i></a>
+
+</form>
+</div>
+{% endblock %}

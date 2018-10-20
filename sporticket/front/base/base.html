@@ -1,0 +1,72 @@
+{%load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<title>SporTicket</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/w3.css' %}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/css.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/window.css' %}">
+	<link rel="icon" type="image/x-icon" href="{% static 'images/sporticket.png' %}">
+	
+</head>
+<body class="w3-light-grey">
+	{% block header %}
+		<div class="w3-bar w3-top w3-dark-grey w3-padding-15">
+    		<button type="submit" class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();return false" style="color: orange;"><i class="fa fa-bars"></i>  Menú</button>
+		   	<form >
+		          <a class= "w3-display-middle" >
+		            <img src="{% static 'images/logo.png' %}" class="w3-round w3-margin-right">
+		            SporTicket
+		          </a>  
+		          <a href="#" class="w3-bar-item w3-button w3-light-gray w3-right w3-large w3-circle"><i class="fa fa-sign-out"></i></a>
+		    </form>
+  		</div>
+	
+	{% endblock %}
+
+	{% block nav %}
+		<nav class="w3-sidebar w3-collapse w3-dark-grey w3-animate-left"  id="mySidebar"><br>
+		    <div class="w3-container w3-row">
+			    <div class="w3-col s4">
+			        <!--
+			          IMAGEN USUARIO EXTRADA DE FACEBOOK
+			        -->
+			        <img src="{% static 'images/Imagen1.png' %}" class="w3-circle w3-margin-right">
+			    </div>
+		    <div class="w3-col s8 w3-bar">
+		        <span>  Bienvenido, <strong><br>  KT</strong></span><br>
+		    </div>
+		    </div>
+		    <hr>
+		    <div class="w3-container">
+		      <h5>General</h5>
+		    </div>
+		    <div class="w3-bar-block" >
+			    <a type="submit" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw" ></i>Cerrar Menú</a>
+			    <button class="w3-button w3-block w3-left-align" onclick="myAccFunc()"><i class="fa fa-calendar fa-fw"></i>
+					Eventos <i class="fa fa-caret-down"></i>
+				</button>
+				<div id="demoAcc" class="w3-hide w3-dark-grey w3-card" >
+				    <a href="/events/insertEvents.html" class="w3-bar-item w3-button" style="color: orange;"><i class="fa fa-plus fa-fw"></i> Insertar</a>
+				    <a href="/events/listEvents.html" class="w3-bar-item w3-button" style="color: orange;"><i class="fa fa-list fa-fw"></i> Listar</a>
+				</div>
+			    <a class="w3-bar-item w3-button w3-padding" ><i class="fa fa-shopping-cart fa-fw"></i>  Ventas</a>
+			    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Usuarios</a>
+			    <a class="w3-bar-item w3-button w3-padding" ><i class="fa fa-bar-chart fa-fw"></i>  Reportes</a>
+		    </div>
+		</nav>
+  		<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" title="close side menu" id="myOverlay"></div>
+  	{% endblock %}
+
+	{% block content %}
+		
+	{% endblock %}
+
+	<script src="{% static 'js/w3.js' %}"></script>
+	<script src="{% static 'js/function.js' %}"></script>
+</body>
+</html>

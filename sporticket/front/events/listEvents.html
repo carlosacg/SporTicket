@@ -1,0 +1,110 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+	<div class="w3-main" >
+		<header class="w3-container">
+			<h5 style="color: black;"><b><i class="fa fa-list" style="color: black;"></i> Listar eventos</b></h5>
+		</header>
+
+		<div class="w3-container">
+      		<table class="w3-table-all w3-hoverable ">
+		        <thead >
+		          	<tr class="w3-dark-grey">
+		          		<th>Nombre</th>
+			            <th>Fecha</th>
+			            <th>Hora</th>
+			            <th>Lugar</th>
+			            <th>Capacidad</th>
+			            <th>Visitante</th>
+						<th>Local</th>
+						<th>Estado</th>
+			            <th>Tipo de evento</th>
+			            <th></th>
+			            <th></th>
+			            <th></th>
+		          	</tr>
+				</thead>
+				<tbody>
+					{% if object_list %}
+					{% for event in object_list %}
+					<tr id="registro_item" >
+						<td>{{event.name}}</td>
+						<td>{{event.initial_date}}</td>
+						<td>{{event.initial_time}}</td>
+						<td>{{event.place}}</td>
+						<td>{{event.capacity}}</td>
+						<td>{{event.visitor}}</td>
+						<td>{{event.local}}</td>
+						<td>{{event.state}}</td>
+						<td>{{event.event_type}}</td>
+						<td><a><button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-padding-small w3-dark-grey w3-circle"><i class="fa fa-eye"></i></button></a></td>
+						<td><a href="{% url 'evento_editar' event.id %}"><button class="w3-button w3-padding-small w3-dark-grey w3-circle"><i class="fa fa-pencil"></i></button></a></td>
+						<td><a href="{% url 'evento_eliminar' event.id %}"><button class="w3-button w3-padding-small w3-dark-grey w3-circle"><i class="fa fa-trash"></i></button></a></td>
+					</tr>
+				</tbody>
+				{% endfor %}
+				{% else %}
+				<h1>No hay registros de eventos</h1>
+				{% endif %}
+	      	</table>
+
+      		<div id="id01" class="w3-modal">
+            	<div class="w3-modal-content">
+              		<header class="w3-container w3-dark-grey"> 
+                		<span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                		<h2>Evento Tenis</h2>
+              		</header>
+              		<div class="w3-row-padding w3-margin-top">
+              			<div class="w3-show-inline-block">
+				  			<div class="w3-half">
+					    		<div class="w3-container">
+					                 <form class="w3-container" >
+					                  	<h4 style="color: black;">Capacidad</h4>
+					                    <label>Nombre</label>
+								    	<input class="w3-input w3-border" type="text" >
+					                    
+										<label>Fecha</label>
+								    	<input class="w3-input w3-border" type="text" >
+										
+					                    <label>Hora</label>
+								    	<input class="w3-input w3-border" type="text" >
+					                   
+					                    <label>Lugar</label>
+								    	<input class="w3-input w3-border" type="text" >
+					                   
+					                    <label>Capacidad</label>
+								    	<input class="w3-input w3-border" type="text">
+										
+					                    <label>Visitante</label>
+								    	<input class="w3-input w3-border" type="text" >
+					                    
+					                    <label>Local</label>
+								    	<input class="w3-input w3-border" type="text" >
+		                    		</form>
+				  				</div>
+             				 	<br>
+			                    <div class="w3-show-inline-block">
+			                        <div class="w3-bar">
+			                            <button class="w3-button w3-padding-16 w3-dark-grey w3-circle" ><i class="fa fa-save"></i></button>
+			                            <button class="w3-button w3-dark-grey w3-padding-16 w3-circle" ><i class="fa fa-repeat"></i></button>
+			                    	</div>
+		                    	</div>
+	                  		</div>
+				            {%load staticfiles %}
+				         	
+							<div class="w3-half">
+							    <div class="w3-card">
+							      <img src="{% static 'images/baseball.png' %}" class="image" >
+								</div>
+			       			</div>
+		      			</div>
+      				</div>
+				</div>
+			</div>
+		</div>
+		<hr>
+		<footer class="w3-container w3-padding-14 w3-grey">
+	    	<p>Powered by <a style="color: black;">XSOFT</a></p>
+		</footer>
+	</div>
+{% endblock %}
