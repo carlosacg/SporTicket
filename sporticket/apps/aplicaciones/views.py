@@ -5,6 +5,7 @@ from apps.aplicaciones.upload_form import UploadForm
 from django.views.generic import ListView,CreateView, UpdateView, DeleteView
 from apps.aplicaciones.models import *
 from django.urls import reverse_lazy
+from django.contrib import messages
 import json
 import psycopg2
 # Create your views here.
@@ -63,12 +64,26 @@ def updateEvent(request,id):
         return redirect('events/listEvents.html')
     return render(request,'events/insertEvents.html',{'form':form})
 
+def generateTicket(request,id):
+    event = Event.objects.get(id=id)
+    print(event.capacity)
+    numberTicket=event.capacity
+    numberTicket=numberTicket/3
+
+    if request.method =='GET':
+        form= EventForm(instance=event)
+    else:
+        for x in xrange(numberTicket):
+            createTicket()
+        return redirect('events/listEvents.html')
+    return render(request,'events/insertEvents.html',{'form':form})
+
 def deleteEvent(request,id):
     event = Event.objects.get(id=id)
     print (event.id)
     if request.method=='POST':
-        event.delete()
-        print ('Se elimino el evento')
+        cancelEvent(id)
+        print ('Se Cancelo el evento')
         return redirect('evento_listar')
     return render(request,'events/deleteEvents.html',{'event':event})
 
@@ -97,6 +112,23 @@ def save_data(name,initial_date,initial_time,place,url,state,capacity,visitor,lo
     conn = connect()
     cursor = conn.cursor()
     instruction = "INSERT INTO aplicaciones_event VALUES (nextval(\'aplicaciones_event_id_seq\'),\'"+name+"\',\'"+initial_date+"\',\'"+initial_time+"\',\'"+place+"\',\'"+url+"\',\'"+state+"\',"+str(capacity)+",\'"+visitor+"\',\'"+local+"\',\'"+event_type+"\');"
+    cursor.execute(instruction)
+    conn.commit()
+    conn.close()
+
+def createTicket(cost,ubication,event):
+    conn = connect()
+    cursor = conn.cursor()
+    instruction = "INSERT INTO aplicaciones_ticket VALUES (nextval(\'aplicaciones_ticket_id_seq\'),"+cost+",\'"+ubication+"\',"+event+");"
+    print (instruction)
+    cursor.execute(instruction)
+    conn.commit()
+    conn.close()
+
+def cancelEvent(id):
+    conn = connect()
+    cursor = conn.cursor()
+    instruction = "UPDATE aplicaciones_event SET state=\'CANCELADO\' WHERE id="+id+";"
     cursor.execute(instruction)
     conn.commit()
     conn.close()
