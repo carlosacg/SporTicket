@@ -1,0 +1,78 @@
+{% extends 'base/base.html' %}
+<head>
+	
+</head>
+
+{% block content %}
+	<div class="w3-main" >
+		<header class="w3-container" >
+			<h5 style="color: black;"><b><i class="fa fa-eye" style="color: black;"></i> Visualizar Evento</b></h5>
+		</header>
+		<form method="post"> 
+			{% csrf_token %}
+
+			<div class="w3-row-padding">
+				<div class="w3-half">
+					<label for="{{form.name.id_for_label}}"> {{form.name.label}}</label>
+					{{form.name}}
+				</div>
+				<div class="w3-half">
+					<label for="{{form.capacity.id_for_label}}"> {{form.capacity.label}} </label>
+					{{form.capacity}}
+				</div>
+			</div>
+			<div class="w3-row-padding">
+				<div class="w3-half">
+					<label for="{{form.initial_date.id_for_label}}">{{form.initial_date.label}}</label>
+					{{form.initial_date}}
+				</div>
+				<div class="w3-half">
+					<label for="{{form.visitor.id_for_label}}">{{form.visitor.label}}</label>
+					{{form.visitor}}
+				</div>
+			</div>
+			<div class="w3-row-padding">
+				<div class="w3-half">
+					<label for="{{form.initial_time.id_for_label}}">{{form.initial_time.label}}</label>
+					{{form.initial_time}}
+				</div>
+				<div class="w3-half">
+					<label for="{{form.local.id_for_label}}">{{form.local.label}}</label>
+					{{form.local}}
+				</div>
+			</div>
+			<div class="w3-row-padding">
+				<div class="w3-half">
+					{{form.url}}
+				</div>
+				<div class="w3-half">
+					<label for="{{form.local.id_for_label}}">{{form.state.label}}</label>
+					{{form.state}}
+				</div>
+			</div>
+			<div class="w3-row-padding">
+				<div class="w3-half">
+					<label for="{{form.place.id_for_label}}">{{form.place.label}}</label>
+					{{form.place}}
+
+				</div>
+				<div class="w3-half">
+					<label for="{{form.event_type.id_for_label}}">{{form.event_type.label}}</label>
+					{{form.event_type}}
+				</div>
+						<br>
+						<br> <br/>
+						<div class="w3-show-inline-block">
+	                        <div class="w3-bar">
+	                            <button class="w3-button w3-padding-16 w3-dark-grey w3-circle" >Ok</button>
+							</div>
+	                    </div>
+			</div>
+		</form>
+		<br>
+		<br>
+	 	<footer class="w3-container w3-padding-14 w3-grey">
+	    	<p>Powered by <a style="color: black;">XSOFT</a></p>
+		</footer>
+	</div>
+{% endblock %}

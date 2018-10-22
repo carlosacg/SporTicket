@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from apps.events.event_form import EventForm
+from apps.events.view_event import ViewEvent
 from apps.events.upload_form import UploadForm
 from django.views.generic import ListView,CreateView, UpdateView, DeleteView
 from apps.events.models import *
@@ -62,6 +63,17 @@ def updateEvent(request,id):
             form.save()
         return redirect('events/listEvents.html')
     return render(request,'events/insertEvents.html',{'form':form})
+
+def viewEvent(request,id):
+    event = Event.objects.get(id=id)
+    if request.method =='GET':
+        form= ViewEvent(instance=event)
+    else:
+        form = ViewEvent(request.POST, instance=event)
+        if form.is_valid():
+            form.save()
+        return redirect('events/listEvents.html')
+    return render(request,'events/viewEvents.html',{'form':form})
 
 def deleteEvent(request,id):
     event = Event.objects.get(id=id)
