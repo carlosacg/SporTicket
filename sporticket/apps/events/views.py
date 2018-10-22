@@ -14,7 +14,7 @@ def connect(): #CONEXION ALTERNATIVA PARA DAR INSTRUCCIONES A LA BD SIN NECESIDA
     conn = psycopg2.connect(" \
         dbname=sport_db \
         user=andres \
-        password=12345")
+        password=123456")
     return conn
 
 def index(request):
@@ -25,7 +25,7 @@ def insertEvent(request):
         form = EventForm(request.POST)
         if form.is_valid():
             form.save()
-        return redirect('events/insertEvents.html')
+        return redirect('tickets/generateTicket.html')
     else:
         form = EventForm()
 
