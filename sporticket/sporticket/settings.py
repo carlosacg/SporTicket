@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'apps.aplicaciones',
+    'apps.events',
+    'apps.tickets',
 ]
 
 MIDDLEWARE = [
@@ -79,7 +80,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'sport_db',
         'USER' : 'andres',
-        'PASSWORD': '12345',
+        'PASSWORD': 'fuckencio1234',
         'HOST' : 'localhost',
         'PORT' : 5432,
     }

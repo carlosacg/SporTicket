@@ -1,11 +1,10 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from apps.aplicaciones.event_form import EventForm
-from apps.aplicaciones.upload_form import UploadForm
+from apps.events.event_form import EventForm
+from apps.events.upload_form import UploadForm
 from django.views.generic import ListView,CreateView, UpdateView, DeleteView
-from apps.aplicaciones.models import *
+from apps.events.models import *
 from django.urls import reverse_lazy
-from django.contrib import messages
 import json
 import psycopg2
 # Create your views here.
@@ -14,7 +13,7 @@ def connect(): #CONEXION ALTERNATIVA PARA DAR INSTRUCCIONES A LA BD SIN NECESIDA
     conn = psycopg2.connect(" \
         dbname=sport_db \
         user=andres \
-        password=12345")
+        password=fuckencio1234")
     return conn
 
 def index(request):
@@ -64,20 +63,6 @@ def updateEvent(request,id):
         return redirect('events/listEvents.html')
     return render(request,'events/insertEvents.html',{'form':form})
 
-def generateTicket(request,id):
-    event = Event.objects.get(id=id)
-    print(event.capacity)
-    numberTicket=event.capacity
-    numberTicket=numberTicket/3
-
-    if request.method =='GET':
-        form= EventForm(instance=event)
-    else:
-        for x in xrange(numberTicket):
-            createTicket()
-        return redirect('events/listEvents.html')
-    return render(request,'events/insertEvents.html',{'form':form})
-
 def deleteEvent(request,id):
     event = Event.objects.get(id=id)
     print (event.id)
@@ -111,16 +96,7 @@ class EventUpdate(UpdateView):
 def save_data(name,initial_date,initial_time,place,url,state,capacity,visitor,local,event_type):
     conn = connect()
     cursor = conn.cursor()
-    instruction = "INSERT INTO aplicaciones_event VALUES (nextval(\'aplicaciones_event_id_seq\'),\'"+name+"\',\'"+initial_date+"\',\'"+initial_time+"\',\'"+place+"\',\'"+url+"\',\'"+state+"\',"+str(capacity)+",\'"+visitor+"\',\'"+local+"\',\'"+event_type+"\');"
-    cursor.execute(instruction)
-    conn.commit()
-    conn.close()
-
-def createTicket(cost,ubication,event):
-    conn = connect()
-    cursor = conn.cursor()
-    instruction = "INSERT INTO aplicaciones_ticket VALUES (nextval(\'aplicaciones_ticket_id_seq\'),"+cost+",\'"+ubication+"\',"+event+");"
-    print (instruction)
+    instruction = "INSERT INTO events_event VALUES (nextval(\'events_event_id_seq\'),\'"+name+"\',\'"+initial_date+"\',\'"+initial_time+"\',\'"+place+"\',\'"+url+"\',\'"+state+"\',"+str(capacity)+",\'"+visitor+"\',\'"+local+"\',\'"+event_type+"\');"
     cursor.execute(instruction)
     conn.commit()
     conn.close()
@@ -128,7 +104,7 @@ def createTicket(cost,ubication,event):
 def cancelEvent(id):
     conn = connect()
     cursor = conn.cursor()
-    instruction = "UPDATE aplicaciones_event SET state=\'CANCELADO\' WHERE id="+id+";"
+    instruction = "UPDATE events_event SET state=\'CANCELADO\' WHERE id="+id+";"
     cursor.execute(instruction)
     conn.commit()
     conn.close()
