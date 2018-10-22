@@ -13,7 +13,7 @@ def connect(): #CONEXION ALTERNATIVA PARA DAR INSTRUCCIONES A LA BD SIN NECESIDA
     conn = psycopg2.connect(" \
         dbname=sport_db \
         user=andres \
-        password=12345")
+        password=fuckencio1234")
     return conn
 
 def index(request):
