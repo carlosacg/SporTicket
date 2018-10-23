@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from django.template import RequestContext
 import psycopg2
 from apps.events.models import Event
+from apps.tickets.models import Ticket
 
 # Create your views here.
 def connect(): #CONEXION ALTERNATIVA PARA DAR INSTRUCCIONES A LA BD SIN NECESIDAD DE UN FORM
@@ -23,6 +24,8 @@ def insertTickets(quantity,ubication,event,cost,state):
         x+=1
 
 def generateTickets(request):
+    ticket = Ticket.objects.all()
+    context = {'tickets':ticket}
     event_type=get_data(str(Event.objects.latest('id')))
     if event_type == 'BEISBOL': 
         if request.method == 'POST':
@@ -39,7 +42,7 @@ def generateTickets(request):
             return redirect('tickets/generateTicket.html')
         else:
             form = BaseballForm()
-        return render(request, 'tickets/generateTicket.html',{'form':form})
+        return render(request, 'tickets/generateTicket.html',{'form':form},context)
     else:
         if request.method == 'POST':
             form = TicketForm(request.POST)
@@ -56,7 +59,7 @@ def generateTickets(request):
             return redirect('tickets/generateTicket.html')
         else:
             form = TicketForm()
-        return render(request, 'tickets/generateTicket.html',{'form':form})
+        return render(request, 'tickets/generateTicket.html',{'form':form},context)
     
 
 def save_data(ubication,event,cost,state):
