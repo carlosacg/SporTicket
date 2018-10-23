@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from apps.tickets.ticket_form import TicketForm
+from apps.tickets.baseball_form import BaseballForm
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.template import RequestContext
@@ -14,23 +15,6 @@ def connect(): #CONEXION ALTERNATIVA PARA DAR INSTRUCCIONES A LA BD SIN NECESIDA
         password=123456")
     return conn
 
-def generateTickets(request):
-    if request.method == 'POST':
-        form = TicketForm(request.POST)
-        if form.is_valid():
-            cost=form['cost'].value()
-            ubication=form['ubication'].value()
-            quantity=form['quantity'].value()
-            state=form['state'].value()
-            print (Event.objects.latest('id'))
-            print(cost+"-"+ubication+"-"+quantity+"-"+str(Event.objects.latest('id'))+"-"+state)
-            insertTickets(quantity,ubication,str(Event.objects.latest('id')),cost,state) 
-        return redirect('events/listEvents.html')
-    else:
-        form = TicketForm()
-    return render(request, 'tickets/generateTicket.html',{'form':form})
-
-
 
 def insertTickets(quantity,ubication,event,cost,state):
     x=0
@@ -38,8 +22,42 @@ def insertTickets(quantity,ubication,event,cost,state):
         save_data(ubication,event,cost,state) 
         x+=1
 
-
-
+def generateTickets(request):
+    event_type=get_data(str(Event.objects.latest('id')))
+    if event_type == 'BEISBOL': 
+        if request.method == 'POST':
+            form = BaseballForm(request.POST)
+            if form.is_valid():
+                cost=form['cost'].value()
+                ubication=form['ubication'].value()
+                quantity=form['quantity'].value()
+                state=form['state'].value()
+                event_type=get_data(str(Event.objects.latest('id')))
+                print(event_type)
+                print(cost+"-"+ubication+"-"+quantity+"-"+str(Event.objects.latest('id'))+"-"+state)
+                insertTickets(quantity,ubication,str(Event.objects.latest('id')),cost,state) 
+            return redirect('tickets/generateTicket.html')
+        else:
+            form = BaseballForm()
+        return render(request, 'tickets/generateTicket.html',{'form':form})
+    else:
+        if request.method == 'POST':
+            form = TicketForm(request.POST)
+            if form.is_valid():
+                cost=form['cost'].value()
+                ubication=form['ubication'].value()
+                quantity=form['quantity'].value()
+                state=form['state'].value()
+                event_type=get_data(str(Event.objects.latest('id')))
+                print(event_type)
+                print(cost+"-"+ubication+"-"+quantity+"-"+str(Event.objects.latest('id'))+"-"+state)
+                insertTickets(quantity,ubication,str(Event.objects.latest('id')),cost,state)
+                updateCapacityEvent(str(Event.objects.latest('id')),quantity) 
+            return redirect('tickets/generateTicket.html')
+        else:
+            form = TicketForm()
+        return render(request, 'tickets/generateTicket.html',{'form':form})
+    
 
 def save_data(ubication,event,cost,state):
     conn = connect()
@@ -50,3 +68,23 @@ def save_data(ubication,event,cost,state):
     conn.commit()
     print ("GENERO TICKET")
     conn.close()
+
+def get_data(event):
+    conn = connect()
+    cursor = conn.cursor()
+    instruction = "SELECT event_type FROM events_event WHERE id="+event+";"
+    cursor.execute(instruction)
+    row = cursor.fetchone()
+    conn.commit()
+    conn.close()
+    return str(row[0])
+
+def updateCapacityEvent(event,newCapacity):
+    conn = connect()
+    cursor = conn.cursor()
+    instruction = "UPDATE events_event SET capacity=capacity+"+newCapacity+" WHERE id="+event+";"
+    print (instruction)
+    cursor.execute(instruction)
+    conn.commit()
+    conn.close()
+

@@ -10,15 +10,13 @@
 		</header>
 		<form method="post"> 
 			{% csrf_token %}
-			{% if object_list %}
-			{% for event in object_list %}
 			<div class="w3-row-padding">
 				<div class="w3-half">
 					<label for="{{form.name.id_for_label}}"> {{form.name.label}}</label>
 					{{form.name}}
 				</div>
 				<div class="w3-half">
-					<label for="{{form.capacity.id_for_label}}"> {{form.capacity.label}} </label>
+					<label for="{{form.capacity.id_for_label}}"> </label>
 					{{form.capacity}}
 				</div>
 			</div>

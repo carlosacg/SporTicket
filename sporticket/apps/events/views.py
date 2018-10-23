@@ -21,7 +21,6 @@ def index(request):
     return render(request, 'base/base.html')
 
 def insertEvent(request):
-
     if request.method == 'POST':
         form = EventForm(request.POST)
         if form.is_valid():
@@ -29,7 +28,6 @@ def insertEvent(request):
         return redirect('tickets/generateTicket.html')
     else:
         form = EventForm()
-
     return render(request, 'events/insertEvents.html',{'form':form})
 
 def listEvent(request):

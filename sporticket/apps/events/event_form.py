@@ -42,7 +42,7 @@ class EventForm(forms.ModelForm):
             'place': forms.TextInput(attrs={'class':'w3-input w3-border'}),
             'url': forms.TextInput(attrs={'class':'w3-input w3-border','type':'hidden','value':'-'}),
             'state': forms.TextInput(attrs={'class':'w3-input w3-border','type':'hidden','value':'ACTIVO'}),
-            'capacity': forms.NumberInput(attrs={'class':'w3-input w3-border'}),  
+            'capacity': forms.NumberInput(attrs={'class':'w3-input w3-border','type':'hidden','value':'0'}),  
             'local': forms.TextInput(attrs={'class':'w3-input w3-border'}),  
             'visitor': forms.TextInput(attrs={'class':'w3-input w3-border'}),  
             'event_type': forms.Select(choices=CHOICES,attrs={'class':'w3-input w3-border'}),

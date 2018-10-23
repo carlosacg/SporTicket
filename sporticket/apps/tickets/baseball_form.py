@@ -4,17 +4,16 @@ from apps.tickets.models import Ticket
 
 
 
-class TicketForm(forms.ModelForm):
+class BaseballForm(forms.ModelForm):
     quantity= forms.IntegerField(label='Cantida Boletos',required=False)
 
 
     class Meta:
         model = Ticket
         CHOICES= (
-        ('TRIBUNA SUR', 'TRIBUNA SUR'),
-        ('TRIBUNA NORTE', 'TRIBUNA NORTE'),
-        ('TRIBUNA ORIENTE', 'TRIBUNA ORIENTE'),
-        ('TRIBUNA OCCIDENTE', 'TRIBUNA OCCIDENTE'),
+        ('ZONA ALTA', 'ZONA ALTA'),
+        ('ZONA MEDIA', 'ZONA MEDIA'),
+        ('ZONA BAJA', 'ZONA BAJA'),
         )
         fields = [
             'ubication',
@@ -32,4 +31,3 @@ class TicketForm(forms.ModelForm):
             'state': forms.TextInput(attrs={'class':'w3-input w3-border','type':'hidden','value':'DISPONIBLE'}),
 
         }
-
