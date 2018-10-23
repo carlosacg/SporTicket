@@ -22,20 +22,17 @@ class TicketForm(forms.ModelForm):
         fields = [
             'ubication',
             'cost',
-            'event',
             'state',
         ]
         labels ={
             'ubication':'Ubicacion',
             'cost':'Precio',
-            'event':'Evento',
             'state':'Estado',
         }
         widgets ={
             'ubication': forms.Select(choices=CHOICES,attrs={'class':'w3-input w3-border'}),
             'cost': forms.NumberInput(attrs={'class':'w3-input w3-border'}),
-            'event': forms.Select(attrs={'class':'w3-input w3-border','type':'time', 'id':'myTime' ,'value':'00:00:00'}),        
-            'state': forms.TextInput(attrs={'class':'w3-input w3-border','type':'hidden','value':'EN VENTA'}),
+            'state': forms.TextInput(attrs={'class':'w3-input w3-border','type':'hidden','value':'DISPONIBLE'}),
 
         }
 

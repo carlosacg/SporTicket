@@ -4,6 +4,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.template import RequestContext
 import psycopg2
+from apps.events.models import Event
 
 # Create your views here.
 def connect(): #CONEXION ALTERNATIVA PARA DAR INSTRUCCIONES A LA BD SIN NECESIDAD DE UN FORM
@@ -20,11 +21,11 @@ def generateTickets(request):
             cost=form['cost'].value()
             ubication=form['ubication'].value()
             quantity=form['quantity'].value()
-            event=form['event'].value()
             state=form['state'].value()
-            print(cost+"-"+ubication+"-"+quantity+"-"+event+"-"+state)
-            insertTickets(quantity,ubication,event,cost,state) 
-        return redirect('tickets/generateTicket.html')
+            print (Event.objects.latest('id'))
+            print(cost+"-"+ubication+"-"+quantity+"-"+str(Event.objects.latest('id'))+"-"+state)
+            insertTickets(quantity,ubication,str(Event.objects.latest('id')),cost,state) 
+        return redirect('events/listEvents.html')
     else:
         form = TicketForm()
     return render(request, 'tickets/generateTicket.html',{'form':form})

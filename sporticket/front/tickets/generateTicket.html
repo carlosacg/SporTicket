@@ -8,11 +8,28 @@
 		<header class="w3-container" >
 			<h5 style="color: black;"><b><i class="fa fa-plus" style="color: black;"></i> Generador de Boletos</b></h5>
 		</header>
-		<form id='form' method="post">
+		<form method="post">
 		{% csrf_token %}
-			{{form.as_p}}
-
-			<button type='submit'>Crear</button>
+			<div class="w3-row-padding">
+				<div class="w3-half">
+					<label for="{{form.ubication.id_for_label}}"> {{form.ubication.label}}</label>
+					{{form.ubication}}
+				</div>
+				<div class="w3-half">
+					<label for="{{form.cost.id_for_label}}"> {{form.cost.label}} </label>
+					{{form.cost}}
+				</div>
+			</div>
+			<div class="w3-row-padding">
+				<div class="w3-half">
+					<label for="{{form.quantity.id_for_label}}">{{form.quantity.label}}</label>
+					{{form.quantity}}
+				</div>
+				<div class="w3-half">
+					{{form.state}}
+				</div>
+			</div>
+		 	<button type='submit'>Crear</button>
 		</form>
 		<br>
 		<br>

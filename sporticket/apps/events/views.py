@@ -21,6 +21,7 @@ def index(request):
     return render(request, 'base/base.html')
 
 def insertEvent(request):
+
     if request.method == 'POST':
         form = EventForm(request.POST)
         if form.is_valid():
