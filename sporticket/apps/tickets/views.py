@@ -11,9 +11,9 @@ from apps.tickets.models import Ticket
 # Create your views here.
 def connect(): #CONEXION ALTERNATIVA PARA DAR INSTRUCCIONES A LA BD SIN NECESIDAD DE UN FORM
     conn = psycopg2.connect(" \
-        dbname=sport_db \
-        user=andres \
-        password=123456")
+        dbname=sporticket \
+        user=postgres \
+        password=1625606")
     return conn
 
 

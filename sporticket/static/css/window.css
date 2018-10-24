@@ -1,4 +1,4 @@
-html,body,h1,h2,h3,h4,h5,a,span,i,button {
+html,body,h1,h2,h3,h4,h5,a,b,span,i,button {
 	font-family: "Raleway", sans-serif; 
 	color: orange;
 }
@@ -39,4 +39,7 @@ th{
 }
 .image{
 	width:100%;
+}
+.imgLogin{
+	width: 100px;
 }
