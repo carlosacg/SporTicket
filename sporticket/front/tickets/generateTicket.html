@@ -32,28 +32,22 @@
 		 	<button type='submit'>Crear</button>
 		</form>
 		<header class="w3-container">
-			<h5 style="color: black;"><b><i class="fa fa-list" style="color: black;"></i> Listar eventos</b></h5>
+			<h5 style="color: black;"><b><i class="fa fa-list" style="color: black;"></i> Boletos Generados</b></h5>
 		</header>
 		<div class="w3-container">
       		<table class="w3-table-all w3-hoverable ">
 		        <thead >
 		          	<tr class="w3-dark-grey">
-		          		<th>#</th>
-			            <th>Costo</th>
+		          		<th>Cantidad Boletos</th>
 			            <th>Ubicacion</th>
-			            <th>Estado</th>
-			            <th>Evento</th>
 		          	</tr>
 				</thead>
-				{% if tickets %}
-				{% for ticket in tickets %}
 				<tbody>
+					{% if tickets %}
+					{% for arrayTicket in tickets %}
 					<tr id="registro_item" >
-						<td>{{ticket.id}}</td>
-						<td>{{ticket.cost}}</td>
-						<td>{{ticket.ubication}}</td>
-						<td>{{ticket.state}}</td>
-						<td>{{ticket.event}}</td>
+						<td>{{arrayTicket.0}}</td>
+						<td>{{arrayTicket.1}}</td>
 					</tr>
 				</tbody>
 				{% endfor %}

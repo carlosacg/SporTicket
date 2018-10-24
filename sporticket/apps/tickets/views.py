@@ -25,9 +25,8 @@ def insertTickets(quantity,ubication,event,cost,state):
 
 def generateTickets(request):
     ticket = Ticket.objects.all()
-    context = {'tickets':ticket}
     event_type=get_data(str(Event.objects.latest('id')))
-    if event_type == 'BEISBOL': 
+    if event_type == 'BEISBOL':  #SI EL EVENTO CREADO FUE TIPO BEISBOL
         if request.method == 'POST':
             form = BaseballForm(request.POST)
             if form.is_valid():
@@ -38,12 +37,18 @@ def generateTickets(request):
                 event_type=get_data(str(Event.objects.latest('id')))
                 print(event_type)
                 print(cost+"-"+ubication+"-"+quantity+"-"+str(Event.objects.latest('id'))+"-"+state)
-                insertTickets(quantity,ubication,str(Event.objects.latest('id')),cost,state) 
+                insertTickets(quantity,ubication,str(Event.objects.latest('id')),cost,state)
+                arrayTicket=getListTicket(str(Event.objects.latest('id'))) 
+                updateCapacityEvent(str(Event.objects.latest('id')),quantity) 
             return redirect('tickets/generateTicket.html')
         else:
             form = BaseballForm()
-        return render(request, 'tickets/generateTicket.html',{'form':form},context)
-    else:
+        arrayTicket=getListTicket(str(Event.objects.latest('id')))
+        context = {'tickets':arrayTicket,'form':form}
+
+        print (arrayTicket)
+        return render(request, 'tickets/generateTicket.html',context)
+    else:                       #SI EL EVENTO CREADO FUE FUTBOL O TENIS
         if request.method == 'POST':
             form = TicketForm(request.POST)
             if form.is_valid():
@@ -55,11 +60,16 @@ def generateTickets(request):
                 print(event_type)
                 print(cost+"-"+ubication+"-"+quantity+"-"+str(Event.objects.latest('id'))+"-"+state)
                 insertTickets(quantity,ubication,str(Event.objects.latest('id')),cost,state)
+                arrayTicket=getListTicket(str(Event.objects.latest('id'))) 
                 updateCapacityEvent(str(Event.objects.latest('id')),quantity) 
             return redirect('tickets/generateTicket.html')
         else:
             form = TicketForm()
-        return render(request, 'tickets/generateTicket.html',{'form':form},context)
+        arrayTicket=getListTicket(str(Event.objects.latest('id')))
+        context = {'tickets':arrayTicket,'form':form}
+
+        print (arrayTicket)
+        return render(request, 'tickets/generateTicket.html',context)
     
 
 def save_data(ubication,event,cost,state):
@@ -81,6 +91,17 @@ def get_data(event):
     conn.commit()
     conn.close()
     return str(row[0])
+
+def getListTicket(event):
+    conn = connect()
+    cursor = conn.cursor()
+    instruction = "SELECT count(*),ubication,event_id from tickets_ticket WHERE event_id="+event+" GROUP BY ubication,event_id;"
+    cursor.execute(instruction)
+    rows = cursor.fetchall()
+    conn.commit()
+    conn.close()
+    return rows
+
 
 def updateCapacityEvent(event,newCapacity):
     conn = connect()
