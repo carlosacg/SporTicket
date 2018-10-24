@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'apps.events',
     'apps.tickets',
     'apps.users',
+    'apps.login',
 ]
 
 MIDDLEWARE = [
@@ -79,11 +80,11 @@ WSGI_APPLICATION = 'sporticket.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'sport_db',
-        'USER' : 'andres',
-        'PASSWORD': '123456',
+        'NAME': 'sporticket',
+        'USER' : 'postgres',
+        'PASSWORD': '1625606',
         'HOST' : 'localhost',
-        'PORT' : 5432,
+        'PORT' : 5433,
     }
 }
 
@@ -125,3 +126,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+STATICFILES_DIRS = (os.path.join(BASE_DIR,'static'),)

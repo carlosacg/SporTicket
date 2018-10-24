@@ -32,7 +32,7 @@ class UserForm(forms.ModelForm):
 			'lastName': forms.TextInput(attrs={'class':'w3-input w3-border'}),
 			'email': forms.EmailInput(attrs={'class':'w3-input w3-border'}),
 			'userType': forms.TextInput(attrs={'class':'w3-input w3-border'}),
-			'phone': forms.NumberInput(attrs={'class':'w3-input w3-border'}),
+			'phone': forms.TextInput(attrs={'class':'w3-input w3-border'}),
 			'numAccount': forms.TextInput(attrs={'class':'w3-input w3-border'}),
 			'state': forms.TextInput(attrs={'class':'w3-input w3-border','type':'hidden','value':'ACTIVO'}),
 		}
