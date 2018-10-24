@@ -5,17 +5,18 @@ from apps.tickets.models import Ticket
 
 
 class TicketForm(forms.ModelForm):
-    quantity= forms.IntegerField(label='Cantida Boletos',required=False)
-
+    northZone= forms.IntegerField(label='Tribuna Norte',required=False)
+    southZone= forms.IntegerField(label='Tribuna Sur',required=False)
+    eastZone= forms.IntegerField(label='Tribuna Oriente',required=False)
+    westZone= forms.IntegerField(label='Tribuna Occidente',required=False)
+    costNorth=forms.IntegerField(label='Precio Tribuna Norte',required=False)
+    costSouth=forms.IntegerField(label='Precio Tribuna Sur',required=False)
+    costEast=forms.IntegerField(label='Precio Tribuna Oriente',required=False)
+    costWest=forms.IntegerField(label='Precio Tribuna Occidente',required=False)
 
     class Meta:
         model = Ticket
-        CHOICES= (
-        ('TRIBUNA SUR', 'TRIBUNA SUR'),
-        ('TRIBUNA NORTE', 'TRIBUNA NORTE'),
-        ('TRIBUNA ORIENTE', 'TRIBUNA ORIENTE'),
-        ('TRIBUNA OCCIDENTE', 'TRIBUNA OCCIDENTE'),
-        )
+
         fields = [
             'ubication',
             'cost',
@@ -27,8 +28,8 @@ class TicketForm(forms.ModelForm):
             'state':'Estado',
         }
         widgets ={
-            'ubication': forms.Select(choices=CHOICES,attrs={'class':'w3-input w3-border'}),
-            'cost': forms.NumberInput(attrs={'class':'w3-input w3-border'}),
+            'ubication': forms.TextInput(attrs={'class':'w3-input w3-border','type':'hidden','value':'-'}),
+            'cost': forms.NumberInput(attrs={'class':'w3-input w3-border','type':'hidden','value':'0'}),
             'state': forms.TextInput(attrs={'class':'w3-input w3-border','type':'hidden','value':'DISPONIBLE'}),
 
         }
