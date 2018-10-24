@@ -47,18 +47,19 @@
 		    </div>
 		    <div class="w3-bar-block" >
 			    <a type="submit" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw" ></i>Cerrar Menú</a>
-			    <button class="w3-button w3-block w3-left-align" onclick="myAccFunc()"><i class="fa fa-calendar fa-fw"></i>
-					Eventos <i class="fa fa-caret-down"></i>
-				</button>
-				<div id="demoAcc" class="w3-hide w3-dark-grey w3-card" >
-				    <a href="/events/insertEvents.html" class="w3-bar-item w3-button" style="color: orange;"><i class="fa fa-plus fa-fw"></i> Insertar</a>
-				    <a href="/events/listEvents.html" class="w3-bar-item w3-button" style="color: orange;"><i class="fa fa-list fa-fw"></i> Listar</a>
-					<a href="/events/uploadFile.html" class="w3-bar-item w3-button" style="color: orange;"><i class="fa fa-repeat"></i> Cargar Eventos </a>
-
-				</div>
-			    <a class="w3-bar-item w3-button w3-padding" ><i class="fa fa-shopping-cart fa-fw"></i>  Ventas</a>
-			    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Usuarios</a>
-			    <a class="w3-bar-item w3-button w3-padding" ><i class="fa fa-bar-chart fa-fw"></i>  Reportes</a>
+			    <button onclick="myFunction('Demo1')" class="w3-button w3-block w3-left-align"><i class="fa fa-calendar fa-fw"></i> Eventos <i class="w3-right fa fa-caret-down"></i></button>
+					<div id="Demo1" class="w3-hide w3-dark-grey w3-card">
+					    <a href="/events/insertEvents.html" class="w3-bar-item w3-button " style="color: orange;"><i class="fa fa-plus fa-fw"></i> Insertar</a>
+				    	<a href="/events/listEvents.html" class="w3-bar-item w3-button" style="color: orange;"><i class="fa fa-list fa-fw"></i> Listar</a>
+				    	<a href="/events/uploadFile.html" class="w3-bar-item w3-button" style="color: orange;"><i class="fa fa-repeat"></i> Cargar </a>
+					</div>
+				<a class="w3-bar-item w3-button w3-padding" ><i class="fa fa-shopping-cart fa-fw"></i>  Ventas</a>
+				<button onclick="myFunction('Demo2')" class="w3-button w3-block w3-left-align" ><i class="fa fa-users  fa-fw"></i> Usuarios <i class="w3-right fa fa-caret-down"></i></button>
+					<div id="Demo2" class="w3-hide w3-dark-grey w3-card">
+					    <a href="/users/insertUsers.html" class="w3-bar-item w3-button " style="color: orange;"><i class="fa fa-plus fa-fw"></i> Insertar</a>
+				    	<a href="/users/listUsers.html" class="w3-bar-item w3-button" style="color: orange;"><i class="fa fa-list fa-fw"></i> Listar</a>
+					</div>
+				<a class="w3-bar-item w3-button w3-padding" ><i class="fa fa-bar-chart fa-fw"></i>  Reportes</a>
 		    </div>
 		</nav>
   		<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" title="close side menu" id="myOverlay"></div>
@@ -70,5 +71,19 @@
 
 	<script src="{% static 'js/w3.js' %}"></script>
 	<script src="{% static 'js/function.js' %}"></script>
+	<script>
+		function myFunction(id) {
+			var x = document.getElementById(id);
+			if (x.className.indexOf("w3-show") == -1) {
+				x.className += " w3-show";
+				x.previousElementSibling.className = 
+				x.previousElementSibling.className.replace("w3-black", "w3-red");
+			} else { 
+				x.className = x.className.replace(" w3-show", "");
+				x.previousElementSibling.className = 
+				x.previousElementSibling.className.replace("w3-red", "w3-black");
+			}
+		}
+	</script>
 </body>
 </html>

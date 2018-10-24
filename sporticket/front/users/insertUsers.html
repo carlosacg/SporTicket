@@ -1,0 +1,61 @@
+{% extends 'base/base.html' %}
+<head>
+	
+</head>
+
+{% block content %}
+	<div class="w3-main" >
+		<header class="w3-container" >
+			<h5 style="color: black;"><b><i class="fa fa-plus" style="color: black;"></i> Insertar usuario</b></h5>
+		</header>
+		<form method="post"> 
+			{% csrf_token %}
+
+			<div class="w3-row-padding">
+				<div class="w3-half">
+					<label for="{{ form.identification.id_for_label}}"> {{form.identification.label}} </label> {{form.identification}}
+				</div>
+				<div class="w3-half">
+					<label for="{{ form.name.id_for_label}}"> {{form.name.label}} </label> {{form.name}}
+				</div>
+			</div>
+			<div class="w3-row-padding">
+				<div class="w3-half">
+					<label for="{{ form.lastName.id_for_label}}"> {{form.lastName.label}} </label> {{form.lastName}}
+				</div>
+				<div class="w3-half">
+					<label for="{{ form.email.id_for_label}}"> {{form.email.label}} </label> {{form.email}}
+				</div>
+			</div>
+			<div class="w3-row-padding">
+				<div class="w3-half">
+					<label for="{{ form.phone.id_for_label}}"> {{form.phone.label}} </label> {{form.phone}}
+				</div>
+				<div class="w3-half">
+					<label for="{{ form.numAccount.id_for_label}}"> {{form.numAccount.label}} </label> {{form.numAccount}}
+				</div>
+			</div>
+			<div class="w3-row-padding">
+				<div class="w3-half">
+					<label for="{{ form.userType.id_for_label}}"> {{form.userType.label}} </label> {{form.userType}}
+				</div>
+				<div class="w3-half">
+					{{form.state}}
+				</div>
+						<br>
+						<br> <br/>
+						<div class="w3-show-inline-block">
+	                        <div class="w3-bar">
+	                            <a href="{% url 'listUsers' %}"><button type="submit" class="w3-button w3-padding-16 w3-dark-grey w3-circle" ><i class="fa fa-save"></i></button></a>
+	                            <a href="#"><button class="w3-button w3-dark-grey w3-padding-16 w3-circle" ><i class="fa fa-repeat"></i></button></a>
+								</div>
+	                    </div>
+			</div>
+		</form>
+		<br>
+		<br>
+	 	<footer class="w3-container w3-padding-14 w3-grey">
+	    	<p>Powered by <a style="color: black;">XSOFT</a></p>
+		</footer>
+	</div>
+{% endblock %}

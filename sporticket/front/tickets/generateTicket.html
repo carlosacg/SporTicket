@@ -8,57 +8,15 @@
 		<header class="w3-container" >
 			<h5 style="color: black;"><b><i class="fa fa-plus" style="color: black;"></i> Generador de Boletos</b></h5>
 		</header>
-		<form method="post">
+		<form id='form' method="post">
 		{% csrf_token %}
-			<div class="w3-row-padding">
-				<div class="w3-half">
-					<label for="{{form.ubication.id_for_label}}"> {{form.ubication.label}}</label>
-					{{form.ubication}}
-				</div>
-				<div class="w3-half">
-					<label for="{{form.cost.id_for_label}}"> {{form.cost.label}} </label>
-					{{form.cost}}
-				</div>
-			</div>
-			<div class="w3-row-padding">
-				<div class="w3-half">
-					<label for="{{form.quantity.id_for_label}}">{{form.quantity.label}}</label>
-					{{form.quantity}}
-				</div>
-				<div class="w3-half">
-					{{form.state}}
-				</div>
-			</div>
-		 	<button type='submit'>Crear</button>
-		</form>
-		<header class="w3-container">
-			<h5 style="color: black;"><b><i class="fa fa-list" style="color: black;"></i> Boletos Generados</b></h5>
-		</header>
-		<div class="w3-container">
-      		<table class="w3-table-all w3-hoverable ">
-		        <thead >
-		          	<tr class="w3-dark-grey">
-		          		<th>Cantidad Boletos</th>
-			            <th>Ubicacion</th>
-		          	</tr>
-				</thead>
-				<tbody>
-					{% if tickets %}
-					{% for arrayTicket in tickets %}
-					<tr id="registro_item" >
-						<td>{{arrayTicket.0}}</td>
-						<td>{{arrayTicket.1}}</td>
-					</tr>
-				</tbody>
-				{% endfor %}
-				{% else %}
-				<h1>No hay registros de Boletos</h1>
-				{% endif %}
-	      	</table>
-		</div>
+			{{form.as_p}}
 
-		<hr>
-		<footer class="w3-container w3-padding-14 w3-grey">
+			<button type='submit'>Crear</button>
+		</form>
+		<br>
+		<br>
+	 	<footer class="w3-container w3-padding-14 w3-grey">
 	    	<p>Powered by <a style="color: black;">XSOFT</a></p>
 		</footer>
 	</div>

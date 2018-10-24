@@ -43,62 +43,10 @@
 				</tbody>
 				{% endfor %}
 				{% else %}
-				<h1>No hay registros de eventos</h1>
+				<h1 style="color: black;">No hay registros de eventos</h1>
 				{% endif %}
 	      	</table>
-      		<div id="id01" class="w3-modal">
-            	<div class="w3-modal-content">
-              		<header class="w3-container w3-dark-grey"> 
-                		<span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-                		<h2>{{event.name}} - {{event.event_type}}</h2>
-              		</header>
-              		<div class="w3-row-padding w3-margin-top">
-              			<div class="w3-show-inline-block">
-				  			<div class="w3-half">
-					    		<div class="w3-container">
-					                 <form class="w3-container" >
-										<label>Fecha</label>
-								    	<input class="w3-input w3-border" type="text" value="{{event.initial_date}}">
-										
-					                    <label>Hora</label>
-								    	<input class="w3-input w3-border" type="text" value="{{event.initial_time}}">
-					                   
-					                    <label>Lugar</label>
-								    	<input class="w3-input w3-border" type="text" value="{{event.place}}">
-					                   
-					                    <label>Capacidad</label>
-								    	<input class="w3-input w3-border" type="text" value="{{event.capacity}}">
-										
-					                    <label>Visitante</label>
-								    	<input class="w3-input w3-border" type="text" value="{{event.visitor}}">
-					                    
-					                    <label>Local</label>
-										<input class="w3-input w3-border" type="text" value="{{event.local}}">
-										
-										<label>Estado</label>
-								    	<input class="w3-input w3-border" type="text" value="{{event.state}}">
-		                    		</form>
-				  				</div>
-             				 	<br>
-			                    <div class="w3-show-inline-block">
-			                        <div class="w3-bar">
-			                            <button class="w3-button w3-padding-16 w3-dark-grey w3-circle" ><i class="fa fa-save"></i></button>
-			                            <button class="w3-button w3-dark-grey w3-padding-16 w3-circle" ><i class="fa fa-repeat"></i></button>
-			                    	</div>
-		                    	</div>
-							  </div>
-						
-				            {%load staticfiles %}
-				         	
-							<div class="w3-half">
-							    <div class="w3-card">
-							      <img src="{% static 'images/baseball.png' %}" class="image" >
-								</div>
-			       			</div>
-		      			</div>
-      				</div>
-				</div>
-			</div>
+      		
 		</div>
 
 		<hr>
