@@ -54,7 +54,7 @@ def generateTickets(request):
             form = BaseballForm()
         arrayTicket=getListTicket(str(Event.objects.latest('id')))
         context = {'tickets':arrayTicket,'form':form}
-        print (arrayTicket)
+        
         return render(request, 'tickets/generateTicketBaseball.html',context)
     else:                       #SI EL EVENTO CREADO FUE FUTBOL O TENIS
         if request.method == 'POST':
@@ -74,7 +74,7 @@ def generateTickets(request):
                 insertTickets(eastZone,'TRIBUNA ORIENTE',str(Event.objects.latest('id')),eastCost,'DISPONIBLE')                 
                 insertTickets(westZone,'TRIBUNA OCCIDENTE',str(Event.objects.latest('id')),westCost,'DISPONIBLE')                
                 arrayTicket=getListTicket(str(Event.objects.latest('id'))) 
-                quantity=int(northZone)+int(southCost)+int(eastCost)+int(westZone)
+                quantity=int(northZone)+int(southZone)+int(eastZone)+int(westZone)
                 print (quantity)
                 updateCapacityEvent(str(Event.objects.latest('id')),str(quantity)) 
             return redirect('tickets/generateTicket.html')
