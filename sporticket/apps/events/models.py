@@ -15,7 +15,7 @@ class Event(models.Model):
     event_type = models.CharField(max_length=200)
     
     def __str__(self):   #MUESTRA EL NOMBRE COMO LLAVE FORANEA
-        return '{}'.format(self.name)
+        return '{}'.format(self.id)
  
 class Document(models.Model):
     filename = models.CharField(max_length=100)

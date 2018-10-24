@@ -12,9 +12,9 @@ import psycopg2
 
 def connect(): #CONEXION ALTERNATIVA PARA DAR INSTRUCCIONES A LA BD SIN NECESIDAD DE UN FORM
     conn = psycopg2.connect(" \
-        dbname=postgres \
-        user=postgres \
-        password=24603759")
+        dbname=sport_db \
+        user=andres \
+        password=123456")
     return conn
 
 def index(request):
@@ -28,7 +28,6 @@ def insertEvent(request):
         return redirect('tickets/generateTicket.html')
     else:
         form = EventForm()
-
     return render(request, 'events/insertEvents.html',{'form':form})
 
 def listEvent(request):
@@ -45,8 +44,21 @@ def uploadFile(request):
             ruta=request.FILES.get('docfile').name
             with open('./documents/'+ruta) as file:
                 datos = json.load(file)
-            for dato in datos: 
+            for dato in datos:
+                print (dato['event_type'])
+                
                 save_data(dato['name'],dato['initial_dale'],dato['initial_time'],dato['place'],dato['url'],dato['state'],dato['capacity'],dato['visitor'],dato['local'],dato['event_type'])
+                if dato['event_type'] == 'BEISBOL':
+                    insertTickets(dato['zAlta'],"ZONA ALTA",str(Event.objects.latest('id')),dato['pAlta'],"DISPONIBLE")
+                    insertTickets(dato['zMedia'],"ZONA MEDIA",str(Event.objects.latest('id')),dato['pMedia'],"DISPONIBLE")
+                    insertTickets(dato['zBaja'],"ZONA BAJA",str(Event.objects.latest('id')),dato['pBaja'],"DISPONIBLE")
+
+                else:
+                    insertTickets(dato['tNorte'],"TRIBUNA NORTE",str(Event.objects.latest('id')),dato['pNorte'],"DISPONIBLE")
+                    insertTickets(dato['tSur'],"TRIBUNA SUR",str(Event.objects.latest('id')),dato['pSur'],"DISPONIBLE")
+                    insertTickets(dato['tOriente'],"TRIBUNA ORIENTE",str(Event.objects.latest('id')),dato['pOriente'],"DISPONIBLE")
+                    insertTickets(dato['tOccidente'],"TRIBUNA OCCIDENTE",str(Event.objects.latest('id')),dato['pOccidente'],"DISPONIBLE")
+                
             return redirect('events/listEvents.html')
     else:
         formulario = UploadForm()
@@ -119,4 +131,20 @@ def cancelEvent(id):
     instruction = "UPDATE events_event SET state=\'CANCELADO\' WHERE id="+id+";"
     cursor.execute(instruction)
     conn.commit()
+    conn.close()
+
+def insertTickets(quantity,ubication,event,cost,state):
+    x=0
+    while x < int(quantity):        
+        save_ticket(ubication,event,cost,state) 
+        x+=1
+
+def save_ticket(ubication,event,cost,state):
+    conn = connect()
+    cursor = conn.cursor()
+    instruction = "INSERT INTO tickets_ticket VALUES (nextval(\'tickets_ticket_id_seq\'),"+str(cost)+",\'"+ubication+"\',"+str(event)+",\'"+state+"\');"
+    print (instruction)
+    cursor.execute(instruction)
+    conn.commit()
+    print ("GENERO TICKET")
     conn.close()
