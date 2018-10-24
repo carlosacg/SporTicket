@@ -26,28 +26,36 @@ def insertTickets(quantity,ubication,event,cost,state):
 def generateTickets(request):
     ticket = Ticket.objects.all()
     event_type=get_data(str(Event.objects.latest('id')))
+    print(event_type)
+    print(request.method)
+
     if event_type == 'BEISBOL':  #SI EL EVENTO CREADO FUE TIPO BEISBOL
         if request.method == 'POST':
             form = BaseballForm(request.POST)
             if form.is_valid():
-                cost=form['cost'].value()
-                ubication=form['ubication'].value()
-                quantity=form['quantity'].value()
-                state=form['state'].value()
+                higtCost=form['costHigth'].value()
+                mediumCost=form['costMediun'].value()
+                lowCost=form['costLow'].value()
+                higthZone=form['higthZone'].value()
+                mediumZone=form['mediumZone'].value()
+                lowZone=form['lowZone'].value()
                 event_type=get_data(str(Event.objects.latest('id')))
                 print(event_type)
-                print(cost+"-"+ubication+"-"+quantity+"-"+str(Event.objects.latest('id'))+"-"+state)
-                insertTickets(quantity,ubication,str(Event.objects.latest('id')),cost,state)
+                print(higtCost+"-"+higthZone+"-"+mediumCost+"-"+mediumZone+"-"+lowZone+"-"+lowCost)
+                insertTickets(higthZone,'ZONA ALTA',str(Event.objects.latest('id')),higtCost,'DISPONIBLE')
+                insertTickets(mediumZone,'ZONA MEDIA',str(Event.objects.latest('id')),mediumCost,'DISPONIBLE')
+                insertTickets(lowZone,'ZONA BAJA',str(Event.objects.latest('id')),lowCost,'DISPONIBLE')
                 arrayTicket=getListTicket(str(Event.objects.latest('id'))) 
-                updateCapacityEvent(str(Event.objects.latest('id')),quantity) 
-            return redirect('tickets/generateTicket.html')
+                quantity=int(higthZone)+int(mediumZone)+int(lowZone)
+                print (quantity)
+                updateCapacityEvent(str(Event.objects.latest('id')),str(quantity)) 
+            return redirect('tickets/generateTicketBaseball.html')
         else:
             form = BaseballForm()
         arrayTicket=getListTicket(str(Event.objects.latest('id')))
         context = {'tickets':arrayTicket,'form':form}
-
         print (arrayTicket)
-        return render(request, 'tickets/generateTicket.html',context)
+        return render(request, 'tickets/generateTicketBaseball.html',context)
     else:                       #SI EL EVENTO CREADO FUE FUTBOL O TENIS
         if request.method == 'POST':
             form = TicketForm(request.POST)

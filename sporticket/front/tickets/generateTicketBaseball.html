@@ -1,0 +1,90 @@
+{% extends 'base/base.html' %}
+<head>
+	
+</head>
+
+{% block content %}
+	<div class="w3-main" >
+		<header class="w3-container" >
+			<h5 style="color: black;"><b><i class="fa fa-plus" style="color: black;"></i> Generador de Boletos BEISBOL</b></h5>
+		</header>
+		<form method="post">
+		{% csrf_token %}
+			<div class="w3-row-padding">
+				<div class="w3-half">
+					<label for="{{form.ubication.id_for_label}}"></label><!--NO BORRAR NADA DEL FORM-->
+					{{form.ubication}}
+				</div>
+				<div class="w3-half">
+					<label for="{{form.cost.id_for_label}}"></label><!--NO BORRAR NADA DEL FORM-->
+					{{form.cost}}
+				</div>
+			</div>
+			<div class="w3-row-padding">
+				<div class="w3-half">
+					{{form.state}}<!--NO BORRAR NADA DEL FORM-->
+                </div>
+                <div class="w3-container">
+                        <table class="w3-table-all w3-hoverable ">
+                          <thead >
+                                <tr class="w3-dark-grey">
+                                <th>Ubicacion</th>
+                                <th>Cantidad Boletos</th>
+                                <th>Precio</th>
+                                </tr>
+                          </thead>
+                          <tbody>
+                              <tr>
+                                <td>ZONA ALTA</td>
+                                <td>{{form.higthZone}}</td>
+                                <td>{{form.costHigth}}</td>
+                              </tr>
+                              <tr>
+                                <td>ZONA MEDIA</td>
+                                <td>{{form.mediumZone}}</td>
+                                <td>{{form.costMediun}}</td>
+                            </tr>
+                            <tr>
+                                <td>ZONA BAJA</td>
+                                <td>{{form.lowZone}}</td>
+                                <td>{{form.costLow}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        </div>
+			</div>
+		 	<button type='submit'>Crear</button>
+		</form>
+		<header class="w3-container">
+			<h5 style="color: black;"><b><i class="fa fa-list" style="color: black;"></i> Boletos Generados</b></h5>
+        </header>
+
+		<div class="w3-container">
+      		<table class="w3-table-all w3-hoverable ">
+		        <thead >
+		          	<tr class="w3-dark-grey">
+		          		<th>Cantidad Boletos</th>
+			            <th>Ubicacion</th>
+		          	</tr>
+				</thead>
+				<tbody>
+					{% if tickets %}
+					{% for arrayTicket in tickets %}
+					<tr id="registro_item" >
+						<td>{{arrayTicket.0}}</td>
+						<td>{{arrayTicket.1}}</td>
+					</tr>
+				</tbody>
+				{% endfor %}
+				{% else %}
+				<h1>No hay registros de Boletos</h1>
+				{% endif %}
+	      	</table>
+		</div>
+
+		<hr>
+		<footer class="w3-container w3-padding-14 w3-grey">
+	    	<p>Powered by <a style="color: black;">XSOFT</a></p>
+		</footer>
+	</div>
+{% endblock %}
