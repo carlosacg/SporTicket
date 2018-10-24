@@ -10,13 +10,14 @@
 		</header>
 		<form method="post"> 
 			{% csrf_token %}
+
 			<div class="w3-row-padding">
 				<div class="w3-half">
 					<label for="{{form.name.id_for_label}}"> {{form.name.label}}</label>
 					{{form.name}}
 				</div>
 				<div class="w3-half">
-					<label for="{{form.capacity.id_for_label}}"> </label>
+					<label for="{{form.capacity.id_for_label}}"> {{form.capacity.label}} </label>
 					{{form.capacity}}
 				</div>
 			</div>

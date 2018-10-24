@@ -7,5 +7,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^', include('apps.events.urls')),
     url(r'^', include('apps.tickets.urls')),
-
+	url(r'^', include('apps.users.urls')),
 ]

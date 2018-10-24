@@ -3,6 +3,7 @@ from apps.events.views import *
 
 
 urlpatterns = [
+
     url(r'^$', index),
     url(r'events/insertEvents.html', insertEvent, name='evento_crear' ),
     url(r'events/listEvents.html', EventList.as_view(), name='evento_listar' ),

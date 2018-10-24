@@ -1,0 +1,55 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+	<div class="w3-main" >
+		<header class="w3-container">
+			<h5 style="color: black;"><b><i class="fa fa-list" style="color: black;"></i> Listar usuarios</b></h5>
+		</header>
+		<div class="w3-container">
+      		<table class="w3-table-all w3-hoverable ">
+		        <thead >
+		          	<tr class="w3-dark-grey">
+		          		<th>Identificación</th>
+			            <th>Nombre</th>
+			            <th>Apellido</th>
+                        <th>Correo</th>
+			            <th>Teléfono</th>
+                        <th>Número de Cuenta</th>
+                        <th>Estado</th>
+						<th>Tipo de usuario</th>						
+			            <th></th>
+			            <th></th>
+			            <th></th>
+		          	</tr>
+				</thead>
+				{% if object_list %}
+				{% for user in object_list %}
+				<tbody>
+					<tr id="registro_item" >
+						<td>{{user.identification}}</td>
+						<td>{{user.name}}</td>
+						<td>{{user.lastName}}</td>
+						<td>{{user.email}}</td>
+						<td>{{user.phone}}</td>
+						<td>{{user.numAccount}}</td>
+						<td>{{user.state}}</td>
+						<td>{{user.userType}}</td>
+						<td><a href="{% url 'viewUser' user.identification %}"><button class="w3-button w3-padding-small w3-dark-grey w3-circle"><i class="fa fa-eye"></i></button></a></td>
+						<td><a href="{% url 'editUser' user.identification %}"><button class="w3-button w3-padding-small w3-dark-grey w3-circle"><i class="fa fa-pencil"></i></button></a></td>
+						<td><a href="{% url 'deleteUser' user.identification %}"><button class="w3-button w3-padding-small w3-dark-grey w3-circle"><i class="fa fa-trash"></i></button></a></td>
+					</tr>
+				</tbody>
+				{% endfor %}
+				{% else %}
+				<h1 style="color: black;">No hay registros de usuarios</h1>
+				{% endif %}
+	      	</table>
+      		
+		</div>
+
+		<hr>
+		<footer class="w3-container w3-padding-14 w3-grey">
+	    	<p>Powered by <a style="color: black;">XSOFT</a></p>
+		</footer>
+	</div>
+{% endblock %}
