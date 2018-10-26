@@ -16,19 +16,27 @@
 					<label for="{{ form.identification.id_for_label}}"> {{form.identification.label}} </label> {{form.identification}}
 				</div>
 				<div class="w3-half">
-					<label for="{{ form.name.id_for_label}}"> {{form.name.label}} </label> {{form.name}}
+					<label for="{{ form2.first_name.id_for_label}}"> {{form2.first_name.label}} </label> {{form2.first_name}}
 				</div>
 			</div>
 			<div class="w3-row-padding">
 				<div class="w3-half">
-					<label for="{{ form.lastName.id_for_label}}"> {{form.lastName.label}} </label> {{form.lastName}}
+					<label for="{{ form2.last_name.id_for_label}}"> {{form2.last_name.label}} </label> {{form2.last_name}}
 				</div>
 				<div class="w3-half">
-					<label for="{{ form.email.id_for_label}}"> {{form.email.label}} </label> {{form.email}}
+					<label for="{{ form2.email.id_for_label}}"> {{form2.email.label}} </label> {{form2.email}}
 				</div>
 			</div>
 			<div class="w3-row-padding">
 				<div class="w3-half">
+					<label for="{{ form2.password1.id_for_label}}"> {{form2.password1.label}} </label> {{form2.password1}}
+				</div>
+				<div class="w3-half">
+					<label for="{{ form2.password2.id_for_label}}"> {{form2.password2.label}} </label> {{form2.password2}}
+				</div>
+			</div>
+			<div class="w3-row-padding">
+				<div class="w3-half"> 
 					<label for="{{ form.phone.id_for_label}}"> {{form.phone.label}} </label> {{form.phone}}
 				</div>
 				<div class="w3-half">
@@ -40,13 +48,14 @@
 					<label for="{{ form.userType.id_for_label}}"> {{form.userType.label}} </label> {{form.userType}}
 				</div>
 				<div class="w3-half">
-					{{form.state}}
+					<label for="{{ form2.username.id_for_label}}"> {{form2.username.label}} </label> {{form2.username}}
 				</div>
+			
 						<br>
 						<br> <br/>
 						<div class="w3-show-inline-block">
 	                        <div class="w3-bar">
-	                            <a href="{% url 'listUsers' %}"><button type="submit" class="w3-button w3-padding-16 w3-dark-grey w3-circle" ><i class="fa fa-save"></i></button></a>
+	                            <a href="{% url 'crateUser' %}"><button type="submit" class="w3-button w3-padding-16 w3-dark-grey w3-circle" ><i class="fa fa-save"></i></button></a>
 	                            <a href="#"><button class="w3-button w3-dark-grey w3-padding-16 w3-circle" ><i class="fa fa-repeat"></i></button></a>
 								</div>
 	                    </div>

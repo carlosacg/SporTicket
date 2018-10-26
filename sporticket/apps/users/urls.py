@@ -6,10 +6,9 @@ from apps.users.views import *
 urlpatterns = [
 
     url(r'^$', index),
-    url(r'users/insertUsers.html', insertUser , name='crateUser'),
-    url(r'users/listUsers.html', UsersList.as_view(), name='listUsers' ),
-    url(r'users/editUsers/(?P<identification>\w+)/$', editUsers , name='editUser'),
-    url(r'users/deleteUsers/(?P<identification>\w+)/$', deleteUsers , name='deleteUser'),
-    url(r'users/viewUsers/(?P<identification>\w+)/$', viewUsers, name='viewUser' ),
+    url(r'users/insertUsers.html', ProfileCreate.as_view() , name='crateUser'),
+    url(r'users/listUsers.html', ProfileList.as_view() , name='listUser'),
+    url(r'users/editUser/(?P<pk>\d+)/$', ProfileUpdate.as_view() , name='editUser'),
+	url(r'users/deleteUsers/(?P<id>\d+)/$', deleteUsers , name='deleteUser'),
 
 ]

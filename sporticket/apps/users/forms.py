@@ -1,38 +1,57 @@
 from django import forms
-from apps.users.models import Users
+from django.contrib.auth.forms  import UserCreationForm
+from django.contrib.auth.models import User
+from apps.users.models import Profile
 
-class UserForm(forms.ModelForm):
+class UserForm(UserCreationForm):
 
 	class Meta:
-		model = Users
-        
+		model = User
 		fields = [
-			'identification',
-			'name',
-			'lastName',
-			'email',
-			'userType',
-			'phone',
-			'numAccount',
-			'state',
+				'username',
+				'first_name',
+				'last_name',
+				'email',
+				'password1',
+				'password2',
 		]
 		labels = {
-			'identification': 'Identificación',
-			'name': 'Nombre',
-			'lastName':'Apellido',
-			'email': 'Correo',
-			'userType': 'Tipo',
-			'phone': 'Teléfono',
-			'numAccount': 'Número de Cuenta',
-			'state': 'Estado',
+				'username': 'Nick',
+				'first_name': 'Nombre',
+				'last_name': 'Apellido',
+				'email': 'Correo electronico',
+				'password1': 'Contraseña',
+				'password2': 'Confirmacion de contraseña',
 		}
 		widgets = {
-			'identification': forms.TextInput(attrs={'class':'w3-input w3-border'}),
-			'name': forms.TextInput(attrs={'class':'w3-input w3-border'}),
-			'lastName': forms.TextInput(attrs={'class':'w3-input w3-border'}),
-			'email': forms.EmailInput(attrs={'class':'w3-input w3-border'}),
-			'userType': forms.TextInput(attrs={'class':'w3-input w3-border'}),
-			'phone': forms.NumberInput(attrs={'class':'w3-input w3-border'}),
-			'numAccount': forms.TextInput(attrs={'class':'w3-input w3-border'}),
-			'state': forms.TextInput(attrs={'class':'w3-input w3-border','type':'hidden','value':'ACTIVO'}),
+				'username':forms.TextInput(attrs={'class':'form-control'}),
+				'first_name':forms.TextInput(attrs={'class':'form-control'}),
+				'last_name':forms.TextInput(attrs={'class':'form-control'}),
+				'email':forms.TextInput(attrs={'class':'form-control'}),
+				'password1':forms.CharField(widget=forms.PasswordInput()),
+				'password2':forms.CharField(widget=forms.PasswordInput()),
 		}
+
+class ProfileForm(forms.ModelForm):
+
+	class Meta:
+		model = Profile
+		fields = [    
+				'identification',
+				'userType',
+				'phone',
+				'numAccount',
+		]
+		labels = {
+				'identification': 'Identificacion',
+				'userType': 'Tipo de usuario',
+				'phone': 'Telefono o celular',
+				'numAccount': 'Numero de cuenta',
+		}
+		widgets = {
+				'identification':forms.TextInput(attrs={'class':'form-control'}),
+				'userType':forms.TextInput(attrs={'class':'form-control'}),
+				'phone':forms.TextInput(attrs={'class':'form-control'}),
+				'numAccount':forms.TextInput(attrs={'class':'form-control'}),
+		}
+
