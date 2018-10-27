@@ -22,7 +22,7 @@
 		            <img src="{% static 'images/logo.png' %}" class="w3-round w3-margin-right">
 		            SporTicket
 		          </a>  
-		          <a href="#" class="w3-bar-item w3-button w3-light-gray w3-right w3-large w3-circle"><i class="fa fa-sign-out"></i></a>
+		          <a href="{% url 'userLogout' %}" class="w3-bar-item w3-button w3-light-gray w3-right w3-large w3-circle"><i class="fa fa-sign-out"></i></a>
 		    </form>
   		</div>
 	
@@ -38,7 +38,7 @@
 			        <img src="{% static 'images/Imagen1.png' %}" class="w3-circle w3-margin-right">
 			    </div>
 		    <div class="w3-col s8 w3-bar">
-		        <span>  Bienvenido, <strong><br>  KT</strong></span><br>
+		        <span>  Bienvenido, <strong><br> {{user.first_name}} </strong></span><br>
 		    </div>
 		    </div>
 		    <hr>
