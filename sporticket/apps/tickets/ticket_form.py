@@ -30,7 +30,7 @@ class TicketForm(forms.ModelForm):
         widgets ={
             'ubication': forms.TextInput(attrs={'class':'w3-input w3-border','type':'hidden','value':'-'}),
             'cost': forms.NumberInput(attrs={'class':'w3-input w3-border','type':'hidden','value':'0'}),
-            'state': forms.TextInput(attrs={'class':'w3-input w3-border','type':'hidden','value':'DISPONIBLE'}),
+            'state': forms.TextInput(attrs={'class':'w3-input w3-border','type':'hidden','value':'Disponible'}),
 
         }
 

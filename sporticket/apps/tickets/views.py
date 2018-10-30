@@ -29,7 +29,7 @@ def generateTickets(request):
     print(event_type)
     print(request.method)
 
-    if event_type == 'BEISBOL':  #SI EL EVENTO CREADO FUE TIPO BEISBOL
+    if event_type == 'Beisbol':  #SI EL EVENTO CREADO FUE TIPO BEISBOL
         if request.method == 'POST':
             form = BaseballForm(request.POST)
             if form.is_valid():
@@ -42,9 +42,9 @@ def generateTickets(request):
                 event_type=get_data(str(Event.objects.latest('id')))
                 print(event_type)
                 print(higtCost+"-"+higthZone+"-"+mediumCost+"-"+mediumZone+"-"+lowZone+"-"+lowCost)
-                insertTickets(higthZone,'ZONA ALTA',str(Event.objects.latest('id')),higtCost,'DISPONIBLE')
-                insertTickets(mediumZone,'ZONA MEDIA',str(Event.objects.latest('id')),mediumCost,'DISPONIBLE')
-                insertTickets(lowZone,'ZONA BAJA',str(Event.objects.latest('id')),lowCost,'DISPONIBLE')
+                insertTickets(higthZone,'Zona alta',str(Event.objects.latest('id')),higtCost,'Disponible')
+                insertTickets(mediumZone,'Zona media',str(Event.objects.latest('id')),mediumCost,'Disponible')
+                insertTickets(lowZone,'Zona baja',str(Event.objects.latest('id')),lowCost,'Disponible')
                 arrayTicket=getListTicket(str(Event.objects.latest('id'))) 
                 quantity=int(higthZone)+int(mediumZone)+int(lowZone)
                 print (quantity)
@@ -69,10 +69,10 @@ def generateTickets(request):
                 eastZone=form['eastZone'].value()
                 westZone=form['westZone'].value()
                 
-                insertTickets(northZone,'TRIBUNA NORTE',str(Event.objects.latest('id')),northCost,'DISPONIBLE')
-                insertTickets(southZone,'TRIBUNA SUR',str(Event.objects.latest('id')),southCost,'DISPONIBLE')
-                insertTickets(eastZone,'TRIBUNA ORIENTE',str(Event.objects.latest('id')),eastCost,'DISPONIBLE')                 
-                insertTickets(westZone,'TRIBUNA OCCIDENTE',str(Event.objects.latest('id')),westCost,'DISPONIBLE')                
+                insertTickets(northZone,'Tribuna norte',str(Event.objects.latest('id')),northCost,'Disponible')
+                insertTickets(southZone,'Tribuna sur',str(Event.objects.latest('id')),southCost,'Disponible')
+                insertTickets(eastZone,'Tribuna oriente',str(Event.objects.latest('id')),eastCost,'Disponible')                 
+                insertTickets(westZone,'Tribuna occidente',str(Event.objects.latest('id')),westCost,'Disponible')                
                 arrayTicket=getListTicket(str(Event.objects.latest('id'))) 
                 quantity=int(northZone)+int(southZone)+int(eastZone)+int(westZone)
                 print (quantity)

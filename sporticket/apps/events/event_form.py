@@ -7,9 +7,9 @@ class EventForm(forms.ModelForm):
     class Meta:
         model = Event
         CHOICES= (
-        ('FUTBOL', 'FUTBOL'),
-        ('BEISBOL', 'BEISBOL'),
-        ('TENIS', 'TENIS'),
+        ('Futbol;', 'Futbol'),
+        ('Beisbol', 'Beisbol'),
+        ('Tenis', 'Tenis'),
         )
         fields = [
             'name',
@@ -25,15 +25,15 @@ class EventForm(forms.ModelForm):
         ]
         labels ={
             'name':'Nombre',
-            'initial_date':'Fecha Inicio',
-            'initial_time':'Hora Inicio',
+            'initial_date':'Fecha inicio',
+            'initial_time':'Hora inicio',
             'place':'Lugar',
             'url':'url',
             'state':'Estado',
             'capacity':'Capacidad',
-            'local':'Local',
-            'visitor':'Visitante',
-            'event_type':'Tipo de Evento'
+            'local':'Equipo local',
+            'visitor':'Equipo visitante',
+            'event_type':'Tipo de evento'
         }
         widgets ={
             'name': forms.TextInput(attrs={'class':'w3-input w3-border'}),
@@ -41,7 +41,7 @@ class EventForm(forms.ModelForm):
             'initial_time': forms.TimeInput(attrs={'class':'w3-input w3-border','type':'time', 'id':'myTime' ,'value':'00:00:00'}),
             'place': forms.TextInput(attrs={'class':'w3-input w3-border'}),
             'url': forms.TextInput(attrs={'class':'w3-input w3-border','type':'hidden','value':'-'}),
-            'state': forms.TextInput(attrs={'class':'w3-input w3-border','type':'hidden','value':'ACTIVO'}),
+            'state': forms.TextInput(attrs={'class':'w3-input w3-border','type':'hidden','value':'Activo'}),
             'capacity': forms.NumberInput(attrs={'class':'w3-input w3-border','type':'hidden','value':'0'}),  
             'local': forms.TextInput(attrs={'class':'w3-input w3-border'}),  
             'visitor': forms.TextInput(attrs={'class':'w3-input w3-border'}),  

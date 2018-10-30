@@ -13,9 +13,9 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 def connect(): #CONEXION ALTERNATIVA PARA DAR INSTRUCCIONES A LA BD SIN NECESIDAD DE UN FORM
     conn = psycopg2.connect(" \
-        dbname=userlogin2 \
-        user=postgres \
-        password=24603759")
+        dbname=sport_db \
+        user=andres \
+        password=12345")
     return conn
 
 def index(request):

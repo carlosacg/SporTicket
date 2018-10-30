@@ -12,9 +12,9 @@ import psycopg2
 
 def connect(): #CONEXION ALTERNATIVA PARA DAR INSTRUCCIONES A LA BD SIN NECESIDAD DE UN FORM
     conn = psycopg2.connect(" \
-        dbname=sporticket \
-        user=postgres \
-        password=1625606")
+        dbname=sport_db \
+        user=andres \
+        password=12345")
     return conn
 
 def index(request):
@@ -48,16 +48,16 @@ def uploadFile(request):
                 print (dato['event_type'])
                 
                 save_data(dato['name'],dato['initial_dale'],dato['initial_time'],dato['place'],dato['url'],dato['state'],dato['capacity'],dato['visitor'],dato['local'],dato['event_type'])
-                if dato['event_type'] == 'BEISBOL':
-                    insertTickets(dato['zAlta'],"ZONA ALTA",str(Event.objects.latest('id')),dato['pAlta'],"DISPONIBLE")
-                    insertTickets(dato['zMedia'],"ZONA MEDIA",str(Event.objects.latest('id')),dato['pMedia'],"DISPONIBLE")
-                    insertTickets(dato['zBaja'],"ZONA BAJA",str(Event.objects.latest('id')),dato['pBaja'],"DISPONIBLE")
+                if dato['event_type'] == 'Beisbol':
+                    insertTickets(dato['zAlta'],"Zona alta",str(Event.objects.latest('id')),dato['pAlta'],"Disponible")
+                    insertTickets(dato['zMedia'],"Zona media",str(Event.objects.latest('id')),dato['pMedia'],"Disponible")
+                    insertTickets(dato['zBaja'],"Zona baja",str(Event.objects.latest('id')),dato['pBaja'],"Disponible")
 
                 else:
-                    insertTickets(dato['tNorte'],"TRIBUNA NORTE",str(Event.objects.latest('id')),dato['pNorte'],"DISPONIBLE")
-                    insertTickets(dato['tSur'],"TRIBUNA SUR",str(Event.objects.latest('id')),dato['pSur'],"DISPONIBLE")
-                    insertTickets(dato['tOriente'],"TRIBUNA ORIENTE",str(Event.objects.latest('id')),dato['pOriente'],"DISPONIBLE")
-                    insertTickets(dato['tOccidente'],"TRIBUNA OCCIDENTE",str(Event.objects.latest('id')),dato['pOccidente'],"DISPONIBLE")
+                    insertTickets(dato['tNorte'],"Tribuna norte",str(Event.objects.latest('id')),dato['pNorte'],"Disponible")
+                    insertTickets(dato['tSur'],"Tribuna sur",str(Event.objects.latest('id')),dato['pSur'],"Disponible")
+                    insertTickets(dato['tOriente'],"Tribuna oriente",str(Event.objects.latest('id')),dato['pOriente'],"Disponible")
+                    insertTickets(dato['tOccidente'],"Tribuna occidente",str(Event.objects.latest('id')),dato['pOccidente'],"Disponible")
                 
             return redirect('events/listEvents.html')
     else:
@@ -128,7 +128,7 @@ def save_data(name,initial_date,initial_time,place,url,state,capacity,visitor,lo
 def cancelEvent(id):
     conn = connect()
     cursor = conn.cursor()
-    instruction = "UPDATE events_event SET state=\'CANCELADO\' WHERE id="+id+";"
+    instruction = "UPDATE events_event SET state=\'Cancelado\' WHERE id="+id+";"
     cursor.execute(instruction)
     conn.commit()
     conn.close()
