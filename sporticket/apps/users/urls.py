@@ -1,13 +1,15 @@
 from django.urls import path
 from django.conf.urls import url,include
 
-from apps.users.views import index, insertUser, users_list, user_edit, user_delete
+from apps.users.views import *
 
 urlpatterns = [
-    url(r'users/insertUsers.html', insertUser , name='user_crear'),
-    url(r'^listar$', users_list , name='user_list'),
-    url(r'^editar/(?P<identificacion>\d+)/$', user_edit , name='user_editar'),
-    url(r'^eliminar/(?P<identificacion>\d+)/$', user_delete , name='user_eliminar'),
 
+    url(r'^$', index),
+    url(r'users/insertUsers.html', ProfileCreate.as_view() , name='crateUser'),
+    url(r'users/listUsers.html', ProfileList.as_view() , name='listUser'),
+    url(r'users/editUser/(?P<pk>\d+)/$', ProfileUpdate.as_view() , name='editUser'),
+	url(r'users/deleteUsers/(?P<id>\d+)/$', deleteUsers , name='deleteUser'),
+	url(r'users/createUser.html', CreateUser.as_view() , name='createUser'),
 
 ]
