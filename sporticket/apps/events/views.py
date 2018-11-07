@@ -27,6 +27,8 @@ def insertEvent(request):
         if form.is_valid():
             form.save()
             print ('SE CREO UN EVENTO')
+            object = Event()
+            object.lastEventId()
         return redirect('tickets/generateTicket.html')
     else:
         form = EventForm()
@@ -50,18 +52,18 @@ def uploadFile(request):
                 datos = json.load(file)
             for dato in datos:
                 print (dato['event_type'])
-                
-                save_data(dato['name'],dato['initial_dale'],dato['initial_time'],dato['place'],dato['url'],dato['state'],dato['capacity'],dato['visitor'],dato['local'],dato['event_type'])
+                object = Event()
+                object.save_data(dato['name'],dato['initial_dale'],dato['initial_time'],dato['place'],dato['url'],dato['state'],dato['capacity'],dato['visitor'],dato['local'],dato['event_type'])
                 if dato['event_type'] == 'Beisbol':
-                    insertTickets(dato['zAlta'],"Zona alta",str(Event.objects.latest('id')),dato['pAlta'],"Disponible")
-                    insertTickets(dato['zMedia'],"Zona media",str(Event.objects.latest('id')),dato['pMedia'],"Disponible")
-                    insertTickets(dato['zBaja'],"Zona baja",str(Event.objects.latest('id')),dato['pBaja'],"Disponible")
+                    object.insertTickets(dato['zAlta'],"Zona alta",object.lastEventId(),dato['pAlta'],"Disponible")
+                    object.insertTickets(dato['zMedia'],"Zona media",object.lastEventId(),dato['pMedia'],"Disponible")
+                    object.insertTickets(dato['zBaja'],"Zona baja",object.lastEventId(),dato['pBaja'],"Disponible")
 
                 else:
-                    insertTickets(dato['tNorte'],"Tribuna norte",str(Event.objects.latest('id')),dato['pNorte'],"Disponible")
-                    insertTickets(dato['tSur'],"Tribuna sur",str(Event.objects.latest('id')),dato['pSur'],"Disponible")
-                    insertTickets(dato['tOriente'],"Tribuna oriente",str(Event.objects.latest('id')),dato['pOriente'],"Disponible")
-                    insertTickets(dato['tOccidente'],"Tribuna occidente",str(Event.objects.latest('id')),dato['pOccidente'],"Disponible")
+                    object.insertTickets(dato['tNorte'],"Tribuna norte",object.lastEventId(),dato['pNorte'],"Disponible")
+                    object.insertTickets(dato['tSur'],"Tribuna sur",object.lastEventId(),dato['pSur'],"Disponible")
+                    object.insertTickets(dato['tOriente'],"Tribuna oriente",object.lastEventId(),dato['pOriente'],"Disponible")
+                    object.insertTickets(dato['tOccidente'],"Tribuna occidente",object.lastEventId(),dato['pOccidente'],"Disponible")
                 
             return redirect('events/listEvents.html')
     else:
@@ -96,7 +98,8 @@ def deleteEvent(request,id):
     event = Event.objects.get(id=id)
     print (event.id)
     if request.method=='POST':
-        cancelEvent(id)
+        object = Event()
+        object.cancelEvent(id)
         print ('Se Cancelo el evento')
         return redirect('evento_listar')
     return render(request,'events/deleteEvents.html',{'event':event})
@@ -109,7 +112,8 @@ def uploadImage(request,id):
                 newdoc.save(formulario)
                 ruta=request.FILES.get('docfile').name
                 print (ruta)
-                conn = connect()
+                object = Event()
+                conn = object.connect()
                 cursor = conn.cursor()
                 instruction = "UPDATE events_event SET image=\'"+ './images/'+ruta +"\' WHERE id="+id+";"
                 cursor.execute(instruction)
@@ -141,34 +145,5 @@ class EventUpdate(UpdateView):
     template_name = 'events/insertEvents.html'
     success_url = reverse_lazy('evento_listar')
 
-def save_data(name,initial_date,initial_time,place,url,state,capacity,visitor,local,event_type):
-    conn = connect()
-    cursor = conn.cursor()
-    instruction = "INSERT INTO events_event VALUES (nextval(\'events_event_id_seq\'),\'"+name+"\',\'"+initial_date+"\',\'"+initial_time+"\',\'"+place+"\',\'"+url+"\',\'"+state+"\',"+str(capacity)+",\'"+visitor+"\',\'"+local+"\',\'"+event_type+"\');"
-    cursor.execute(instruction)
-    conn.commit()
-    conn.close()
 
-def cancelEvent(id):
-    conn = connect()
-    cursor = conn.cursor()
-    instruction = "UPDATE events_event SET state=\'Cancelado\' WHERE id="+id+";"
-    cursor.execute(instruction)
-    conn.commit()
-    conn.close()
 
-def insertTickets(quantity,ubication,event,cost,state):
-    x=0
-    while x < int(quantity):        
-        save_ticket(ubication,event,cost,state) 
-        x+=1
-
-def save_ticket(ubication,event,cost,state):
-    conn = connect()
-    cursor = conn.cursor()
-    instruction = "INSERT INTO tickets_ticket VALUES (nextval(\'tickets_ticket_id_seq\'),"+str(cost)+",\'"+ubication+"\',"+str(event)+",\'"+state+"\');"
-    print (instruction)
-    cursor.execute(instruction)
-    conn.commit()
-    print ("GENERO TICKET")
-    conn.close()

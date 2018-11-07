@@ -26,6 +26,7 @@ def insertTickets(quantity,ubication,event,cost,state):
 def generateTickets(request):
     ticket = Ticket.objects.all()
     event_type=get_data(str(Event.objects.latest('id')))
+    object = Event()
 
     if event_type == 'Beisbol':  #SI EL EVENTO CREADO FUE TIPO BEISBOL
         if request.method == 'POST':
@@ -40,13 +41,13 @@ def generateTickets(request):
                 event_type=get_data(str(Event.objects.latest('id')))
                 print(event_type)
                 print(higtCost+"-"+higthZone+"-"+mediumCost+"-"+mediumZone+"-"+lowZone+"-"+lowCost)
-                insertTickets(higthZone,'Zona alta',str(Event.objects.latest('id')),higtCost,'Disponible')
-                insertTickets(mediumZone,'Zona media',str(Event.objects.latest('id')),mediumCost,'Disponible')
-                insertTickets(lowZone,'Zona baja',str(Event.objects.latest('id')),lowCost,'Disponible')
-                arrayTicket=getListTicket(str(Event.objects.latest('id'))) 
+                insertTickets(higthZone,'Zona alta', object.lastEventId(),higtCost,'Disponible')
+                insertTickets(mediumZone,'Zona media', object.lastEventId(),mediumCost,'Disponible')
+                insertTickets(lowZone,'Zona baja', object.lastEventId(),lowCost,'Disponible')
+                arrayTicket=getListTicket(object.lastEventId()) 
                 quantity=int(higthZone)+int(mediumZone)+int(lowZone)
                 print (quantity)
-                updateCapacityEvent(str(Event.objects.latest('id')),str(quantity)) 
+                updateCapacityEvent( object.lastEventId(),str(quantity)) 
             return redirect('tickets/generateTicketBaseball.html')
         else:
             form = BaseballForm()
@@ -67,18 +68,18 @@ def generateTickets(request):
                 eastZone=form['eastZone'].value()
                 westZone=form['westZone'].value()
                 
-                insertTickets(northZone,'Tribuna norte',str(Event.objects.latest('id')),northCost,'Disponible')
-                insertTickets(southZone,'Tribuna sur',str(Event.objects.latest('id')),southCost,'Disponible')
-                insertTickets(eastZone,'Tribuna oriente',str(Event.objects.latest('id')),eastCost,'Disponible')                 
-                insertTickets(westZone,'Tribuna occidente',str(Event.objects.latest('id')),westCost,'Disponible')                
-                arrayTicket=getListTicket(str(Event.objects.latest('id'))) 
+                insertTickets(northZone,'Tribuna norte', object.lastEventId(),northCost,'Disponible')
+                insertTickets(southZone,'Tribuna sur', object.lastEventId(),southCost,'Disponible')
+                insertTickets(eastZone,'Tribuna oriente', object.lastEventId(),eastCost,'Disponible')                 
+                insertTickets(westZone,'Tribuna occidente', object.lastEventId(),westCost,'Disponible')                
+                arrayTicket=getListTicket( object.lastEventId()) 
                 quantity=int(northZone)+int(southZone)+int(eastZone)+int(westZone)
                 print (quantity)
-                updateCapacityEvent(str(Event.objects.latest('id')),str(quantity)) 
+                updateCapacityEvent( object.lastEventId(),str(quantity)) 
             return redirect('tickets/generateTicket.html')
         else:
             form = TicketForm()
-        arrayTicket=getListTicket(str(Event.objects.latest('id')))
+        arrayTicket=getListTicket( object.lastEventId())
         context = {'tickets':arrayTicket,'form':form}
 
         print (arrayTicket)
