@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from apps.events.event_form import EventForm
 from apps.events.view_event import ViewEvent
 from apps.events.upload_form import UploadForm
+from apps.events.image_form import ImageForm
 from django.views.generic import ListView,CreateView, UpdateView, DeleteView
 from apps.events.models import *
 from django.urls import reverse_lazy
@@ -25,9 +26,12 @@ def insertEvent(request):
         form = EventForm(request.POST)
         if form.is_valid():
             form.save()
+            print ('SE CREO UN EVENTO')
         return redirect('tickets/generateTicket.html')
     else:
         form = EventForm()
+        print(form['name'].value())
+
     return render(request, 'events/insertEvents.html',{'form':form})
 
 def listEvent(request):
@@ -85,7 +89,8 @@ def viewEvent(request,id):
         if form.is_valid():
             form.save()
         return redirect('events/listEvents.html')
-    return render(request,'events/viewEvents.html',{'form':form})
+    context = {'event':event,'form':form}
+    return render(request,'events/viewEvents.html',context)
 
 def deleteEvent(request,id):
     event = Event.objects.get(id=id)
@@ -95,6 +100,25 @@ def deleteEvent(request,id):
         print ('Se Cancelo el evento')
         return redirect('evento_listar')
     return render(request,'events/deleteEvents.html',{'event':event})
+
+def uploadImage(request,id):
+    if request.method == 'POST':
+            formulario = ImageForm(request.POST, request.FILES)
+            if formulario.is_valid():
+                newdoc = Image(filename = request.POST['filename'],docfile = request.FILES['docfile'])
+                newdoc.save(formulario)
+                ruta=request.FILES.get('docfile').name
+                print (ruta)
+                conn = connect()
+                cursor = conn.cursor()
+                instruction = "UPDATE events_event SET image=\'"+ './images/'+ruta +"\' WHERE id="+id+";"
+                cursor.execute(instruction)
+                conn.commit()
+                conn.close()
+            return redirect('events/listEvents.html')
+    else:
+            formulario = UploadForm()
+    return render(request, "events/imageEvents.html",{'form': formulario})
 
 class EventDelete(DeleteView):
     model = Event

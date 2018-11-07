@@ -18,9 +18,11 @@
 						<th>Equipo local</th>
 						<th>Estado</th>
 			            <th>Tipo de evento</th>
-			            <th></th>
-			            <th></th>
-			            <th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						<th></th>
+						
 		          	</tr>
 				</thead>
 				{% if object_list %}
@@ -36,6 +38,7 @@
 						<td>{{event.local}}</td>
 						<td>{{event.state}}</td>
 						<td>{{event.event_type}}</td>
+						<td><a href="{% url 'evento_imagen' event.id %}"><button class="w3-button w3-padding-small w3-dark-grey w3-circle">Img</button></a></td>
 						<td><a href="{% url 'evento_ver' event.id %}"><button class="w3-button w3-padding-small w3-dark-grey w3-circle"><i class="fa fa-eye"></i></button></a></td>
 						<td><a href="{% url 'evento_editar' event.id %}"><button class="w3-button w3-padding-small w3-dark-grey w3-circle"><i class="fa fa-pencil"></i></button></a></td>
 						<td><a href="{% url 'evento_eliminar' event.id %}"><button class="w3-button w3-padding-small w3-dark-grey w3-circle"><i class="fa fa-trash"></i></button></a></td>

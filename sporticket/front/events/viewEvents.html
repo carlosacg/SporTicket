@@ -60,6 +60,10 @@
 					<label for="{{form.event_type.id_for_label}}">{{form.event_type.label}}</label>
 					{{form.event_type}}
 				</div>
+				
+					{% if event %}
+					<img src="../../../static/{{event.image}}">
+					{% endif %}
 						<br>
 						<br> <br/>
 						<div class="w3-show-inline-block">

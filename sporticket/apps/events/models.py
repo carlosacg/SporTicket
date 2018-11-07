@@ -13,7 +13,8 @@ class Event(models.Model):
     visitor = models.CharField(max_length=200)
     local = models.CharField(max_length=200)
     event_type = models.CharField(max_length=200)
-    
+    image = models.ImageField(null=True)
+
     def __str__(self):   #MUESTRA EL NOMBRE COMO LLAVE FORANEA
         return '{}'.format(self.id)
  
@@ -23,3 +24,11 @@ class Document(models.Model):
     
     def __unicode__(self):
          return '%s' % (self.nombre)
+
+class Image(models.Model):
+    filename = models.CharField(max_length=100)
+    docfile = models.ImageField(upload_to='static/images/')
+    
+    def __unicode__(self):
+         return '%s' % (self.nombre)
+

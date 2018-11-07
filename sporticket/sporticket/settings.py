@@ -82,7 +82,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'sport_db',
         'USER' : 'andres',
-        'PASSWORD': '123456',
+        'PASSWORD': '12345',
         'HOST' : 'localhost',
         'PORT' : 5432,
         
@@ -132,3 +132,4 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR,'static'),)
 
 LOGIN_REDIRECT_URL = reverse_lazy('events:evento_listar')
+

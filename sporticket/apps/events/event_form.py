@@ -6,8 +6,9 @@ class EventForm(forms.ModelForm):
 
     class Meta:
         model = Event
+        
         CHOICES= (
-        ('Futbol;', 'Futbol'),
+        ('Futbol', 'Futbol'),
         ('Beisbol', 'Beisbol'),
         ('Tenis', 'Tenis'),
         )
@@ -21,7 +22,7 @@ class EventForm(forms.ModelForm):
             'capacity',
             'local',
             'visitor',
-            'event_type'
+            'event_type',
         ]
         labels ={
             'name':'Nombre',
@@ -33,7 +34,7 @@ class EventForm(forms.ModelForm):
             'capacity':'Capacidad',
             'local':'Equipo local',
             'visitor':'Equipo visitante',
-            'event_type':'Tipo de evento'
+            'event_type':'Tipo de evento',
         }
         widgets ={
             'name': forms.TextInput(attrs={'class':'w3-input w3-border'}),

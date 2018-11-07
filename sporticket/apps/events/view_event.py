@@ -17,7 +17,7 @@ class ViewEvent(forms.ModelForm):
             'capacity',
             'local',
             'visitor',
-            'event_type'
+            'event_type',
         ]
         labels ={
             'name':'Nombre',
@@ -29,7 +29,7 @@ class ViewEvent(forms.ModelForm):
             'capacity':'Capacidad',
             'local':'Local',
             'visitor':'Visitante',
-            'event_type':'Tipo de Evento'
+            'event_type':'Tipo de Evento',
         }
         widgets ={
             'name': forms.TextInput(attrs={'class':'w3-input w3-border'}),

@@ -13,7 +13,7 @@ def connect(): #CONEXION ALTERNATIVA PARA DAR INSTRUCCIONES A LA BD SIN NECESIDA
     conn = psycopg2.connect(" \
         dbname=sport_db \
         user=andres \
-        password=123456")
+        password=12345")
     return conn
 
 
@@ -26,8 +26,6 @@ def insertTickets(quantity,ubication,event,cost,state):
 def generateTickets(request):
     ticket = Ticket.objects.all()
     event_type=get_data(str(Event.objects.latest('id')))
-    print(event_type)
-    print(request.method)
 
     if event_type == 'Beisbol':  #SI EL EVENTO CREADO FUE TIPO BEISBOL
         if request.method == 'POST':
