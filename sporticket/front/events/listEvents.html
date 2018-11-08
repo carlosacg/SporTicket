@@ -3,7 +3,7 @@
 {% block content %}
 	<div class="w3-main" >
 		<header class="w3-container">
-			<h5 style="color: black;"><b><i class="fa fa-list" style="color: black;"></i> Listar eventos</b></h5>
+			<h5 style="color: black;"><b style="color: black;"><i class="fa fa-list" style="color: black;"></i> Listar eventos</b></h5>
 		</header>
 		<div class="w3-container">
       		<table class="w3-table-all w3-hoverable ">
@@ -38,7 +38,7 @@
 						<td>{{event.local}}</td>
 						<td>{{event.state}}</td>
 						<td>{{event.event_type}}</td>
-						<td><a href="{% url 'evento_imagen' event.id %}"><button class="w3-button w3-padding-small w3-dark-grey w3-circle">I</button></a></td>
+						<td><a href="{% url 'evento_imagen' event.id %}"><button class="w3-button w3-padding-small w3-dark-grey w3-circle"><i class="fa fa-file-image-o"></i></button></a></td>
 						<td><a href="{% url 'evento_ver' event.id %}"><button class="w3-button w3-padding-small w3-dark-grey w3-circle"><i class="fa fa-eye"></i></button></a></td>
 						<td><a href="{% url 'evento_editar' event.id %}"><button class="w3-button w3-padding-small w3-dark-grey w3-circle"><i class="fa fa-pencil"></i></button></a></td>
 						<td><a href="{% url 'evento_eliminar' event.id %}"><button class="w3-button w3-padding-small w3-dark-grey w3-circle"><i class="fa fa-trash"></i></button></a></td>

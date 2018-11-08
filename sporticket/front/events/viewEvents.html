@@ -6,7 +6,7 @@
 {% block content %}
 	<div class="w3-main" >
 		<header class="w3-container" >
-			<h5 style="color: black;"><b><i class="fa fa-eye" style="color: black;"></i> Visualizar Evento</b></h5>
+			<h5 style="color: black;"><b style="color: black;"><i class="fa fa-eye" style="color: black;"></i> Visualizar Evento</b></h5>
 		</header>
 		<form method="post"> 
 			{% csrf_token %}
@@ -43,7 +43,9 @@
 			</div>
 			<div class="w3-row-padding">
 				<div class="w3-half">
-					{{form.url}}
+					<label for="{{form.event_type.id_for_label}}">{{form.event_type.label}}</label>
+					{{form.event_type}}
+					
 				</div>
 				<div class="w3-half">
 					<label for="{{form.local.id_for_label}}">{{form.state.label}}</label>
@@ -57,8 +59,7 @@
 
 				</div>
 				<div class="w3-half">
-					<label for="{{form.event_type.id_for_label}}">{{form.event_type.label}}</label>
-					{{form.event_type}}
+					{{form.url}}
 				</div>
 				
 					{% if event %}

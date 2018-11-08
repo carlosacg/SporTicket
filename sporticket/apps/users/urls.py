@@ -10,5 +10,6 @@ urlpatterns = [
     url(r'users/listUsers.html', ProfileList.as_view() , name='listUser'),
     url(r'users/editUser/(?P<pk>\d+)/$', ProfileUpdate.as_view() , name='editUser'),
 	url(r'users/deleteUsers/(?P<id>\d+)/$', deleteUsers , name='deleteUser'),
+    url(r'users/createUser.html', CreateUser.as_view() , name='createUser'),
 
 ]

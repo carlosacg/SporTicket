@@ -131,3 +131,10 @@ def userLogout(request):
     logout(request)
     return HttpResponseRedirect(reverse('userLogin'))
 
+class CreateUser(CreateView):
+		model = Profile
+		template_name = 'users/createUser.html'
+		form_class = ProfileForm
+		second_form_class = UserForm
+		success_url = reverse_lazy('userLogin')
+

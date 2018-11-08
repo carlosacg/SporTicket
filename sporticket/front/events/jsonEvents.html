@@ -3,12 +3,12 @@
 {% block content %}
 	<div class="w3-main" >
 		<header class="w3-container">
-			<h5 style="color: black;"><b><i class="fa fa-repeat" style="color: black;"></i> Cargar eventos</b></h5>
+			<h5 style="color: black;"><b style="color: black;"><i class="fa fa-repeat" style="color: black;"></i> Cargar eventos</b></h5>
 		</header>
 		<div class="w3-container" >
 			<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
 				{{ form.as_p }}
-			<input type="submit" value="Submit">
+				<button type='submit' class="w3-button w3-dark-grey w3-padding-16 w3-circle" ><i class="fa fa-check"></i></button>
 			</form>
 		</div>
 		<hr>
