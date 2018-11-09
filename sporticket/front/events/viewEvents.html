@@ -1,6 +1,8 @@
 {% extends 'base/base.html' %}
+{%load staticfiles %}
+
 <head>
-	
+	<link rel="stylesheet" type="text/css" href="{% static 'css/window.css' %}">
 </head>
 
 {% block content %}
@@ -8,73 +10,72 @@
 		<header class="w3-container" >
 			<h5 style="color: black;"><b style="color: black;"><i class="fa fa-eye" style="color: black;"></i> Visualizar Evento</b></h5>
 		</header>
-		<form method="post"> 
-			{% csrf_token %}
-
-			<div class="w3-row-padding">
-				<div class="w3-half">
-					<label for="{{form.name.id_for_label}}"> {{form.name.label}}</label>
-					{{form.name}}
+		<div class="w3-container">
+			<form method="post"> 
+				<div class="w3-container">
+					{% csrf_token %}
+					<div class="w3-half">
+						<div class="w3-row-padding">
+						<label for="{{form.name.id_for_label}}"> {{form.name.label}}</label>
+						{{form.name}}
+						</div>
+						<div class="w3-row-padding">
+							<label for="{{form.initial_date.id_for_label}}">{{form.initial_date.label}}</label>
+							{{form.initial_date}}
+						</div>
+						<div class="w3-row-padding">
+							<label for="{{form.event_type.id_for_label}}">{{form.event_type.label}}</label>
+							{{form.event_type}}
+						</div>
+						<div class="w3-row-padding">
+							<label for="{{form.local.id_for_label}}">{{form.local.label}}</label>
+							{{form.local}}
+						</div>
+						<div class="w3-row-padding">
+							<label for="{{form.place.id_for_label}}">{{form.place.label}}</label>
+							{{form.place}}
+						</div>
+						<div class="w3-row-padding">
+							<label for="{{form.visitor.id_for_label}}">{{form.visitor.label}}</label>
+							{{form.visitor}}
+						</div>
+						
+					</div>
+		
+					<div class="w3-half">
+						<div class="w3-center">
+							{% if event %}
+							<img src="../../../static/{{event.image}}" style="position: relative; z-index:1; width:450px; height:350px;" >
+							{% endif %}
+						</div>
+						
+						<div >
+							{{form.url}}
+						</div>
+					</div>
 				</div>
-				<div class="w3-half">
-					<label for="{{form.capacity.id_for_label}}"> {{form.capacity.label}} </label>
-					{{form.capacity}}
+				<div class="w3-container" style="margin-left:-8px; margin-top:-18px">
+					<div class="w3-row-padding">
+						<div class="w3-half">
+							<label for="{{form.capacity.id_for_label}}"> {{form.capacity.label}} </label>
+							{{form.capacity}}
+						</div>
+						<div class="w3-half">
+							<label for="{{form.local.id_for_label}}">{{form.state.label}}</label>
+							{{form.state}}
+						</div>
+					</div>
 				</div>
-			</div>
-			<div class="w3-row-padding">
-				<div class="w3-half">
-					<label for="{{form.initial_date.id_for_label}}">{{form.initial_date.label}}</label>
-					{{form.initial_date}}
-				</div>
-				<div class="w3-half">
-					<label for="{{form.visitor.id_for_label}}">{{form.visitor.label}}</label>
-					{{form.visitor}}
-				</div>
-			</div>
-			<div class="w3-row-padding">
-				<div class="w3-half">
-					<label for="{{form.initial_time.id_for_label}}">{{form.initial_time.label}}</label>
-					{{form.initial_time}}
-				</div>
-				<div class="w3-half">
-					<label for="{{form.local.id_for_label}}">{{form.local.label}}</label>
-					{{form.local}}
-				</div>
-			</div>
-			<div class="w3-row-padding">
-				<div class="w3-half">
-					<label for="{{form.event_type.id_for_label}}">{{form.event_type.label}}</label>
-					{{form.event_type}}
 					
+				<br> 
+				<div class="w3-show-inline-block">
+					<div class="w3-bar">
+						<button class="w3-button w3-padding-16 w3-dark-grey w3-circle" ><i class="fa fa-check fa-fw"></i></button>
+					</div>
 				</div>
-				<div class="w3-half">
-					<label for="{{form.local.id_for_label}}">{{form.state.label}}</label>
-					{{form.state}}
-				</div>
-			</div>
-			<div class="w3-row-padding">
-				<div class="w3-half">
-					<label for="{{form.place.id_for_label}}">{{form.place.label}}</label>
-					{{form.place}}
-
-				</div>
-				<div class="w3-half">
-					{{form.url}}
-				</div>
-				
-					{% if event %}
-					<img src="../../../static/{{event.image}}">
-					{% endif %}
-						<br>
-						<br> <br/>
-						<div class="w3-show-inline-block">
-	                        <div class="w3-bar">
-	                            <button class="w3-button w3-padding-16 w3-dark-grey w3-circle" ><i class="fa fa-check fa-fw"></i></button>
-							</div>
-	                    </div>
-			</div>
-		</form>
-		<br>
+			</form>
+		</div>
+		
 		<br>
 	 	<footer class="w3-container w3-padding-14 w3-grey">
 	    	<p>Powered by <a style="color: black;">XSOFT</a></p>
