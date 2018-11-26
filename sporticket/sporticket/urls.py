@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^', include('apps.events.urls')),
     url(r'^', include('apps.tickets.urls')),
 	url(r'^', include('apps.users.urls')),
+	url(r'^', include('apps.sales.urls')),
 	url(r'^login/', userLogin, name="userLogin"),
 	url(r'^success/', success, name="userSuccess"),
 	url(r'^logout/', userLogout, name="userLogout"),
