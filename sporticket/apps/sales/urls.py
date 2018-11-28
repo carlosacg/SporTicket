@@ -1,9 +1,7 @@
 from django.urls import path
-from django.conf.urls import url,include
-
-from apps.sales.views import *
-
+from .views import BillCreate
+app_name='sales'
 urlpatterns = [
-
-    url(r'sales/createSale.html', index_sale),
+	path('index', index_user, name='index'),
+    path('crear_factura', BillCreate.as_view(), name='base'),
 ]
