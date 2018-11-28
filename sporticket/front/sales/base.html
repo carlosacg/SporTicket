@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+</head>
+
+<body>
+	<form method="POST">
+		{% csrf_token %}
+		{{ form_bill.as_p}}
+		{{ form_ticket.as_p}}
+		<button type="submit">Guardar</button>
+	</form>
+</body>
