@@ -22,7 +22,8 @@
 						<th></th>
 						<th></th>
 						<th></th>
-						
+						<th></th>
+
 		          	</tr>
 				</thead>
 				{% if object_list %}
@@ -42,6 +43,8 @@
 						<td><a href="{% url 'evento_ver' event.id %}"><button class="w3-button w3-padding-small w3-dark-grey w3-circle"><i class="fa fa-eye"></i></button></a></td>
 						<td><a href="{% url 'evento_editar' event.id %}"><button class="w3-button w3-padding-small w3-dark-grey w3-circle"><i class="fa fa-pencil"></i></button></a></td>
 						<td><a href="{% url 'evento_eliminar' event.id %}"><button class="w3-button w3-padding-small w3-dark-grey w3-circle"><i class="fa fa-trash"></i></button></a></td>
+						<td><a href="{% url 'venta_usuario' %}"><button class="w3-button w3-padding-small w3-dark-grey w3-circle">1</button></a></td>
+
 					</tr>
 				</tbody>
 				{% endfor %}

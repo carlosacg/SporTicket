@@ -1,5 +1,6 @@
 from django.db import models
 from apps.events.models import Event
+from apps.sales.models import Bill
 
 class Ticket(models.Model):
     id = models.AutoField(primary_key=True)

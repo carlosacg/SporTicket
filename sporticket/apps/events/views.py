@@ -145,5 +145,7 @@ class EventUpdate(UpdateView):
     template_name = 'events/insertEvents.html'
     success_url = reverse_lazy('evento_listar')
 
-
+def userSale(request):
+    return render(request,'sales/userSale.html')
+	 
 

@@ -5,8 +5,10 @@ from django.urls import reverse_lazy
 from django.dispatch import receiver
 
 from .models import Bill
-from ..tickets.models import tickets
+from apps.tickets.models import Ticket
+
 from .forms import BillForm, AddTicketsForm
+
 
 class BillCreate(CreateView):
 	model = Bill
