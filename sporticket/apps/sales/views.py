@@ -9,6 +9,8 @@ from apps.tickets.models import Ticket
 
 from .forms import BillForm, AddTicketsForm
 
+def index_sale(request):
+    return render(request, 'sales/createSale.html')
 
 class BillCreate(CreateView):
 	model = Bill
