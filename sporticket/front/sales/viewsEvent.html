@@ -1,0 +1,81 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+	<div class="w3-main" >
+		<header class="w3-container">
+			<h5 style="color: black;"><b style="color: black;"><i class="fa fa-list" style="color: black;"></i> Listar eventos</b></h5>
+        </header>
+        {% if object_list %}
+        {% for event in object_list %}
+        <div class="w3-container">
+            <div class="w3-container">
+                <div class="w3-half">
+                    <div class="w3-row-padding">
+                        <p>Nombre evento</p>
+                        {{event.name}}
+                    </div>
+                    <div class="w3-row-padding">
+                        <p>Fecha evento</p>
+                        {{event.initial_date}}
+                    </div>
+                    <div class="w3-row-padding">
+                        <p>Tipo evento</p>
+                        {{event.event_type}}
+                    </div>
+                    <div class="w3-row-padding">
+                        <p>Equipo local</p>
+                        {{event.local}}
+                    </div>
+                    <div class="w3-row-padding">
+                        <p>Lugar</p>
+                        {{event.place}}
+                    </div>
+                    <div class="w3-row-padding">
+                        <p>Equipo visitante</p>
+                        {{event.visitor}}
+                    </div>
+                    
+                </div>
+    
+                <div class="w3-half">
+                    <div class="w3-center">
+                        {% if event %}
+                        <img src="../../../static/{{event.image}}" style="position: relative; z-index:1; width:450px; height:350px;" >
+                        {% endif %}
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="w3-container" style="margin-left:-8px; margin-top:-18px">
+                <div class="w3-row-padding">
+                    <div class="w3-half">
+                        <p>Boletos disponibles</p>
+                        {{event.capacity}}
+                    </div>
+                    <div class="w3-half">
+                        <p>Estado del evento</p>
+                        {{event.state}}
+                    </div>
+                </div>
+                
+            </div>
+                
+            <br> 
+            <div class="w3-show-inline-block">
+                <div class="w3-bar">
+                    <button class="w3-button w3-padding-16 w3-dark-grey w3-circle" ><i class="fa fa-shopping-cart"></i></button>
+                </div>
+            </div>
+            
+            {% endfor %}
+            {% else %}
+            <h1 style="color: black;">No hay registros de eventos</h1>
+            {% endif %}
+    </div>
+
+		<hr>
+		<footer class="w3-container w3-padding-14 w3-grey">
+	    	<p>Powered by <a style="color: black;">XSOFT</a></p>
+		</footer>
+	</div>
+{% endblock %}

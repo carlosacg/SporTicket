@@ -3,9 +3,10 @@ from django.http import HttpResponse
 from django.views.generic import CreateView, View
 from django.urls import reverse_lazy
 from django.dispatch import receiver
-
+from apps.events.models import *
 from .models import Bill
 from apps.tickets.models import Ticket
+from django.views.generic import ListView,CreateView, UpdateView, DeleteView
 
 from .forms import BillForm, AddTicketsForm
 
@@ -40,3 +41,10 @@ class BillCreate(CreateView):
 			return HttpResponseRedirect(self.get_success_url())
 		else:
 			return self.render_to_response(self.get_context_data(form=form, form2=form2))
+
+class EventList(ListView):
+    model = Event
+    template_name ='sales/viewsEvent.html'
+
+
+	
