@@ -54,14 +54,26 @@ class EventList(ListView):
     template_name ='sales/viewsEvent.html'
 
 def createShopping(request,id):
-    event = Event.objects.get(id=id)
-    print (event.event_type)
-
-    if request.method=='POST':
-				
-        return redirect('evento_listar')
-
-    return render(request,'sales/createShopping.html',{'event':event})
+		event = Event.objects.get(id=id)
+		print (event.event_type)
+		if event.event_type=='Beisbol':
+			if request.method=='POST':
+				form = BuyTicketsFormBaseball()
+				if form.is_valid():
+					form.save()
+				return redirect('sales/createShopping.html')
+			else:
+				form = BuyTicketsFormBaseball()
+			return render(request,'sales/createShopping.html',{'event':event})
+		else:
+			if request.method=='POST':
+				form = BuyTicketsForm()
+				if form.is_valid():
+					form.save()
+				return redirect('sales/createShopping.html')
+			else:
+				form = BuyTicketsForm()
+			return render(request,'sales/createShopping.html',{'event':event})
 
 def get_event_type(event):
     conn = connect()
