@@ -4,21 +4,32 @@
 {% block content %}
 	<div class="w3-main" >
         <header class="w3-container">
-            <h5 style="color: black;"><b style="color: black;"><i class="fa fa-shopping-cart" style="color: black;"></i> Seleccione los boletos a comprar del evento: {{event.name}}?</b></h5>
-        </header>
+            <h5 style="color: black;"><b style="color: black;"><i class="fa fa-shopping-cart" style="color: black;"></i> Seleccione los boletos a comprar del evento: {{event.name}}</b></h5>
+			<h5 style="color: black;">Boletos disponibles: cantidadBoletos </h5>
+		</header>
 		<div class="w3-container">
-			  <!--SELECT-->
-			  <!--INPUT INT-->
-
-      		<div class="w3-row-padding">
-      			<br>
-      			<div class="w3-show-inline-block">
-                    <div class="w3-bar">
-                    	<button onclick="document.getElementById('id01').style.display='block'" type="submit" class="w3-button w3-padding w3-dark-grey w3-round-large" ><font color="orange"><i class="fa fa-plus"></i> Añadir boleto</font></button>
-                    	<button onclick="document.getElementById('id02').style.display='block'"type="submit" class="w3-button w3-padding w3-dark-grey w3-round-large"><font color="orange">Facturar</font></button>
+			<form method="post">
+				{% csrf_token %}
+					<div class="w3-row-padding">
+						<div class="w3-half">
+							<label>Ubicacion</label><!--NO BORRAR NADA DEL FORM-->
+							{{form.ubication}}
+						</div>
+						<div class="w3-half">
+							<label>Cantidad de boletos</label><!--NO BORRAR NADA DEL FORM-->
+							{{form.quantity}}
+						</div>
 					</div>
-                </div>
-      		</div>
+					<div class="w3-container">
+						<div class="w3-show-inline-block">
+							<div class="w3-bar">
+								<button onclick="document.getElementById('id01').style.display='block'" type="submit" class="w3-button w3-padding w3-dark-grey w3-round-large" ><font color="orange"><i class="fa fa-plus"></i> Añadir boleto</font></button>
+								<button onclick="document.getElementById('id02').style.display='block'"type="submit" class="w3-button w3-padding w3-dark-grey w3-round-large"><font color="orange">Facturar</font></button>
+							</div>
+						</div>
+					</div>
+					
+				</form>
 		</div>
 		<div class="w3-container">
 			<table class="w3-table-all w3-hoverable ">

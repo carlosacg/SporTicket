@@ -26,17 +26,17 @@ class AddTicketsForm(forms.ModelForm):
 			'id':forms.TextInput(attrs={'class':'form-control'}),
 		}
 
-class BuyTicketsFormBaseball(forms.ModelForm):
+class BuyTicketsFormBaseball(forms.Form):
 	CHOICES= (
         ('Zona alta', 'Zona alta'),
         ('Zona media', 'Zona media'),
         ('Zona baja', 'Zona baja'),
     	)
 
-	ubication= forms.Select(choices=CHOICES)
+	ubication= forms.ChoiceField(choices=CHOICES)
 	quantity = forms.IntegerField(label='Cantidad boletos',required=False)
 
-class BuyTicketsForm(forms.ModelForm):
+class BuyTicketsForm(forms.Form):
 	CHOICES= (
         ('Tribuna norte', 'Tribuna alta'),
         ('Tribuna sur', 'Tribuna sur'),
@@ -44,6 +44,5 @@ class BuyTicketsForm(forms.ModelForm):
 		('Tribuna occidente', 'Tribuna occidente'),
     	)
 
-	ubication= forms.Select(choices=CHOICES)
+	ubication= forms.ChoiceField(choices=CHOICES)
 	quantity = forms.IntegerField(label='Cantidad boletos',required=False)
-		
