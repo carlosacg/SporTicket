@@ -8,5 +8,7 @@ urlpatterns = [
 	#path('index', index_user, name='index'),
     #path('crear_factura', BillCreate.as_view(), name='base'),/sales/viewsEvent.html
     url(r'sales/viewsEvent.html', EventList.as_view(), name='evento_listar' ),
+    url(r'sales/createShopping/(?P<id>\d+)/$', createShopping, name='comprar_boletos' ),
+
 
 ]

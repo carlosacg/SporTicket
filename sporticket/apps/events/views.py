@@ -11,13 +11,6 @@ import json
 import psycopg2
 # Create your views here.
 
-def connect(): #CONEXION ALTERNATIVA PARA DAR INSTRUCCIONES A LA BD SIN NECESIDAD DE UN FORM
-    conn = psycopg2.connect(" \
-        dbname=www \
-        user=postgres \
-        password=1625606")
-    return conn
-
 def index(request):
     return render(request, 'base/base.html')
 
@@ -145,7 +138,5 @@ class EventUpdate(UpdateView):
     template_name = 'events/insertEvents.html'
     success_url = reverse_lazy('evento_listar')
 
-def userSale(request):
-    return render(request,'sales/userSale.html')
 	 
 

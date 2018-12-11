@@ -8,7 +8,14 @@ from .models import Bill
 from apps.tickets.models import Ticket
 from django.views.generic import ListView,CreateView, UpdateView, DeleteView
 
-from .forms import BillForm, AddTicketsForm
+from .forms import BillForm, AddTicketsForm, BuyTicketsFormBaseball, BuyTicketsForm
+
+def connect(): #CONEXION ALTERNATIVA PARA DAR INSTRUCCIONES A LA BD SIN NECESIDAD DE UN FORM
+    conn = psycopg2.connect(" \
+        dbname=sport_db \
+        user=andres \
+        password=1625606")
+    return conn
 
 def index_sale(request):
     return render(request, 'sales/createSale.html')
@@ -46,5 +53,24 @@ class EventList(ListView):
     model = Event
     template_name ='sales/viewsEvent.html'
 
+def createShopping(request,id):
+    event = Event.objects.get(id=id)
+    print (event.event_type)
 
+    if request.method=='POST':
+				
+        return redirect('evento_listar')
+
+    return render(request,'sales/createShopping.html',{'event':event})
+
+def get_event_type(event):
+    conn = connect()
+    cursor = conn.cursor()
+    instruction = "SELECT event_type FROM events_event WHERE id="+event+";"
+    cursor.execute(instruction)
+    row = cursor.fetchone()
+    conn.commit()
+    conn.close()
+    return str(row[0])
 	
+

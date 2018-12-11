@@ -11,7 +11,6 @@ urlpatterns = [
     url(r'events/deleteEvents/(?P<id>\d+)/$', deleteEvent, name='evento_eliminar' ),
     url(r'events/uploadFile.html', uploadFile, name='evento_cargar' ),
     url(r'events/viewEvents/(?P<id>\d+)/$', viewEvent, name='evento_ver' ),
-    url(r'sales/userSale.html', userSale, name='venta_usuario' ),
 
 ]
 

@@ -1,0 +1,50 @@
+
+{% extends 'base/base.html' %}
+
+{% block content %}
+	<div class="w3-main" >
+        <header class="w3-container">
+            <h5 style="color: black;"><b style="color: black;"><i class="fa fa-shopping-cart" style="color: black;"></i> Seleccione los boletos a comprar del evento: {{event.name}}?</b></h5>
+        </header>
+		<div class="w3-container">
+			  <!--SELECT-->
+			  <!--INPUT INT-->
+
+      		<div class="w3-row-padding">
+      			<br>
+      			<div class="w3-show-inline-block">
+                    <div class="w3-bar">
+                    	<button onclick="document.getElementById('id01').style.display='block'" type="submit" class="w3-button w3-padding w3-dark-grey w3-round-large" ><font color="orange"><i class="fa fa-plus"></i> Añadir boleto</font></button>
+                    	<button onclick="document.getElementById('id02').style.display='block'"type="submit" class="w3-button w3-padding w3-dark-grey w3-round-large"><font color="orange">Facturar</font></button>
+					</div>
+                </div>
+      		</div>
+		</div>
+		<div class="w3-container">
+			<table class="w3-table-all w3-hoverable ">
+			  <thead >
+					<tr class="w3-dark-grey">
+						<th>Cantidad boletos</th>
+					  <th>Ubicacion</th>
+					</tr>
+			  </thead>
+			  <tbody>
+				  {% if tickets %}
+				  {% for arrayTicket in tickets %}
+				  <tr id="registro_item" >
+					  <td>{{arrayTicket.0}}</td>
+					  <td>{{arrayTicket.1}}</td>
+				  </tr>
+			  </tbody>
+			  {% endfor %}
+			  {% else %}
+			  <h1 style="color: black;">No hay boletos en la factura</h1>
+			  {% endif %}
+			</table>
+	  </div>
+
+		<footer class="w3-container w3-padding-14 w3-grey">
+	    	<p>Powered by <a style="color: black;">XSOFT</a></p>
+		</footer>
+	</div>
+{% endblock %}
