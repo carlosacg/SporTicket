@@ -40,11 +40,11 @@
 					</tr>
 			  </thead>
 			  <tbody>
-				  {% if tickets %}
-				  {% for arrayTicket in tickets %}
+				  {% if arrayTicket %}
+				  {% for tickets in arrayTicket %}
 				  <tr id="registro_item" >
-					  <td>{{arrayTicket.0}}</td>
-					  <td>{{arrayTicket.1}}</td>
+					  <td>{{tickets.0}}</td>
+					  <td>{{tickets.1}}</td>
 				  </tr>
 			  </tbody>
 			  {% endfor %}

@@ -49,27 +49,27 @@ class BillCreate(CreateView):
 		else:
 			return self.render_to_response(self.get_context_data(form=form, form2=form2))
 
-class EventList(ListView):
-    model = Event
-    template_name ='sales/viewsEvent.html'
+
+def listEvent(request):
+		create_bill()
+		event = Event.objects.all()
+		context = {'events':event}
+		return render(request,'sales/viewsEvent.html',context)
 
 def createShopping(request,id):
 		event = Event.objects.get(id=id)
-		print (event.event_type+"-"+id)
+		bill_id=str(Bill.objects.latest('id').id)
 		if event.event_type=='Beisbol':
 			if request.method=='POST':
 				form = BuyTicketsFormBaseball(request.POST)
 				ubication=form['ubication'].value()
 				quantity=form['quantity'].value()
-				print(ubication+"-"+quantity)
 				avalible_tickets=get_avalible_tickets(id,ubication)
-				print(len(avalible_tickets))
-				create_bill()
-				#OBTENIDO EL ID DE LA FACTURA CREADA LLAMAMOS A LA FUNCION add_shopping
-				#
+				add_shopping(bill_id,avalible_tickets,quantity,len(avalible_tickets))
 			else:
 				form = BuyTicketsFormBaseball()
-			context = {'event':event,'form':form}
+			tickets=getListTicketsSolds(bill_id)
+			context = {'event':event,'form':form,'arrayTicket':tickets}
 			return render(request,'sales/createShopping.html',context)
 		else:
 			if request.method=='POST':
@@ -77,10 +77,12 @@ def createShopping(request,id):
 				ubication=form['ubication'].value()
 				quantity=form['quantity'].value()
 				avalible_tickets=get_avalible_tickets(id,ubication)
+				add_shopping(bill_id,avalible_tickets,quantity,len(avalible_tickets))
+				tickets=getListTicketsSolds(bill_id)
 			else:
 				form = BuyTicketsForm()
-			
-			context = {'event':event,'form':form}
+			tickets=getListTicketsSolds(bill_id)
+			context = {'event':event,'form':form,'arrayTicket':tickets}
 			return render(request,'sales/createShopping.html',context)
 
 def get_event_type(event):
@@ -93,14 +95,22 @@ def get_event_type(event):
     conn.close()
     return str(row[0])
 
+def getListTicketsSolds(bill):
+    conn = connect()
+    cursor = conn.cursor()
+    instruction = "SELECT count(*),ubication from tickets_ticket WHERE id_bill_id="+bill+" GROUP BY ubication;"
+    cursor.execute(instruction)
+    rows = cursor.fetchall()
+    conn.commit()
+    conn.close()
+    return rows
+
 def get_avalible_tickets(event,ubication):
 		conn = connect()
 		cursor = conn.cursor()
 		instruction = "SELECT id FROM tickets_ticket WHERE event_id="+event+" AND ubication=\'"+ubication+"\' AND state='Disponible';"
 		cursor.execute(instruction)
 		row = cursor.fetchall()
-		print(len(list(row)))#CANTIDAD DATOS
-		print(str(row[0])[1:2])#ID 
 		conn.commit()
 		conn.close()
 		return (list(row))
@@ -108,9 +118,8 @@ def get_avalible_tickets(event,ubication):
 def add_ticket_to_bill(bill,ticket):
 		conn = connect()
 		cursor = conn.cursor()
-		instruction = "UPDATE tickets_ticket SET id_bill="+bill +"WHERE id="+ticket+";"
+		instruction = "UPDATE tickets_ticket SET id_bill_id="+bill +", state='Vendido' WHERE id="+ticket+";"
 		cursor.execute(instruction)
-		row = cursor.fetchall()
 		conn.commit()
 		conn.close()
 
@@ -121,14 +130,45 @@ def create_bill():
 		cursor.execute(instruction)
 		conn.commit()
 		conn.close()
-
+		
 def add_shopping(bill,ticket,quantity,avalibles):
+		print("Factura: "+str(bill)+" TICKETS DISPONIBLES: "+str(ticket)+" CANTIDAD SOLICITADA: "+str(quantity)+" DISPONIBLES: "+str(avalibles))
 		x=0
 		if int(quantity) < int(avalibles): 
-			while x < int(quantity):        
-				add_ticket_to_bill(bill,str(ticket[x])[1:2]) 
+			while x < int(quantity):
+				if int(len(str(ticket[x])))==4:
+					add_ticket_to_bill(bill,str(ticket[x])[1:2])
+				if int(len(str(ticket[x])))==5:
+					add_ticket_to_bill(bill,str(ticket[x])[1:3])
+				if int(len(str(ticket[x])))==6:
+					add_ticket_to_bill(bill,str(ticket[x])[1:4])
+				if int(len(str(ticket[x])))==7:
+					add_ticket_to_bill(bill,str(ticket[x])[1:5])
+				if int(len(str(ticket[x])))==8:
+					add_ticket_to_bill(bill,str(ticket[x])[1:6])
+				if int(len(str(ticket[x])))==9:
+					add_ticket_to_bill(bill,str(ticket[x])[1:7])
+				if int(len(str(ticket[x])))==10:
+					add_ticket_to_bill(bill,str(ticket[x])[1:8])
+				if int(len(str(ticket[x])))==11:
+					add_ticket_to_bill(bill,str(ticket[x])[1:9])
 				x+=1
 		else:
-			while x < int(avalibles):        
-				add_ticket_to_bill(bill,str(ticket[x])[1:2])
+			while x < int(avalibles):
+				if int(len(str(ticket[x])))==4:
+					add_ticket_to_bill(bill,str(ticket[x])[1:2])
+				if int(len(str(ticket[x])))==5:
+					add_ticket_to_bill(bill,str(ticket[x])[1:3])
+				if int(len(str(ticket[x])))==6:
+					add_ticket_to_bill(bill,str(ticket[x])[1:4])
+				if int(len(str(ticket[x])))==7:
+					add_ticket_to_bill(bill,str(ticket[x])[1:5])
+				if int(len(str(ticket[x])))==8:
+					add_ticket_to_bill(bill,str(ticket[x])[1:6])
+				if int(len(str(ticket[x])))==9:
+					add_ticket_to_bill(bill,str(ticket[x])[1:7])
+				if int(len(str(ticket[x])))==10:
+					add_ticket_to_bill(bill,str(ticket[x])[1:8])
+				if int(len(str(ticket[x])))==11:
+					add_ticket_to_bill(bill,str(ticket[x])[1:9])
 				x+=1

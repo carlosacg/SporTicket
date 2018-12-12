@@ -5,5 +5,5 @@ from ..users.models import Profile
 
 class Bill(models.Model):
 	id = models.AutoField(primary_key=True)
-	id_profile = models.ForeignKey(Profile, null=False, blank=False, on_delete=models.CASCADE)
+	id_profile = models.ForeignKey(Profile, null=True, blank=False, on_delete=models.CASCADE)
 	time_bill = models.TimeField(auto_now=True)

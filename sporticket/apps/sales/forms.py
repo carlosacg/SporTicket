@@ -38,7 +38,7 @@ class BuyTicketsFormBaseball(forms.Form):
 
 class BuyTicketsForm(forms.Form):
 	CHOICES= (
-        ('Tribuna norte', 'Tribuna alta'),
+        ('Tribuna norte', 'Tribuna norte'),
         ('Tribuna sur', 'Tribuna sur'),
         ('Tribuna oriente', 'Tribuna oriente'),
 		('Tribuna occidente', 'Tribuna occidente'),
