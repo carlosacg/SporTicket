@@ -59,6 +59,7 @@ def listEvent(request):
 def createShopping(request,id):
 		event = Event.objects.get(id=id)
 		bill_id=str(Bill.objects.latest('id').id)
+		bill=Bill.objects.get(id=bill_id)
 		if event.event_type=='Beisbol':
 			if request.method=='POST':
 				form = BuyTicketsFormBaseball(request.POST)
@@ -69,7 +70,9 @@ def createShopping(request,id):
 			else:
 				form = BuyTicketsFormBaseball()
 			tickets=getListTicketsSolds(bill_id)
-			context = {'event':event,'form':form,'arrayTicket':tickets}
+			tickets_avalibles=getListTicketsAvalibles(event)
+			print (tickets_avalibles)
+			context = {'event':event,'form':form,'arrayTicket':tickets,'bill':bill_id,'avalibleTicket':tickets_avalibles}
 			return render(request,'sales/createShopping.html',context)
 		else:
 			if request.method=='POST':
@@ -82,7 +85,9 @@ def createShopping(request,id):
 			else:
 				form = BuyTicketsForm()
 			tickets=getListTicketsSolds(bill_id)
-			context = {'event':event,'form':form,'arrayTicket':tickets}
+			tickets_avalibles=getListTicketsAvalibles(event)
+			print (tickets_avalibles)
+			context = {'event':event,'form':form,'arrayTicket':tickets,'bill':bill_id,'avalibleTicket':tickets_avalibles}
 			return render(request,'sales/createShopping.html',context)
 
 def get_event_type(event):
@@ -99,6 +104,16 @@ def getListTicketsSolds(bill):
     conn = connect()
     cursor = conn.cursor()
     instruction = "SELECT count(*),ubication from tickets_ticket WHERE id_bill_id="+bill+" GROUP BY ubication;"
+    cursor.execute(instruction)
+    rows = cursor.fetchall()
+    conn.commit()
+    conn.close()
+    return rows
+
+def getListTicketsAvalibles(event):
+    conn = connect()
+    cursor = conn.cursor()
+    instruction = "SELECT count(*),ubication from tickets_ticket WHERE state='Disponible' AND event_id="+str(event.id)+" GROUP BY ubication;"
     cursor.execute(instruction)
     rows = cursor.fetchall()
     conn.commit()
