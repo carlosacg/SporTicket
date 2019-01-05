@@ -9,14 +9,9 @@ from django.contrib.auth.forms  import UserCreationForm
 import psycopg2
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.db import connection 
 
 # Create your views here.
-def connect(): #CONEXION ALTERNATIVA PARA DAR INSTRUCCIONES A LA BD SIN NECESIDAD DE UN FORM
-    conn = psycopg2.connect(" \
-        dbname=www \
-        user=postgres \
-        password=1625606")
-    return conn
 
 def index(request):
 	return HttpResponse("soy la pagina principal de la app")
@@ -88,12 +83,11 @@ class ProfileUpdate(UpdateView):
 
 
 def changeState(id):
-    conn = connect()
-    cursor = conn.cursor()
+    cursor = connection.cursor()
     instruction = "UPDATE auth_user SET is_active=\'FALSE\' WHERE id="+id+";"
     cursor.execute(instruction)
-    conn.commit()
-    conn.close()
+    connection.commit()
+    connection.close()
 
 def deleteUsers(request,id):
     user = User.objects.get(id=id)

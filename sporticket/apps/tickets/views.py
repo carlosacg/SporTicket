@@ -7,15 +7,9 @@ from django.template import RequestContext
 import psycopg2
 from apps.events.models import Event
 from apps.tickets.models import Ticket
+from django.db import connection 
 
 # Create your views here.
-def connect(): #CONEXION ALTERNATIVA PARA DAR INSTRUCCIONES A LA BD SIN NECESIDAD DE UN FORM
-    conn = psycopg2.connect(" \
-        dbname=www \
-        user=postgres \
-        password=1625606")
-    return conn
-
 
 def insertTickets(quantity,ubication,event,cost,state):
     x=0
@@ -87,41 +81,37 @@ def generateTickets(request):
     
 
 def save_data(ubication,event,cost,state):
-    conn = connect()
-    cursor = conn.cursor()
+    cursor = connection.cursor()
     instruction = "INSERT INTO tickets_ticket VALUES (nextval(\'tickets_ticket_id_seq\'),"+cost+",\'"+ubication+"\',"+event+",\'"+state+"\');"
     print (instruction)
     cursor.execute(instruction)
-    conn.commit()
+    connection.commit()
     print ("GENERO TICKET")
-    conn.close()
+    connection.close()
 
 def get_data(event):
-    conn = connect()
-    cursor = conn.cursor()
+    cursor = connection.cursor()
     instruction = "SELECT event_type FROM events_event WHERE id="+event+";"
     cursor.execute(instruction)
     row = cursor.fetchone()
-    conn.commit()
-    conn.close()
+    connection.commit()
+    connection.close()
     return str(row[0])
 
 def getListTicket(event):
-    conn = connect()
-    cursor = conn.cursor()
+    cursor = connection.cursor()
     instruction = "SELECT count(*),ubication,event_id from tickets_ticket WHERE event_id="+event+" GROUP BY ubication,event_id;"
     cursor.execute(instruction)
     rows = cursor.fetchall()
-    conn.commit()
-    conn.close()
+    connection.commit()
+    connection.close()
     return rows
 
 
 def updateCapacityEvent(event,newCapacity):
-    conn = connect()
-    cursor = conn.cursor()
+    cursor = connection.cursor()
     instruction = "UPDATE events_event SET capacity=capacity+"+newCapacity+" WHERE id="+event+";"
     print (instruction)
     cursor.execute(instruction)
-    conn.commit()
-    conn.close()
+    connection.commit()
+    connection.close()

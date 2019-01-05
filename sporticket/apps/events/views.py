@@ -8,7 +8,8 @@ from django.views.generic import ListView,CreateView, UpdateView, DeleteView
 from apps.events.models import *
 from django.urls import reverse_lazy
 import json
-import psycopg2
+from django.db import connection 
+
 # Create your views here.
 
 def index(request):
@@ -106,12 +107,11 @@ def uploadImage(request,id):
                 ruta=request.FILES.get('docfile').name
                 print (ruta)
                 object = Event()
-                conn = object.connect()
-                cursor = conn.cursor()
+                cursor = connection.cursor()
                 instruction = "UPDATE events_event SET image=\'"+ './images/'+ruta +"\' WHERE id="+id+";"
                 cursor.execute(instruction)
-                conn.commit()
-                conn.close()
+                connection.commit()
+                connection.close()
             return redirect('events/listEvents.html')
     else:
             formulario = UploadForm()

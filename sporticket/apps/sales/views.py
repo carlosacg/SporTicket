@@ -7,15 +7,9 @@ from apps.events.models import *
 from .models import Bill
 from apps.tickets.models import Ticket
 from django.views.generic import ListView,CreateView, UpdateView, DeleteView
-
+from django.db import connection 
 from .forms import BillForm, AddTicketsForm, BuyTicketsFormBaseball, BuyTicketsForm
 
-def connect(): #CONEXION ALTERNATIVA PARA DAR INSTRUCCIONES A LA BD SIN NECESIDAD DE UN FORM
-    conn = psycopg2.connect(" \
-        dbname=sport_db \
-        user=andres \
-        password=1625606")
-    return conn
 
 def index_sale(request):
     return render(request, 'sales/createSale.html')
@@ -91,60 +85,54 @@ def createShopping(request,id):
 			return render(request,'sales/createShopping.html',context)
 
 def get_event_type(event):
-    conn = connect()
-    cursor = conn.cursor()
+    cursor = connection.cursor()
     instruction = "SELECT event_type FROM events_event WHERE id="+event+";"
     cursor.execute(instruction)
     row = cursor.fetchone()
-    conn.commit()
-    conn.close()
+    connection.commit()
+    connection.close()
     return str(row[0])
 
 def getListTicketsSolds(bill):
-    conn = connect()
-    cursor = conn.cursor()
+    cursor = connection.cursor()
     instruction = "SELECT count(*),ubication from tickets_ticket WHERE id_bill_id="+bill+" GROUP BY ubication;"
     cursor.execute(instruction)
     rows = cursor.fetchall()
-    conn.commit()
-    conn.close()
+    connection.commit()
+    connection.close()
     return rows
 
 def getListTicketsAvalibles(event):
-    conn = connect()
-    cursor = conn.cursor()
+    cursor = connection.cursor()
     instruction = "SELECT count(*),ubication from tickets_ticket WHERE state='Disponible' AND event_id="+str(event.id)+" GROUP BY ubication;"
     cursor.execute(instruction)
     rows = cursor.fetchall()
-    conn.commit()
-    conn.close()
+    connection.commit()
+    connection.close()
     return rows
 
 def get_avalible_tickets(event,ubication):
-		conn = connect()
-		cursor = conn.cursor()
+		cursor = connection.cursor()
 		instruction = "SELECT id FROM tickets_ticket WHERE event_id="+event+" AND ubication=\'"+ubication+"\' AND state='Disponible';"
 		cursor.execute(instruction)
 		row = cursor.fetchall()
-		conn.commit()
-		conn.close()
+		connection.commit()
+		connection.close()
 		return (list(row))
 
 def add_ticket_to_bill(bill,ticket):
-		conn = connect()
-		cursor = conn.cursor()
+		cursor = connection.cursor()
 		instruction = "UPDATE tickets_ticket SET id_bill_id="+bill +", state='Vendido' WHERE id="+ticket+";"
 		cursor.execute(instruction)
-		conn.commit()
-		conn.close()
+		connection.commit()
+		connection.close()
 
 def create_bill():
-		conn = connect()
-		cursor = conn.cursor()
+		cursor = connection.cursor()
 		instruction = "INSERT INTO sales_bill VALUES(nextval('sales_bill_id_seq'),now());"
 		cursor.execute(instruction)
-		conn.commit()
-		conn.close()
+		connection.commit()
+		connection.close()
 		
 def add_shopping(bill,ticket,quantity,avalibles):
 		print("Factura: "+str(bill)+" TICKETS DISPONIBLES: "+str(ticket)+" CANTIDAD SOLICITADA: "+str(quantity)+" DISPONIBLES: "+str(avalibles))

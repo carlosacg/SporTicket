@@ -1,5 +1,5 @@
 from django.db import models
-import psycopg2
+from django.db import connection 
 
 # Create your models here.
 class Event(models.Model):
@@ -21,31 +21,20 @@ class Event(models.Model):
 
     def lastEventId(self):
         return str(Event.objects.latest('id'))
-
-    def connect(self): #CONEXION ALTERNATIVA PARA DAR INSTRUCCIONES A LA BD SIN NECESIDAD DE UN FORM
-        conn = psycopg2.connect(" \
-            dbname=sport_db \
-            user=andres \
-            password=12345")
-        return conn
     
     def cancelEvent(self,id):
-        object = Event()
-        conn = object.connect()
-        cursor = conn.cursor()
+        cursor = connection.cursor()
         instruction = "UPDATE events_event SET state=\'Cancelado\' WHERE id="+id+";"
         cursor.execute(instruction)
-        conn.commit()
-        conn.close()
+        connection.commit()
+        connection.close()
 
     def save_data(self,name,initial_date,initial_time,place,url,state,capacity,visitor,local,event_type):
-        object = Event()
-        conn = object.connect()
-        cursor = conn.cursor()
+        cursor = connection.cursor()
         instruction = "INSERT INTO events_event VALUES (nextval(\'events_event_id_seq\'),\'"+name+"\',\'"+initial_date+"\',\'"+initial_time+"\',\'"+place+"\',\'"+url+"\',\'"+state+"\',"+str(capacity)+",\'"+visitor+"\',\'"+local+"\',\'"+event_type+"\');"
         cursor.execute(instruction)
-        conn.commit()
-        conn.close()
+        connection.commit()
+        connection.close()
 
     def insertTickets(self,quantity,ubication,event,cost,state):
         object = Event()
@@ -56,14 +45,13 @@ class Event(models.Model):
     
     def save_ticket(self,ubication,event,cost,state):
         object = Event()
-        conn = object.connect()
-        cursor = conn.cursor()
+        cursor = connection.cursor()
         instruction = "INSERT INTO tickets_ticket VALUES (nextval(\'tickets_ticket_id_seq\'),"+str(cost)+",\'"+ubication+"\',"+str(event)+",\'"+state+"\');"
         print (instruction)
         cursor.execute(instruction)
-        conn.commit()
+        connection.commit()
         print ("GENERO TICKET")
-        conn.close()
+        connection.close()
 
 class Document(models.Model):
     filename = models.CharField(max_length=100)
