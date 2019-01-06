@@ -46,7 +46,8 @@ class BillCreate(CreateView):
 
 def listEvent(request):
 		create_bill()
-		event = Event.objects.all()
+		event = Event.objects.filter(state="Activo")
+		print (event)
 		context = {'events':event}
 		return render(request,'sales/viewsEvent.html',context)
 
