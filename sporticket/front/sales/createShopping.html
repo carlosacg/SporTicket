@@ -2,89 +2,87 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
-	<div class="w3-main" >
-        <header class="w3-container">
-            <h5 style="color: black;"><b style="color: black;"><i class="fa fa-shopping-cart" style="color: black;"></i> Seleccione los boletos a comprar del evento: {{event.name}}</b></h5>
-			<h5 style="color: black;">BOLETOS DISPONIBLES</h5>
-			<div class="w3-container">
-				<table class="w3-table-all w3-hoverable ">
-				  <thead >
-						<tr class="w3-dark-grey">
-							<th>Cantidad boletos</th>
-							  <th>Ubicacion</th>
-	
-						</tr>
-				  </thead>
-				  <tbody>
-					  {% if avalibleTicket %}
-					  {% for tickets_avalibles in avalibleTicket %}
-					  <tr id="registro_item" >
-						  <td>{{tickets_avalibles.0}}</td>
-						  <td>{{tickets_avalibles.1}}</td>
-	
-					  </tr>
-				  </tbody>
-				  {% endfor %}
-				  {% else %}
-				  <h1 style="color: black;">No hay boletos disponibles en este evento</h1>
-				  {% endif %}
-				</table>
-		  </div>
-			<h5 style="color: black;">Factura # {{bill}}</h5>
-
-
-		</header>
+<div class="w3-main" >
+    <header class="w3-container">
+        <h5 style="color: black;"><b style="color: black;"><i class="fa fa-shopping-cart" style="color: black;"></i> Seleccione los boletos a comprar del evento: {{event.name}}</b></h5>
+		<h5 style="color: black;">BOLETOS DISPONIBLES</h5>
 		<div class="w3-container">
-			<form method="post">
-				{% csrf_token %}
-					<div class="w3-row-padding">
-						<div class="w3-half">
-							<label>Ubicacion</label><!--NO BORRAR NADA DEL FORM-->
-							{{form.ubication}}
-						</div>
-						<div class="w3-half">
-							<label>Cantidad de boletos</label><!--NO BORRAR NADA DEL FORM-->
-							{{form.quantity}}
-						</div>
-					</div>
-					<div class="w3-container">
-						<div class="w3-show-inline-block">
-							<div class="w3-bar">
-								<button onclick="document.getElementById('id01').style.display='block'" type="submit" class="w3-button w3-padding w3-dark-grey w3-round-large" ><font color="orange"><i class="fa fa-plus"></i> Añadir boleto</font></button>
-								<button onclick="document.getElementById('id02').style.display='block'"  class="w3-button w3-padding w3-dark-grey w3-round-large"><font color="orange">Imprimir</font></button>
-							</div>
-						</div>
-					</div>
-					
-				</form>
-		</div>
-		<div class="w3-container">
-			<table class="w3-table-all w3-hoverable ">
-			  <thead >
+			<table class="w3-table-all w3-hoverable " style="width: 50%">
+				<thead >
 					<tr class="w3-dark-grey">
 						<th>Cantidad boletos</th>
-						  <th>Ubicacion</th>
-
+						 <th>Ubicación</th>
 					</tr>
-			  </thead>
-			  <tbody>
-				  {% if arrayTicket %}
-				  {% for tickets in arrayTicket %}
-				  <tr id="registro_item" >
-					  <td>{{tickets.0}}</td>
-					  <td>{{tickets.1}}</td>
-
-				  </tr>
-			  </tbody>
-			  {% endfor %}
-			  {% else %}
-			  <h1 style="color: black;">No hay boletos en la factura</h1>
-			  {% endif %}
+				</thead>
+			 	<tbody>
+				  	{% if avalibleTicket %}
+				  	{% for tickets_avalibles in avalibleTicket %}
+				  	<tr id="registro_item" >
+					  	<td>{{tickets_avalibles.0}}</td>
+					  	<td>{{tickets_avalibles.1}}</td>
+					</tr>
+			  	</tbody>
+				{% endfor %}
+				{% else %}
+				<h1 style="color: black;">No hay boletos disponibles en este evento</h1>
+				{% endif %}
 			</table>
-	  </div>
+	  	</div>
+	</header>
 
-		<footer class="w3-container w3-padding-14 w3-grey">
-	    	<p>Powered by <a style="color: black;">XSOFT</a></p>
-		</footer>
+	<hr>
+
+	<div class="w3-container w3-card-2" style="width: 70%; text-align: center; margin-left: 200px;">
+		<h3 style="color: black; text-align: center">Factura # {{bill}}</h3>
+		<form method="post">
+			{% csrf_token %}
+			<div class="w3-row-padding">
+				<div class="w3-half">
+					<label>Ubicación</label><!--NO BORRAR NADA DEL FORM-->
+					{{form.ubication}}
+				</div>
+				<div class="w3-half">
+					<label>Cantidad de boletos</label><!--NO BORRAR NADA DEL FORM-->
+					{{form.quantity}}
+				</div>
+			</div>
+			<div class="w3-container">
+				<div class="w3-show-inline-block">
+					<div class="w3-bar">
+						<button onclick="document.getElementById('id01').style.display='block'" type="submit" class="w3-button w3-padding w3-dark-grey w3-round-large" ><font color="orange"><i class="fa fa-plus"></i> Añadir boleto</font></button>
+						<button onclick="document.getElementById('id02').style.display='block'"  class="w3-button w3-padding w3-dark-grey w3-round-large"><font color="orange">Imprimir</font></button>
+					</div>
+				</div>
+			</div>
+		</form>
+		<div class="w3-container">
+			<table class="w3-table-all w3-hoverable ">
+			  	<thead >
+					<tr class="w3-dark-grey">
+						<th>Cantidad boletos</th>
+						<th>Ubicación</th>
+					</tr>
+			  	</thead>
+			  	<tbody>
+				  	{% if arrayTicket %}
+				  	{% for tickets in arrayTicket %}
+				  	<tr id="registro_item" >
+					  	<td>{{tickets.0}}</td>
+					  	<td>{{tickets.1}}</td>
+					</tr>
+			  	</tbody>
+			  	{% endfor %}
+			  	{% else %}
+			  	<h1 style="color: black;">No hay boletos en la factura</h1>
+			  	{% endif %}
+			</table>
+	  	</div>
 	</div>
+	
+	<hr>
+
+	<footer class="w3-container w3-padding-14 w3-grey">
+    	<p>Powered by <a style="color: black;">XSOFT</a></p>
+	</footer>
+</div>
 {% endblock %}
