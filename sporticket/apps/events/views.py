@@ -47,17 +47,20 @@ def uploadFile(request):
             for dato in datos:
                 print (dato['event_type'])
                 object = Event()
+                print(dato['name'],dato['initial_dale'],dato['initial_time'],dato['place'],dato['url'],dato['state'],dato['capacity'],dato['visitor'],dato['local'],dato['event_type'])
                 object.save_data(dato['name'],dato['initial_dale'],dato['initial_time'],dato['place'],dato['url'],dato['state'],dato['capacity'],dato['visitor'],dato['local'],dato['event_type'])
+                print('GUARDO EL EVENTO')
                 if dato['event_type'] == 'Beisbol':
-                    object.insertTickets(dato['zAlta'],"Zona alta",object.lastEventId(),dato['pAlta'],"Disponible")
-                    object.insertTickets(dato['zMedia'],"Zona media",object.lastEventId(),dato['pMedia'],"Disponible")
-                    object.insertTickets(dato['zBaja'],"Zona baja",object.lastEventId(),dato['pBaja'],"Disponible")
+                    print(dato['zAlta'],"Zona alta",object.lastEventId(),dato['pAlta'])
+                    object.insertTickets(dato['zAlta'],"Zona alta",object.lastEventId(),dato['pAlta'])
+                    object.insertTickets(dato['zMedia'],"Zona media",object.lastEventId(),dato['pMedia'])
+                    object.insertTickets(dato['zBaja'],"Zona baja",object.lastEventId(),dato['pBaja'])
 
                 else:
-                    object.insertTickets(dato['tNorte'],"Tribuna norte",object.lastEventId(),dato['pNorte'],"Disponible")
-                    object.insertTickets(dato['tSur'],"Tribuna sur",object.lastEventId(),dato['pSur'],"Disponible")
-                    object.insertTickets(dato['tOriente'],"Tribuna oriente",object.lastEventId(),dato['pOriente'],"Disponible")
-                    object.insertTickets(dato['tOccidente'],"Tribuna occidente",object.lastEventId(),dato['pOccidente'],"Disponible")
+                    object.insertTickets(dato['tNorte'],"Tribuna norte",object.lastEventId(),dato['pNorte'])
+                    object.insertTickets(dato['tSur'],"Tribuna sur",object.lastEventId(),dato['pSur'])
+                    object.insertTickets(dato['tOriente'],"Tribuna oriente",object.lastEventId(),dato['pOriente'])
+                    object.insertTickets(dato['tOccidente'],"Tribuna occidente",object.lastEventId(),dato['pOccidente'])
                 
             return redirect('events/listEvents.html')
     else:

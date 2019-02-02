@@ -36,17 +36,17 @@ class Event(models.Model):
         connection.commit()
         connection.close()
 
-    def insertTickets(self,quantity,ubication,event,cost,state):
+    def insertTickets(self,quantity,ubication,event,cost):
         object = Event()
         x=0
         while x < int(quantity):        
-            object.save_ticket(ubication,event,cost,state) 
+            object.save_ticket(ubication,event,cost) 
             x+=1    
     
-    def save_ticket(self,ubication,event,cost,state):
+    def save_ticket(self,ubication,event,cost):
         object = Event()
         cursor = connection.cursor()
-        instruction = "INSERT INTO tickets_ticket VALUES (nextval(\'tickets_ticket_id_seq\'),"+str(cost)+",\'"+ubication+"\',"+str(event)+",\'"+state+"\');"
+        instruction = "INSERT INTO tickets_ticket VALUES (nextval(\'tickets_ticket_id_seq\'),"+str(cost)+",\'"+ubication+"\','Disponible',"+str(event)+");"
         print (instruction)
         cursor.execute(instruction)
         connection.commit()

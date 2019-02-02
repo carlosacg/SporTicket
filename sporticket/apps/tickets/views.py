@@ -82,7 +82,7 @@ def generateTickets(request):
 
 def save_data(ubication,event,cost,state):
     cursor = connection.cursor()
-    instruction = "INSERT INTO tickets_ticket VALUES (nextval(\'tickets_ticket_id_seq\'),"+cost+",\'"+ubication+"\',"+event+",\'"+state+"\');"
+    instruction = "INSERT INTO tickets_ticket VALUES (nextval(\'tickets_ticket_id_seq\'),"+cost+",\'"+ubication+"\','"+state+"',"+event+");"
     print (instruction)
     cursor.execute(instruction)
     connection.commit()
