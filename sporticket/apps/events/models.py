@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib import messages
+
 # Create your models here.
 class Event(models.Model):
     id = models.AutoField(primary_key=True)
@@ -24,11 +26,14 @@ class Event(models.Model):
         event = Event.objects.get(id=id)
         event.state = 'Cancelado'
         event.save()
+        #messages.success(self.request,'Evento cancelado')
     
     def activateEvent(self,id):
         event = Event.objects.get(id=id)
         event.state = 'Activo'
         event.save()
+        #messages.success(self.request,'Evento reactivado')
+
     
     def save_data(self,name,initial_date,initial_time,place,url,state,capacity,visitor,local,event_type):
         newEvent = Event(name=name,initial_date=initial_date,initial_time=initial_time,place=place,url=url,state=state,capacity=capacity,visitor=visitor,local=local,event_type=event_type)

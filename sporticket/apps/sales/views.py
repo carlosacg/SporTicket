@@ -53,8 +53,7 @@ def listEvent(request):
 
 def createShopping(request,id):
 		event = Event.objects.get(id=id)
-		bill_id=str(Bill.objects.latest('id').id)
-		bill=Bill.objects.get(id=bill_id)
+		bill_id=Bill.objects.all().last()
 		if event.event_type=='Beisbol':
 			if request.method=='POST':
 				form = BuyTicketsFormBaseball(request.POST)
@@ -85,18 +84,10 @@ def createShopping(request,id):
 			context = {'event':event,'form':form,'arrayTicket':tickets,'bill':bill_id,'avalibleTicket':tickets_avalibles}
 			return render(request,'sales/createShopping.html',context)
 
-def get_event_type(event):
-    cursor = connection.cursor()
-    instruction = "SELECT event_type FROM events_event WHERE id="+event+";"
-    cursor.execute(instruction)
-    row = cursor.fetchone()
-    connection.commit()
-    connection.close()
-    return str(row[0])
 
 def getListTicketsSolds(bill):
     cursor = connection.cursor()
-    instruction = "SELECT count(*),ubication from tickets_ticket WHERE id_bill_id="+bill+" GROUP BY ubication;"
+    instruction = "SELECT count(*),ubication from tickets_ticket WHERE id_bill_id="+str(bill.id)+" GROUP BY ubication;"
     cursor.execute(instruction)
     rows = cursor.fetchall()
     connection.commit()
@@ -122,18 +113,15 @@ def get_avalible_tickets(event,ubication):
 		return (list(row))
 
 def add_ticket_to_bill(bill,ticket):
-		cursor = connection.cursor()
-		instruction = "UPDATE tickets_ticket SET id_bill_id="+bill +", state='Vendido' WHERE id="+ticket+";"
-		cursor.execute(instruction)
-		connection.commit()
-		connection.close()
+	ticket = Ticket.objects.get(id=ticket)
+	ticket.id_bill=bill
+	ticket.state='Vendido'
+	ticket.save()
+
 
 def create_bill():
-		cursor = connection.cursor()
-		instruction = "INSERT INTO sales_bill VALUES(nextval('sales_bill_id_seq'),now());"
-		cursor.execute(instruction)
-		connection.commit()
-		connection.close()
+	bill = Bill()
+	bill.save()
 		
 def add_shopping(bill,ticket,quantity,avalibles):
 		print("Factura: "+str(bill)+" TICKETS DISPONIBLES: "+str(ticket)+" CANTIDAD SOLICITADA: "+str(quantity)+" DISPONIBLES: "+str(avalibles))

@@ -19,7 +19,8 @@ def insertTickets(quantity,ubication,event,cost,state):
 
 def generateTickets(request):
     ticket = Ticket.objects.all()
-    event_type=get_data(str(Event.objects.latest('id')))
+    event_type=Event.objects.all().last().event_type
+    print(event_type)
     object = Event()
 
     if event_type == 'Beisbol':  #SI EL EVENTO CREADO FUE TIPO BEISBOL
@@ -32,12 +33,11 @@ def generateTickets(request):
                 higthZone=form['higthZone'].value()
                 mediumZone=form['mediumZone'].value()
                 lowZone=form['lowZone'].value()
-                event_type=get_data(str(Event.objects.latest('id')))
                 print(event_type)
                 print(higtCost+"-"+higthZone+"-"+mediumCost+"-"+mediumZone+"-"+lowZone+"-"+lowCost)
-                insertTickets(higthZone,'Zona alta', object.lastEventId(),higtCost,'Disponible')
-                insertTickets(mediumZone,'Zona media', object.lastEventId(),mediumCost,'Disponible')
-                insertTickets(lowZone,'Zona baja', object.lastEventId(),lowCost,'Disponible')
+                insertTickets(higthZone,'Zona alta', Event.objects.all().last(),higtCost,'Disponible')
+                insertTickets(mediumZone,'Zona media', Event.objects.all().last(),mediumCost,'Disponible')
+                insertTickets(lowZone,'Zona baja', Event.objects.all().last(),lowCost,'Disponible')
                 arrayTicket=getListTicket(object.lastEventId()) 
                 quantity=int(higthZone)+int(mediumZone)+int(lowZone)
                 print (quantity)
@@ -62,10 +62,10 @@ def generateTickets(request):
                 eastZone=form['eastZone'].value()
                 westZone=form['westZone'].value()
                 
-                insertTickets(northZone,'Tribuna norte', object.lastEventId(),northCost,'Disponible')
-                insertTickets(southZone,'Tribuna sur', object.lastEventId(),southCost,'Disponible')
-                insertTickets(eastZone,'Tribuna oriente', object.lastEventId(),eastCost,'Disponible')                 
-                insertTickets(westZone,'Tribuna occidente', object.lastEventId(),westCost,'Disponible')                
+                insertTickets(northZone,'Tribuna norte', Event.objects.all().last(),northCost,'Disponible')
+                insertTickets(southZone,'Tribuna sur', Event.objects.all().last(),southCost,'Disponible')
+                insertTickets(eastZone,'Tribuna oriente', Event.objects.all().last(),eastCost,'Disponible')                 
+                insertTickets(westZone,'Tribuna occidente', Event.objects.all().last(),westCost,'Disponible')                
                 arrayTicket=getListTicket( object.lastEventId()) 
                 quantity=int(northZone)+int(southZone)+int(eastZone)+int(westZone)
                 print (quantity)
@@ -81,22 +81,9 @@ def generateTickets(request):
     
 
 def save_data(ubication,event,cost,state):
-    cursor = connection.cursor()
-    instruction = "INSERT INTO tickets_ticket VALUES (nextval(\'tickets_ticket_id_seq\'),"+cost+",\'"+ubication+"\','"+state+"',"+event+");"
-    print (instruction)
-    cursor.execute(instruction)
-    connection.commit()
-    print ("GENERO TICKET")
-    connection.close()
+    newTicket = Ticket(ubication=ubication,event=event,cost=cost,state=state)
+    newTicket.save()
 
-def get_data(event):
-    cursor = connection.cursor()
-    instruction = "SELECT event_type FROM events_event WHERE id="+event+";"
-    cursor.execute(instruction)
-    row = cursor.fetchone()
-    connection.commit()
-    connection.close()
-    return str(row[0])
 
 def getListTicket(event):
     cursor = connection.cursor()
@@ -109,9 +96,6 @@ def getListTicket(event):
 
 
 def updateCapacityEvent(event,newCapacity):
-    cursor = connection.cursor()
-    instruction = "UPDATE events_event SET capacity=capacity+"+newCapacity+" WHERE id="+event+";"
-    print (instruction)
-    cursor.execute(instruction)
-    connection.commit()
-    connection.close()
+    event = Event.objects.get(id=event)
+    event.capacity = newCapacity
+    event.save()

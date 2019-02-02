@@ -9,8 +9,7 @@ from apps.events.models import *
 from django.urls import reverse_lazy
 import json
 from apps.tickets.models import Ticket
-
-
+from django.contrib import messages
 # Create your views here.
 
 def index(request):
@@ -27,8 +26,6 @@ def insertEvent(request):
         return redirect('tickets/generateTicket.html')
     else:
         form = EventForm()
-        print(form['name'].value())
-
     return render(request, 'events/insertEvents.html',{'form':form})
 
 def listEvent(request):
