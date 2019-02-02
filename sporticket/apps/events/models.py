@@ -1,6 +1,4 @@
 from django.db import models
-from django.db import connection 
-
 # Create your models here.
 class Event(models.Model):
     id = models.AutoField(primary_key=True)
@@ -23,35 +21,19 @@ class Event(models.Model):
         return str(Event.objects.latest('id'))
     
     def cancelEvent(self,id):
-        cursor = connection.cursor()
-        instruction = "UPDATE events_event SET state=\'Cancelado\' WHERE id="+id+";"
-        cursor.execute(instruction)
-        connection.commit()
-        connection.close()
-
-    def save_data(self,name,initial_date,initial_time,place,url,state,capacity,visitor,local,event_type):
-        cursor = connection.cursor()
-        instruction = "INSERT INTO events_event VALUES (nextval(\'events_event_id_seq\'),\'"+name+"\',\'"+initial_date+"\',\'"+initial_time+"\',\'"+place+"\',\'"+url+"\',\'"+state+"\',"+str(capacity)+",\'"+visitor+"\',\'"+local+"\',\'"+event_type+"\');"
-        cursor.execute(instruction)
-        connection.commit()
-        connection.close()
-
-    def insertTickets(self,quantity,ubication,event,cost):
-        object = Event()
-        x=0
-        while x < int(quantity):        
-            object.save_ticket(ubication,event,cost) 
-            x+=1    
+        event = Event.objects.get(id=id)
+        event.state = 'Cancelado'
+        event.save()
     
-    def save_ticket(self,ubication,event,cost):
-        object = Event()
-        cursor = connection.cursor()
-        instruction = "INSERT INTO tickets_ticket VALUES (nextval(\'tickets_ticket_id_seq\'),"+str(cost)+",\'"+ubication+"\','Disponible',"+str(event)+");"
-        print (instruction)
-        cursor.execute(instruction)
-        connection.commit()
-        print ("GENERO TICKET")
-        connection.close()
+    def activateEvent(self,id):
+        event = Event.objects.get(id=id)
+        event.state = 'Activo'
+        event.save()
+    
+    def save_data(self,name,initial_date,initial_time,place,url,state,capacity,visitor,local,event_type):
+        newEvent = Event(name=name,initial_date=initial_date,initial_time=initial_time,place=place,url=url,state=state,capacity=capacity,visitor=visitor,local=local,event_type=event_type)
+        newEvent.save()
+
 
 class Document(models.Model):
     filename = models.CharField(max_length=100)
