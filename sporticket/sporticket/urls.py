@@ -4,6 +4,7 @@ from django.urls import path
 from django.conf.urls import url, include
 from apps.users.views import userLogin, userLogout, success
 from django.contrib.auth import views as auth_views
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),

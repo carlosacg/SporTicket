@@ -37,6 +37,9 @@
                                         <label><b style="color:orange;">Contraseña</b></label>
                                         <input class="w3-input w3-border" type="password" name="password" id="password" required>
                                         <button class="w3-button w3-block w3-green w3-section w3-padding" type="submit">Login</button>
+                                        <a href="{% url 'social:begin' 'google-oauth2' %}">
+                                         <button type="button" name="button" class="w3-button w3-block w3-green w3-section w3-padding" >Google</button>
+                                        </a>
                                     </div>
                                 </form>
 
@@ -62,13 +65,4 @@
     </div>
 
 </body>
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = 'https://connect.facebook.net/es_ES/sdk.js#xfbml=1&version=v3.2&appId=897867993748425&autoLogAppEvents=1';
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
 
-</html>    

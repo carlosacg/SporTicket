@@ -53,6 +53,14 @@ INSTALLED_APPS = [
     'social_django',
 ]
 
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
+
+    'django.contrib.auth.backends.ModelBackend',
+)
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -83,13 +91,6 @@ TEMPLATES = [
         },
     },
 ]
-AUTHENTICATION_BACKENDS = (
-    'social_core.backends.github.GithubOAuth2',
-    'social_core.backends.twitter.TwitterOAuth',
-    'social_core.backends.facebook.FacebookOAuth2',
-
-    'django.contrib.auth.backends.ModelBackend',
-)
 
 WSGI_APPLICATION = 'sporticket.wsgi.application'
 
@@ -150,7 +151,8 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR,'static'),)
 
-LOGIN_REDIRECT_URL = reverse_lazy('events:evento_listar')
-
+LOGIN_REDIRECT_URL = 'evento_listar'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '490350965101-28igg9n6je008vggfsqbtosldb04sfu8.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'dGMy1kGiHXLjY9xeDf5HNvUv'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
