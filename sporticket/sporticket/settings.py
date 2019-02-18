@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'apps.tickets',
     'apps.users',
     'apps.sales',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -60,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'sporticket.urls'
@@ -75,10 +77,19 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
 ]
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
+
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 WSGI_APPLICATION = 'sporticket.wsgi.application'
 
@@ -89,9 +100,9 @@ WSGI_APPLICATION = 'sporticket.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'sport_db',
-        'USER' : 'andres',
-        'PASSWORD': 'un1v4ll3',
+        'NAME': 'www',
+        'USER' : 'postgres',
+        'PASSWORD': '24603759',
         'HOST' : 'localhost',
         'PORT' : 5432,        
     }
@@ -141,3 +152,5 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR,'static'),)
 
 LOGIN_REDIRECT_URL = reverse_lazy('events:evento_listar')
 
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
