@@ -12,6 +12,11 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/css.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/window.css' %}">
     <link rel="icon"  href="{% static 'images/sporticket.png' %}">
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+         <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+        <link rel="stylesheet" href="{% static 'css/morris.css' %}">
+        <script src="{% static 'js/morris.min.js' %}" charset="utf-8"></script>
     
 </head>
 <body class="w3-light-grey">
@@ -60,7 +65,7 @@
                  	   <a href="/users/insertUsers.html" class="w3-bar-item w3-button " style="color: orange;"><i class="fa fa-plus fa-fw"></i> Insertar</a>
              	       <a href="/users/listUsers.html" class="w3-bar-item w3-button" style="color: orange;"><i class="fa fa-list fa-fw"></i> Listar</a>
                     </div>
-                <a class="w3-bar-item w3-button w3-padding" ><i class="fa fa-bar-chart fa-fw"></i>  Reportes</a>
+                <a href="/reports/reports.html" class="w3-bar-item w3-button w3-padding" ><i class="fa fa-bar-chart fa-fw"></i>  Reportes</a>
                 <a href="/sales/viewsEvent.html" class="w3-bar-item w3-button" style="color: orange;"><i class="fa fa-shopping-cart"></i> Comprar </a>
 
             </div>
@@ -74,10 +79,9 @@
     {% endblock %}
 
     <script src="{% static 'js/w3.js' %}"></script>
-    <script src="{% static 'js/function.js' %}"></script>
-    <script>
-        
-    </script>
+    <script src="{% static 'js/function.js' %}"></script>   
+
+    <script src="{% static 'js/grafico.js' %}" charset="utf-8"></script>
 </body>
 </html>
 
