@@ -1,4 +1,5 @@
 {% extends 'base/base.html' %}
+{%load staticfiles %}
 
 {% block content %}
 <div class="w3-main" >
@@ -10,7 +11,7 @@
 				<thead >
 					<tr class="w3-dark-grey">
 						<th>Cantidad boletos</th>
-						 <th>Ubicación</th>
+						<th>Ubicación</th>
 					</tr>
 				</thead>
 			 	<tbody>
@@ -48,7 +49,7 @@
 			<div class="w3-container">
 				<div class="w3-show-inline-block">
 					<div class="w3-bar">
-						<button onclick="document.getElementById('id01').style.display='block'" type="submit" class="w3-button w3-padding w3-dark-grey w3-round-large" ><font color="orange"><i class="fa fa-plus"></i> Añadir boleto</font></button>
+						<button type="submit" class="w3-button w3-padding w3-dark-grey w3-round-large" ><font color="orange"><i class="fa fa-plus"></i> Añadir boleto</font></button>
 						<button onclick="document.getElementById('id02').style.display='block'"  class="w3-button w3-padding w3-dark-grey w3-round-large"><font color="orange">Imprimir</font></button>
 					</div>
 				</div>
@@ -75,10 +76,129 @@
 			  	<h1 style="color: black;">No hay boletos en la factura</h1>
 			  	{% endif %}
 			</table>
+			<br>
 	  	</div>
 	</div>
 	
 	<hr>
+	<div class="w3-container">
+		<div id="id02" class="w3-modal">
+			<div class="w3-modal-content">
+			  <header > 
+			    <span onclick="document.getElementById('id02').style.display='none'" 
+			    class="w3-button w3-display-topright">&times;</span>
+ 	           	<a class= "w3-display-topmiddle" >
+ 	           		<img src="{% static 'images/logo.png' %}" class="w3-round w3-display-topmiddle w3-margin-right" style="left: -30px;">
+ 	           		<h6 class= "w3-margin-left" style="color: black; font-weight:bold; left: 200px;">SporTicket</h6>
+ 	         	</a> 
+ 	         	<div class="w3-row-padding">
+ 	         		<br>
+ 	         		<div class="w3-third">
+ 	         			<img src="">
+ 	         		</div>
+ 	         		<div class="w3-third w3-center">
+ 	         			<br>
+ 	         			<p>NIT: 0000000-0</p>
+ 	         			<p>Régimen común</p>
+ 	         			<p>Factura # 00000001</p>
+ 	         		</div>
+ 	         		<div class="w3-third w3-center">
+ 	         			<p>Fecha: </p>
+ 	         			<p>00/00/0000</p>
+ 	         			<p>Hora</p>
+ 	         			<p>00:00</p>
+ 	         		</div>
+ 	         	</div>
+			  	</header>
+				<div class="w3-row-padding">
+					<p>Vendedor: KT</p>
+					<p>Cond. Pago: CONTADO</p>
+				</div>
+				<div class="w3-container">
+					<table class="w3-table-all w3-hoverable ">
+				        <thead >
+				          	<tr class="w3-dark-grey">
+				          		<th>Evento</th>
+					            <th>Ubicación</th>
+					            <th></th>
+					            <th>Costo/Unidad</th>
+					            <th>Cantidad</th>
+					            <th></th>
+					            <th>Total</th>            
+							</tr>
+						</thead>
+						<tbody>
+							<tr id="registro_item" >
+								<td>Clásico bla bla bla</td>
+								<td>Zona sur</td>
+								<td>$</td>
+								<td>30.000</td>
+								<td>4</td>
+								<td>$</td>
+								<td>120.000</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<th style="color: black;">Costo total</th>
+								<th style="color: black;">$</th>
+								<th style="color: black;">120.000</th>
+							</tr>
+						</tbody>
+			      	</table>
+				</div>
+		      	<hr>
+		      	<div class="w3-row-padding">
+		      		<p class="w3-center">INFORMACIÓN TRIBUTARIA</p>
+		      		<div class="w3-third">
+		      			<p>Total :</p>
+		      		</div>
+		      		<div class="w3-third">
+		      			<img src="">
+		      		</div>
+		      		<div class="w3-third w3-center">
+		      			<p> 000</p>
+		      		</div>
+		      	</div>
+		      	<hr>
+		      	<div class="w3-row-padding">
+		      		<div class="w3-third">
+		      			<p>Efectivo</p>
+		      			<p>Cambio</p>
+		      		</div>
+		      		<div class="w3-third">
+		      			<img src="">
+		      		</div>
+		      		<div class="w3-third w3-center">
+		      			<p>0000</p>
+		      			<p>0000</p>
+		      		</div>
+		      	</div>
+		      	<hr>
+		      	<div class="w3-row-padding">
+		      		<div class="w3-third">
+		      			<img src="">
+		      		</div>
+		      		<div class="w3-third w3-center">
+		      			<p>RESOLUCIÓN DIAN NO. 500 046612 DE  1200 HASTA 5000</p>
+		      		</div>
+		      		<div class="w3-third">
+		      			<img src="">
+		      		</div>
+		      	</div>
+		      	<div class="w3-row-padding">
+	      			<br>
+	      			<div class="w3-show-inline-block">
+	                    <div class="w3-bar">
+	                    	<button type="submit" class="w3-button w3-padding-16 w3-dark-grey w3-circle" ><i class="fa fa-print"></i></button>
+	                    </div>
+	                </div>
+	      		</div>
+			</div>
+		</div>
+	</div>
 
 	<footer class="w3-container w3-padding-14 w3-grey">
     	<p>Powered by <a style="color: black;">XSOFT</a></p>
