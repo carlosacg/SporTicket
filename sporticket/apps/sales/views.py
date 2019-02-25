@@ -60,8 +60,9 @@ def createShopping(request,id):
 				ubication=form['ubication'].value()
 				quantity=form['quantity'].value()
 				avalible_tickets=get_avalible_tickets(id,ubication)
-				calculate(ubication,id,quantity)
 				add_shopping(bill_id,avalible_tickets,quantity,len(avalible_tickets))
+				calculate(ubication,id,quantity)
+
 			else:
 				form = BuyTicketsFormBaseball()
 			tickets=getListTicketsSolds(bill_id)
@@ -76,6 +77,7 @@ def createShopping(request,id):
 				quantity=form['quantity'].value()
 				avalible_tickets=get_avalible_tickets(id,ubication)
 				add_shopping(bill_id,avalible_tickets,quantity,len(avalible_tickets))
+				calculate(ubication,id,quantity)
 				tickets=getListTicketsSolds(bill_id)
 			else:
 				form = BuyTicketsForm()
@@ -170,4 +172,3 @@ def calculate(ubications, event, quantity):
 	ticket = Ticket.objects.all().filter(event_id=event, ubication=ubications).first()	
 	quantityTickets =  int(quantity)
 	cost = ticket.cost * quantityTickets
-
