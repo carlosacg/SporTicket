@@ -90,7 +90,7 @@ def createShopping(request,id):
 
 def getListTicketsSolds(bill):
     cursor = connection.cursor()
-    instruction = "SELECT count(*),ubication from tickets_ticket WHERE id_bill_id="+str(bill.id)+" GROUP BY ubication;"
+    instruction = "SELECT count(*),ubication,cost from tickets_ticket WHERE id_bill_id="+str(bill.id)+" GROUP BY ubication,cost;"
     cursor.execute(instruction)
     rows = cursor.fetchall()
     connection.commit()
@@ -99,7 +99,7 @@ def getListTicketsSolds(bill):
 
 def getListTicketsAvalibles(event):
     cursor = connection.cursor()
-    instruction = "SELECT count(*),ubication from tickets_ticket WHERE state='Disponible' AND event_id="+str(event.id)+" GROUP BY ubication;"
+    instruction = "SELECT count(*),ubication,cost from tickets_ticket WHERE state='Disponible' AND event_id="+str(event.id)+" GROUP BY ubication,cost;"
     cursor.execute(instruction)
     rows = cursor.fetchall()
     connection.commit()

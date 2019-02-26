@@ -11,7 +11,9 @@
 				<thead >
 					<tr class="w3-dark-grey">
 						<th>Cantidad boletos</th>
-						<th>Ubicación</th>
+						 <th>Ubicación</th>
+						 <th>Costo</th>
+
 					</tr>
 				</thead>
 			 	<tbody>
@@ -19,7 +21,8 @@
 				  	{% for tickets_avalibles in avalibleTicket %}
 				  	<tr id="registro_item" >
 					  	<td>{{tickets_avalibles.0}}</td>
-					  	<td>{{tickets_avalibles.1}}</td>
+						  <td>{{tickets_avalibles.1}}</td>
+						  <td>{{tickets_avalibles.2}}</td>
 					</tr>
 			  	</tbody>
 				{% endfor %}
