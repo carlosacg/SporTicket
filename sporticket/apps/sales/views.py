@@ -65,6 +65,7 @@ def createShopping(request,id):
 
 			else:
 				form = BuyTicketsFormBaseball()
+				
 			tickets=getListTicketsSolds(bill_id)
 			tickets_avalibles=getListTicketsAvalibles(event)
 			print (tickets_avalibles)
@@ -81,6 +82,7 @@ def createShopping(request,id):
 				tickets=getListTicketsSolds(bill_id)
 			else:
 				form = BuyTicketsForm()
+				
 			tickets=getListTicketsSolds(bill_id)
 			tickets_avalibles=getListTicketsAvalibles(event)
 			print (tickets_avalibles)
@@ -129,46 +131,48 @@ def create_bill():
 def add_shopping(bill,ticket,quantity,avalibles):
 		print("Factura: "+str(bill)+" TICKETS DISPONIBLES: "+str(ticket)+" CANTIDAD SOLICITADA: "+str(quantity)+" DISPONIBLES: "+str(avalibles))
 		x=0
-		if int(quantity) < int(avalibles): 
-			while x < int(quantity):
-				if int(len(str(ticket[x])))==4:
-					add_ticket_to_bill(bill,str(ticket[x])[1:2])
-				if int(len(str(ticket[x])))==5:
-					add_ticket_to_bill(bill,str(ticket[x])[1:3])
-				if int(len(str(ticket[x])))==6:
-					add_ticket_to_bill(bill,str(ticket[x])[1:4])
-				if int(len(str(ticket[x])))==7:
-					add_ticket_to_bill(bill,str(ticket[x])[1:5])
-				if int(len(str(ticket[x])))==8:
-					add_ticket_to_bill(bill,str(ticket[x])[1:6])
-				if int(len(str(ticket[x])))==9:
-					add_ticket_to_bill(bill,str(ticket[x])[1:7])
-				if int(len(str(ticket[x])))==10:
-					add_ticket_to_bill(bill,str(ticket[x])[1:8])
-				if int(len(str(ticket[x])))==11:
-					add_ticket_to_bill(bill,str(ticket[x])[1:9])
-				x+=1
-		else:
-			while x < int(avalibles):
-				if int(len(str(ticket[x])))==4:
-					add_ticket_to_bill(bill,str(ticket[x])[1:2])
-				if int(len(str(ticket[x])))==5:
-					add_ticket_to_bill(bill,str(ticket[x])[1:3])
-				if int(len(str(ticket[x])))==6:
-					add_ticket_to_bill(bill,str(ticket[x])[1:4])
-				if int(len(str(ticket[x])))==7:
-					add_ticket_to_bill(bill,str(ticket[x])[1:5])
-				if int(len(str(ticket[x])))==8:
-					add_ticket_to_bill(bill,str(ticket[x])[1:6])
-				if int(len(str(ticket[x])))==9:
-					add_ticket_to_bill(bill,str(ticket[x])[1:7])
-				if int(len(str(ticket[x])))==10:
-					add_ticket_to_bill(bill,str(ticket[x])[1:8])
-				if int(len(str(ticket[x])))==11:
-					add_ticket_to_bill(bill,str(ticket[x])[1:9])
-				x+=1
+		if str(quantity) != '':
+			if int(quantity) < int(avalibles): 
+				while x < int(quantity):
+					if int(len(str(ticket[x])))==4:
+						add_ticket_to_bill(bill,str(ticket[x])[1:2])
+					if int(len(str(ticket[x])))==5:
+						add_ticket_to_bill(bill,str(ticket[x])[1:3])
+					if int(len(str(ticket[x])))==6:
+						add_ticket_to_bill(bill,str(ticket[x])[1:4])
+					if int(len(str(ticket[x])))==7:
+						add_ticket_to_bill(bill,str(ticket[x])[1:5])
+					if int(len(str(ticket[x])))==8:
+						add_ticket_to_bill(bill,str(ticket[x])[1:6])
+					if int(len(str(ticket[x])))==9:
+						add_ticket_to_bill(bill,str(ticket[x])[1:7])
+					if int(len(str(ticket[x])))==10:
+						add_ticket_to_bill(bill,str(ticket[x])[1:8])
+					if int(len(str(ticket[x])))==11:
+						add_ticket_to_bill(bill,str(ticket[x])[1:9])
+					x+=1
+			else:
+				while x < int(avalibles):
+					if int(len(str(ticket[x])))==4:
+						add_ticket_to_bill(bill,str(ticket[x])[1:2])
+					if int(len(str(ticket[x])))==5:
+						add_ticket_to_bill(bill,str(ticket[x])[1:3])
+					if int(len(str(ticket[x])))==6:
+						add_ticket_to_bill(bill,str(ticket[x])[1:4])
+					if int(len(str(ticket[x])))==7:
+						add_ticket_to_bill(bill,str(ticket[x])[1:5])
+					if int(len(str(ticket[x])))==8:
+						add_ticket_to_bill(bill,str(ticket[x])[1:6])
+					if int(len(str(ticket[x])))==9:
+						add_ticket_to_bill(bill,str(ticket[x])[1:7])
+					if int(len(str(ticket[x])))==10:
+						add_ticket_to_bill(bill,str(ticket[x])[1:8])
+					if int(len(str(ticket[x])))==11:
+						add_ticket_to_bill(bill,str(ticket[x])[1:9])
+					x+=1
 
 def calculate(ubications, event, quantity):	
-	ticket = Ticket.objects.all().filter(event_id=event, ubication=ubications).first()	
-	quantityTickets =  int(quantity)
-	cost = ticket.cost * quantityTickets
+	if str(quantity) != '':
+		ticket = Ticket.objects.all().filter(event_id=event, ubication=ubications).first()	
+		quantityTickets =  int(quantity)
+		cost = ticket.cost * quantityTickets
