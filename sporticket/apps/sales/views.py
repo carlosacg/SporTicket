@@ -51,6 +51,28 @@ def listEvent(request):
 		context = {'events':event}
 		return render(request,'sales/viewsEvent.html',context)
 
+def listEvent1(request):
+		event = Event.objects.filter(state="Activo")
+		print (event)
+		context = {'events':event}
+		return render(request,'sales/saleEvent.html',context)
+
+def createSale(request,id):
+	event = Event.objects.get(id=id)
+	if request.method=='POST':
+		form = BuyTicketsForm(request.POST)
+		ubication=form['ubication'].value()
+		quantity=form['quantity'].value()
+		avalible_tickets = get_avalible_tickets(id,ubication)
+
+	else:
+		form = BuyTicketsForm()
+	#tickets=getListTicketsSolds(bill_id)
+	tickets_avalibles=getListTicketsAvalibles(event)
+	print (tickets_avalibles)
+	context = {'event':event,'form':form,'avalibleTicket':tickets_avalibles}
+	return render(request,'sales/createSale.html',context)
+	
 def createShopping(request,id):
 		event = Event.objects.get(id=id)
 		bill_id=Bill.objects.all().last()
