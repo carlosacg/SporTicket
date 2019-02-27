@@ -1,0 +1,72 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+	<div class="w3-main" >
+		<header class="w3-container">
+			<h5 style="color: black;"><b style="color: black;"><i class="fa fa-shopping-cart" style="color: black;"></i>Ventas</b></h5>
+        </header>
+        <div class="w3-row-padding">
+            {% if events %}
+            {% for event in events %}
+            <div class="w3-container w3-half">
+                <div class="w3-card-4" style="width:100%">
+                    <header class="w3-container w3-dark-grey w3-center w3-padding-small">
+                      <p style="color: orange; font-size: 20px">{{event.name}}</p>
+                    </header>
+                    <div class="w3-container">
+                        <div class="w3-half">
+                            <div class="w3-row-padding">
+                                <p>Fecha evento:</p>
+                                <input class="w3-input w3-border-0" value="{{event.initial_date}}" disabled style="width: 90%; margin-top: -10px;">
+                            </div>
+                            <div class="w3-row-padding">
+                                <p>Tipo evento:</p>
+                                <input class="w3-input w3-border-0" value="{{event.event_type}}" disabled style="width: 90%; margin-top: -10px;">
+                            </div>
+                            <div class="w3-row-padding">
+                                <p>Equipo local:</p>
+                                <input class="w3-input w3-border-0" value="{{event.local}}" disabled style="width: 90%; margin-top: -10px;">
+                            </div>
+                            <div class="w3-row-padding">
+                                <p>Lugar:</p>
+                                <input class="w3-input w3-border-0" value="{{event.place}}" disabled style="width: 90%; margin-top: -10px;">
+                            </div>
+                            <div class="w3-row-padding">
+                                <p>Equipo visitante:</p>
+                                <input class="w3-input w3-border-0" value="{{event.visitor}}" disabled style="width: 90%; margin-top: -10px;">
+                            </div>
+                        </div>
+                        <div class="w3-half">
+                            <br>
+                            {% if event %}
+                            <img src="../../../static/{{event.image}}" style="position: relative; z-index:1; width:100%; height:350px; margin-left: -10px;" >
+                            {% endif %}
+                        </div>
+                        <div class="w3-row-padding" style="margin-left:-8px; margin-top:-18px">
+                            <div class="w3-half">
+                                <p>Boletos disponibles:</p>
+                                <input class="w3-input w3-border-0" value="{{event.capacity}}" disabled style="width: 90%; margin-top: -10px;">
+                            </div>
+                            <div class="w3-half" style="margin-left:-10px;">
+                                <p>Estado del evento:</p>
+                                <input class="w3-input w3-border-0" value="{{event.state}}" disabled style="width: 90%; margin-top: -10px;">
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <a href="{% url 'realizar_venta' event.id %}"><button class="w3-button w3-padding w3-dark-grey w3-block" ><i class="fa fa-shopping-cart">Facturar</i></button></a>
+                </div>
+                <br>
+            </div>
+            {% endfor %}
+            {% else %}
+            <h1 style="color: black;">No hay registros de eventos</h1>
+            {% endif %}
+        </div>
+        
+        <hr>
+		<footer class="w3-container w3-padding-14 w3-grey">
+	    	<p>Powered by <a style="color: black;">XSOFT</a></p>
+		</footer>
+	</div>
+{% endblock %}
