@@ -1,32 +1,55 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from apps.events.event_form import EventForm
+from apps.events.forms import EventForm
 from apps.events.view_event import ViewEvent
-from apps.events.upload_form import UploadForm
-from apps.events.image_form import ImageForm
+from apps.events.forms import UploadForm
+from apps.events.forms import ImageForm
 from django.views.generic import ListView,CreateView, UpdateView, DeleteView
 from apps.events.models import *
 from django.urls import reverse_lazy
 import json
 from apps.tickets.models import Ticket
 from django.contrib import messages
+from django.utils.datastructures import MultiValueDictKeyError
+from apps.events.forms import UploadImageForm
+
 # Create your views here.
 
 def index(request):
     return render(request, 'base/base.html')
 
 def insertEvent(request):
-    if request.method == 'POST':
-        form = EventForm(request.POST)
-        if form.is_valid():
-            form.save()
-            print ('SE CREO UN EVENTO')
-            object = Event()
-            object.lastEventId()
-        return redirect('tickets/generateTicket.html')
-    else:
+    try:
         form = EventForm()
-    return render(request, 'events/insertEvents.html',{'form':form})
+        imageForm = ImageForm()
+        context = {'form':form,'imageForm':imageForm}
+        if request.method == 'POST':
+            form = EventForm(request.POST)
+            imageForm = ImageForm(request.POST, request.FILES)
+            if form.is_valid():
+                form.save()
+                print ('SE CREO UN EVENTO')
+                object = Event()
+                object.lastEventId()
+                if imageForm.is_valid():
+                    newdoc = Image(filename = request.POST['filename'],docfile = request.FILES['docfile'])
+                    print ('creo el newdoc')
+                    newdoc.save(imageForm)
+                    print ('guardo el newdoc')
+                    ruta=request.FILES.get('docfile',false).name
+                    print (ruta)
+                    object = Event()
+                    event = Event.objects.get(id=id)
+                    event.image="./images/"+ruta
+                    event.save()
+                else:
+                    print('Error al subir imagen')
+            return redirect('tickets/generateTicket.html')
+        else:
+            return render(request, 'events/insertEvents.html',context)
+    except MultiValueDictKeyError:
+        newdoc = False
+    return render(request, 'events/insertEvents.html',context)
 
 def listEvent(request):
     event = Event.objects.all()
@@ -91,15 +114,23 @@ def viewEvent(request,id):
 def deleteEvent(request,id):
     event = Event.objects.get(id=id)
     print (event.id)
+    if event.state == 'Cancelado':
+        state = 'activar'
+        context = {'state':state,'event':event}
+    else:
+        state = 'cancelar'
+        context = {'state':state,'event':event}
+
     if request.method=='POST':
         if event.state == 'Activo':
             object = Event()
             object.cancelEvent(id)
+
         if event.state == 'Cancelado':
             object = Event()
             object.activateEvent(id)
-        return redirect('evento_listar')
-    return render(request,'events/deleteEvents.html',{'event':event})
+        return redirect('events/listEvents.html')
+    return render(request,'events/deleteEvents.html',context)
 
 def uploadImage(request,id):
     if request.method == 'POST':

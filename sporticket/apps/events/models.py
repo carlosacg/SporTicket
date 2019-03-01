@@ -14,8 +14,7 @@ class Event(models.Model):
     visitor = models.CharField(max_length=200)
     local = models.CharField(max_length=200)
     event_type = models.CharField(max_length=200)
-    image = models.ImageField(null=True)
-
+    
     def __str__(self):   #MUESTRA EL NOMBRE COMO LLAVE FORANEA
         return '{}'.format(self.id)
 
@@ -34,11 +33,17 @@ class Event(models.Model):
         event.save()
         #messages.success(self.request,'Evento reactivado')
 
-    
     def save_data(self,name,initial_date,initial_time,place,url,state,capacity,visitor,local,event_type):
         newEvent = Event(name=name,initial_date=initial_date,initial_time=initial_time,place=place,url=url,state=state,capacity=capacity,visitor=visitor,local=local,event_type=event_type)
         newEvent.save()
 
+
+class EventImage(models.Model):
+    event = models.ForeignKey(Event, on_delete=True)
+    image = models.ImageField(upload_to='albums/images/')
+
+    def __unicode__(self,):
+        return str(self.image)
 
 class Document(models.Model):
     filename = models.CharField(max_length=100)
