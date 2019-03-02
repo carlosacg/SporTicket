@@ -39,7 +39,7 @@
 						<td>{{event.local}}</td>
 						<td>{{event.state}}</td>
 						<td>{{event.event_type}}</td>
-						<td><a href="#" data-toggle="tooltip" title="Boletos del evento"><button class="w3-button w3-padding-small w3-dark-grey w3-circle"><i class="fa fa-trash"></i></button></a></td>
+						<td><a href="{% url 'ticket_crear' event.id %}" data-toggle="tooltip" title="Boletos del evento"><button class="w3-button w3-padding-small w3-dark-grey w3-circle"><i class="fa fa-trash"></i></button></a></td>
 						<td><a href="{% url 'evento_imagen' event.id %}" data-toggle="tooltip" title="Inserta imagen para el evento"><button class="w3-button w3-padding-small w3-dark-grey w3-circle"><i class="fa fa-file-image-o"></i></button></a></td>
 						<td><a href="{% url 'evento_ver' event.id %}" data-toggle="tooltip" title="Visualiza el evento"><button class="w3-button w3-padding-small w3-dark-grey w3-circle"><i class="fa fa-eye"></i></button></a></td>
 						<td><a href="{% url 'evento_editar' event.id %}" data-toggle="tooltip" title="Edita el evento"><button class="w3-button w3-padding-small w3-dark-grey w3-circle"><i class="fa fa-pencil"></i></button></a></td>

@@ -70,7 +70,10 @@
 		        <thead >
 		          	<tr class="w3-dark-grey">
 		          		<th>Cantidad boletos</th>
-			            <th>Ubicacion</th>
+									<th>Ubicacion</th>
+									<th></th>
+									<th></th>
+									<th></th>
 		          	</tr>
 				</thead>
 				<tbody>
@@ -79,6 +82,9 @@
 					<tr id="registro_item" >
 						<td>{{arrayTicket.0}}</td>
 						<td>{{arrayTicket.1}}</td>
+						<td><a href="#" data-toggle="tooltip" title="Aumentar boletos"><button >+</i></button></a></td>
+						<td><a href="#" data-toggle="tooltip" title="Disminuir boletos"><button >-</i></button></a></td>
+						<td><a href="#" data-toggle="tooltip" title="Borrar todos boletos"><button >+</i></button></a></td>
 					</tr>
 				</tbody>
 				{% endfor %}

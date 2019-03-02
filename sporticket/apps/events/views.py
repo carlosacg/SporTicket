@@ -1,16 +1,17 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from apps.events.forms import EventForm
-from apps.events.view_event import ViewEvent
+from apps.events.forms import ViewEvent
 from apps.events.forms import UploadForm
 from apps.events.forms import ImageForm
 from django.views.generic import ListView,CreateView, UpdateView, DeleteView
 from apps.events.models import *
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy,reverse
 import json
 from apps.tickets.models import Ticket
 from django.contrib import messages
 from django.utils.datastructures import MultiValueDictKeyError
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 
@@ -124,7 +125,9 @@ def uploadImage(request,id):
                 event = Event.objects.get(id=id)
                 event.image="./images/"+ruta
                 event.save()
-            return redirect('tickets/generateTicket.html')
+            
+            return HttpResponseRedirect(reverse('ticket_crear', args=[id]))
+            #return redirect('ticket_crear',args=[id])
     else:
             formulario = UploadForm()
     return render(request, "events/imageEvents.html",{'form': formulario})

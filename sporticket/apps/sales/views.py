@@ -6,7 +6,6 @@ from django.dispatch import receiver
 from apps.events.models import *
 from .models import Bill
 from apps.tickets.models import Ticket
-from django.views.generic import ListView,CreateView, UpdateView, DeleteView
 from django.db import connection 
 from .forms import BillForm, AddTicketsForm, BuyTicketsFormBaseball, BuyTicketsForm
 
