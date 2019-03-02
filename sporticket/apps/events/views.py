@@ -11,7 +11,6 @@ import json
 from apps.tickets.models import Ticket
 from django.contrib import messages
 from django.utils.datastructures import MultiValueDictKeyError
-from apps.events.forms import UploadImageForm
 
 # Create your views here.
 
@@ -19,37 +18,18 @@ def index(request):
     return render(request, 'base/base.html')
 
 def insertEvent(request):
-    try:
+    if request.method == 'POST':
+        form = EventForm(request.POST)
+        if form.is_valid():
+            form.save()
+            object = Event()
+            event = Event.objects.get(id=str(object.lastEventId()))
+            event.image="./images/porDefecto.jpg"
+            event.save()
+        return redirect('uploadImage.html'+str(object.lastEventId()))
+    else:
         form = EventForm()
-        imageForm = ImageForm()
-        context = {'form':form,'imageForm':imageForm}
-        if request.method == 'POST':
-            form = EventForm(request.POST)
-            imageForm = ImageForm(request.POST, request.FILES)
-            if form.is_valid():
-                form.save()
-                print ('SE CREO UN EVENTO')
-                object = Event()
-                object.lastEventId()
-                if imageForm.is_valid():
-                    newdoc = Image(filename = request.POST['filename'],docfile = request.FILES['docfile'])
-                    print ('creo el newdoc')
-                    newdoc.save(imageForm)
-                    print ('guardo el newdoc')
-                    ruta=request.FILES.get('docfile',false).name
-                    print (ruta)
-                    object = Event()
-                    event = Event.objects.get(id=id)
-                    event.image="./images/"+ruta
-                    event.save()
-                else:
-                    print('Error al subir imagen')
-            return redirect('tickets/generateTicket.html')
-        else:
-            return render(request, 'events/insertEvents.html',context)
-    except MultiValueDictKeyError:
-        newdoc = False
-    return render(request, 'events/insertEvents.html',context)
+    return render(request, 'events/insertEvents.html',{'form':form})
 
 def listEvent(request):
     event = Event.objects.all()
@@ -72,17 +52,17 @@ def uploadFile(request):
                 object.save_data(dato['name'],dato['initial_dale'],dato['initial_time'],dato['place'],dato['url'],dato['state'],dato['capacity'],dato['visitor'],dato['local'],dato['event_type'])
                 print('GUARDO EL EVENTO')
                 if dato['event_type'] == 'Beisbol':
-                    insertTickets(dato['zAlta'],"Zona alta",Event.objects.all().last(),dato['pAlta'])
-                    insertTickets(dato['zMedia'],"Zona media",Event.objects.all().last(),dato['pMedia'])
-                    insertTickets(dato['zBaja'],"Zona baja",Event.objects.all().last(),dato['pBaja'])
+                    object.insertTickets(dato['zAlta'],"Zona alta",Event.objects.all().last(),dato['pAlta'])
+                    object.insertTickets(dato['zMedia'],"Zona media",Event.objects.all().last(),dato['pMedia'])
+                    object.insertTickets(dato['zBaja'],"Zona baja",Event.objects.all().last(),dato['pBaja'])
 
                 else:
-                    insertTickets(dato['tNorte'],"Tribuna norte",Event.objects.all().last(),dato['pNorte'])
-                    insertTickets(dato['tSur'],"Tribuna sur",Event.objects.all().last(),dato['pSur'])
-                    insertTickets(dato['tOriente'],"Tribuna oriente",Event.objects.all().last(),dato['pOriente'])
-                    insertTickets(dato['tOccidente'],"Tribuna occidente",Event.objects.all().last(),dato['pOccidente'])
+                    object.insertTickets(dato['tNorte'],"Tribuna norte",Event.objects.all().last(),dato['pNorte'])
+                    object.insertTickets(dato['tSur'],"Tribuna sur",Event.objects.all().last(),dato['pSur'])
+                    object.insertTickets(dato['tOriente'],"Tribuna oriente",Event.objects.all().last(),dato['pOriente'])
+                    object.insertTickets(dato['tOccidente'],"Tribuna occidente",Event.objects.all().last(),dato['pOccidente'])
                 
-            return redirect('events/listEvents.html')
+            return redirect('evento_listar')
     else:
         formulario = UploadForm()
     return render(request, "events/jsonEvents.html",{'form': formulario})
@@ -96,7 +76,7 @@ def updateEvent(request,id):
         form = EventForm(request.POST, instance=event)
         if form.is_valid():
             form.save()
-        return redirect('events/listEvents.html')
+        return redirect('evento_listar')
     return render(request,'events/insertEvents.html',{'form':form})
 
 def viewEvent(request,id):
@@ -107,7 +87,7 @@ def viewEvent(request,id):
         form = ViewEvent(request.POST, instance=event)
         if form.is_valid():
             form.save()
-        return redirect('events/listEvents.html')
+        return redirect('evento_listar')
     context = {'event':event,'form':form}
     return render(request,'events/viewEvents.html',context)
 
@@ -144,7 +124,7 @@ def uploadImage(request,id):
                 event = Event.objects.get(id=id)
                 event.image="./images/"+ruta
                 event.save()
-            return redirect('events/listEvents.html')
+            return redirect('tickets/generateTicket.html')
     else:
             formulario = UploadForm()
     return render(request, "events/imageEvents.html",{'form': formulario})
@@ -170,13 +150,4 @@ class EventUpdate(UpdateView):
     template_name = 'events/insertEvents.html'
     success_url = reverse_lazy('evento_listar')
 
-def insertTickets(quantity,ubication,event,cost):
-        x=0
-        while x < int(quantity):        
-            save_ticket(ubication,event,cost) 
-            x+=1    
-
-def save_ticket(ubication,event,cost):
-        newTicket = Ticket(cost=cost,ubication=ubication,event=event,state='Disponible')
-        newTicket.save()
 

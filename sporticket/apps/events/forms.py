@@ -1,6 +1,5 @@
 from django import forms
 from apps.events.models import Event
-from apps.events.models import EventImage
 
 class ImageForm(forms.Form):
  filename = forms.CharField(max_length=100)
@@ -61,7 +60,3 @@ class EventForm(forms.ModelForm):
             'event_type': forms.Select(choices=CHOICES,attrs={'class':'w3-input w3-border'}),
         }
  
-class UploadImageForm(forms.ModelForm):
-    class Meta:
-        model = EventImage
-        fields = ['event', 'image']

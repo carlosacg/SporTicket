@@ -14,6 +14,7 @@ class Event(models.Model):
     visitor = models.CharField(max_length=200)
     local = models.CharField(max_length=200)
     event_type = models.CharField(max_length=200)
+    image = models.ImageField(null=True)
     
     def __str__(self):   #MUESTRA EL NOMBRE COMO LLAVE FORANEA
         return '{}'.format(self.id)
@@ -37,14 +38,16 @@ class Event(models.Model):
         newEvent = Event(name=name,initial_date=initial_date,initial_time=initial_time,place=place,url=url,state=state,capacity=capacity,visitor=visitor,local=local,event_type=event_type)
         newEvent.save()
 
-
-class EventImage(models.Model):
-    event = models.ForeignKey(Event, on_delete=True)
-    image = models.ImageField(upload_to='albums/images/')
-
-    def __unicode__(self,):
-        return str(self.image)
-
+    def insertTickets(quantity,ubication,event,cost):
+            x=0
+            while x < int(quantity):        
+                save_ticket(ubication,event,cost) 
+                x+=1    
+    
+    def save_ticket(ubication,event,cost):
+        newTicket = Ticket(cost=cost,ubication=ubication,event=event,state='Disponible')
+        newTicket.save()
+        
 class Document(models.Model):
     filename = models.CharField(max_length=100)
     docfile = models.FileField(upload_to='documents/')
