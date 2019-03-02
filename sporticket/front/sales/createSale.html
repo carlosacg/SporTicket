@@ -1,5 +1,7 @@
 
+
 {% extends 'base/base.html' %}
+{%load staticfiles %}
 
 {% block content %}
 <div class="w3-main" >
@@ -57,14 +59,14 @@
 			<div class="w3-container">
 				<div class="w3-show-inline-block">
 					<div class="w3-bar">
-						<button onclick="addRow()"  class="w3-button w3-padding w3-dark-grey w3-round-large" ><font color="orange"><i class="fa fa-plus"></i> Añadir boleto</font></button>
+						<button onclick="addRowMain()"  class="w3-button w3-padding w3-dark-grey w3-round-large" ><font color="orange"><i class="fa fa-plus"></i> Añadir boleto</font></button>
 					</div>
 				</div>
 			</div>
-		<form method="post">
+		<form>
 			{% csrf_token %}
-			<button onclick="document.getElementById('id02').style.display='block'"  type="submit" class="w3-button w3-padding w3-dark-grey w3-round-large"><font color="orange">Finalizar Venta</font></button>
 		</form>
+		<button onclick="document.getElementById('id02').style.display='block'"  type="submit" class="w3-button w3-padding w3-dark-grey w3-round-large"><font color="orange">Finalizar Venta</font></button>
 		<div class="w3-container">
 			<table id="bill_table" class="w3-table-all w3-hoverable ">
 			  	<thead >
@@ -74,6 +76,7 @@
 						<th>Costo</th>
 						<th>SubTotal</th>
 					</tr>
+
 			  	</thead>
 			  	<tbody>
 			  		<tr>
@@ -88,6 +91,88 @@
 	</div>
 	
 	<hr>
+
+	<div class="w3-container">
+			<div id="id02" class="w3-modal">
+				<div class="w3-modal-content">
+				  <header > 
+					<span onclick="document.getElementById('id02').style.display='none'" 
+					class="w3-button w3-display-topright">&times;</span>
+						<a class= "w3-display-topmiddle" >
+							<img src="{% static 'images/logo.png' %}" class="w3-round w3-display-topmiddle w3-margin-right" style="left: -30px;">
+							<h6 class= "w3-margin-left" style="color: black; font-weight:bold; left: 200px;">SporTicket</h6>
+					  </a> 
+					  <div class="w3-row-padding">
+						  <br>
+						  <div class="w3-third">
+							  <img src="">
+						  </div>
+						  <div class="w3-third w3-center">
+							  <br>
+							  <p>NIT: 0000000-0</p>
+							  <p>Régimen común</p>
+							  <p>Factura # {{bill.id}}</p>
+						  </div>
+						  <div class="w3-third w3-center">				
+							  <p> Fecha y Hora</p>
+							  <p>{{hora}}</p>
+						  </div>
+					  </div>
+					  </header>
+					<div class="w3-row-padding">
+						<p>Vendedor:{{user.last_name}}</p>
+						<p>Cond. Pago: CONTADO</p>
+						<div class="w3-container">
+								<table id="bill_table1" class="w3-table-all w3-hoverable ">
+									  <thead >
+										<tr class="w3-dark-grey">
+											<th>Cant.</th>
+											<th>Ubicación</th>
+											<th>Costo</th>
+											<th>SubTotal</th>
+										</tr>
+					
+									  </thead>
+									  <tbody>
+										  <tr>
+											  <div class="w3-threequarter w3-dark-grey">
+												  <th style="text-align:right;" colspan="3">Total</th>
+											  </div>
+											  <th id="total_bill1"></th>			  			
+										  </tr>
+									  </tbody>
+								</table>
+							  </div>
+					  <hr>
+					  <div class="w3-row-padding">
+						  <p class="w3-center">INFORMACIÓN TRIBUTARIA</p>
+						  <div class="w3-third">
+							  <img src="">
+						  </div>
+					  </div>
+					  <hr>
+					  <div class="w3-row-padding">
+						  <div class="w3-third">
+							  <img src="">
+						  </div>
+						  <div class="w3-third w3-center">
+							  <p>RESOLUCIÓN DIAN NO. 500 046612 DE  1200 HASTA 5000</p>
+						  </div>
+						  <div class="w3-third">
+							  <img src="">
+						  </div>
+					  </div>
+					  <div class="w3-row-padding">
+						  <br>
+						  <div class="w3-show-inline-block">
+							<div class="w3-bar">
+								<button type="submit" class="w3-button w3-padding-16 w3-dark-grey w3-circle" ><i class="fa fa-print"></i></button>
+							</div>
+						</div>
+					  </div>
+				</div>
+			</div>
+		</div>
 
 	<footer class="w3-container w3-padding-14 w3-grey">
     	<p>Powered by <a style="color: black;">XSOFT</a></p>
@@ -104,7 +189,16 @@
 		}
 		document.getElementById("total_bill").innerHTML=total;
 	}
-	//Comentario prueba
+	function calcularTotalF(){
+		var table=document.getElementById("bill_table1");
+ 		var table_len=(table.rows.length)-1;
+ 		var total=0;
+		for (var i = 1; i < table_len; i++) {
+			var subtotal = parseInt(document.getElementById("subtotal_f_"+i).innerHTML);
+			total += subtotal;
+		}
+		document.getElementById("total_bill1").innerHTML=total;
+	}
 	function calcularSubotales(){
 		var table=document.getElementById("bill_table");
  		var table_len=(table.rows.length)-1;
@@ -114,24 +208,49 @@
 			document.getElementById("subtotal_"+i).innerHTML=(cant*cost);
 		}
 	}
+	function calcularSubotalesF(){
+		var table=document.getElementById("bill_table1");
+ 		var table_len=(table.rows.length)-1;
+		for (var i = 1; i < table_len; i++) {
+			var cant = document.getElementById("cantidad_boletos_f_"+i).innerHTML;
+			var cost = document.getElementById("costo_f_"+i).innerHTML;
+			document.getElementById("subtotal_f_"+i).innerHTML=(cant*cost);
+		}
+	}
 	function getCosto(selectTribuna){
 		var costoTribuna = document.getElementById(selectTribuna+"_cost");
-		console.log("costo tribuna : "+costoTribuna.firstChild.nodeValue);
+		//console.log("costo tribuna : "+costoTribuna.firstChild.nodeValue);
 		return costoTribuna.innerHTML;
 	}
 	function addRow(){
 		var selectTribuna = document.getElementById('select_tribuna');
 		var selectedOption = selectTribuna.options[selectTribuna.selectedIndex];
 		var cantidadBoletos = document.getElementById('cantidad').value;
-		console.log("Cantidad de boletos :"+cantidadBoletos);
-		console.log(selectedOption.value + ': ' + selectedOption.text);
+		//console.log("Cantidad de boletos :"+cantidadBoletos);
+		//console.log(selectedOption.value + ': ' + selectedOption.text);
 		var table=document.getElementById("bill_table");
  		var table_len=(table.rows.length)-1;
- 		console.log("tamaño de la tabla : "+table_len);
+ 		//console.log("tamaño de la tabla : "+table_len);
  		 var row = table.insertRow(table_len).outerHTML="<tr id='row_"+table_len+"'> <td id='cantidad_boletos_"+table_len+"'>"+cantidadBoletos+"</td> <td id='ubicacion_"+table_len+"'>"+selectedOption.text+"</td><td id='costo_"+table_len+"'>"+getCosto(selectedOption.text)+"</td><td id='subtotal_"+table_len+"'></td></tr>";
  		 calcularSubotales();
  		 calcularTotal();
 	}
+	function addRowF(){
+		var selectTribuna = document.getElementById('select_tribuna');
+		var selectedOption = selectTribuna.options[selectTribuna.selectedIndex];
+		var cantidadBoletos = document.getElementById('cantidad').value;
+		//console.log("Cantidad de boletos :"+cantidadBoletos);
+		//console.log(selectedOption.value + ': ' + selectedOption.text);
+		var table=document.getElementById("bill_table1");
+ 		var table_len=(table.rows.length)-1;
+ 		//console.log("tamaño de la tabla : "+table_len);
+ 		 var row = table.insertRow(table_len).outerHTML="<tr id='row_f_"+table_len+"'> <td id='cantidad_boletos_f_"+table_len+"'>"+cantidadBoletos+"</td> <td id='ubicacion_f_"+table_len+"'>"+selectedOption.text+"</td><td id='costo_f_"+table_len+"'>"+getCosto(selectedOption.text)+"</td><td id='subtotal_f_"+table_len+"'></td></tr>";
+ 		 calcularSubotalesF();
+ 		 calcularTotalF();
+	}
+	function addRowMain(){
+		addRow();
+		addRowF();
+	}
 </script>
 {% endblock %}
-

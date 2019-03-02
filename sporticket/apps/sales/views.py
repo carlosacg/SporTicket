@@ -8,6 +8,7 @@ from .models import Bill
 from apps.tickets.models import Ticket
 from django.db import connection 
 from .forms import BillForm, AddTicketsForm, BuyTicketsFormBaseball, BuyTicketsForm
+import time
 
 
 def index_sale(request):
@@ -57,6 +58,7 @@ def listEvent1(request):
 		return render(request,'sales/saleEvent.html',context)
 
 def createSale(request,id):
+	hora = time.strftime("%c")
 	event = Event.objects.get(id=id)
 	if request.method=='POST':
 		form = BuyTicketsForm(request.POST)
@@ -69,7 +71,7 @@ def createSale(request,id):
 	#tickets=getListTicketsSolds(bill_id)
 	tickets_avalibles=getListTicketsAvalibles(event)
 	print (tickets_avalibles)
-	context = {'event':event,'form':form,'avalibleTicket':tickets_avalibles}
+	context = {'event':event,'form':form,'hora':hora,'avalibleTicket':tickets_avalibles}
 	return render(request,'sales/createSale.html',context)
 	
 def createShopping(request,id):
