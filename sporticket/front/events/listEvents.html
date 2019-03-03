@@ -1,63 +1,97 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
-	<div class="w3-main" >
-		<header class="w3-container">
-			<h5 style="color: black;"><b style="color: black;"><i class="fa fa-list" style="color: black;"></i> Listar eventos</b></h5>
-		</header>
-		<div class="w3-container">
-      		<table class="w3-table-all w3-hoverable ">
-		        <thead >
-		          	<tr class="w3-dark-grey">
-		          		<th>Nombre</th>
-			            <th>Fecha</th>
-			            <th>Hora</th>
-			            <th>Lugar</th>
-			            <th>Capacidad</th>
-			            <th>Equipo visitante</th>
-						<th>Equipo local</th>
-						<th>Estado</th>
-			            <th>Tipo de evento</th>
-						<th></th>
-						<th></th>
-						<th></th>
-						<th></th>
-						<th></th>
-
-		          	</tr>
-				</thead>
-				{% if object_list %}
-				{% for event in object_list %}
-				<tbody>
-					<tr id="registro_item" >
-						<td>{{event.name}}</td>
-						<td>{{event.initial_date}}</td>
-						<td>{{event.initial_time}}</td>
-						<td>{{event.place}}</td>
-						<td>{{event.capacity}}</td>
-						<td>{{event.visitor}}</td>
-						<td>{{event.local}}</td>
-						<td>{{event.state}}</td>
-						<td>{{event.event_type}}</td>
-						<td><a href="{% url 'ticket_crear' event.id %}" data-toggle="tooltip" title="Boletos del evento"><button class="w3-button w3-padding-small w3-dark-grey w3-circle"><i class="fa fa-trash"></i></button></a></td>
-						<td><a href="{% url 'evento_imagen' event.id %}" data-toggle="tooltip" title="Inserta imagen para el evento"><button class="w3-button w3-padding-small w3-dark-grey w3-circle"><i class="fa fa-file-image-o"></i></button></a></td>
-						<td><a href="{% url 'evento_ver' event.id %}" data-toggle="tooltip" title="Visualiza el evento"><button class="w3-button w3-padding-small w3-dark-grey w3-circle"><i class="fa fa-eye"></i></button></a></td>
-						<td><a href="{% url 'evento_editar' event.id %}" data-toggle="tooltip" title="Edita el evento"><button class="w3-button w3-padding-small w3-dark-grey w3-circle"><i class="fa fa-pencil"></i></button></a></td>
-						<td><a href="{% url 'evento_eliminar' event.id %}" data-toggle="tooltip" title="Cancela/Re-activa el evento"><button class="w3-button w3-padding-small w3-dark-grey w3-circle"><i class="fa fa-trash"></i></button></a></td>
-
-					</tr>
-				</tbody>
-				{% endfor %}
-				{% else %}
-				<h1 style="color: black;">No hay registros de eventos</h1>
-				{% endif %}
-	      	</table>
-      		
-		</div>
-
-		<hr>
-		<footer class="w3-container w3-padding-14 w3-grey">
-	    	<p>Powered by <a style="color: black;">XSOFT</a></p>
-		</footer>
+<div class="w3-main" >
+	<header class="w3-container">
+		<h5 class="black-color">
+			<b class="black-color" ">
+			<i class="fa fa-list black-color"></i> Listar eventos</b>
+		</h5>
+	</header>
+	<div class="w3-container w3-rest">
+  		<table class="w3-table-all w3-hoverable ">
+	        <thead >
+	          	<tr class="w3-dark-grey">
+	          		<th>Nombre</th>
+		            <th>Fecha</th>
+		            <th>Hora</th>
+		            <th>Lugar</th>
+		            <th>Capacidad</th>
+		            <th>Equipo visitante</th>
+					<th>Equipo local</th>
+					<th>Estado</th>
+		            <th>Tipo de evento</th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+	          	</tr>
+			</thead>
+			{% if object_list %}
+			{% for event in object_list %}
+			<tbody>
+				<tr id="registro_item" >
+					<td>{{event.name}}</td>
+					<td>{{event.initial_date}}</td>
+					<td>{{event.initial_time}}</td>
+					<td>{{event.place}}</td>
+					<td>{{event.capacity}}</td>
+					<td>{{event.visitor}}</td>
+					<td>{{event.local}}</td>
+					<td>{{event.state}}</td>
+					<td>{{event.event_type}}</td>
+					<td><a href="#" 
+							data-toggle="tooltip" 
+							title="Boletos del evento">
+							<button class="w3-button w3-padding-small w3-dark-grey w3-circle">
+							<i class="fa fa-ticket"></i>
+							</button>
+						</a>
+					</td>
+					<td><a href="{% url 'evento_imagen' event.id %}" 
+							data-toggle="tooltip" 
+							title="Inserta imagen para el evento">
+							<button class="w3-button w3-padding-small w3-dark-grey w3-circle">
+							<i class="fa fa-file-image-o"></i>
+							</button>
+						</a>
+					</td>
+					<td><a href="{% url 'evento_ver' event.id %}" 
+							data-toggle="tooltip" 
+							title="Visualiza el evento">
+							<button class="w3-button w3-padding-small w3-dark-grey w3-circle">
+							<i class="fa fa-eye"></i>
+							</button>
+						</a>
+					</td>
+					<td><a href="{% url 'evento_editar' event.id %}" 
+							data-toggle="tooltip" 
+							title="Edita el evento">
+							<button class="w3-button w3-padding-small w3-dark-grey w3-circle">
+							<i class="fa fa-pencil"></i>
+							</button>
+						</a>
+					</td>
+					<td><a href="{% url 'evento_eliminar' event.id %}" 
+							data-toggle="tooltip" 
+							title="Cancela/Re-activa el evento">
+							<button class="w3-button w3-padding-small w3-dark-grey w3-circle">
+							<i class="fa fa-refresh"></i>
+							</button>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+			{% endfor %}
+			{% else %}
+			<h1 class="black-color">No hay registros de eventos</h1>
+			{% endif %}
+      	</table>      		
 	</div>
+	<hr>
+	<footer class="w3-container w3-padding-14 w3-grey">
+    	<p>Powered by <a class="black-color">XSOFT</a></p>
+	</footer>
+</div>
 {% endblock %}

@@ -1,104 +1,124 @@
 {% extends 'base/base.html' %}
-<head>
-	
-</head>
 
 {% block content %}
-	<div class="w3-main" >
-		<header class="w3-container" >
-			<h5 style="color: black;"><b style="color: black;"><i class="fa fa-plus" style="color: black;"></i> Generador de boletos</b></h5>
-			<h5 style="color: black;"><b style="color: black;"> {{event.name}}</b></h5>
-
-		</header>
-		<form method="post">
-		{% csrf_token %}
-			<div class="w3-row-padding">
-				<div class="w3-half">
-					<label for="{{form.ubication.id_for_label}}"></label><!--NO BORRAR NADA DEL FORM-->
-					{{form.ubication}}
-				</div>
-				<div class="w3-half">
-					<label for="{{form.cost.id_for_label}}"></label><!--NO BORRAR NADA DEL FORM-->
-					{{form.cost}}
-				</div>
+<div class="w3-main" >
+	<header class="w3-container" >
+		<h5 class="black-color">
+			<b class="black-color">
+			<i class="fa fa-plus black-color"></i> Generador de boletos</b>
+		</h5>
+		<h5 class="black-color" "><b class="black-color"> {{event.name}}</b></h5>
+	</header>
+	<form method="post">
+	{% csrf_token %}
+		<div class="w3-row-padding">
+			<div class="w3-half">
+				<label for="{{form.ubication.id_for_label}}"></label><!--NO BORRAR NADA DEL FORM-->
+				{{form.ubication}}
 			</div>
-			<div class="w3-row-padding">
-				<div class="w3-half">
-					{{form.state}}<!--NO BORRAR NADA DEL FORM-->
-                </div>
-                <div class="w3-container">
-                        <table class="w3-table-all w3-hoverable ">
-                          <thead >
-                                <tr class="w3-dark-grey">
-                                <th>Ubicacion</th>
-                                <th>Cantidad Boletos</th>
-                                <th>Precio</th>
-                                </tr>
-                          </thead>
-                          <tbody>
-                              <tr>
-                                <td>Zona alta</td>
-                                <td>{{form.higthZone}}</td>
-                                <td>{{form.costHigth}}</td>
-                              </tr>
-                              <tr>
-                                <td>Zona media</td>
-                                <td>{{form.mediumZone}}</td>
-                                <td>{{form.costMediun}}</td>
-                            </tr>
-                            <tr>
-                                <td>Zona baja</td>
-                                <td>{{form.lowZone}}</td>
-                                <td>{{form.costLow}}</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                        </div>
+			<div class="w3-half">
+				<label for="{{form.cost.id_for_label}}"></label><!--NO BORRAR NADA DEL FORM-->
+				{{form.cost}}
 			</div>
-			<div class="w3-show-inline-block">
-				<div class="w3-container">
-					<div class="w3-bar">
-						<button type="submit" class="w3-button w3-padding-16 w3-dark-grey w3-circle" ><i class="fa fa-save"></i></button>
-					</div>
-				</div>
-				
-			</div>		</form>
-		<header class="w3-container">
-			<h5 style="color: black;"><b style="color: black;"><i class="fa fa-list" style="color: black;"></i> Boletos generados</b></h5>
-        </header>
-
-		<div class="w3-container">
-      		<table class="w3-table-all w3-hoverable ">
-		        <thead >
-		          	<tr class="w3-dark-grey">
-		          		<th>Cantidad boletos</th>
-									<th>Ubicacion</th>
-									<th></th>
-									<th></th>
-									<th></th>
-		          	</tr>
-				</thead>
-				<tbody>
-					{% if tickets %}
-					{% for arrayTicket in tickets %}
-					<tr id="registro_item" >
-						<td>{{arrayTicket.0}}</td>
-						<td>{{arrayTicket.1}}</td>
-						<td><a href="{% url 'ticket_add' id=event.id ubication=arrayTicket.1 %}" data-toggle="tooltip" title="Aumentar boletos"><button >+</i></button></a></td>
-						<td><a href="{% url 'ticket_minus' id=event.id ubication=arrayTicket.1 %}" data-toggle="tooltip" title="Disminuir boletos"><button >-</i></button></a></td>
-						<td><a href="{% url 'ticket_delete' id=event.id ubication=arrayTicket.1 %}" data-toggle="tooltip" title="Borrar todos boletos"><button >X</i></button></a></td>
-					</tr>
-				</tbody>
-				{% endfor %}
-				{% else %}
-				<h1 style="color: black;">No hay registros de Boletos</h1>
-				{% endif %}
-	      	</table>
 		</div>
+		<div class="w3-row-padding">
+			<div class="w3-half">
+				{{form.state}}<!--NO BORRAR NADA DEL FORM-->
+            </div>
+            <div class="w3-container">
+                <table class="w3-table-all w3-hoverable ">
+	                <thead >
+                        <tr class="w3-dark-grey">
+                        <th>Ubicacion</th>
+                        <th>Cantidad Boletos</th>
+                        <th>Precio</th>
+                        </tr>
+	                </thead>
+	                <tbody>
+	                    <tr>
+	                        <td>Zona alta</td>
+	                        <td>{{form.higthZone}}</td>
+	                        <td>{{form.costHigth}}</td>
+	                    </tr>
+	                    <tr>
+	                        <td>Zona media</td>
+	                        <td>{{form.mediumZone}}</td>
+	                        <td>{{form.costMediun}}</td>
+	                    </tr>
+	                    <tr>
+	                        <td>Zona baja</td>
+	                        <td>{{form.lowZone}}</td>
+	                        <td>{{form.costLow}}</td>
+	                    </tr>
+	                </tbody>
+                </table>
+            </div>
+		</div>
+		<div class="w3-show-inline-block">
+			<div class="w3-container">
+				<div class="w3-bar">
+					<button type="submit" 
+							class="w3-button w3-padding-16 w3-dark-grey w3-circle" >
+							<i class="fa fa-save"></i>
+					</button>
+				</div>
+			</div>
+		</div>		
+	</form>
+	<header class="w3-container">
+		<h5 class="black-color">
+			<b class="black-color">
+			<i class="fa fa-list black-color"></i> Boletos generados</b>
+		</h5>
+    </header>
 
-		<hr>
-		<footer class="w3-container w3-padding-14 w3-grey">
-	    	<p>Powered by <a style="color: black;">XSOFT</a></p>
-		</footer>
+	<div class="w3-container">
+  		<table class="w3-table-all w3-hoverable ">
+	        <thead >
+	          	<tr class="w3-dark-grey">
+	          		<th>Cantidad boletos</th>
+					<th>Ubicacion</th>
+					<th></th>
+					<th></th>
+					<th></th>
+	          	</tr>
+			</thead>
+			<tbody>
+				{% if tickets %}
+				{% for arrayTicket in tickets %}
+				<tr id="registro_item" >
+					<td>{{arrayTicket.0}}</td>
+					<td>{{arrayTicket.1}}</td>
+					<td><a href="{% url 'ticket_add' id=event.id ubication=arrayTicket.1 %}" 
+							data-toggle="tooltip" 
+							title="Aumentar boletos">
+							<button class="w3-button w3-padding-small w3-dark-grey w3-circle">
+							<i class="fa fa-plus"></i></button>
+						</a></td>
+					<td><a href="{% url 'ticket_minus' id=event.id ubication=arrayTicket.1 %}" 
+							data-toggle="tooltip" 
+							title="Disminuir boletos">
+							<button class="w3-button w3-padding-small w3-dark-grey w3-circle">
+							<i class="fa fa-minus"></i></button>
+						</a></td>
+					<td><a href="{% url 'ticket_delete' id=event.id ubication=arrayTicket.1 %}" 
+							data-toggle="tooltip" 
+							title="Borrar todos boletos">
+							<button class="w3-button w3-padding-small w3-dark-grey w3-circle">
+							<i class="fa fa-close"></i></button>
+						</a></td>
+				</tr>
+			</tbody>
+			{% endfor %}
+			{% else %}
+			<h1 class="black-color">No hay registros de Boletos</h1>
+			{% endif %}
+      	</table>
 	</div>
+
+	<hr>
+	<footer class="w3-container w3-padding-14 w3-grey">
+    	<p>Powered by <a class="black-color">XSOFT</a></p>
+	</footer>
+</div>
 {% endblock %}

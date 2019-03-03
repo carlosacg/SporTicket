@@ -1,3 +1,7 @@
+.black-color {
+	color: black;
+}
+
 .btn {
   border: none;
   border-radius: 4px;
@@ -15,13 +19,59 @@
   opacity: 1;
 }
 
+.content {
+	margin-left: -8px;
+	margin-top: -18px;
+}
+
+#graph {
+	height: 199px;
+
+}
+
 .google {
   background-color: #dd4b39;
   color: white;
 }
 
-html,body,h1,h2,h3,h4,h5,a,b,span,i,button {
-	font-family: "Raleway", sans-serif; 
+html,body,h1,h2,h3,h4,h5,a,b,span,i,button {	
+	color: orange;
+	font-family: "Raleway", sans-serif; 	
+}
+
+i {
+	color: orange;
+}
+
+img {
+	width: 65px;
+} 
+
+.image {
+	width: 100%;
+}
+
+.imgEvent {
+	position: relative; 
+	z-index: 1; 
+	width: 450px; 
+	height: 350px;
+}
+
+.imgLogin {
+	width: 100px;
+}
+
+.main {
+	margin-left: 200px;
+	margin-top: 43px;
+}
+
+#myfirstchart {
+	height: 200px;
+}
+
+.orange-color {
 	color: orange;
 }
 
@@ -29,49 +79,55 @@ html,body,h1,h2,h3,h4,h5,a,b,span,i,button {
     border-top: 1px solid white;
 }
 
-.w3-bar .w3-top .w3-dark-grey .w3-padding-15{
-	z-index:4;
+th {
+	color: orange;
+}
+
+.view {
+	height: 100%;
+	position: relative;
+	width: 100%; 
+	z-index: 1; 
+}
+
+.w3-bar .w3-top .w3-dark-grey .w3-padding-15 {
+	z-index: 4;
 } 
 
-.w3-sidebar .w3-collapse .w3-dark-grey .w3-animate-left{
-	z-index:3;width:200px;
-}
-img{
-	width:65px;
-} 
-.w3-bar-block{
+.w3-bar-block {
 	color: orange;
 } 
-.w3-hide .w3-dark-grey .w3-card{
+
+.w3-sidebar .w3-collapse .w3-dark-grey .w3-animate-left {
+	width: 200px;
+	z-index: 3;
+}
+
+.w3-hide .w3-dark-grey .w3-card {
 	color: orange;
 }
-.w3-overlay .w3-hide-large .w3-animate-opacity{
-	cursor:pointer;
+
+.w3-overlay .w3-hide-large .w3-animate-opacity {
+	cursor: pointer;
 }
-i{
+
+.w3-bar-item .w3-button {
 	color: orange;
 }
-.w3-bar-item .w3-button{
-	color: orange;
+
+.w3-main {
+	margin-left: 200px;
+	margin-top: 43px;
 }
-.w3-main{
-	margin-left:200px;
-	margin-top:43px;
+
+.w3-container {
+	padding-top: 22px;
 }
-.w3-container{
-	padding-top:22px;
+
+.width-card {
+	width: 105%;
 }
-th{
-	color: orange;
-}
-.image{
-	width:100%;
-}
-.imgLogin{
-	width: 100px;
-}.view{
-	position: relative;
-	z-index:1; 
-	width:100%; 
-	height:100%;
+
+.width-image {
+	width: 80%;
 }

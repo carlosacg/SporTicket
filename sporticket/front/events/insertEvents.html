@@ -1,78 +1,83 @@
 {% extends 'base/base.html' %}
-<head>
-	
-</head>
 
 {% block content %}
-	<div class="w3-main" >
-		<header class="w3-container" >
-			<h5 style="color: black;"><b style="color: black;"><i class="fa fa-plus" style="color: black;"></i> Insertar eventos</b></h5>
-		</header>
-		
-		<form method="post"> 
-			{% csrf_token %}
-		
-			<div class="w3-row-padding">
-				<div class="w3-half">
-					<label for="{{form.name.id_for_label}}"> {{form.name.label}}</label>
-					{{form.name}}
-				</div>
-				<div class="w3-half">
-					<label for="{{form.visitor.id_for_label}}">{{form.visitor.label}}</label>
-					{{form.visitor}}
-					{{form.capacity}}
-				</div>
+<div class="w3-main" >
+	<header class="w3-container" >
+		<h5 class="black-color">
+			<b class="black-color">
+			<i class="fa fa-plus black-color"></i> Insertar eventos</b>
+		</h5>
+	</header>
+	
+	<form method="post"> 
+		{% csrf_token %}
+	
+		<div class="w3-row-padding">
+			<div class="w3-half">
+				<label for="{{form.name.id_for_label}}"> {{form.name.label}}</label>
+				{{form.name}}
 			</div>
-			<div class="w3-row-padding">
-				<div class="w3-half">
-					<label for="{{form.initial_date.id_for_label}}">{{form.initial_date.label}}</label>
-					{{form.initial_date}}
-				</div>
-				<div class="w3-half">
-					<label for="{{form.local.id_for_label}}">{{form.local.label}}</label>
-					{{form.local}}
-				</div>
+			<div class="w3-half">
+				<label for="{{form.visitor.id_for_label}}">{{form.visitor.label}}</label>
+				{{form.visitor}}
+				{{form.capacity}}
 			</div>
-			<div class="w3-row-padding">
-				<div class="w3-half">
-					<label for="{{form.initial_time.id_for_label}}">{{form.initial_time.label}}</label>
-					{{form.initial_time}}
-				</div>
-				<div class="w3-half">
-					<label for="{{form.event_type.id_for_label}}">{{form.event_type.label}}</label>
-					{{form.event_type}}
-				</div>
+		</div>
+		<div class="w3-row-padding">
+			<div class="w3-half">
+				<label for="{{form.initial_date.id_for_label}}">{{form.initial_date.label}}</label>
+				{{form.initial_date}}
 			</div>
-			<div class="w3-row-padding">
-				<div class="w3-half">
-					{{form.url}}
-				</div>
-				<div class="w3-half">
-					{{form.state}}
-				</div>
+			<div class="w3-half">
+				<label for="{{form.local.id_for_label}}">{{form.local.label}}</label>
+				{{form.local}}
 			</div>
-			<div class="w3-row-padding">
-				<div class="w3-half">
-					<label for="{{form.place.id_for_label}}">{{form.place.label}}</label>
-					{{form.place}}
+		</div>
+		<div class="w3-row-padding">
+			<div class="w3-half">
+				<label for="{{form.initial_time.id_for_label}}">{{form.initial_time.label}}</label>
+				{{form.initial_time}}
+			</div>
+			<div class="w3-half">
+				<label for="{{form.event_type.id_for_label}}">{{form.event_type.label}}</label>
+				{{form.event_type}}
+			</div>
+		</div>
+		<div class="w3-row-padding">
+			<div class="w3-half">
+				{{form.url}}
+			</div>
+			<div class="w3-half">
+				{{form.state}}
+			</div>
+		</div>
+		<div class="w3-row-padding">
+			<div class="w3-half">
+				<label for="{{form.place.id_for_label}}">{{form.place.label}}</label>
+				{{form.place}}
 
-				</div>
-
-
-						<br>
-						<br> <br/>
-						<div class="w3-show-inline-block">
-	                        <div class="w3-bar">
-	                            <button type="submit" class="w3-button w3-padding-16 w3-dark-grey w3-circle" ><i class="fa fa-save"></i></button>
-	                            <a href="{% url 'evento_crear' %}"><button class="w3-button w3-dark-grey w3-padding-16 w3-circle" ><i class="fa fa-repeat"></i></button></a>
-								</div>
-	                    </div>
 			</div>
-		</form>
-		<br>
-		<br>
-	 	<footer class="w3-container w3-padding-14 w3-grey">
-	    	<p>Powered by <a style="color: black;">XSOFT</a></p>
-		</footer>
-	</div>
+			<br>
+			<br> <br/>
+			<div class="w3-show-inline-block">
+                <div class="w3-bar">
+                    <button type="submit" 
+                    		class="w3-button w3-padding-16 w3-dark-grey w3-circle" >
+                    		<i class="fa fa-save"></i>
+                    </button>
+                    <a href="{% url 'evento_crear' %}">
+                    	<button class="w3-button w3-dark-grey w3-padding-16 w3-circle" >
+                    		<i class="fa fa-repeat"></i>
+                    	</button>
+                    </a>
+				</div>
+            </div>
+		</div>
+	</form>
+	<br>
+	<br>
+ 	<footer class="w3-container w3-padding-14 w3-grey">
+    	<p>Powered by <a class="black-color">XSOFT</a></p>
+	</footer>
+</div>
 {% endblock %}

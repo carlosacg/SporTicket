@@ -2,102 +2,113 @@
 {%load staticfiles %}
 
 {% block content %}
-	<div class="w3-main" >
-		<header class="w3-container">
-			<h5 style="color: black;"><b style="color: black;"><i class="fa fa-bar-chart fa-fw" style="color: black;"></i> Reportes</b></h5>
-		</header>
-		<div class="w3-container">
-			<form method="post"> 
-				{% csrf_token %}
+<div class="w3-main" >
+	<header class="w3-container">
+		<h5 class="black-color">
+			<b class="black-color">
+			<i class="fa fa-bar-chart fa-fw black-color"></i> Reportes</b>
+		</h5>
+	</header>
+	<div class="w3-container">
+		<form method="post"> 
+			{% csrf_token %}
 			<div class="w3-row-padding">
 				<div class="w3-third">		
-						<label for="{{form.events.id_for_label}}"> {{form.events.label}} </label>
-						{{form.events}}	
+					<label for="{{form.events.id_for_label}}"> {{form.events.label}} </label>
+					{{form.events}}	
 				</div>		
 				<div class="w3-third">		
-						{{form.numEventAvaible.label}}
-						{{form.numEventAvaible}}	
+					{{form.numEventAvaible.label}}
+					{{form.numEventAvaible}}	
 				</div>
 				<div class="w3-third">		
-						{{form.numEventsSale.label}}
-						{{form.numEventsSale}}	
+					{{form.numEventsSale.label}}
+					{{form.numEventsSale}}	
 				</div>
 				<div class="w3-show-inline-block">
-						<div class="w3-bar">
-								<button type="submit" class="w3-button w3-padding-16 w3-dark-grey w3-circle" ><i class="fa fa-save"></i></button>
-								<!-- <a href="{% url 'evento_crear' %}"> -->
-	 			</div>
+					<div class="w3-bar">
+						<button type="submit" 
+								class="w3-button w3-padding-16 w3-dark-grey w3-circle" >
+								<i class="fa fa-save"></i>
+						</button>
+						<!-- <a href="{% url 'evento_crear' %}"> -->
+	 				</div>
 				</div>
-				<br>
-				<br>
-				<br>
-				<div class="w3-third">		
-						<label for="{{form.events.id_for_label}}">Seleccione su usuario</label>
-						{{form.users}}	
-				</div>
-				<div class="w3-third">		
-						{{form.shoptTickets.label}}
-						{{form.shoptTickets}}	
-				</div>
-				<div class="w3-show-inline-block">
-						<div class="w3-bar">
-								<button type="submit" class="w3-button w3-padding-16 w3-dark-grey w3-circle" ><i class="fa fa-save"></i></button>
-								<!-- <a href="{% url 'evento_crear' %}"> -->
-	 			</div>
-				<br>
-				<br>
-				<br>
-				<div class="w3-third">		
-						<label for="{{form.events.id_for_label}}">Seleccione su vendedor</label>
-						{{form.users}}	
-				</div>
-				<div class="w3-third">		
-					  {{form.userTickets.label}}
-						{{form.userTickets}}	
-				</div>	
-				<div class="w3-show-inline-block">
-						<div class="w3-bar">
-								<button type="submit" class="w3-button w3-padding-16 w3-dark-grey w3-circle" ><i class="fa fa-save"></i></button>
-								<a href="{% url 'dasd' %}">
+			</div>
+		</form>
+		<br>
+		<br>
+		<br>
+		<div class="w3-third">		
+			<label for="{{form.events.id_for_label}}">Seleccione su usuario</label>
+			{{form.users}}	
+		</div>
+		<div class="w3-third">		
+			{{form.shoptTickets.label}}
+			{{form.shoptTickets}}	
+		</div>
+		<div class="w3-show-inline-block">
+			<div class="w3-bar">
+				<button type="submit" 
+						class="w3-button w3-padding-16 w3-dark-grey w3-circle" >
+						<i class="fa fa-save"></i>
+				</button>
+				<!-- <a href="{% url 'evento_crear' %}"> -->
+			</div>
+		</div>
+		<br>
+		<br>
+		<br>
+		<div class="w3-third">		
+			<label for="{{form.events.id_for_label}}">Seleccione su vendedor</label>
+			{{form.users}}	
+		</div>
+		<div class="w3-third">		
+		 	{{form.userTickets.label}}
+			{{form.userTickets}}	
+		</div>	
+		<div class="w3-show-inline-block">
+			<div class="w3-bar">
+				<button type="submit" 
+						class="w3-button w3-padding-16 w3-dark-grey w3-circle" >
+						<i class="fa fa-save"></i>
+				</button>
+				<a href="{% url 'dasd' %}"></a>
 			</div>
 			<br>
 			<br>
 			<br>
       		<div class="w3-row-padding">
 			    <div class="w3-half w3-center">
-							<div class="w3-third">		
-									<label for="{{form.date1.id_for_label}}">Seleccione su fecha inicial</label>
-									{{form.date1}}	
-							</div>
-			      <header class="w3-container ">
-			        <h4>
-			          <b style="color: black;"> Reporte de compras en el mes</b>
-			        </h4>
-			      </header>
-			      <div class="w3-center" >
-			        <div id="myfirstchart" style="height: 200px;"></div>
-			      </div>
+					<div class="w3-third">		
+						<label for="{{form.date1.id_for_label}}">Seleccione su fecha inicial</label>
+						{{form.date1}}	
+					</div>
+			      	<header class="w3-container ">
+			        	<h4><b class="black-color"> Reporte de compras en el mes</b></h4>
+			      	</header>
+			     	<div class="w3-center" >
+			        	<div id="myfirstchart" ></div>
+			      	</div>
 			    </div>
 
 			    <div class="w3-half w3-center">
-							<div class="w3-third">		
-									<label for="{{form.date2.id_for_label}}">Seleccione su fecha final</label>
-									{{form.date2}}	
-							</div>
-			      <header class="w3-container">
-			        <h4>
-			          <b style="color: black;"> Reporte de ventas en el mes</b>
-			        </h4>
-			      </header>
-			      <div class="w3-center" >
-			        <div id="graph" style="height: 200px;"></div>
-			      </div>
+					<div class="w3-third">		
+						<label for="{{form.date2.id_for_label}}">Seleccione su fecha final</label>
+						{{form.date2}}	
+					</div>
+				     <header class="w3-container">
+				        <h4><b class="black-color"> Reporte de ventas en el mes</b></h4>
+				    </header>
+				    <div class="w3-center" >
+				        <div id="graph"></div>
+				    </div>
 			    </div>
-			  </div>
-      	</div>
-			</form>
-		<footer class="w3-container w3-padding-14 w3-grey">
-	    	<p>Powered by <a style="color: black;">XSOFT</a></p>
-		</footer>
+	  		</div>
+  		</div>
 	</div>
+	<footer class="w3-container w3-padding-14 w3-grey">
+    	<p>Powered by <a class="black-color" ">XSOFT</a></p>
+	</footer>
+</div>
 {% endblock %}

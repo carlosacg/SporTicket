@@ -2,58 +2,70 @@
 {%load staticfiles %}
 
 {% block content %}
-	<div class="w3-main" >
-		<header class="w3-container">
-			<h5 style="color: black;"><b style="color: black;"><i class="fa fa-bar-chart fa-fw" style="color: black;"></i> Reportes</b></h5>
-		</header>
+<div class="w3-main" >
+	<header class="w3-container">
+		<h5 class="black-color">
+			<b class="black-color">
+			<i class="fa fa-bar-chart fa-fw black-color"></i> Reportes</b>
+		</h5>
+	</header>
+	<div class="w3-container">
 		<div class="w3-container">
 			<form method="post"> 
 				{% csrf_token %}
-			<div class="w3-row-padding">
-				<div class="w3-third">		
+				<div class="w3-row-padding">
+					<div class="w3-third">		
 						<label for="{{form.events.id_for_label}}"> {{form.events.label}} </label>
 						{{form.events}}	
-				</div>		
-				<div class="w3-third">		
-					Numero de boletos disponibles: 
-					<strong>{{avalibles}}</strong>
-				</div>
-				<div class="w3-third">		
+					</div>		
+					<div class="w3-third">		
+						Numero de boletos disponibles: 
+						<strong>{{avalibles}}</strong>
+					</div>
+					<div class="w3-third">		
 						Numero de boletos vendidos: 
 						<strong>{{sales}}</strong>
+					</div>
+				</div>
+				<div class="w3-row-padding">
+					<button type="submit" 
+							class="w3-button w3-padding-16 w3-dark-grey w3-circle" >
+							<i class="fa fa-save"></i>
+					</button>
 				</div>				
 			</form>
-				<div class="w3-show-inline-block">
-      		<div class="w3-row-padding">
-							<div class="w3-bar">
+		</div>
+		
+		<div class="w3-container w3-row-padding">
+  			<div class="w3-row-padding">
+				<div class="w3-bar">
 				</div>
 			    <div class="w3-half w3-center">
 			      <header class="w3-container ">
 			        <h4>
-									<button type="submit" class="w3-button w3-padding-16 w3-dark-grey w3-circle" ><i class="fa fa-save"></i></button>
-									<a href="{% url 'report1' %}"></a>
-									<b style="color: black;"> Reporte de compras en el mes</b>
+						<a href="{% url 'report1' %}"></a>
+						<b class="black-color" "> Reporte de compras en el mes</b>
 			        </h4>
 			      </header>
 			      <div class="w3-center" >
-			        <div id="myfirstchart" style="height: 200px;"></div>
+			        <div id="myfirstchart"></div>
 			      </div>
 			    </div>
 
 			    <div class="w3-half w3-center">
 			      <header class="w3-container">
-			        <h4>
-			          <b style="color: black;"> Reporte de ventas en el mes</b>
-			        </h4>
+			        <h4><b class="black-color"> Reporte de ventas en el mes</b></h4>
 			      </header>
 			      <div class="w3-center" >
-			        <div id="graph" style="height: 200px;"></div>
+			        <div id="graph"></div>
 			      </div>
 			    </div>
-			  </div>
-      	</div>
-		<footer class="w3-container w3-padding-14 w3-grey">
-	    	<p>Powered by <a style="color: black;">XSOFT</a></p>
-		</footer>
-	</div>
+		  	</div>
+		</div>
+		
+  	</div>
+	<footer class="w3-container w3-padding-14 w3-grey">
+    	<p>Powered by <a class="black-color">XSOFT</a></p>
+	</footer>
+</div>
 {% endblock %}
