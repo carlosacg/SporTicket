@@ -1,23 +1,5 @@
 [
     {
-      "name": "LIGA AGUILA",
-      "initial_dale": "2018-10-17",
-      "initial_time": "19:56:59",
-      "place": "CALI",
-      "url": "NINGUNA",
-      "state": "Activo",
-      "capacity": 15,
-      "visitor": "CALI",
-      "local": "ABERICA",
-      "event_type": "Beisbol",
-      "zAlta": 5,
-      "pAlta": 5000,
-      "zMedia": 5,
-      "pMedia": 5000,
-      "zBaja": 5,
-      "pBaja": 5000
-     },
-    {
       "name": "LIGA PEGELAGARTA",
       "initial_dale": "2018-10-17",
       "initial_time": "19:56:59",
@@ -37,7 +19,25 @@
       "tOccidente": 5,
       "pOccidente": 5000
       
-    }
+    },    
+    {
+      "name": "LIGA AGUILA",
+      "initial_dale": "2018-10-17",
+      "initial_time": "19:56:59",
+      "place": "CALI",
+      "url": "NINGUNA",
+      "state": "Activo",
+      "capacity": 15,
+      "visitor": "CALI",
+      "local": "ABERICA",
+      "event_type": "Beisbol",
+      "zAlta": 5,
+      "pAlta": 5000,
+      "zMedia": 5,
+      "pMedia": 5000,
+      "zBaja": 5,
+      "pBaja": 5000
+     }
 
 
   ]

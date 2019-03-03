@@ -53,21 +53,23 @@ def uploadFile(request):
                 object.save_data(dato['name'],dato['initial_dale'],dato['initial_time'],dato['place'],dato['url'],dato['state'],dato['capacity'],dato['visitor'],dato['local'],dato['event_type'])
                 print('GUARDO EL EVENTO')
                 if dato['event_type'] == 'Beisbol':
-                    object.insertTickets(dato['zAlta'],"Zona alta",Event.objects.all().last(),dato['pAlta'])
-                    object.insertTickets(dato['zMedia'],"Zona media",Event.objects.all().last(),dato['pMedia'])
-                    object.insertTickets(dato['zBaja'],"Zona baja",Event.objects.all().last(),dato['pBaja'])
+                    print('Entro a beisbol')
+                    insertTickets(dato['zAlta'],"Zona alta",Event.objects.all().last(),dato['pAlta'])
+                    insertTickets(dato['zMedia'],"Zona media",Event.objects.all().last(),dato['pMedia'])
+                    insertTickets(dato['zBaja'],"Zona baja",Event.objects.all().last(),dato['pBaja'])
 
                 else:
-                    object.insertTickets(dato['tNorte'],"Tribuna norte",Event.objects.all().last(),dato['pNorte'])
-                    object.insertTickets(dato['tSur'],"Tribuna sur",Event.objects.all().last(),dato['pSur'])
-                    object.insertTickets(dato['tOriente'],"Tribuna oriente",Event.objects.all().last(),dato['pOriente'])
-                    object.insertTickets(dato['tOccidente'],"Tribuna occidente",Event.objects.all().last(),dato['pOccidente'])
+                    print('Entro a futTenis')
+                    print(dato['tNorte'],"Tribuna norte",Event.objects.all().last(),dato['pNorte'])
+                    insertTickets(dato['tNorte'],"Tribuna norte",Event.objects.all().last(),dato['pNorte'])
+                    insertTickets(dato['tSur'],"Tribuna sur",Event.objects.all().last(),dato['pSur'])
+                    insertTickets(dato['tOriente'],"Tribuna oriente",Event.objects.all().last(),dato['pOriente'])
+                    insertTickets(dato['tOccidente'],"Tribuna occidente",Event.objects.all().last(),dato['pOccidente'])
                 
-            return redirect('evento_listar')
+            return redirect('events/listEvents.html')
     else:
         formulario = UploadForm()
     return render(request, "events/jsonEvents.html",{'form': formulario})
-
 
 def updateEvent(request,id):
     event = Event.objects.get(id=id)
@@ -131,6 +133,18 @@ def uploadImage(request,id):
     else:
             formulario = UploadForm()
     return render(request, "events/imageEvents.html",{'form': formulario})
+    
+def insertTickets(quantity,ubication,event,cost):
+        print(quantity,ubication,event,cost)
+        x=0
+        while x < int(quantity):        
+            save_ticket(ubication,event,cost) 
+            x+=1    
+    
+def save_ticket(ubication,event,cost):
+    print(ubication,event,cost)
+    newTicket = Ticket(cost=cost,ubication=ubication,event=event,state='Disponible')
+    newTicket.save()
 
 class EventDelete(DeleteView):
     model = Event

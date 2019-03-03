@@ -37,16 +37,6 @@ class Event(models.Model):
     def save_data(self,name,initial_date,initial_time,place,url,state,capacity,visitor,local,event_type):
         newEvent = Event(name=name,initial_date=initial_date,initial_time=initial_time,place=place,url=url,state=state,capacity=capacity,visitor=visitor,local=local,event_type=event_type)
         newEvent.save()
-
-    def insertTickets(quantity,ubication,event,cost):
-            x=0
-            while x < int(quantity):        
-                save_ticket(ubication,event,cost) 
-                x+=1    
-    
-    def save_ticket(ubication,event,cost):
-        newTicket = Ticket(cost=cost,ubication=ubication,event=event,state='Disponible')
-        newTicket.save()
         
 class Document(models.Model):
     filename = models.CharField(max_length=100)

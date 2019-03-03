@@ -23,7 +23,6 @@ def generateTickets(request,id):
     ticket = Ticket.objects.all()
     event =  Event.objects.get(id=id)
     event_type=event.event_type
-    print(event_type)
     object = Event()
 
     if event_type == 'Beisbol':  #SI EL EVENTO CREADO FUE TIPO BEISBOL
@@ -36,20 +35,17 @@ def generateTickets(request,id):
                 higthZone=form['higthZone'].value()
                 mediumZone=form['mediumZone'].value()
                 lowZone=form['lowZone'].value()
-                print(event_type)
-                print(higtCost+"-"+higthZone+"-"+mediumCost+"-"+mediumZone+"-"+lowZone+"-"+lowCost)
                 insertTickets(higthZone,'Zona alta', event, higtCost,'Disponible')
                 insertTickets(mediumZone,'Zona media', event, mediumCost,'Disponible')
                 insertTickets(lowZone,'Zona baja', event, lowCost,'Disponible')
                 arrayTicket=getListTicket(event.id) 
                 quantity=int(higthZone)+int(mediumZone)+int(lowZone)
-                print (quantity)
                 updateCapacityEvent( event.id,str(quantity)) 
             return HttpResponseRedirect(reverse('ticket_crear', args=[id]))
         else:
             form = BaseballForm()
         arrayTicket=getListTicket(str(event.id))
-        context = {'tickets':arrayTicket,'form':form}
+        context = {'tickets':arrayTicket,'form':form,'event':event}
         
         return render(request, 'tickets/generateTicketBaseball.html',context)
     else:                       #SI EL EVENTO CREADO FUE FUTBOL O TENIS
@@ -77,9 +73,7 @@ def generateTickets(request,id):
         else:
             form = TicketForm()
         arrayTicket=getListTicket( str(event.id) )
-        context = {'tickets':arrayTicket,'form':form}
-
-        print (arrayTicket)
+        context = {'tickets':arrayTicket,'form':form,'event':event}
         return render(request, 'tickets/generateTicket.html',context)
     
 
@@ -102,3 +96,57 @@ def updateCapacityEvent(event,newCapacity):
     event = Event.objects.get(id=event)
     event.capacity = newCapacity
     event.save()
+
+def addTicketView(request,id,ubication):
+    event =  Event.objects.get(id=id)
+    event_type=event.event_type
+    arrayTicket=getListTicket( id )
+    object = Ticket()
+    print(id)
+    ticket = Ticket.objects.filter(event=id).filter(ubication=ubication).last()
+    print(ticket.cost,ubication,ticket.event)
+    save_ticket(ticket.cost,ubication,ticket.event)
+    if event_type == 'Beisbol':
+        form = BaseballForm()
+    else: 
+        form = TicketForm()
+
+    context = {'tickets':arrayTicket,'form':form}
+    return HttpResponseRedirect(reverse('ticket_crear', args=[id]))
+
+def minusTicketView(request,id,ubication):
+    event =  Event.objects.get(id=id)
+    event_type=event.event_type
+    arrayTicket=getListTicket( id )
+    delete_ticket(ubication,'one')
+    if event_type == 'Beisbol':
+        form = BaseballForm()
+    else: 
+        form = TicketForm()
+
+    context = {'tickets':arrayTicket,'form':form}
+    return HttpResponseRedirect(reverse('ticket_crear', args=[id]))
+
+def deleteTicketsView(request,id,ubication):
+    event =  Event.objects.get(id=id)
+    event_type=event.event_type
+    arrayTicket=getListTicket( id )
+    delete_ticket(ubication,'all')
+    if event_type == 'Beisbol':
+        form = BaseballForm()
+    else: 
+        form = TicketForm()
+
+    context = {'tickets':arrayTicket,'form':form}
+    return HttpResponseRedirect(reverse('ticket_crear', args=[id]))
+
+def save_ticket(cost,ubication,event):
+    newTicket = Ticket(cost=cost,ubication=ubication,event=event,state='Disponible')
+    newTicket.save()
+
+def delete_ticket(ubication,case):
+    if case =='one':
+        Ticket.objects.filter(ubication=ubication).last().delete()
+    if case =='all':
+        Ticket.objects.filter(ubication=ubication).delete()
+

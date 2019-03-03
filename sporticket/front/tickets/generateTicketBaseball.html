@@ -7,6 +7,8 @@
 	<div class="w3-main" >
 		<header class="w3-container" >
 			<h5 style="color: black;"><b style="color: black;"><i class="fa fa-plus" style="color: black;"></i> Generador de boletos</b></h5>
+			<h5 style="color: black;"><b style="color: black;"> {{event.name}}</b></h5>
+
 		</header>
 		<form method="post">
 		{% csrf_token %}
@@ -82,9 +84,9 @@
 					<tr id="registro_item" >
 						<td>{{arrayTicket.0}}</td>
 						<td>{{arrayTicket.1}}</td>
-						<td><a href="#" data-toggle="tooltip" title="Aumentar boletos"><button >+</i></button></a></td>
-						<td><a href="#" data-toggle="tooltip" title="Disminuir boletos"><button >-</i></button></a></td>
-						<td><a href="#" data-toggle="tooltip" title="Borrar todos boletos"><button >+</i></button></a></td>
+						<td><a href="{% url 'ticket_add' id=event.id ubication=arrayTicket.1 %}" data-toggle="tooltip" title="Aumentar boletos"><button >+</i></button></a></td>
+						<td><a href="{% url 'ticket_minus' id=event.id ubication=arrayTicket.1 %}" data-toggle="tooltip" title="Disminuir boletos"><button >-</i></button></a></td>
+						<td><a href="{% url 'ticket_delete' id=event.id ubication=arrayTicket.1 %}" data-toggle="tooltip" title="Borrar todos boletos"><button >X</i></button></a></td>
 					</tr>
 				</tbody>
 				{% endfor %}

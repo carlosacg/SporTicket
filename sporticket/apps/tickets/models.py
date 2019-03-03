@@ -9,3 +9,8 @@ class Ticket(models.Model):
     state = models.CharField(null=True,max_length=20)
     event = models.name = models.ForeignKey(Event, null=True, on_delete=models.CASCADE)
     id_bill = models.ForeignKey(Bill, null=True, blank=True, on_delete=models.CASCADE)
+
+    def addTicket(self,event):
+        tickets = Ticket.objects.get(event=id)
+        print (tickets)
+        
