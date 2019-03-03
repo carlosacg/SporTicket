@@ -6,7 +6,7 @@ from apps.users.views import *
 
 urlpatterns = [
 
-    url(r'^$', index),
+    url(r'^$', login_required(index)),
     url(r'users/insertUsers.html', login_required(ProfileCreate.as_view()) , name='crateUser'),
     url(r'users/listUsers.html',login_required(ProfileList.as_view()) , name='listUser'),
     url(r'users/editUser/(?P<pk>\d+)/$', login_required(ProfileUpdate.as_view()) , name='editUser'),

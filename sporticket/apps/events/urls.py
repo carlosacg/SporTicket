@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 
 
 urlpatterns = [
-    url(r'^$', index),
+    url(r'^$', login_required(index)),
     url(r'events/insertEvents.html', login_required(insertEvent), name='evento_crear' ),
     url(r'events/uploadImage.html(?P<id>\d+)/$', login_required(uploadImage), name='evento_imagen' ),
     url(r'events/listEvents.html', login_required(EventList.as_view()), name='evento_listar' ),
