@@ -31,29 +31,58 @@
                         <tr class="w3-dark-grey">
                         <th>Ubicacion</th>
                         <th>Cantidad Boletos</th>
-                        <th>Precio</th>
+						<th>Precio</th>
+						<th></th>
                         </tr>
                   	</thead>
                   	<tbody>
                         <tr>
                             <td>Tribuna norte</td>
                             <td>{{form.northZone}}</td>
-                            <td>{{form.costNorth}}</td>
+							<td>{{form.costNorth}}</td>
+							<td><a href="{% url 'add_north' event=event quantity=form.northZone cost=form.costNorth %}" 
+								data-toggle="tooltip" 
+								title="Guardar boletos tribuna norte">
+								<button class="w3-button w3-padding-small w3-dark-grey w3-circle">
+								<i class="fa fa-save"></i></button>
+								</a>
+							</td>
                         </tr>
                         <tr>
                             <td>Tribuna sur</td>
                             <td>{{form.southZone}}</td>
-                            <td>{{form.costSouth}}</td>
+							<td>{{form.costSouth}}</td>
+							<td><a href="{% url 'add_south' event=event quantity=form.southZone cost=form.costSouth %}" 
+								data-toggle="tooltip" 
+								title="Guardar boletos tribuna sur">
+								<button class="w3-button w3-padding-small w3-dark-grey w3-circle">
+								<i class="fa fa-save"></i></button>
+								</a>
+							</td>
                         </tr>
                         <tr>
                             <td>Tribuna oriente</td>
                             <td>{{form.eastZone}}</td>
-                            <td>{{form.costEast}}</td>
+							<td>{{form.costEast}}</td>
+							<td><a href="{% url 'add_east' event=event quantity=form.eastZone cost=form.costEast %}" 
+								data-toggle="tooltip" 
+								title="Guardar boletos tribuna oriente">
+								<button class="w3-button w3-padding-small w3-dark-grey w3-circle">
+								<i class="fa fa-save"></i></button>
+								</a>
+							</td>
                         </tr>
 						<tr>
                             <td>Tribuna occidente</td>
                             <td>{{form.westZone}}</td>
-                            <td>{{form.costWest}}</td>
+							<td>{{form.costWest}}</td>
+							<td><a href="{% url 'add_west' event=event quantity=form.westZone cost=form.costWest %}" 
+								data-toggle="tooltip" 
+								title="Guardar boletos tribuna occidente">
+								<button class="w3-button w3-padding-small w3-dark-grey w3-circle">
+								<i class="fa fa-save"></i></button>
+								</a>
+							</td>
                         </tr>
                   	</tbody>
                 </table>
@@ -62,7 +91,10 @@
 		<div class="w3-container">
 			<div class="w3-show-inline-block">
 				<div class="w3-bar">
-					<button type="submit" class="w3-button w3-padding-16 w3-dark-grey w3-circle" ><i class="fa fa-save"></i></button>
+					<a data-toggle="tooltip" 
+					title="Guardar todos los boletos de las tribunas">
+						<button type="submit" class="w3-button w3-padding-16 w3-dark-grey w3-circle" ><i class="fa fa-save"></i></button>
+					</a>
 				</div>
 			</div>
 		</div>
@@ -80,6 +112,7 @@
 	          	<tr class="w3-dark-grey">
 	          		<th>Cantidad boletos</th>
 					<th>Ubicacion</th>
+					<th>Precio</th>
 					<th></th>
 					<th></th>
 					<th></th>
@@ -91,6 +124,7 @@
 				<tr id="registro_item" >
 					<td>{{arrayTicket.0}}</td>	
 					<td>{{arrayTicket.1}}</td>
+					<td>{{arrayTicket.2}}</td>
 					<td><a href="{% url 'ticket_add' id=event.id ubication=arrayTicket.1 %}" 
 							data-toggle="tooltip" 
 							title="Aumentar boletos">

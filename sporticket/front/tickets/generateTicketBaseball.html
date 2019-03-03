@@ -31,24 +31,46 @@
                         <tr class="w3-dark-grey">
                         <th>Ubicacion</th>
                         <th>Cantidad Boletos</th>
-                        <th>Precio</th>
+						<th>Precio</th>
+						<th></th>
                         </tr>
 	                </thead>
 	                <tbody>
 	                    <tr>
 	                        <td>Zona alta</td>
 	                        <td>{{form.higthZone}}</td>
-	                        <td>{{form.costHigth}}</td>
+							<td>{{form.costHigth}}</td>
+							<td><a href="#" 
+								data-toggle="tooltip" 
+								title="Guardar boletos zona alta">
+								<button class="w3-button w3-padding-small w3-dark-grey w3-circle">
+								<i class="fa fa-save"></i></button>
+								</a>
+							</td>
 	                    </tr>
 	                    <tr>
 	                        <td>Zona media</td>
 	                        <td>{{form.mediumZone}}</td>
-	                        <td>{{form.costMediun}}</td>
+							<td>{{form.costMediun}}</td>
+							<td><a href="#" 
+								data-toggle="tooltip" 
+								title="Guardar boletos zona media">
+								<button class="w3-button w3-padding-small w3-dark-grey w3-circle">
+								<i class="fa fa-save"></i></button>
+								</a>
+							</td>
 	                    </tr>
 	                    <tr>
 	                        <td>Zona baja</td>
 	                        <td>{{form.lowZone}}</td>
-	                        <td>{{form.costLow}}</td>
+							<td>{{form.costLow}}</td>
+							<td><a href="#" 
+								data-toggle="tooltip" 
+								title="Guardar boletos zona baja">
+								<button class="w3-button w3-padding-small w3-dark-grey w3-circle">
+								<i class="fa fa-save"></i></button>
+								</a>
+							</td>
 	                    </tr>
 	                </tbody>
                 </table>
@@ -78,6 +100,7 @@
 	          	<tr class="w3-dark-grey">
 	          		<th>Cantidad boletos</th>
 					<th>Ubicacion</th>
+					<th>Precio</th>
 					<th></th>
 					<th></th>
 					<th></th>
@@ -89,6 +112,7 @@
 				<tr id="registro_item" >
 					<td>{{arrayTicket.0}}</td>
 					<td>{{arrayTicket.1}}</td>
+					<td>{{arrayTicket.2}}</td>
 					<td><a href="{% url 'ticket_add' id=event.id ubication=arrayTicket.1 %}" 
 							data-toggle="tooltip" 
 							title="Aumentar boletos">
