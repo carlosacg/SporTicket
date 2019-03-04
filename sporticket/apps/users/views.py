@@ -10,6 +10,7 @@ import psycopg2
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import connection 
+from django.contrib import messages
 
 # Create your views here.
 
@@ -39,6 +40,7 @@ class ProfileCreate(CreateView):
 			profile = form.save(commit=False)
 			profile.user = form2.save()
 			profile.save()
+			messages.success(request, "Paciente registrado exitosamente.")
 			return HttpResponseRedirect(self.get_success_url())
 		else:
 			return self.render_to_response(self.get_context_data(form=form, form2=form2))

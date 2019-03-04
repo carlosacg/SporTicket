@@ -79,6 +79,8 @@ def createShopping(request,id):
 		bill_id=Bill.objects.all().last()
 		if event.event_type=='Beisbol':
 			if request.method=='POST':
+				usuario=request.user.id	#OBTENGO EL ID DEL USUARIO
+				print(userId)
 				form = BuyTicketsFormBaseball(request.POST)
 				ubication=form['ubication'].value()
 				quantity=form['quantity'].value()
@@ -96,7 +98,9 @@ def createShopping(request,id):
 			return render(request,'sales/createShopping.html',context)
 		else:
 			if request.method=='POST':
+				usuario=request.user.id  #OBTENGO EL ID DEL USUARIO
 				form = BuyTicketsForm(request.POST)
+				print(usuario)
 				ubication=form['ubication'].value()
 				quantity=form['quantity'].value()
 				avalible_tickets=get_avalible_tickets(id,ubication)
