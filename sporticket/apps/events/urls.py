@@ -1,7 +1,7 @@
 from django.conf.urls import url, include
 from apps.events.views import *
 from django.contrib.auth.decorators import login_required
-
+from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
     url(r'^$', login_required(index)),
@@ -12,6 +12,10 @@ urlpatterns = [
     url(r'events/deleteEvents/(?P<id>\d+)/$', login_required(deleteEvent), name='evento_eliminar' ),
     url(r'events/uploadFile.html', login_required(uploadFile), name='evento_cargar' ),
     url(r'events/viewEvents/(?P<id>\d+)/$', login_required(viewEvent), name='evento_ver' ),
+    url(r'^events/$', EventsSerialList.as_view()),
+    url(r'^events/(?P<pk>[0-9]+)/$', EventsSerialDetail.as_view()),
 
 ]
+
+urlpatterns = format_suffix_patterns(urlpatterns)
 

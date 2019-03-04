@@ -12,6 +12,9 @@ from apps.tickets.models import Ticket
 from django.contrib import messages
 from django.utils.datastructures import MultiValueDictKeyError
 from django.http import HttpResponseRedirect
+from apps.events.serializers import EventSerializers
+from rest_framework import generics
+from django.views.generic.list import ListView
 
 # Create your views here.
 
@@ -167,4 +170,11 @@ class EventUpdate(UpdateView):
     template_name = 'events/insertEvents.html'
     success_url = reverse_lazy('evento_listar')
 
+class EventsSerialList(generics.ListCreateAPIView):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializers
 
+class EventsSerialDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializers
+          
