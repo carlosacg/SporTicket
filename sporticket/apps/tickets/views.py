@@ -27,7 +27,8 @@ def insertLocation(request,event,name,cost):
     location.save()
 
 def addTicketLocationView(request,ubication,event,cost,quantity):
-    print(event,quantity,cost)
+    print('ENTRO A ADD TICKET CON LOCATION')
+    print(event,quantity,cost,ubication)
     insertTickets(quantity,ubication,event,cost,'Disponible')
     updateCapacityEvent( event.id ,quantity) 
     return HttpResponseRedirect(reverse('ticket_crear', args=[event.id]))
@@ -60,13 +61,14 @@ def insertLocationView(request,id):
 
 
 def renderGlobalTicket(request,id):
-    print(request.method)
     event =  Event.objects.get(id=id)
     object = Event()
     locations = Location.objects.filter(event=id)
     form = TicketLocationForm()
     arrayTicket=getListTicket(str(event.id))
-    context = {'tickets':arrayTicket,'form':form,'event':event,'locations':locations}                     
+    zone = None
+    cost = None
+    context = {'tickets':arrayTicket,'form':form,'event':event,'locations':locations,'zone':zone,'cost':cost}                     
     return render(request, 'tickets/generateTicketLocation.html',context)
 
 

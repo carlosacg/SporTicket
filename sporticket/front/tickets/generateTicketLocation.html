@@ -20,11 +20,6 @@
             </h5>
             <h5 class="black-color"><b class="black-color"> {{event.name}}</b></h5>
         </header>
-        <form method="POST">
-            {% csrf_token %}
-            <div class="w3-half">
-            {{form.state}}<!--NO BORRAR NADA DEL FORM-->
-            </div>
             <div class="w3-row-padding">
                 <div class="w3-container">
                     <table class="w3-table-all w3-hoverable ">
@@ -40,6 +35,8 @@
                                 {% if locations %}
                                 {% for locations in locations %}
                                 <tr>
+                                    <form method='POST'>
+                                        {% csrf_token %}
                                     <td>{{locations.name}}</td>
                                     <td>{{form.zone}}</td>
                                     <td>{{form.cost}}</td>
@@ -50,6 +47,7 @@
                                         <i class="fa fa-save"></i></button>
                                         </a>
                                     </td>
+                                </form>
                                 </tr>
                                 {% endfor %}
                                 {% else %}
@@ -59,7 +57,6 @@
                     </table>
                 </div>
             </div>
-        </form>
 
         <header class="w3-container">
             <h5 class="black-color">
