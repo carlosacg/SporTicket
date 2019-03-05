@@ -129,10 +129,8 @@ def uploadImage(request,id):
                 object = Event()
                 event = Event.objects.get(id=id)
                 event.image="./images/"+ruta
-                event.save()
-            
-            return HttpResponseRedirect(reverse('ticket_crear', args=[id]))
-            #return redirect('ticket_crear',args=[id])
+                event.save()          
+            return HttpResponseRedirect(reverse('location_crear', args=[id]))
     else:
             formulario = UploadForm()
     return render(request, "events/imageEvents.html",{'form': formulario})

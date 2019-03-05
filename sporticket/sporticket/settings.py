@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'apps.tickets',
     'apps.users',
     'apps.sales',
+    'apps.location',
     'social_django',
 ]
 
@@ -102,9 +103,9 @@ WSGI_APPLICATION = 'sporticket.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'www2',
-        'USER' : 'postgres',
-        'PASSWORD': '24603759',
+        'NAME': 'sport_db',
+        'USER' : 'andres',
+        'PASSWORD': 'un1v4ll3',
         'HOST' : 'localhost',
         'PORT' : 5432,    
     }

@@ -4,7 +4,7 @@
 <div class="w3-main" >
 	<header class="w3-container">
 		<h5 class="black-color">
-			<b class="black-color" ">
+			<b class="black-color">
 			<i class="fa fa-list black-color"></i> Listar eventos</b>
 		</h5>
 	</header>
@@ -41,7 +41,7 @@
 					<td>{{event.local}}</td>
 					<td>{{event.state}}</td>
 					<td>{{event.event_type}}</td>
-					<td><a href="{% url 'ticket_crear' event.id %}" 
+					<td><a href="{% url 'location_crear' event.id %}" 
 						data-toggle="tooltip" 
 						title="Boletos del evento">
 						<button class="w3-button w3-padding-small w3-dark-grey w3-circle">

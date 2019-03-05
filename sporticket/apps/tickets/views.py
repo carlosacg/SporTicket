@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from apps.tickets.forms import TicketForm
-from apps.tickets.forms import BaseballForm
+from apps.location.forms import LocationForm
+from apps.tickets.forms import TicketLocationForm
+from apps.location.models import Location
 from django.shortcuts import render,redirect
 from django.http import HttpResponse,HttpResponseRedirect
 from django.template import RequestContext
@@ -19,10 +20,63 @@ def insertTickets(quantity,ubication,event,cost,state):
         save_data(ubication,event,cost,state) 
         x+=1
 
+def insertLocation(request,event,name,cost):
+    print('ENTRO A INSERT LOCATION')
+    print(event,name)
+    location = Location(event=event, name=name,cost=cost)
+    location.save()
+
+def addTicketLocationView(request,ubication,event,cost,quantity):
+    print(event,quantity,cost)
+    insertTickets(quantity,ubication,event,cost,'Disponible')
+    updateCapacityEvent( event.id ,quantity) 
+    return HttpResponseRedirect(reverse('ticket_crear', args=[event.id]))
+
+def addLocationView(request,event,name,cost):
+    event =  Event.objects.get(id=event)
+    print(event,name)
+    print('Entro a addlocationView')
+    print(name)
+    locations = Location.objects.filter(event=event)
+    print(name)
+    insertLocation(request,event,name,cost)
+    return HttpResponseRedirect(reverse('ticket_crear', args=[event.id]))
+
+def insertLocationView(request,id):
+    event =  Event.objects.get(id=id)
+    object = Event()
+    locations = Location.objects.filter(event=id)
+    location_form=LocationForm()
+
+    if request.method == 'POST':
+        location_form = LocationForm(request.POST)
+        if location_form.is_valid:
+            print()
+            addLocationView(request,event.id,location_form['name'].value(),location_form['cost'].value())
+            return HttpResponseRedirect(reverse('location_crear', args=[id]))
+    else:
+        context = {'event':event,'location_form':location_form,'locations':locations}              
+    return render(request, 'tickets/generateLocations.html',context)   
+
+
+def renderGlobalTicket(request,id):
+    print(request.method)
+    event =  Event.objects.get(id=id)
+    object = Event()
+    locations = Location.objects.filter(event=id)
+    form = TicketLocationForm()
+    arrayTicket=getListTicket(str(event.id))
+    context = {'tickets':arrayTicket,'form':form,'event':event,'locations':locations}                     
+    return render(request, 'tickets/generateTicketLocation.html',context)
+
+
+
+
 def generateTickets(request,id):
     event =  Event.objects.get(id=id)
     event_type=event.event_type
     object = Event()
+    location_form=LocationForm()
     if event_type == 'Beisbol':  #SI EL EVENTO CREADO FUE TIPO BEISBOL
         if request.method == 'POST':
             form = BaseballForm(request.POST)
@@ -173,6 +227,10 @@ def deleteTicketsView(request,id,ubication):
         form = TicketForm()
     context = {'tickets':arrayTicket,'form':form}
     return HttpResponseRedirect(reverse('ticket_crear', args=[id]))
+
+def deleteLocationsView(request,id,event):
+    Location.objects.filter(id=id).delete()
+    return HttpResponseRedirect(reverse('location_crear', args=[event]))
 
 def addNorthView(request,event,quantity,cost):
     print(event,quantity,cost)

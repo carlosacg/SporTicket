@@ -5,6 +5,12 @@ from ..tickets.models import Ticket
 
 class BillForm(forms.ModelForm):
 	class Meta:
+		CHOICES= (
+        ('Efectivo', 'Efectivo'),
+        ('Tarjeta de credito', 'Tarjeta de credito'),
+        ('Tarjeta de debito', 'Tarjeta de debito'),
+        )
+
 		model = Bill
 		fields = ['id_profile']
 		labels = {

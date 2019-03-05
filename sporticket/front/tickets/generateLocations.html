@@ -1,0 +1,96 @@
+{% extends 'base/base.html' %}
+
+    {% block content %}
+    <div class="w3-main" >
+        <header class="w3-container" >
+            <h5 class="black-color" >
+                <b class="black-color">
+                <i class="fa fa-plus black-color"></i> Generador de localidades</b>
+            </h5>
+            <h5 class="black-color"><b class="black-color"> {{event.name}}</b></h5>
+        </header>
+        <form method="post">
+            {% csrf_token %}
+                <div class="w3-row-padding">
+
+                    <div class="w3-container">
+                        <table class="w3-table-all w3-hoverable ">
+                              <thead >
+                                <tr class="w3-dark-grey">
+                                <th>Precio localidad</th>
+                                <th>Nombre localidad</th>
+                                <th></th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                    <td>{{location_form.cost}}</td>
+                                    <td>{{location_form.name}}</td>
+                                    <td><a href="{% url 'location_crear' id=event.id %}" 
+                                        data-toggle="tooltip" 
+                                        title="Guardar localidad">
+                                        <button type="submit" class="w3-button w3-padding-small w3-dark-grey w3-circle">
+                                        <i class="fa fa-save"></i></button>
+                                        </a>
+                                    </td>
+                                </tr>
+                              </tbody>
+                        </table>
+                    </div>
+                </div>
+            </form>
+            <div class="w3-container">
+                <div class="w3-show-inline-block">
+                    <div class="w3-bar">
+                        <a href="{% url 'ticket_crear' id=event.id %}"
+                        data-toggle="tooltip" 
+                        title="Continuar">
+                            <button class="w3-button w3-padding-16 w3-dark-grey w3-circle" >Continuar</i></button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        <header class="w3-container">
+            <h5 class="black-color">
+                <b class="black-color">
+                <i class="fa fa-list black-color"></i> Localidades generadas</b>
+            </h5>
+        </header>
+    
+        <div class="w3-container">
+              <table class="w3-table-all w3-hoverable ">
+                <thead >
+                      <tr class="w3-dark-grey">
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th></th>
+                      </tr>
+                </thead>
+                <tbody>
+                    {% if locations %}
+                    {% for locations in locations %}
+                    <tr id="registro_item" >
+                        <td>{{locations.name}}</td>	
+                        <td>{{locations.cost}}</td>
+                        <td><a href="{% url 'location_delete' event=event.id id=locations.id %}" 
+                                data-toggle="tooltip" 
+                                title="Eliminar localidad">
+                                <button class="w3-button w3-padding-small w3-dark-grey w3-circle">
+                                <i class="fa fa-close"></i></button>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+                {% endfor %}
+                {% else %}
+                <h1 class="black-color">No hay registros de localidades</h1>
+                {% endif %}
+              </table>
+        </div>
+    
+        <hr>
+        <footer class="w3-container w3-padding-14 w3-grey">
+            <p>Powered by <a class="black-color">XSOFT</a></p>
+        </footer>
+    </div>
+    {% endblock %}
