@@ -66,8 +66,8 @@ def renderGlobalTicket(request,id):
     locations = Location.objects.filter(event=id)
     form = TicketLocationForm()
     arrayTicket=getListTicket(str(event.id))
-    zone = None
-    cost = None
+    zone = 0
+    cost = 0
     context = {'tickets':arrayTicket,'form':form,'event':event,'locations':locations,'zone':zone,'cost':cost}                     
     return render(request, 'tickets/generateTicketLocation.html',context)
 

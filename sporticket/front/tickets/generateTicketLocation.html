@@ -40,14 +40,18 @@
                                     <td>{{locations.name}}</td>
                                     <td>{{form.zone}}</td>
                                     <td>{{form.cost}}</td>
-                                    <td><a href="{% url 'add_ticket' ubication=locations.name event=event quantity=form.zone cost=form.cost %}" 
+                                    {% with zone as form.zone%}
+                                    {% endwith %}
+                                    {% with cost as form.cost%}
+                                    {% endwith %}
+                                    </form>
+                                    <td><a href="{% url 'add_ticket' ubication=locations.name event=event quantity=zone cost=cost %}" 
                                         data-toggle="tooltip" 
                                         title="Guardar boletos {{locations.name}}">
                                         <button class="w3-button w3-padding-small w3-dark-grey w3-circle">
                                         <i class="fa fa-save"></i></button>
                                         </a>
                                     </td>
-                                </form>
                                 </tr>
                                 {% endfor %}
                                 {% else %}
