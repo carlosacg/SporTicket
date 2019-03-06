@@ -5,9 +5,8 @@
         <header class="w3-container" >
             <h5 class="black-color" >
                 <b class="black-color">
-                <i class="fa fa-plus black-color"></i> Generador de localidades</b>
+                <i class="fa fa-plus black-color"></i> Generador de localidades para el evento: {{event.name}}</b>
             </h5>
-            <h5 class="black-color"><b class="black-color"> {{event.name}}</b></h5>
         </header>
         <form method="post">
             {% csrf_token %}
@@ -17,14 +16,12 @@
                         <table class="w3-table-all w3-hoverable ">
                               <thead >
                                 <tr class="w3-dark-grey">
-                                <th>Precio localidad</th>
                                 <th>Nombre localidad</th>
                                 <th></th>
                                 </tr>
                               </thead>
                               <tbody>
                                 <tr>
-                                    <td>{{location_form.cost}}</td>
                                     <td>{{location_form.name}}</td>
                                     <td><a href="{% url 'location_crear' id=event.id %}" 
                                         data-toggle="tooltip" 

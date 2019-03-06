@@ -5,15 +5,6 @@
     {% block content %}
     <div class="w3-main" >
         <header class="w3-container" >
-                    <h5 class="black-color" >
-                        <b class="black-color">
-                        <i class="fa fa-plus black-color"></i> Generar ubicaciones</b>
-                    </h5>
-        </header>
-
-
-        
-        <header class="w3-container" >
             <h5 class="black-color" >
                 <b class="black-color">
                 <i class="fa fa-plus black-color"></i> Generador de boletos</b>
@@ -33,27 +24,21 @@
                           </thead>
                           <tbody>        
                                 {% if locations %}
-                                {% for locations in locations %}
                                 <tr>
                                     <form method='POST'>
                                         {% csrf_token %}
-                                    <td>{{locations.name}}</td>
+                                    <td>{{form.location}}</td>
                                     <td>{{form.zone}}</td>
                                     <td>{{form.cost}}</td>
-                                    {% with zone as form.zone%}
-                                    {% endwith %}
-                                    {% with cost as form.cost%}
-                                    {% endwith %}
-                                    </form>
-                                    <td><a href="{% url 'add_ticket' ubication=locations.name event=event quantity=zone cost=cost %}" 
+                                    <td><a
                                         data-toggle="tooltip" 
-                                        title="Guardar boletos {{locations.name}}">
+                                        title="Guardar boletos">
                                         <button class="w3-button w3-padding-small w3-dark-grey w3-circle">
                                         <i class="fa fa-save"></i></button>
                                         </a>
                                     </td>
+                                    </form>
                                 </tr>
-                                {% endfor %}
                                 {% else %}
                                 <h1 class="black-color">No hay ubicaciones para este evento</h1>
                                 {% endif %}

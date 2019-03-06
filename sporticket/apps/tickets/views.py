@@ -15,32 +15,32 @@ from django.urls import reverse_lazy,reverse
 # Create your views here.
 
 def insertTickets(quantity,ubication,event,cost,state):
+    print(quantity,ubication,event,cost,state)
     x=0
     while x < int(quantity):        
         save_data(ubication,event,cost,state) 
         x+=1
 
-def insertLocation(request,event,name,cost):
+def insertLocation(request,event,name):
     print('ENTRO A INSERT LOCATION')
     print(event,name)
-    location = Location(event=event, name=name,cost=cost)
+    location = Location(event=event, name=name)
     location.save()
 
 def addTicketLocationView(request,ubication,event,cost,quantity):
     print('ENTRO A ADD TICKET CON LOCATION')
-    print(event,quantity,cost,ubication)
     insertTickets(quantity,ubication,event,cost,'Disponible')
-    updateCapacityEvent( event.id ,quantity) 
+    #updateCapacityEvent( event.id ,quantity) 
     return HttpResponseRedirect(reverse('ticket_crear', args=[event.id]))
 
-def addLocationView(request,event,name,cost):
+def addLocationView(request,event,name):
     event =  Event.objects.get(id=event)
     print(event,name)
     print('Entro a addlocationView')
     print(name)
     locations = Location.objects.filter(event=event)
     print(name)
-    insertLocation(request,event,name,cost)
+    insertLocation(request,event,name)
     return HttpResponseRedirect(reverse('ticket_crear', args=[event.id]))
 
 def insertLocationView(request,id):
@@ -53,7 +53,7 @@ def insertLocationView(request,id):
         location_form = LocationForm(request.POST)
         if location_form.is_valid:
             print()
-            addLocationView(request,event.id,location_form['name'].value(),location_form['cost'].value())
+            addLocationView(request,event.id,location_form['name'].value())
             return HttpResponseRedirect(reverse('location_crear', args=[id]))
     else:
         context = {'event':event,'location_form':location_form,'locations':locations}              
@@ -61,14 +61,20 @@ def insertLocationView(request,id):
 
 
 def renderGlobalTicket(request,id):
+    print(id)
     event =  Event.objects.get(id=id)
     object = Event()
     locations = Location.objects.filter(event=id)
-    form = TicketLocationForm()
-    arrayTicket=getListTicket(str(event.id))
-    zone = 0
-    cost = 0
-    context = {'tickets':arrayTicket,'form':form,'event':event,'locations':locations,'zone':zone,'cost':cost}                     
+    arrayTicket=getListTicket(id)
+    print(arrayTicket)
+    if request.method=='POST':
+        form = TicketLocationForm(request.POST)
+        if form.is_valid:
+            addTicketLocationView(request, form['location'].value(), event, form['cost'].value(), form['zone'].value())
+            return HttpResponseRedirect(reverse('ticket_crear', args=[id]))
+    else:
+        form = TicketLocationForm()
+    context = {'tickets':arrayTicket,'form':form,'event':event,'locations':locations}                     
     return render(request, 'tickets/generateTicketLocation.html',context)
 
 
@@ -175,7 +181,8 @@ def generateTickets(request,id):
     
 
 def save_data(ubication,event,cost,state):
-    newTicket = Ticket(ubication=ubication,event=event,cost=cost,state=state)
+    location= Location.objects.get(id=ubication)
+    newTicket = Ticket(location=location,cost=cost,event=event,state=state)
     newTicket.save()
 
 def updateCapacityEvent(event,newCapacity):
@@ -186,20 +193,18 @@ def updateCapacityEvent(event,newCapacity):
 
 def addTicketView(request,id,ubication):
     event =  Event.objects.get(id=id)
-    event_type=event.event_type
+    location = Location.objects.filter(name=ubication).get(event=event)
+    locationArray = Location.objects.filter(name=ubication).filter(event=event)
     arrayTicket=getListTicket( id )
     object = Ticket()
-    print(id)
-    ticket = Ticket.objects.filter(event=id).filter(ubication=ubication).last()
-    print(ticket.cost,ubication,ticket.event)
-    save_ticket(ticket.cost,ubication,ticket.event)
+    print(event,location)
+    id_location=''
+    for locations in locationArray:
+        id_location=locations.id
+    ticket = Ticket.objects.filter(event=event).filter(location=id_location).last()
+    print(ticket)
+    save_ticket(ticket.cost,location,ticket.event)
     updateCapacityEvent( event.id ,1) 
-    if event_type == 'Beisbol':
-        form = BaseballForm()
-    else: 
-        form = TicketForm()
-
-    context = {'tickets':arrayTicket,'form':form}
     return HttpResponseRedirect(reverse('ticket_crear', args=[id]))
 
 def minusTicketView(request,id,ubication):
@@ -286,11 +291,13 @@ def addHightView(request,event,quantity,cost):
 
 def getListTicket(event):
     cursor = connection.cursor()
-    instruction = "SELECT count(*),ubication,cost,event_id from tickets_ticket WHERE event_id="+str(event)+" GROUP BY cost,ubication,event_id;"
+    instruction = "SELECT count(*),location_location.name,cost from tickets_ticket,location_location WHERE location_location.id=tickets_ticket.location_id AND tickets_ticket.event_id="+str(event)+" GROUP BY cost,location_location.name;"
     cursor.execute(instruction)
     rows = cursor.fetchall()
     connection.commit()
     connection.close()
+    print(instruction)
+    print(rows)
     return rows
     
 def addMediumView(request,event,quantity,cost):
