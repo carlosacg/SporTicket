@@ -7,6 +7,11 @@ from apps.location.models import Location
 
 
 class TicketLocationForm(forms.ModelForm):
+
+    def query(self,event):
+        print(event)
+        self.fields['location'].queryset= Location.objects.filter(event=event)
+            
     location = forms.ModelChoiceField(Location.objects.all(), required=True)
     zone= forms.IntegerField(required=False)
     class Meta:
@@ -21,4 +26,3 @@ class TicketLocationForm(forms.ModelForm):
         widgets ={
             'state': forms.TextInput(attrs={'class':'w3-input w3-border','type':'hidden','value':'Disponible'}),
         }
-
