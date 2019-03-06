@@ -1,0 +1,7 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+  {% for city in cities %}
+ <a href="{% url 'next_view_name' pokemon.id %}"><p>{{pokemon.pokemon.name}}</p></a>
+{% endfor %}
+{% endblock %}

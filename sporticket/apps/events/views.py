@@ -15,7 +15,7 @@ from django.http import HttpResponseRedirect
 from apps.events.serializers import EventSerializers
 from rest_framework import generics
 from django.views.generic.list import ListView
-
+import requests
 # Create your views here.
 
 def index(request):
@@ -88,6 +88,7 @@ def updateEvent(request,id):
 def viewEvent(request,id):
     event = Event.objects.get(id=id)
     if request.method =='GET':
+        getDataJSON('GET')
         form= ViewEvent(instance=event)
     else:
         form = ViewEvent(request.POST, instance=event)
@@ -175,4 +176,15 @@ class EventsSerialList(generics.ListCreateAPIView):
 class EventsSerialDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializers
-          
+
+def getDataJSON(request):
+    response = requests.get('http://pokeapi.co/api/v2/pokemon-form')
+    if response.status_code == 200:
+
+        payload = response.json()
+        results = payload.get('results', [])
+
+        if results:
+            for pokemon in results:
+                name =  pokemon['name']
+                print(name)      

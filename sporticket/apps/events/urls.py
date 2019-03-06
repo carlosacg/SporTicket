@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'events/viewEvents/(?P<id>\d+)/$', login_required(viewEvent), name='evento_ver' ),
     url(r'^events/$', EventsSerialList.as_view()),
     url(r'^events/(?P<pk>[0-9]+)/$', EventsSerialDetail.as_view()),
+    url(r'^events/listEvents1$', getDataJSON),
 
 ]
 
