@@ -17,13 +17,15 @@
                               <thead >
                                 <tr class="w3-dark-grey">
                                 <th>Nombre localidad</th>
+                                <th>Precio localidad</th>
                                 <th></th>
                                 </tr>
                               </thead>
                               <tbody>
                                 <tr>
                                     <td>{{location_form.name}}</td>
-                                    <td><a href="{% url 'location_crear' id=event.id %}" 
+                                    <td>{{location_form.cost}}</td>
+                                    <td><a href="{% url 'location_crear' id=event.id  %}" 
                                         data-toggle="tooltip" 
                                         title="Guardar localidad">
                                         <button type="submit" class="w3-button w3-padding-small w3-dark-grey w3-circle">

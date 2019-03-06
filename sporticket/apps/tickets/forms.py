@@ -9,21 +9,16 @@ from apps.location.models import Location
 class TicketLocationForm(forms.ModelForm):
     location = forms.ModelChoiceField(Location.objects.all(), required=True)
     zone= forms.IntegerField(required=False)
-    cost= forms.IntegerField(required=False)
     class Meta:
         model = Ticket
 
         fields = [
-            'cost',
             'state',
         ]
         labels ={
-            'cost':'Precio',
             'state':'Estado',
         }
         widgets ={
-            'cost': forms.NumberInput(attrs={'class':'w3-input w3-border','type':'hidden','value':'0'}),
             'state': forms.TextInput(attrs={'class':'w3-input w3-border','type':'hidden','value':'Disponible'}),
-
         }
 

@@ -18,7 +18,6 @@
                             <tr class="w3-dark-grey">
                             <th>Ubicacion</th>
                             <th>Cantidad Boletos</th>
-                            <th>Precio</th>
                             <th></th>
                             </tr>
                           </thead>
@@ -29,7 +28,6 @@
                                         {% csrf_token %}
                                     <td>{{form.location}}</td>
                                     <td>{{form.zone}}</td>
-                                    <td>{{form.cost}}</td>
                                     <td><a
                                         data-toggle="tooltip" 
                                         title="Guardar boletos">
