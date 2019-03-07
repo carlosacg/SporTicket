@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'apps.users',
     'apps.sales',
     'apps.location',
+    'apps.event_type',
     'social_django',
 ]
 
@@ -105,7 +106,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'sport_db',
         'USER' : 'andres',
-        'PASSWORD': '',
+        'PASSWORD': 'un1v4ll3',
         'HOST' : 'localhost',
         'PORT' : 5432,    
     }

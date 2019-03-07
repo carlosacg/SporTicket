@@ -1,5 +1,6 @@
 from django import forms
 from apps.events.models import Event
+from apps.event_type.models import EventType
 
 class ImageForm(forms.Form):
  filename = forms.CharField(max_length=100)
@@ -61,6 +62,8 @@ class EventForm(forms.ModelForm):
         }
 
 class ViewEvent(forms.ModelForm):
+    
+    event_type = forms.ModelChoiceField(EventType.objects.all(), required=True)
 
     class Meta:
         model = Event
@@ -75,7 +78,6 @@ class ViewEvent(forms.ModelForm):
             'capacity',
             'local',
             'visitor',
-            'event_type',
         ]
         labels ={
             'name':'Nombre',
@@ -87,7 +89,6 @@ class ViewEvent(forms.ModelForm):
             'capacity':'Capacidad',
             'local':'Local',
             'visitor':'Visitante',
-            'event_type':'Tipo de Evento',
         }
         widgets ={
             'name': forms.TextInput(attrs={'class':'w3-input w3-border'}),
@@ -99,6 +100,5 @@ class ViewEvent(forms.ModelForm):
             'capacity': forms.TextInput(attrs={'class':'w3-input w3-border'}),  
             'local': forms.TextInput(attrs={'class':'w3-input w3-border'}),  
             'visitor': forms.TextInput(attrs={'class':'w3-input w3-border'}),  
-            'event_type': forms.TextInput(attrs={'class':'w3-input w3-border'}),
         }
  

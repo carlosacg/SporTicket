@@ -4,6 +4,7 @@ from apps.events.forms import EventForm
 from apps.events.forms import ViewEvent
 from apps.events.forms import UploadForm
 from apps.events.forms import ImageForm
+from apps.event_type.forms import EventTypeForm
 from django.views.generic import ListView,CreateView, UpdateView, DeleteView
 from apps.events.models import *
 from django.urls import reverse_lazy,reverse
@@ -20,6 +21,16 @@ import requests
 
 def index(request):
     return render(request, 'base/base.html')
+
+def insertEventType(request):
+    if request.method == 'POST':
+        form = EventTypeForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect('insertEvenType.html')
+    else:
+        form = EventTypeForm()
+    return render(request, 'events/insertEvenType.html',{'form':form})
 
 def insertEvent(request):
     if request.method == 'POST':

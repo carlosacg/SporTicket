@@ -42,6 +42,7 @@
 				<label for="{{form.event_type.id_for_label}}">{{form.event_type.label}}</label>
 				{{form.event_type}}
 			</div>
+
 		</div>
 		<div class="w3-row-padding">
 			<div class="w3-half">
@@ -74,6 +75,12 @@
             </div>
 		</div>
 	</form>
+		<a href="{% url 'tipo_evento_crear' %}" 
+			data-toggle="tooltip" 
+			title="Agregar tipo de evento ">
+			<button class="w3-button w3-padding-small w3-dark-grey w3-circle">
+			<i class="fa fa-plus"></i></button>
+		</a>
 	<br>
 	<br>
  	<footer class="w3-container w3-padding-14 w3-grey">

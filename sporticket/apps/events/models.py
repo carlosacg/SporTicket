@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib import messages
-
+from apps.event_type.models import EventType
 # Create your models here.
 class Event(models.Model):
     id = models.AutoField(primary_key=True)
@@ -13,7 +13,7 @@ class Event(models.Model):
     capacity = models.IntegerField()
     visitor = models.CharField(max_length=200)
     local = models.CharField(max_length=200)
-    event_type = models.CharField(max_length=200)
+    event_type = models.name = models.ForeignKey(EventType, null=True, on_delete=models.CASCADE)
     image = models.ImageField(null=True)
     
     def __str__(self):   #MUESTRA EL NOMBRE COMO LLAVE FORANEA
