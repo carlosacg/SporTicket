@@ -2,9 +2,9 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from apps.events.forms import EventForm
 from apps.events.forms import ViewEvent
+from apps.event_type.forms import EventTypeForm
 from apps.events.forms import UploadForm
 from apps.events.forms import ImageForm
-from apps.event_type.forms import EventTypeForm
 from django.views.generic import ListView,CreateView, UpdateView, DeleteView
 from apps.events.models import *
 from django.urls import reverse_lazy,reverse
@@ -27,10 +27,10 @@ def insertEventType(request):
         form = EventTypeForm(request.POST)
         if form.is_valid():
             form.save()
-        return redirect('insertEvenType.html')
+        return redirect('insertEvents.html')
     else:
         form = EventTypeForm()
-    return render(request, 'events/insertEvenType.html',{'form':form})
+    return render(request, 'events/insertEvenType.html',{'form':form}) 
 
 def insertEvent(request):
     if request.method == 'POST':
@@ -198,4 +198,7 @@ def getDataJSON(request):
         if results:
             for pokemon in results:
                 name =  pokemon['name']
-                print(name)      
+                url = pokemon['url']
+                print(name, url) 
+                     
+                post.event.create()
