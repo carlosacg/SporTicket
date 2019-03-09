@@ -17,6 +17,8 @@ from apps.events.serializers import EventSerializers
 from rest_framework import generics
 from django.views.generic.list import ListView
 import requests
+import json
+
 # Create your views here.
 
 def index(request):
@@ -99,7 +101,8 @@ def updateEvent(request,id):
 def viewEvent(request,id):
     event = Event.objects.get(id=id)
     if request.method =='GET':
-        getDataJSON('GET')
+       # getDataJSON('GET')
+        getEventsJSON('GET')
         form= ViewEvent(instance=event)
     else:
         form = ViewEvent(request.POST, instance=event)
@@ -185,6 +188,7 @@ class EventsSerialList(generics.ListCreateAPIView):
     serializer_class = EventSerializers
 
 class EventsSerialDetail(generics.RetrieveUpdateDestroyAPIView):
+  
     queryset = Event.objects.all()
     serializer_class = EventSerializers
 
@@ -201,4 +205,20 @@ def getDataJSON(request):
                 url = pokemon['url']
                 print(name, url) 
                      
-                post.event.create()
+
+
+def getEventsJSON(request):
+    response = requests.get('http://localhost:8001/events/?format=json')
+    if response.status_code == 200:
+        payload = response.json()
+        for i in payload:
+
+            name = payload[i]['name']
+            date = payload[i]['initial_date']
+            hour = payload[i]['initial_time']
+            place = payload[i]['place']
+            print([i['name']])
+            #object = Event()
+            #save_data(name,date,hour,place)
+            print("Interopere")
+        
