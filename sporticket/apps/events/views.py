@@ -208,17 +208,24 @@ def getDataJSON(request):
 
 
 def getEventsJSON(request):
-    response = requests.get('http://localhost:8001/events/?format=json')
+    response = requests.get('http://localhost:8001/events/?format=json') 
     if response.status_code == 200:
         payload = response.json()
         for i in payload:
-
-            name = payload[i]['name']
-            date = payload[i]['initial_date']
-            hour = payload[i]['initial_time']
-            place = payload[i]['place']
-            print([i['name']])
-            #object = Event()
-            #save_data(name,date,hour,place)
+            name = i['name']
+            date = i['initial_date']
+            hour = i['initial_time']
+            place = i['place']
+            state = i['state']
+            url = i['url']
+            capacity = i['capacity']
+            visitor = i['visitor']
+            local = i['local']
+            image = i['image']
+            event_type = i['event_type']
+            print(event_type)
+            object = Event()
+            newEvent = Event(name=name,initial_date=date,initial_time=hour,place=place,url=url,state=state,capacity=capacity,visitor=visitor,local=local,event_type_id=event_type)
+            newEvent.save()
             print("Interopere")
         
