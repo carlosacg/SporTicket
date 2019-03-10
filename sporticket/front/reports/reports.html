@@ -17,7 +17,11 @@
 					<div class="w3-third">		
 						<label for="{{form.events.id_for_label}}"> {{form.events.label}} </label>
 						{{form.events}}	
-					</div>		
+					</div>
+					<div class="w3-third">		
+						<label for="{{form.events.id_for_label}}"></label>
+						{{form.date1}}	
+					</div>			
 					<div class="w3-third">		
 						Numero de boletos disponibles: 
 						<strong>{{avalibles}}</strong>
@@ -32,10 +36,16 @@
 							class="w3-button w3-padding-16 w3-dark-grey w3-circle" >
 							<i class="fa fa-save"></i>
 					</button>
-				</div>				
+				</div>
+				<div class="w3-third">		
+					Ventas del dia:
+					<strong>{{dailySales}}</strong> 
+				</div>	
 			</form>
 		</div>
 		
+				
+
 		<div class="w3-container w3-row-padding">
   			<div class="w3-row-padding">
 				<div class="w3-bar">
@@ -44,7 +54,7 @@
 			      <header class="w3-container ">
 			        <h4>
 						<a href="{% url 'report1' %}"></a>
-						<b class="black-color" "> Reporte de compras en el mes</b>
+						<b class="black-color"> Reporte de compras en el mes</b>
 			        </h4>
 			      </header>
 			      <div class="w3-center" >

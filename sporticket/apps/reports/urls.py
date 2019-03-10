@@ -7,4 +7,6 @@ from django.contrib.auth.decorators import login_required
 urlpatterns = [
 	#url(r'reports/reports.html', index_sale),
 	url(r'reports/reports.html', login_required(report_f), name='report1'),
+	url(r'sales/saleEvent.html', login_required(reportByDailySales), name='dailySales'),
+
 ]
