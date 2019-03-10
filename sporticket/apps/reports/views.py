@@ -18,10 +18,10 @@ def report_f(request):
         sales = reportByEventSale(int(selected_event))
         dailySales =  reportByDailySales()
         context = {'sales':sales,'avalibles':avalibles,'dailySales':dailySales,'form':form}
-        return render(request, 'reports/reports.html',context)
+        return render(request, 'reports/reports.html',context)#A donde debo ir si gano 
 
     else:
-        return render(request, 'reports/reports.html',{'form': form})
+        return render(request, 'reports/reports.html',{'form': form})#El mismo lugar donde hice la peticion 
 
 
 def reportByEventAvalibles(event_id):
