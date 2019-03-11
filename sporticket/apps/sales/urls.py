@@ -9,7 +9,7 @@ urlpatterns = [
 	#path('index', index_user, name='index'),
     #path('crear_factura', BillCreate.as_view(), name='base'),/sales/viewsEvent.html
     url(r'sales/viewsEvent.html', login_required(listEvent), name='evento_listar_compras' ),
-    url(r'sales/createShopping/(?P<id>\d+)/$', login_required(createShopping), name='comprar_boletos' ),
+    url(r'sales/createShopping/(?P<id>\d+)/$', login_required(createShop), name='comprar_boletos' ),
     url(r'sales/createSale/(?P<id>\d+)/$', login_required(createSale), name='realizar_venta' ),
     url(r'sales/saleEvent.html', login_required(listEvent1), name='evento_venta' ),
 	

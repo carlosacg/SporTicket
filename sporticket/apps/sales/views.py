@@ -4,10 +4,12 @@ from django.views.generic import CreateView, View
 from django.urls import reverse_lazy
 from django.dispatch import receiver
 from apps.events.models import *
+from apps.location.models import *
 from .models import Bill
 from apps.tickets.models import Ticket
+from django.contrib.auth.models import User
 from django.db import connection 
-from .forms import BillForm, AddTicketsForm, BuyTicketsFormBaseball, BuyTicketsForm
+from .forms import BillForm, AddTicketsForm, BuyTicketsLocationForm
 import time
 
 
@@ -45,7 +47,7 @@ class BillCreate(CreateView):
 
 
 def listEvent(request):
-		create_bill()
+		create_bill(request)
 		event = Event.objects.filter(state="Activo")
 		print (event)
 		context = {'events':event}
@@ -65,7 +67,6 @@ def createSale(request,id):
 		ubication=form['ubication'].value()
 		quantity=form['quantity'].value()
 		avalible_tickets = get_avalible_tickets(id,ubication)
-
 	else:
 		form = BuyTicketsForm()
 	#tickets=getListTicketsSolds(bill_id)
@@ -73,53 +74,31 @@ def createSale(request,id):
 	print (tickets_avalibles)
 	context = {'event':event,'form':form,'hora':hora,'avalibleTicket':tickets_avalibles}
 	return render(request,'sales/createSale.html',context)
-	
-def createShopping(request,id):
-		event = Event.objects.get(id=id)
-		bill_id=Bill.objects.all().last()
-		if event.event_type=='Beisbol':
-			if request.method=='POST':
-				usuario=request.user.id	#OBTENGO EL ID DEL USUARIO
-				print(userId)
-				form = BuyTicketsFormBaseball(request.POST)
-				ubication=form['ubication'].value()
-				quantity=form['quantity'].value()
-				avalible_tickets=get_avalible_tickets(id,ubication)
-				add_shopping(bill_id,avalible_tickets,quantity,len(avalible_tickets))
-				calculate(ubication,id,quantity)
 
-			else:
-				form = BuyTicketsFormBaseball()
-				
-			tickets=getListTicketsSolds(bill_id)
-			tickets_avalibles=getListTicketsAvalibles(event)
-			print (tickets_avalibles)
-			context = {'event':event,'form':form,'arrayTicket':tickets,'bill':bill_id,'avalibleTicket':tickets_avalibles}
-			return render(request,'sales/createShopping.html',context)
-		else:
-			if request.method=='POST':
-				usuario=request.user.id  #OBTENGO EL ID DEL USUARIO
-				form = BuyTicketsForm(request.POST)
-				print(usuario)
-				ubication=form['ubication'].value()
-				quantity=form['quantity'].value()
-				avalible_tickets=get_avalible_tickets(id,ubication)
-				add_shopping(bill_id,avalible_tickets,quantity,len(avalible_tickets))
-				calculate(ubication,id,quantity)
-				tickets=getListTicketsSolds(bill_id)
-			else:
-				form = BuyTicketsForm()
-				
-			tickets=getListTicketsSolds(bill_id)
-			tickets_avalibles=getListTicketsAvalibles(event)
-			print (tickets_avalibles)
-			context = {'event':event,'form':form,'arrayTicket':tickets,'bill':bill_id,'avalibleTicket':tickets_avalibles}
-			return render(request,'sales/createShopping.html',context)
+def createShop(request,id):
+	event = Event.objects.get(id=id)
+	bill_id=Bill.objects.all().last()
+	if request.method=='POST':
+		form=BuyTicketsLocationForm(request.POST)
+		if form.is_valid:
+			location=form['location'].value()
+			quantity=form['quantity'].value()
+			print(location)
+			avalible_tickets=get_avalible_tickets(id,location)
+			add_shopping(bill_id,avalible_tickets,quantity,len(avalible_tickets))
+
+	else:
+		form=BuyTicketsLocationForm(request.POST)
+		form.query(event)
+	tickets=getListTicketsSolds(bill_id)
+	tickets_avalibles=getListTicketsAvalibles(event)
+	context = {'event':event,'form':form,'arrayTicket':tickets,'bill':bill_id,'avalibleTicket':tickets_avalibles}
+	return render(request,'sales/createShopping.html',context)
 
 
 def getListTicketsSolds(bill):
     cursor = connection.cursor()
-    instruction = "SELECT count(*),ubication,cost from tickets_ticket WHERE id_bill_id="+str(bill.id)+" GROUP BY ubication,cost;"
+    instruction = "SELECT count(*),location_location.name,location_location.cost FROM tickets_ticket,location_location WHERE location_location.id=tickets_ticket.location_id AND id_bill_id="+str(bill.id)+" GROUP BY location_location.name,location_location.cost;"
     cursor.execute(instruction)
     rows = cursor.fetchall()
     connection.commit()
@@ -128,21 +107,22 @@ def getListTicketsSolds(bill):
 
 def getListTicketsAvalibles(event):
     cursor = connection.cursor()
-    instruction = "SELECT count(*),ubication,cost from tickets_ticket WHERE state='Disponible' AND event_id="+str(event.id)+" GROUP BY ubication,cost;"
+    instruction = "SELECT count(*),location_location.name,location_location.cost FROM tickets_ticket,location_location WHERE location_location.id=tickets_ticket.location_id AND state='Disponible' AND tickets_ticket.event_id="+str(event.id)+" GROUP BY location_location.name,location_location.cost;"
     cursor.execute(instruction)
     rows = cursor.fetchall()
     connection.commit()
     connection.close()
     return rows
 
-def get_avalible_tickets(event,ubication):
-		cursor = connection.cursor()
-		instruction = "SELECT id FROM tickets_ticket WHERE event_id="+event+" AND ubication=\'"+ubication+"\' AND state='Disponible';"
-		cursor.execute(instruction)
-		row = cursor.fetchall()
-		connection.commit()
-		connection.close()
-		return (list(row))
+def get_avalible_tickets(event,location):
+	cursor = connection.cursor()
+	instruction = "SELECT id FROM tickets_ticket WHERE event_id="+event+" AND location_id="+location+" AND state='Disponible';"
+	print(instruction)
+	cursor.execute(instruction)
+	row = cursor.fetchall()
+	connection.commit()
+	connection.close()
+	return (list(row))
 
 def add_ticket_to_bill(bill,ticket):
 	ticket = Ticket.objects.get(id=ticket)
@@ -151,8 +131,10 @@ def add_ticket_to_bill(bill,ticket):
 	ticket.save()
 
 
-def create_bill():
-	bill = Bill()
+def create_bill(request):
+	user=User.objects.get(id=request.user.id)
+	print(user.id)
+	bill = Bill(id_profile=user)
 	bill.save()
 		
 def add_shopping(bill,ticket,quantity,avalibles):

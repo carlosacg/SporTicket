@@ -1,6 +1,8 @@
 from django import forms
 
 from .models import Bill
+from apps.location.models import Location
+
 from ..tickets.models import Ticket
 
 class BillForm(forms.ModelForm):
@@ -32,23 +34,15 @@ class AddTicketsForm(forms.ModelForm):
 			'id':forms.TextInput(attrs={'class':'form-control'}),
 		}
 
-class BuyTicketsFormBaseball(forms.Form):
+class BuyTicketsLocationForm(forms.Form):
+	def query(self,event):
+		print(event)
+		self.fields['location'].queryset= Location.objects.filter(event=event)
+        
 	CHOICES= (
-        ('Zona alta', 'Zona alta'),
-        ('Zona media', 'Zona media'),
-        ('Zona baja', 'Zona baja'),
-    	)
-
-	ubication= forms.ChoiceField(choices=CHOICES)
+        ('Tarjeta de credito', 'Tarjeta de credito'),
+        ('Tarjeta de debito', 'Tarjeta de debito'),
+        )
+	location = forms.ModelChoiceField(Location.objects.all(), required=True)   
 	quantity = forms.IntegerField(label='Cantidad boletos',required=False)
-
-class BuyTicketsForm(forms.Form):
-	CHOICES= (
-        ('Tribuna norte', 'Tribuna norte'),
-        ('Tribuna sur', 'Tribuna sur'),
-        ('Tribuna oriente', 'Tribuna oriente'),
-		('Tribuna occidente', 'Tribuna occidente'),
-    	)
-
-	ubication= forms.ChoiceField(choices=CHOICES)
-	quantity = forms.IntegerField(label='Cantidad boletos',required=False)
+	#payment = forms.ChoiceField(CHOICES)
