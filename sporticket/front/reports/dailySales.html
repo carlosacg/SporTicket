@@ -1,0 +1,36 @@
+{% extends 'base/base.html' %}
+{%load staticfiles %}
+
+{% block content %}
+<div class="w3-main" >
+	<header class="w3-container">
+		<h5 class="black-color">
+			<b class="black-color">
+			<i class="fa fa-bar-chart fa-fw black-color"></i> Reporte ventas diarias</b>
+		</h5>
+	</header>
+	<div class="w3-container">
+		<div class="w3-container">
+			<form method="post"> 
+				{% csrf_token %}
+				<div class="w3-row-padding">
+					<div class="w3-third">		
+						<img src="">
+					</div>
+					<div class="w3-third">		
+						Total de ventas en el dia: 
+						<strong> $$$ </strong>
+					</div>
+					<div class="w3-third">		
+						<img src="">
+					</div>
+				</div>
+			</form>
+			<br>
+		</div>	
+  	</div>
+	<footer class="w3-container w3-padding-14 w3-grey">
+    	<p>Powered by <a class="black-color">XSOFT</a></p>
+	</footer>
+</div>
+{% endblock %}

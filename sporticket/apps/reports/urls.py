@@ -10,4 +10,7 @@ urlpatterns = [
 	url(r'sales/saleEvent.html', login_required(reportByDailySales), name='dailySales'),
 	url(r'reports/saleEvents.html', login_required(reportSaleEvents), name='reportEvent'),
 	url(r'reports/graphicsReports.html', login_required(graphicsReport), name='graphicsReport'),
+	url(r'reports/dailySales.html', login_required(dailyReport), name='dailyReport'),
+	url(r'reports/sellerReport.html', login_required(sellerReport), name='sellerReport'),
+	url(r'reports/dateRange.html', login_required(dateRangeReport), name='dateRange'),
 ]

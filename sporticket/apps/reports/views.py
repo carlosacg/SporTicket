@@ -52,3 +52,12 @@ def reportSaleEvents(request):
 
 def graphicsReport(request):
     return render(request, 'reports/graphicsReports.html')
+
+def dailyReport(request):
+    return render(request, 'reports/dailySales.html')
+
+def sellerReport(request):
+    return render(request, 'reports/sellerReport.html')
+
+def dateRangeReport(request):
+    return render(request, 'reports/dateRange.html')

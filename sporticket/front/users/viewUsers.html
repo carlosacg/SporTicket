@@ -4,57 +4,62 @@
 </head>
 
 {% block content %}
-	<div class="w3-main" >
-		<header class="w3-container" >
-			<h5 style="color: black;"><b style="color: black;"><i class="fa fa-eye" style="color: black;"></i> Visualizar usuario</b></h5>
-		</header>
-		<form method="post"> 
-			{% csrf_token %}
+<div class="w3-main" >
+	<header class="w3-container" >
+		<h5 class="black-color">
+			<b class="black-color">
+			<i class="fa fa-eye black-color"></i> Visualizar usuario</b>
+		</h5>
+	</header>
+	<form method="post"> 
+		{% csrf_token %}
 
-			<div class="w3-row-padding">
-				<div class="w3-half">
-					<label for="{{ form.identification.id_for_label}}"> {{form.identification.label}} </label> {{form.identification}}
-				</div>
-				<div class="w3-half">
-					<label for="{{ form.name.id_for_label}}"> {{form.name.label}} </label> {{form.name}}
-				</div>
+		<div class="w3-row-padding">
+			<div class="w3-half">
+				<label for="{{ form.identification.id_for_label}}"> {{form.identification.label}} </label> {{form.identification}}
 			</div>
-			<div class="w3-row-padding">
-				<div class="w3-half">
-					<label for="{{ form.lastName.id_for_label}}"> {{form.lastName.label}} </label> {{form.lastName}}
-				</div>
-				<div class="w3-half">
-					<label for="{{ form.email.id_for_label}}"> {{form.email.label}} </label> {{form.email}}
-				</div>
+			<div class="w3-half">
+				<label for="{{ form.name.id_for_label}}"> {{form.name.label}} </label> {{form.name}}
 			</div>
-			<div class="w3-row-padding">
-				<div class="w3-half">
-					<label for="{{ form.phone.id_for_label}}"> {{form.phone.label}} </label> {{form.phone}}
-				</div>
-				<div class="w3-half">
-					<label for="{{ form.numAccount.id_for_label}}"> {{form.numAccount.label}} </label> {{form.numAccount}}
-				</div>
+		</div>
+		<div class="w3-row-padding">
+			<div class="w3-half">
+				<label for="{{ form.lastName.id_for_label}}"> {{form.lastName.label}} </label> {{form.lastName}}
 			</div>
-			<div class="w3-row-padding">
-				<div class="w3-half">
-					<label for="{{ form.userType.id_for_label}}"> {{form.userType.label}} </label> {{form.userType}}
-				</div>
-				<div class="w3-half">
-					{{form.state}}
-				</div>
-						<br>
-						<br> <br/>
-						<div class="w3-show-inline-block">
-	                        <div class="w3-bar">
-	                            <button class="w3-button w3-padding-16 w3-dark-grey w3-circle" ><i class="fa fa-check fa-fw"></i></button>
-							</div>
-	                    </div>
+			<div class="w3-half">
+				<label for="{{ form.email.id_for_label}}"> {{form.email.label}} </label> {{form.email}}
 			</div>
-		</form>
-		<br>
-		<br>
-	 	<footer class="w3-container w3-padding-14 w3-grey">
-	    	<p>Powered by <a style="color: black;">XSOFT</a></p>
-		</footer>
-	</div>
+		</div>
+		<div class="w3-row-padding">
+			<div class="w3-half">
+				<label for="{{ form.phone.id_for_label}}"> {{form.phone.label}} </label> {{form.phone}}
+			</div>
+			<div class="w3-half">
+				<label for="{{ form.numAccount.id_for_label}}"> {{form.numAccount.label}} </label> {{form.numAccount}}
+			</div>
+		</div>
+		<div class="w3-row-padding">
+			<div class="w3-half">
+				<label for="{{ form.userType.id_for_label}}"> {{form.userType.label}} </label> {{form.userType}}
+			</div>
+			<div class="w3-half">
+				{{form.state}}
+			</div>
+			<br>
+			<br> <br/>
+			<div class="w3-show-inline-block">
+                <div class="w3-bar">
+                    <button class="w3-button w3-padding-16 w3-dark-grey w3-circle" >
+                    	<i class="fa fa-check fa-fw"></i>
+                    </button>
+				</div>
+            </div>
+		</div>
+	</form>
+	<br>
+	<br>
+ 	<footer class="w3-container w3-padding-14 w3-grey">
+    	<p>Powered by <a class="black-color">XSOFT</a></p>
+	</footer>
+</div>
 {% endblock %}

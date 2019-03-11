@@ -1,87 +1,88 @@
 {% extends 'base/base.html' %}
+{%load staticfiles %}
 <head>
-	
-</head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 {% block content %}
-	<div class="w3-main" >
-		<header class="w3-container" >
-			<h5 style="color: black;"><b style="color: black;"><i class="fa fa-plus" style="color: black;"></i> Insertar usuario</b></h5>
-		</header>
-		<form method="post"> 
-			{% csrf_token %}
+<div class="w3-main" >
+	<header class="w3-container" >
+		<h5 class="black-color">
+			<b class="black-color">
+			<i class="fa fa-plus black-color"></i> Insertar usuario</b>
+		</h5>
+	</header>
+	<form method="post"> 
+		{% csrf_token %}
 
-			<div class="w3-row-padding">
-				<div class="w3-half">
-					<label for="{{ form.identification.id_for_label}}"> {{form.identification.label}} </label> {{form.identification}}
-				</div>
-				<div class="w3-half">
-					<label for="{{ form2.first_name.id_for_label}}"> {{form2.first_name.label}} </label> {{form2.first_name}}
-				</div>
+		<div class="w3-row-padding">
+			<div class="w3-half">
+				<label for="{{ form.identification.id_for_label}}"> {{form.identification.label}} </label> {{form.identification}}
 			</div>
-			<div class="w3-row-padding">
-				<div class="w3-half">
-					<label for="{{ form2.last_name.id_for_label}}"> {{form2.last_name.label}} </label> {{form2.last_name}}
-				</div>
-				<div class="w3-half">
-					<label for="{{ form2.email.id_for_label}}"> {{form2.email.label}} </label> {{form2.email}}
-				</div>
+			<div class="w3-half">
+				<label for="{{ form2.first_name.id_for_label}}"> {{form2.first_name.label}} </label> {{form2.first_name}}
 			</div>
-			<div class="w3-row-padding">
-				<div class="w3-half">
-					<label for="{{ form2.password1.id_for_label}}"> {{form2.password1.label}} </label> {{form2.password1}}
-				</div>
-				<div class="w3-half">
-					<label for="{{ form2.password2.id_for_label}}"> {{form2.password2.label}} </label> {{form2.password2}}
-				</div>
+		</div>
+		<div class="w3-row-padding">
+			<div class="w3-half">
+				<label for="{{ form2.last_name.id_for_label}}"> {{form2.last_name.label}} </label> {{form2.last_name}}
 			</div>
-			<div class="w3-row-padding">
-				<div class="w3-half"> 
-					<label for="{{ form.phone.id_for_label}}"> {{form.phone.label}} </label> {{form.phone}}
-				</div>
-				<div class="w3-half">
-					<label for="{{ form.numAccount.id_for_label}}"> {{form.numAccount.label}} </label> {{form.numAccount}}
-				</div>
+			<div class="w3-half">
+				<label for="{{ form2.email.id_for_label}}"> {{form2.email.label}} </label> {{form2.email}}
 			</div>
-			<div class="w3-row-padding">
-				<div class="w3-half">
-					<label for="{{ form.userType.id_for_label}}"> {{form.userType.label}} </label> {{form.userType}}
-				</div>
-				<div class="w3-half">
-					<label for="{{ form2.username.id_for_label}}"> {{form2.username.label}} </label> {{form2.username}}
-				</div>
-			
-						<br>
-						<br> <br/>
-						<div class="w3-show-inline-block">
-	                        <div class="w3-bar">
-	                            <a href="{% url 'crateUser' %}"><button type="submit" class="w3-button w3-padding-16 w3-dark-grey w3-circle" id="save"><i class="fa fa-save"></i></button></a>
-	                            <a href="#"><button class="w3-button w3-dark-grey w3-padding-16 w3-circle" ><i class="fa fa-repeat"></i></button></a>
-								</div>
-	                    </div>
+		</div>
+		<div class="w3-row-padding">
+			<div class="w3-half">
+				<label for="{{ form2.password1.id_for_label}}"> {{form2.password1.label}} </label> {{form2.password1}}
 			</div>
-		</form>
-		<br>
-		<br>
-	 	<footer class="w3-container w3-padding-14 w3-grey">
-	    	<p>Powered by <a style="color: black;">XSOFT</a></p>
-		</footer>	
-		<div id="success" class="w3-panel w3-green" style= "margin-top:1 0px; display: none;">		 
-			<p>Usuario creado!</p>
-		</div> 
-		  
-	</div>
-	<script>
-	$(document).ready(function(){
-	$("#save").click(function(){
-	$("#success").toggle(100);
-	$("#success").fadeOut(1500);
-	});
-	});
-
+			<div class="w3-half">
+				<label for="{{ form2.password2.id_for_label}}"> {{form2.password2.label}} </label> {{form2.password2}}
+			</div>
+		</div>
+		<div class="w3-row-padding">
+			<div class="w3-half"> 
+				<label for="{{ form.phone.id_for_label}}"> {{form.phone.label}} </label> {{form.phone}}
+			</div>
+			<div class="w3-half">
+				<label for="{{ form.numAccount.id_for_label}}"> {{form.numAccount.label}} </label> {{form.numAccount}}
+			</div>
+		</div>
+		<div class="w3-row-padding">
+			<div class="w3-half">
+				<label for="{{ form.userType.id_for_label}}"> {{form.userType.label}} </label> {{form.userType}}
+			</div>
+			<div class="w3-half">
+				<label for="{{ form2.username.id_for_label}}"> {{form2.username.label}} </label> {{form2.username}}
+			</div>
+		
+			<br>
+			<br> <br/>
+			<div class="w3-show-inline-block">
+                <div class="w3-bar">
+                    <a href="{% url 'crateUser' %}">
+                    	<button type="submit" 
+                    	class="w3-button w3-padding-16 w3-dark-grey w3-circle" 
+                    	id="save">
+                    	<i class="fa fa-save"></i></button>
+                    </a>
+                    <a href="#">
+                    	<button class="w3-button w3-dark-grey w3-padding-16 w3-circle" >
+                    	<i class="fa fa-repeat"></i></button>
+                    </a>
+				</div>
+            </div>
+		</div>
+	</form>
+	<br>
+	<br>
+ 	<footer class="w3-container w3-padding-14 w3-grey">
+    	<p>Powered by <a class="black-color">XSOFT</a></p>
+	</footer>	
+	<div id="success" class="w3-panel w3-green">		 
+		<p>Usuario creado!</p>
+	</div> 
+	  
+</div>
+<script src="{% static 'js/message.js' %}"></script>
 	
-	</script>
-	
-{% endblock %}}
+{% endblock %}
 
