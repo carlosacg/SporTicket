@@ -4,18 +4,16 @@
 {% block content %}
 <div class="w3-main" >
     <header class="w3-container">
-        <h5 class="black-color">
-        	<b class="black-color" ">
-        	<i class="fa fa-shopping-cart black-color"></i> Seleccione los boletos a comprar del evento: {{event.name}}</b>
-        </h5>
-		<h5 class="black-color">BOLETOS DISPONIBLES</h5>
+        <h5 style="color: black;"><b style="color: black;"><i class="fa fa-shopping-cart" style="color: black;"></i> Seleccione los boletos a comprar del evento: {{event.name}}</b></h5>
+		<h5 style="color: black;">BOLETOS DISPONIBLES</h5>
 		<div class="w3-container">
-			<table class="w3-table-all w3-hoverable tableXS">
+			<table class="w3-table-all w3-hoverable " style="width: 50%">
 				<thead >
 					<tr class="w3-dark-grey">
 						<th>Cantidad boletos</th>
-						<th>Ubicación</th>
-						<th>Costo</th>
+						 <th>Ubicación</th>
+						 <th>Costo</th>
+
 					</tr>
 				</thead>
 			 	<tbody>
@@ -23,13 +21,13 @@
 				  	{% for tickets_avalibles in avalibleTicket %}
 				  	<tr id="registro_item" >
 					  	<td>{{tickets_avalibles.0}}</td>
-						<td>{{tickets_avalibles.1}}</td>
-						<td>{{tickets_avalibles.2}}</td>
+						  <td>{{tickets_avalibles.1}}</td>
+						  <td>{{tickets_avalibles.2}}</td>
 					</tr>
 			  	</tbody>
 				{% endfor %}
 				{% else %}
-				<h1 class="black-color">No hay boletos disponibles en este evento</h1>
+				<h1 style="color: black;">No hay boletos disponibles en este evento</h1>
 				{% endif %}
 			</table>
 	  	</div>
@@ -37,14 +35,14 @@
 
 	<hr>
 
-	<div class="w3-container w3-card-2 cardSize">
-		<h3 class="textBill">Factura # {{bill.id}}</h3>
+	<div class="w3-container w3-card-2" style="width: 70%; text-align: center; margin-left: 200px;">
+		<h3 style="color: black; text-align: center">Factura # {{bill.id}}</h3>
 		<form method="post">
 			{% csrf_token %}
 			<div class="w3-row-padding">
 				<div class="w3-half">
 					<label>Ubicación</label><!--NO BORRAR NADA DEL FORM-->
-					{{form.ubication}}
+					{{form.location}}
 				</div>
 				<div class="w3-half">
 					<label>Cantidad de boletos</label><!--NO BORRAR NADA DEL FORM-->
@@ -54,18 +52,12 @@
 			<div class="w3-container">
 				<div class="w3-show-inline-block">
 					<div class="w3-bar">
-						<button class="w3-button w3-padding w3-dark-grey w3-round-large" >
-							<font color="orange">
-							<i class="fa fa-plus"></i> Añadir boleto</font>
-						</button>
+						<button class="w3-button w3-padding w3-dark-grey w3-round-large" ><font color="orange"><i class="fa fa-plus"></i> Añadir boleto</font></button>
 					</div>
 				</div>
 			</div>
 		</form>
-		<button onclick="document.getElementById('id02').style.display='block'"  
-				class="w3-button w3-padding w3-dark-grey w3-round-large">
-				<font color="orange">Imprimir</font>
-		</button>
+		<button onclick="document.getElementById('id02').style.display='block'"  class="w3-button w3-padding w3-dark-grey w3-round-large"><font color="orange">Imprimir</font></button>
 
 		<div class="w3-container">
 			<table class="w3-table-all w3-hoverable ">
@@ -85,7 +77,7 @@
 			  	</tbody>
 			  	{% endfor %}
 			  	{% else %}
-			  	<h1 class="black-color">No hay boletos en la factura</h1>
+			  	<h1 style="color: black;">No hay boletos en la factura</h1>
 			  	{% endif %}
 			</table>
 			<br>
@@ -98,12 +90,10 @@
 			<div class="w3-modal-content">
 			  <header > 
 			    <span onclick="document.getElementById('id02').style.display='none'" 
-			    	class="w3-button w3-display-topright">&times;</span>
+			    class="w3-button w3-display-topright">&times;</span>
  	           	<a class= "w3-display-topmiddle" >
- 	           		<img src="{% static 'images/logo.png' %}" 
- 	           			class="w3-round w3-display-topmiddle w3-margin-right imgBill" 
- 	           			alt="Logo SporTicket">
- 	           		<h6 class= "w3-margin-left textBillTitle">SporTicket</h6>
+ 	           		<img src="{% static 'images/logo.png' %}" class="w3-round w3-display-topmiddle w3-margin-right" style="left: -30px;">
+ 	           		<h6 class= "w3-margin-left" style="color: black; font-weight:bold; left: 200px;">SporTicket</h6>
  	         	</a> 
  	         	<div class="w3-row-padding">
  	         		<br>
@@ -156,9 +146,9 @@
 								<td></td>
 								<td></td>
 								<td></td>
-								<th class="black-color">Costo total</th>
-								<th class="black-color">$</th>
-								<th class="black-color">120.000</th>
+								<th style="color: black;">Costo total</th>
+								<th style="color: black;">$</th>
+								<th style="color: black;">120.000</th>
 							</tr>
 						</tbody>
 			      	</table>
@@ -215,7 +205,7 @@
 	</div>
 
 	<footer class="w3-container w3-padding-14 w3-grey">
-    	<p>Powered by <a class="black-color">XSOFT</a></p>
+    	<p>Powered by <a style="color: black;">XSOFT</a></p>
 	</footer>
 </div>
 {% endblock %}
