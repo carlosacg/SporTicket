@@ -12,8 +12,9 @@ class TicketLocationForm(forms.ModelForm):
         print(event)
         self.fields['location'].queryset= Location.objects.filter(event=event)
             
-    location = forms.ModelChoiceField(Location.objects.all(), required=True)
-    zone= forms.IntegerField(required=False)
+    location = forms.ModelChoiceField(Location.objects.all(), required=True, widget=forms.Select(attrs={'class':'w3-input w3-border'}))
+    
+    zone= forms.IntegerField(required=False, widget=forms.NumberInput(attrs={'class':'w3-input w3-border'}))
     class Meta:
         model = Ticket
 

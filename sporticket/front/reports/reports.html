@@ -9,71 +9,79 @@
 			<i class="fa fa-bar-chart fa-fw black-color"></i> Reportes</b>
 		</h5>
 	</header>
-	<div class="w3-container">
-		<div class="w3-container">
-			<form method="post"> 
-				{% csrf_token %}
-				<div class="w3-row-padding">
-					<div class="w3-third">		
-						<label for="{{form.events.id_for_label}}"> {{form.events.label}} </label>
-						{{form.events}}	
-					</div>
-					<div class="w3-third">		
-						<label for="{{form.events.id_for_label}}"></label>
-						{{form.date1}}	
-					</div>			
-					<div class="w3-third">		
-						Numero de boletos disponibles: 
-						<strong>{{avalibles}}</strong>
-					</div>
-					<div class="w3-third">		
-						Numero de boletos vendidos: 
-						<strong>{{sales}}</strong>
-					</div>
-				</div>
-				<div class="w3-row-padding">
-					<button type="submit" 
-							class="w3-button w3-padding-16 w3-dark-grey w3-circle" >
-							<i class="fa fa-save"></i>
-					</button>
-				</div>
-				<div class="w3-third">		
-					Ventas del dia:
-					<strong>{{dailySales}}</strong> 
-				</div>	
-			</form>
+	<div class="w3-row-padding">
+		<div class="w3-third">
+			<div class="w3-container">
+	            <div class="w3-card-4 cardM">
+	                <header class="w3-container w3-dark-grey w3-center w3-padding-small">
+	                  <p class="text">Ventas por eventos</p>
+	                </header>
+	                <div class="w3-container">
+	                    <img src="{% static 'images/eventos.png' %}" alt="imagen de eventos" class="sizeImg" >
+	                </div>
+	                <a href="/reports/saleEvents.html"><button class="w3-button w3-padding w3-dark-grey w3-block" ><i class="fa fa-bar-chart fa-fw"> Reporte</i></button></a>
+	            </div>
+	        </div>
 		</div>
-		
-				
-
-		<div class="w3-container w3-row-padding">
-  			<div class="w3-row-padding">
-				<div class="w3-bar">
-				</div>
-			    <div class="w3-half w3-center">
-			      <header class="w3-container ">
-			        <h4>
-						<a href="{% url 'report1' %}"></a>
-						<b class="black-color"> Reporte de compras en el mes</b>
-			        </h4>
-			      </header>
-			      <div class="w3-center" >
-			        <div id="myfirstchart"></div>
-			      </div>
-			    </div>
-
-			    <div class="w3-half w3-center">
-			      <header class="w3-container">
-			        <h4><b class="black-color"> Reporte de ventas en el mes</b></h4>
-			      </header>
-			      <div class="w3-center" >
-			        <div id="graph"></div>
-			      </div>
-			    </div>
-		  	</div>
+		<div class="w3-third">
+			<div class="w3-container">
+	            <div class="w3-card-4 card">
+	                <header class="w3-container w3-dark-grey w3-center w3-padding-small">
+	                  <p class="text">Ventas diarias</p>
+	                </header>
+	                <div class="w3-container">
+	                    <img class="sizeImg" src="{% static 'images/diarias.png' %}" alt="imagen de eventos" >
+	                </div>
+	                <a href=""><button class="w3-button w3-padding w3-dark-grey w3-block" ><i class="fa fa-bar-chart"> Reporte</i></button></a>
+	            </div>
+	        </div>
 		</div>
-		
-  	</div>
+		<div class="w3-third">
+			<div class="w3-container">
+	            <div class="w3-card-4 card">
+	                <header class="w3-container w3-dark-grey w3-center w3-padding-small">
+	                  <p class="text">Vendedor</p>
+	                </header>
+	                <div class="w3-container">
+	                    <img class="sizeImg" src="{% static 'images/vendedor.png' %}" alt="imagen de eventos" >
+	                </div>
+	                <a href=""><button class="w3-button w3-padding w3-dark-grey w3-block" ><i class="fa fa-bar-chart"> Reporte</i></button></a>
+	            </div>
+	        </div>
+		</div>
+        
+        <br>
+    </div>
+    <div class="w3-row-padding">
+		<div class="w3-half">
+			<div class="w3-container">
+	            <div class="w3-card-4 cardL w3-center">
+	                <header class="w3-container w3-dark-grey w3-center w3-padding-small">
+	                  <p class="text">Rango de fechas</p>
+	                </header>
+	                <div class="w3-container">
+	                    <img src="{% static 'images/fechas.png' %}" alt="imagen de eventos" class="sizeImg" >
+	                </div>
+	                <a href=""><button class="w3-button w3-padding w3-dark-grey w3-block" ><i class="fa fa-bar-chart fa-fw"> Reporte</i></button></a>
+	            </div>
+	        </div>
+		</div>
+		<div class="w3-half">
+			<div class="w3-container">
+	            <div class="w3-card-4 cardSmall w3-center">
+	                <header class="w3-container w3-dark-grey w3-center w3-padding-small">
+	                  <p class="text">Total de ventas</p>
+	                </header>
+	                <div class="w3-container">
+	                    <img class="sizeImg" src="{% static 'images/graficos.png' %}" alt="imagen de eventos" >
+	                </div>
+	                <a href="/reports/graphicsReports.html"><button class="w3-button w3-padding w3-dark-grey w3-block" ><i class="fa fa-bar-chart"> Reporte</i></button></a>
+	            </div>
+	        </div>
+		</div>        
+        <br>
+    </div>
+    <br>
 	<footer class="w3-container w3-padding-14 w3-grey">
     	<p>Powered by <a class="black-color">XSOFT</a></p>
 	</footer>

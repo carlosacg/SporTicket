@@ -7,7 +7,8 @@ from django.forms.fields import DateField
 class ByEventsForms(forms.Form):
     
     events = forms.ModelChoiceField(Event.objects.all() , widget=Select2Widget, required=True)
-    #date1 = forms.DateField(widget=forms.DateInput(attrs={'class':'w3-input w3-border', 'type':'date','id':'myDate','value':'aaaa-mm-dd'}))
+    dateInitial = forms.DateField(widget=forms.DateInput(attrs={'class':'w3-input w3-border', 'type':'date','id':'myDate','value':'aaaa-mm-dd'}))
+    dateFinal = forms.DateField(widget=forms.DateInput(attrs={'class':'w3-input w3-border', 'type':'date','id':'myDate','value':'aaaa-mm-dd'}))
     # users = forms.ModelChoiceField(queryset=User.objects.all().values('first_name'), widget=Select2Widget, required=True)
 
 

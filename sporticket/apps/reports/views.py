@@ -47,3 +47,8 @@ def reportByDailySales():
     # return render(request, 'reports/reports.html',context)
     return str(sales)
 
+def reportSaleEvents(request):
+    return render(request, 'reports/saleEvents.html')
+
+def graphicsReport(request):
+    return render(request, 'reports/graphicsReports.html')

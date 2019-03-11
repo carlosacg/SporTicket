@@ -1,0 +1,55 @@
+{% extends 'base/base.html' %}
+{%load staticfiles %}
+
+{% block content %}
+<div class="w3-main" >
+	<header class="w3-container">
+		<h5 class="black-color">
+			<b class="black-color">
+			<i class="fa fa-bar-chart fa-fw black-color"></i> Reportes</b>
+		</h5>
+	</header>
+	<div class="w3-container">
+		<div class="w3-container w3-row-padding">
+			<div class="w3-third">
+				<label>Fecha inicial</label>
+				{{form.dateInitial}}
+			</div>
+			<div class="w3-third">
+				<label>Fecha final</label>
+			</div>
+			<div class="w3-third">
+				<label>Evento</label>
+			</div>
+  			<div class="w3-row-padding">
+				<div class="w3-bar">
+				</div>
+			    <div class="w3-half w3-center">
+			      <header class="w3-container ">
+			        <h4>
+						<a href="{% url 'report1' %}"></a>
+						<b class="black-color"> Reporte de compras en el mes</b>
+			        </h4>
+			      </header>
+			      <div class="w3-center" >
+			        <div id="myfirstchart"></div>
+			      </div>
+			    </div>
+
+			    <div class="w3-half w3-center">
+			      <header class="w3-container">
+			        <h4><b class="black-color"> Reporte de ventas en el mes</b></h4>
+			      </header>
+			      <div class="w3-center" >
+			        <div id="graph"></div>
+			      </div>
+			    </div>
+		  	</div>
+		</div>
+	</div>
+
+	<footer class="w3-container w3-padding-14 w3-grey">
+    	<p>Powered by <a class="black-color">XSOFT</a></p>
+	</footer>
+</div>
+{% endblock %}

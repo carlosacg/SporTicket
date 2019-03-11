@@ -13,27 +13,27 @@
                 <div class="w3-row-padding">
 
                     <div class="w3-container">
-                        <table class="w3-table-all w3-hoverable ">
-                              <thead >
+                        <table class="w3-table-all w3-hoverable table">
+                            <thead >
                                 <tr class="w3-dark-grey">
                                 <th>Nombre localidad</th>
                                 <th>Precio localidad</th>
                                 <th></th>
                                 </tr>
-                              </thead>
-                              <tbody>
+                            </thead>
+                            <tbody>
                                 <tr>
                                     <td>{{location_form.name}}</td>
                                     <td>{{location_form.cost}}</td>
                                     <td><a href="{% url 'location_crear' id=event.id  %}" 
                                         data-toggle="tooltip" 
                                         title="Guardar localidad">
-                                        <button type="submit" class="w3-button w3-padding-small w3-dark-grey w3-circle">
+                                        <button type="submit" class="w3-button w3-padding w3-dark-grey w3-circle">
                                         <i class="fa fa-save"></i></button>
                                         </a>
                                     </td>
                                 </tr>
-                              </tbody>
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -42,9 +42,9 @@
                 <div class="w3-show-inline-block">
                     <div class="w3-bar">
                         <a href="{% url 'ticket_crear' id=event.id %}"
-                        data-toggle="tooltip" 
-                        title="Generar boletos">
-                            <button class="w3-button w3-padding-16 w3-dark-grey w3-circle" >Generar boletos</i></button>
+                            data-toggle="tooltip" 
+                            title="Generar boletos">
+                            <button class="w3-button w3-padding-16 w3-dark-grey w3-circle" ><i class=" fa fa-save fa fa-ticket"></i></button>
                         </a>
                     </div>
                 </div>
@@ -57,7 +57,7 @@
         </header>
     
         <div class="w3-container">
-              <table class="w3-table-all w3-hoverable ">
+              <table class="w3-table-all w3-hoverable table">
                 <thead >
                       <tr class="w3-dark-grey">
                         <th>Nombre</th>

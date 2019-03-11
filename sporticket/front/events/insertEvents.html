@@ -39,8 +39,13 @@
 				{{form.initial_time}}
 			</div>
 			<div class="w3-half">
-				<label for="{{form.event_type.id_for_label}}">{{form.event_type.label}}</label>
-				{{form.event_type}}
+				<div class="w3-threequarter" >
+					<div class="size" >
+						<label for="{{form.event_type.id_for_label}}" >{{form.event_type.label}}</label>
+						{{form.event_type}}
+					</div>
+					
+				</div>
 			</div>
 
 		</div>
@@ -71,16 +76,21 @@
                     		<i class="fa fa-repeat"></i>
                     	</button>
                     </a>
+                    
+                    
 				</div>
             </div>
 		</div>
 	</form>
-		<a href="{% url 'tipo_evento_crear' %}" 
+	<div class="w3-quarter" style="margin-top: -180px; margin-left: 1085px;">
+    	<a href="{% url 'tipo_evento_crear' %}" 
 			data-toggle="tooltip" 
 			title="Agregar tipo de evento ">
-			<button class="w3-button w3-padding-small w3-dark-grey w3-circle">
+			<button class="w3-button w3-dark-grey w3-padding w3-circle position">
 			<i class="fa fa-plus"></i></button>
 		</a>
+    </div>
+		
 	<br>
 	<br>
  	<footer class="w3-container w3-padding-14 w3-grey">
