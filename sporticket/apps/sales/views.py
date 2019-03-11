@@ -83,7 +83,11 @@ def createShop(request,id):
 		if form.is_valid:
 			location=form['location'].value()
 			quantity=form['quantity'].value()
+			payment_method=form['payment'].value()
 			print(location)
+			bill_id=Bill.objects.all().last()
+			bill_id.payment_method=payment_method
+			bill_id.save()
 			avalible_tickets=get_avalible_tickets(id,location)
 			add_shopping(bill_id,avalible_tickets,quantity,len(avalible_tickets))
 

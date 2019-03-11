@@ -45,4 +45,7 @@ class BuyTicketsLocationForm(forms.Form):
         )
 	location = forms.ModelChoiceField(Location.objects.all(), required=True)   
 	quantity = forms.IntegerField(label='Cantidad boletos',required=False)
-	#payment = forms.ChoiceField(CHOICES)
+	payment = forms.ChoiceField(
+		required=False,
+		choices=CHOICES,
+	)
