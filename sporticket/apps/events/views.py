@@ -18,6 +18,8 @@ from rest_framework import generics
 from django.views.generic.list import ListView
 import requests
 import json
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -101,7 +103,6 @@ def updateEvent(request,id):
 def viewEvent(request,id):
     event = Event.objects.get(id=id)
     if request.method =='GET':
-       # getDataJSON('GET')
         getEventsJSON('GET')
         form= ViewEvent(instance=event)
     else:
@@ -113,25 +114,26 @@ def viewEvent(request,id):
     return render(request,'events/viewEvents.html',context)
 
 def deleteEvent(request,id):
-    event = Event.objects.get(id=id)
-    print (event.id)
-    if event.state == 'Cancelado':
-        state = 'activar'
-        context = {'state':state,'event':event}
-    else:
-        state = 'cancelar'
-        context = {'state':state,'event':event}
 
-    if request.method=='POST':
-        if event.state == 'Activo':
-            object = Event()
-            object.cancelEvent(id)
-
+        event = Event.objects.get(id=id)
+        print (event.id)
         if event.state == 'Cancelado':
-            object = Event()
-            object.activateEvent(id)
-        return redirect('events/listEvents.html')
-    return render(request,'events/deleteEvents.html',context)
+            state = 'activar'
+            context = {'state':state,'event':event}
+        else:
+            state = 'cancelar'
+            context = {'state':state,'event':event}
+
+        if request.method=='POST':
+            if event.state == 'Activo':
+                object = Event()
+                object.cancelEvent(id)
+
+            if event.state == 'Cancelado':
+                object = Event()
+                object.activateEvent(id)
+            return redirect('events/listEvents.html')
+        return render(request,'events/deleteEvents.html',context)
 
 def uploadImage(request,id):
     if request.method == 'POST':
@@ -162,50 +164,58 @@ def save_ticket(ubication,event,cost):
     newTicket = Ticket(cost=cost,ubication=ubication,event=event,state='Disponible')
     newTicket.save()
 
-class EventDelete(DeleteView):
-    model = Event
-    template_name = 'events/deleteEvents.html'
-    success_url = reverse_lazy('evento_listar')
+class EventDelete(LoginRequiredMixin, DeleteView):
+    
+        login_url = '/login/'
+        redirect_field_name = '/login/'
+        raise_exception = False
+        model = Event
+        template_name = 'events/deleteEvents.html'
+        success_url = reverse_lazy('evento_listar')
 
-class EventList(ListView):
-    model = Event
-    template_name ='events/listEvents.html'
+class EventList(LoginRequiredMixin,ListView):
 
-class EventCreate(CreateView):
-    model = Event
-    form_class = EventForm
-    template_name ='events/insertEvents.html'
-    success_url = reverse_lazy('evento_listar')
+        login_url = '/login/'
+        redirect_field_name = '/login/'
+        raise_exception = False
+        model = Event
+        template_name ='events/listEvents.html'
 
-class EventUpdate(UpdateView):
-    model = Event
-    form_class = EventForm
-    template_name = 'events/insertEvents.html'
-    success_url = reverse_lazy('evento_listar')
+class EventCreate(LoginRequiredMixin,CreateView):
+    
+        login_url = '/login/'
+        redirect_field_name = '/login/'
+        raise_exception = False
+        model = Event
+        form_class = EventForm
+        template_name ='events/insertEvents.html'
+        success_url = reverse_lazy('evento_listar')
 
-class EventsSerialList(generics.ListCreateAPIView):
-    queryset = Event.objects.all()
-    serializer_class = EventSerializers
+class EventUpdate(LoginRequiredMixin,UpdateView):
 
-class EventsSerialDetail(generics.RetrieveUpdateDestroyAPIView):
-  
-    queryset = Event.objects.all()
-    serializer_class = EventSerializers
+        login_url = '/login/'
+        redirect_field_name = '/login/'
+        raise_exception = False
+        model = Event
+        form_class = EventForm
+        template_name = 'events/insertEvents.html'
+        success_url = reverse_lazy('evento_listar')
 
-def getDataJSON(request):
-    response = requests.get('http://pokeapi.co/api/v2/pokemon-form')
-    if response.status_code == 200:
+class EventsSerialList(LoginRequiredMixin, generics.ListCreateAPIView):
 
-        payload = response.json()
-        results = payload.get('results', [])
+        login_url = '/login/'
+        redirect_field_name = '/login/'
+        raise_exception = False
+        queryset = Event.objects.all()
+        serializer_class = EventSerializers
 
-        if results:
-            for pokemon in results:
-                name =  pokemon['name']
-                url = pokemon['url']
-                print(name, url) 
-                     
+class EventsSerialDetail(LoginRequiredMixin, generics.RetrieveUpdateDestroyAPIView):
 
+        login_url = '/login/'
+        redirect_field_name = '/login/'
+        raise_exception = False
+        queryset = Event.objects.all()
+        serializer_class = EventSerializers
 
 def getEventsJSON(request):
     response = requests.get('http://localhost:8001/events/?format=json') 

@@ -11,87 +11,107 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import connection 
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
 def index(request):
 	return HttpResponse("soy la pagina principal de la app")
 
-class ProfileCreate(CreateView):
-	model = Profile
-	template_name = 'users/insertUsers.html'
-	form_class = ProfileForm
-	second_form_class = UserForm
-	success_url = reverse_lazy('listUser')
+class ProfileCreate(LoginRequiredMixin,CreateView):
 
-	def get_context_data(self, **kwargs):
-		context = super(ProfileCreate, self).get_context_data(**kwargs)
-		if 'form'  not in context:
-			context['form'] = self.form_class(self.request.GET)
-		if 'form2' not in context:
-			context['form2'] = self.second_form_class(self.request.GET)
-		return context
+		login_url = '/login/'
+		redirect_field_name = '/login/'
+		raise_exception = False
 
-	def post(self, request, *args , **kwargs):
-		self.object = self.get_object
-		form = self.form_class(request.POST)
-		form2 =  self.second_form_class(request.POST)
-		if form.is_valid() and form2.is_valid():
-			profile = form.save(commit=False)
-			profile.user = form2.save()
-			profile.save()
-			messages.success(request, "Paciente registrado exitosamente.")
-			return HttpResponseRedirect(self.get_success_url())
-		else:
-			return self.render_to_response(self.get_context_data(form=form, form2=form2))
+		model = Profile
+		template_name = 'users/insertUsers.html'
+		form_class = ProfileForm
+		second_form_class = UserForm
+		success_url = reverse_lazy('listUser')
 
-class ProfileList(ListView):
-	model = Profile
-	template_name = 'users/listUsers.html'
+		def get_context_data(self, **kwargs):
+			context = super(ProfileCreate, self).get_context_data(**kwargs)
+			if 'form'  not in context:
+				context['form'] = self.form_class(self.request.GET)
+			if 'form2' not in context:
+				context['form2'] = self.second_form_class(self.request.GET)
+			return context
 
-class ProfileUpdate(UpdateView):
-	model = Profile
-	second_model = User
-	template_name = 'users/insertUsers.html'
-	form_class = ProfileForm
-	second_form_class = UserForm
-	success_url = reverse_lazy('listUser')
+		def post(self, request, *args , **kwargs):
+			self.object = self.get_object
+			form = self.form_class(request.POST)
+			form2 =  self.second_form_class(request.POST)
+			if form.is_valid() and form2.is_valid():
+				profile = form.save(commit=False)
+				profile.user = form2.save()
+				profile.save()
+				messages.success(request, "Paciente registrado exitosamente.")
+				return HttpResponseRedirect(self.get_success_url())
+			else:
+				return self.render_to_response(self.get_context_data(form=form, form2=form2))
 
-	def get_context_data(self, **kwargs):
-		context = super(ProfileUpdate, self).get_context_data(**kwargs)
-		pk = self.kwargs.get('pk',0)
-		profile = self.model.objects.get(id=pk)
-		user = self.second_model.objects.get(id=profile.user_id)
-		if 'form' not in context:
-			context['form'] = self.form_class()
-		if 'form2' not in context:
-			context['form2'] = self.second_form_class(instance=user)
-		context['id'] = pk
-		return context
+class ProfileList(LoginRequiredMixin, ListView):
 
-	def post(self, request, *args, **kwargs):
-		self.object = self.get_object
-		id_profile = kwargs['pk']
-		profile = self.model.objects.get(id=id_profile)
-		user = self.second_model.objects.get(id=profile.user_id)
-		form = self.form_class(request.POST, instance=profile)
-		form2 = self.second_form_class(request.POST, instance=user)
-		if form.is_valid() and form2.is_valid():
-			form.save()
-			form2.save()
-			return HttpResponseRedirect(self.get_success_url())
-		else:
-			return HttpResponseRedirect(self.get_success_url())
+		login_url = '/login/'
+		redirect_field_name = '/login/'
+		raise_exception = False
+	
+		model = Profile
+		template_name = 'users/listUsers.html'
+
+class ProfileUpdate(LoginRequiredMixin, UpdateView):
+
+		login_url = '/login/'
+		redirect_field_name = '/login/'
+		raise_exception = False
+	
+		model = Profile
+		second_model = User
+		template_name = 'users/insertUsers.html'
+		form_class = ProfileForm
+		second_form_class = UserForm
+		success_url = reverse_lazy('listUser')
+
+		def get_context_data(self, **kwargs):
+			context = super(ProfileUpdate, self).get_context_data(**kwargs)
+			pk = self.kwargs.get('pk',0)
+			profile = self.model.objects.get(id=pk)
+			user = self.second_model.objects.get(id=profile.user_id)
+			if 'form' not in context:
+				context['form'] = self.form_class()
+			if 'form2' not in context:
+				context['form2'] = self.second_form_class(instance=user)
+			context['id'] = pk
+			return context
+
+		def post(self, request, *args, **kwargs):
+			self.object = self.get_object
+			id_profile = kwargs['pk']
+			profile = self.model.objects.get(id=id_profile)
+			user = self.second_model.objects.get(id=profile.user_id)
+			form = self.form_class(request.POST, instance=profile)
+			form2 = self.second_form_class(request.POST, instance=user)
+			if form.is_valid() and form2.is_valid():
+				form.save()
+				form2.save()
+				return HttpResponseRedirect(self.get_success_url())
+			else:
+				return HttpResponseRedirect(self.get_success_url())
 
 
 def changeState(id):
-    cursor = connection.cursor()
-    instruction = "UPDATE auth_user SET is_active=\'FALSE\' WHERE id="+id+";"
-    cursor.execute(instruction)
-    connection.commit()
-    connection.close()
+	
+		login_url = '/login/'
+		redirect_field_name = '/login/'
+		raise_exception = False
+		cursor = connection.cursor()
+		instruction = "UPDATE auth_user SET is_active=\'FALSE\' WHERE id="+id+";"
+		cursor.execute(instruction)
+		connection.commit()
+		connection.close()
 
-def deleteUsers(request,id):
+def deleteUsers(request ,id):
     user = User.objects.get(id=id)
     print (user.id)
     if request.method=='POST':

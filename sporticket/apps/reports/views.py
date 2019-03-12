@@ -1,11 +1,13 @@
 from django.shortcuts import render,redirect
-from apps.reports.forms import ByEventsForms
+from apps.reports.forms import ByEventsForms, ByDateRangeForms
 from apps.tickets.models import Ticket
 from apps.sales.models import Bill
 import datetime
 
-    
-def report_f(request):
+def index(request):
+    return render(request, 'reports/reports.html')
+
+def reportByEvents(request):
 
     print("entre")
     form = ByEventsForms()
@@ -18,10 +20,10 @@ def report_f(request):
         sales = reportByEventSale(int(selected_event))
         dailySales =  reportByDailySales()
         context = {'sales':sales,'avalibles':avalibles,'dailySales':dailySales,'form':form}
-        return render(request, 'reports/reports.html',context)#A donde debo ir si gano 
+        return render(request, 'reports/saleEvents.html',context)#A donde debo ir si gano 
 
     else:
-        return render(request, 'reports/reports.html',{'form': form})#El mismo lugar donde hice la peticion 
+        return render(request, 'reports/saleEvents.html',{'form': form})#El mismo lugar donde hice la peticion 
 
 
 def reportByEventAvalibles(event_id):
@@ -47,9 +49,6 @@ def reportByDailySales():
     # return render(request, 'reports/reports.html',context)
     return str(sales)
 
-def reportSaleEvents(request):
-    return render(request, 'reports/saleEvents.html')
-
 def graphicsReport(request):
     return render(request, 'reports/graphicsReports.html')
 
@@ -59,5 +58,20 @@ def dailyReport(request):
 def sellerReport(request):
     return render(request, 'reports/sellerReport.html')
 
-def dateRangeReport(request):
-    return render(request, 'reports/dateRange.html')
+def reportByDateRange(request):
+
+    form = ByDateRangeForms()
+
+    if request.method == 'POST':
+        form = ByDateRangeForms(request.POST)
+        dateInitial = form['dateInitial'].value()
+        dateFinal = form['dateFinal'].value()
+        print(dateInitial)
+        # avalibles =reportByEventAvalibles(int(selected_event))
+        # sales = reportByEventSale(int(selected_event))
+        # dailySales =  reportByDailySales()
+        # context = {'sales':sales,'avalibles':avalibles,'dailySales':dailySales,'form':form}
+        return render(request, 'reports/dateRange.html')#A donde debo ir si gano 
+
+    else:
+        return render(request, 'reports/dateRange.html',{'form': form})#El mismo lugar donde hice la peticion 

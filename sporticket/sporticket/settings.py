@@ -104,9 +104,9 @@ WSGI_APPLICATION = 'sporticket.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'sport_db',
-        'USER' : 'andres',
-        'PASSWORD': '',
+        'NAME': 'hoy',
+        'USER' : 'postgres',
+        'PASSWORD': '24603759',
         'HOST' : 'localhost',
         'PORT' : 5432,    
     } 
@@ -157,5 +157,6 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR,'static'),)
 LOGIN_REDIRECT_URL = 'evento_listar'
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '490350965101-28igg9n6je008vggfsqbtosldb04sfu8.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'dGMy1kGiHXLjY9xeDf5HNvUv'
-LOGIN_URL = 'login'
+LOGIN_URL = '/login/'
 LOGOUT_URL = 'logout'
+REDIRECT_FIELD_NAME = 'login'

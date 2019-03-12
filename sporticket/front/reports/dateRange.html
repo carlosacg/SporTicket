@@ -10,21 +10,25 @@
 		</h5>
 	</header>
 	<div class="w3-container">
-		<div class="w3-container w3-row-padding">
-			<div class="w3-third">
-				<label>Fecha inicial</label>
-				{{form.dateInitial}}
+		<form  method="post">
+			<div class="w3-container w3-row-padding">
+				<div class="w3-third">		
+					<label for="{{form.dateInitial.id_for_label}}"> {{form.dateInitial.label}} </label>
+					{{form.dateInitial}}	
+				</div>
+				<div class="w3-third">		
+					<label for="{{form.dateFinal.id_for_label}}"> {{form.dateFinal.label}} </label>
+					{{form.dateFinal}}	
+				</div>
+				<div class="w3-third">
+					<button type="submit" 
+							class="w3-button w3-padding w3-dark-grey w3-circle" >
+							<i class="fa fa-save"></i>
+					</button>
+				</div>
 			</div>
-			<div class="w3-third">
-				<label>Fecha final</label>
-			</div>
-			<div class="w3-third">
-				<button type="submit" 
-						class="w3-button w3-padding w3-dark-grey w3-circle" >
-						<i class="fa fa-save"></i>
-				</button>
-			</div>
-		</div>
+		</form>
+		
 		<br>
 	</div>
 
