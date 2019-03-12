@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 from django.db import connection 
 from .forms import BillForm, AddTicketsForm, BuyTicketsLocationForm
 import time
-
+from django.contrib.auth.decorators import permission_required
 
 def index_sale(request):
     return render(request, 'sales/createSale.html')
@@ -45,7 +45,6 @@ class BillCreate(CreateView):
 		else:
 			return self.render_to_response(self.get_context_data(form=form, form2=form2))
 
-
 def listEvent(request):
 		create_bill(request)
 		event = Event.objects.filter(state="Activo")
@@ -53,6 +52,7 @@ def listEvent(request):
 		context = {'events':event}
 		return render(request,'sales/viewsEvent.html',context)
 
+@permission_required('users.Vendedor' ,reverse_lazy('evento_listar_compras'))
 def listEvent1(request):
 		event = Event.objects.filter(state="Activo")
 		print (event)

@@ -9,9 +9,7 @@ def index(request):
 
 def reportByEvents(request):
 
-    print("entre")
     form = ByEventsForms()
-    print("ey") 
     if request.method == 'POST':
         form = ByEventsForms(request.POST)
         selected_event = form['events'].value()

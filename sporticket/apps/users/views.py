@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic import ListView, CreateView , UpdateView
-from apps.users.models import Profile
+from apps.users.models import Profile, Seller, Manager, Buyer
 from django.contrib.auth.models import User
 from apps.users.forms import ProfileForm, UserForm
 from django.urls import reverse_lazy, reverse
@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.db import connection 
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import Group
 
 # Create your views here.
 
@@ -45,9 +46,24 @@ class ProfileCreate(LoginRequiredMixin,CreateView):
 			if form.is_valid() and form2.is_valid():
 				profile = form.save(commit=False)
 				profile.user = form2.save()
+				typeUser = form.cleaned_data['userType']
+				print(typeUser)
 				profile.save()
-				messages.success(request, "Paciente registrado exitosamente.")
-				return HttpResponseRedirect(self.get_success_url())
+				if str(typeUser) == "Vendedor":
+					Seller.objects.create(profile=Profile.objects.all().last())
+					my_group = Group.objects.get(name='Vendedores') 
+					my_group.user_set.add(User.objects.all().last())
+					return HttpResponseRedirect(self.get_success_url())
+				if str(typeUser) == "Gerente":
+					Manager.objects.create(profile=Profile.objects.all().last())
+					my_group = Group.objects.get(name='Gerente') 
+					my_group.user_set.add(User.objects.all().last())
+					return HttpResponseRedirect(self.get_success_url())
+				if str(typeUser) == "Externo":
+					Manager.objects.create(profile=Profile.objects.all().last())
+					my_group = Group.objects.get(name='Externo') 
+					my_group.user_set.add(User.objects.all().last())
+					return HttpResponseRedirect(self.get_success_url())
 			else:
 				return self.render_to_response(self.get_context_data(form=form, form2=form2))
 
@@ -56,7 +72,7 @@ class ProfileList(LoginRequiredMixin, ListView):
 		login_url = '/login/'
 		redirect_field_name = '/login/'
 		raise_exception = False
-	
+		model2 = User
 		model = Profile
 		template_name = 'users/listUsers.html'
 
@@ -129,8 +145,8 @@ def userLogin(request):
         user = authenticate(request, username=username, password=password)
         if user:
             login(request, user)
-            if request.GET.get('next', None):
-                return HttpResponseRedirect(request.GET['next'])
+            if request.GET.get('next', None):	
+                return HttpResponseRedirect(request.GET['next'])						
             return HttpResponseRedirect(reverse('listUser'))
         else:
             context["error"] = "Provide valid credentials !!"
