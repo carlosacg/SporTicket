@@ -59,6 +59,7 @@ def listEvent1(request):
 		context = {'events':event}
 		return render(request,'sales/saleEvent.html',context)
 
+@permission_required('users.Vendedor' ,reverse_lazy('evento_listar_compras'))
 def createSale(request,id):
 	hora = time.strftime("%c")
 	event = Event.objects.get(id=id)

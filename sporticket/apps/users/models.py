@@ -31,8 +31,6 @@ class Seller(models.Model):
 			newSeller = Seller(profile=profile)
 			newSeller.save()
 
-
-
 class Manager(models.Model):
 
 		profile = models.OneToOneField(Profile, primary_key=True, on_delete=models.PROTECT)

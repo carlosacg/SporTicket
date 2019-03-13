@@ -3,10 +3,17 @@ from apps.reports.forms import ByEventsForms, ByDateRangeForms
 from apps.tickets.models import Ticket
 from apps.sales.models import Bill
 import datetime
+from django.contrib.auth.decorators import login_required,permission_required
+from django.urls import reverse_lazy, reverse
 
+@permission_required('users.Gerente' ,reverse_lazy('base'))
 def index(request):
     return render(request, 'reports/reports.html')
 
+def base(request):
+    return render(request, 'base/base.html')
+
+@permission_required('users.Gerente' ,reverse_lazy('base'))
 def reportByEvents(request):
 
     form = ByEventsForms()
@@ -37,6 +44,7 @@ def reportByEventSale(event_id):
     print(ticket)
     return ticket
 
+@permission_required('users.Gerente' ,reverse_lazy('base'))
 def reportByDailySales():
 
     currentDate = datetime.datetime.now()
@@ -56,6 +64,7 @@ def dailyReport(request):
 def sellerReport(request):
     return render(request, 'reports/sellerReport.html')
 
+@permission_required('users.Gerente' ,reverse_lazy('base'))
 def reportByDateRange(request):
 
     form = ByDateRangeForms()

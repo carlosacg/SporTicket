@@ -8,23 +8,23 @@ from django.urls import reverse_lazy, reverse
 from django.contrib.auth.forms  import UserCreationForm
 import psycopg2
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required,permission_required
 from django.db import connection 
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import Group
+from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
+from django.contrib.auth.models import Group 
 
 # Create your views here.
 
 def index(request):
 	return HttpResponse("soy la pagina principal de la app")
 
-class ProfileCreate(LoginRequiredMixin,CreateView):
-
+class ProfileCreate(LoginRequiredMixin,PermissionRequiredMixin,CreateView):
+		
+		permission_required = 'users.Gerente'	
 		login_url = '/login/'
 		redirect_field_name = '/login/'
 		raise_exception = False
-
 		model = Profile
 		template_name = 'users/insertUsers.html'
 		form_class = ProfileForm
@@ -56,7 +56,9 @@ class ProfileCreate(LoginRequiredMixin,CreateView):
 					return HttpResponseRedirect(self.get_success_url())
 				if str(typeUser) == "Gerente":
 					Manager.objects.create(profile=Profile.objects.all().last())
-					my_group = Group.objects.get(name='Gerente') 
+					my_group = Group.objects.get(name='Vendedores') 
+					my_group.user_set.add(User.objects.all().last())
+					my_group = Group.objects.get(name='Gerentes') 
 					my_group.user_set.add(User.objects.all().last())
 					return HttpResponseRedirect(self.get_success_url())
 				if str(typeUser) == "Externo":
@@ -67,8 +69,9 @@ class ProfileCreate(LoginRequiredMixin,CreateView):
 			else:
 				return self.render_to_response(self.get_context_data(form=form, form2=form2))
 
-class ProfileList(LoginRequiredMixin, ListView):
-
+class ProfileList(LoginRequiredMixin,PermissionRequiredMixin, ListView):
+		
+		permission_required = 'users.Gerente'	
 		login_url = '/login/'
 		redirect_field_name = '/login/'
 		raise_exception = False
@@ -76,12 +79,13 @@ class ProfileList(LoginRequiredMixin, ListView):
 		model = Profile
 		template_name = 'users/listUsers.html'
 
-class ProfileUpdate(LoginRequiredMixin, UpdateView):
+class ProfileUpdate(LoginRequiredMixin,PermissionRequiredMixin, UpdateView):
 
+		permission_required = 'users.Gerente'	
 		login_url = '/login/'
 		redirect_field_name = '/login/'
 		raise_exception = False
-	
+
 		model = Profile
 		second_model = User
 		template_name = 'users/insertUsers.html'
@@ -115,7 +119,7 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
 			else:
 				return HttpResponseRedirect(self.get_success_url())
 
-
+@permission_required('users.Gerente' ,reverse_lazy('listUser'))
 def changeState(id):
 	
 		login_url = '/login/'
@@ -127,6 +131,7 @@ def changeState(id):
 		connection.commit()
 		connection.close()
 
+@permission_required('users.Gerente' ,reverse_lazy('listUser'))
 def deleteUsers(request ,id):
     user = User.objects.get(id=id)
     print (user.id)
@@ -147,7 +152,7 @@ def userLogin(request):
             login(request, user)
             if request.GET.get('next', None):	
                 return HttpResponseRedirect(request.GET['next'])						
-            return HttpResponseRedirect(reverse('listUser'))
+            return HttpResponseRedirect(reverse('indexUser'))
         else:
             context["error"] = "Provide valid credentials !!"
             return render(request, "auth/login.html", context)

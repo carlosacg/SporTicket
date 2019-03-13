@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
-    url(r'^$', login_required(index)),
+    url(r'^$', login_required(index), name='indexEvents'),
     url(r'events/insertEvents.html', login_required (insertEvent), name='evento_crear' ),
     url(r'events/insertEvenType.html', login_required(insertEventType), name='tipo_evento_crear' ),
     url(r'events/uploadImage.html(?P<id>\d+)/$', login_required(uploadImage), name='evento_imagen' ),

@@ -18,14 +18,15 @@ from rest_framework import generics
 from django.views.generic.list import ListView
 import requests
 import json
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
+from django.contrib.auth.decorators import login_required,permission_required
 
 # Create your views here.
 
 def index(request):
     return render(request, 'base/base.html')
 
+@permission_required('users.Gerente' ,reverse_lazy('indexEvents'))
 def insertEventType(request):
     if request.method == 'POST':
         form = EventTypeForm(request.POST)
@@ -36,6 +37,7 @@ def insertEventType(request):
         form = EventTypeForm()
     return render(request, 'events/insertEvenType.html',{'form':form}) 
 
+@permission_required('users.Gerente' ,reverse_lazy('indexEvents'))
 def insertEvent(request):
     if request.method == 'POST':
         form = EventForm(request.POST)
@@ -50,11 +52,13 @@ def insertEvent(request):
         form = EventForm()
     return render(request, 'events/insertEvents.html',{'form':form})
 
+@permission_required('users.Gerente' ,reverse_lazy('indexEvents'))
 def listEvent(request):
     event = Event.objects.all()
     context = {'events':event}
     return render(request,'events/listEvents.html',context)
 
+@permission_required('users.Gerente' ,reverse_lazy('index'))
 def uploadFile(request):
     if request.method == 'POST':
         formulario = UploadForm(request.POST, request.FILES)
@@ -89,6 +93,7 @@ def uploadFile(request):
         formulario = UploadForm()
     return render(request, "events/jsonEvents.html",{'form': formulario})
 
+@permission_required('users.Gerente' ,reverse_lazy('indexEvents'))
 def updateEvent(request,id):
     event = Event.objects.get(id=id)
     if request.method =='GET':
@@ -100,6 +105,7 @@ def updateEvent(request,id):
         return redirect('evento_listar')
     return render(request,'events/insertEvents.html',{'form':form})
 
+@permission_required('users.Gerente' ,reverse_lazy('indexEvents'))
 def viewEvent(request,id):
     event = Event.objects.get(id=id)
     if request.method =='GET':
@@ -113,6 +119,7 @@ def viewEvent(request,id):
     context = {'event':event,'form':form}
     return render(request,'events/viewEvents.html',context)
 
+@permission_required('users.Gerente' ,reverse_lazy('indexEvents'))
 def deleteEvent(request,id):
 
         event = Event.objects.get(id=id)
@@ -135,6 +142,7 @@ def deleteEvent(request,id):
             return redirect('events/listEvents.html')
         return render(request,'events/deleteEvents.html',context)
 
+@permission_required('users.Gerente' ,reverse_lazy('indexEvents'))
 def uploadImage(request,id):
     if request.method == 'POST':
             formulario = ImageForm(request.POST, request.FILES)
@@ -164,8 +172,9 @@ def save_ticket(ubication,event,cost):
     newTicket = Ticket(cost=cost,ubication=ubication,event=event,state='Disponible')
     newTicket.save()
 
-class EventDelete(LoginRequiredMixin, DeleteView):
-    
+class EventDelete(LoginRequiredMixin, PermissionRequiredMixin,DeleteView):
+    		
+        permission_required = 'users.Gerente'	
         login_url = '/login/'
         redirect_field_name = '/login/'
         raise_exception = False
@@ -174,7 +183,7 @@ class EventDelete(LoginRequiredMixin, DeleteView):
         success_url = reverse_lazy('evento_listar')
 
 class EventList(LoginRequiredMixin,ListView):
-
+		
         login_url = '/login/'
         redirect_field_name = '/login/'
         raise_exception = False
@@ -182,7 +191,8 @@ class EventList(LoginRequiredMixin,ListView):
         template_name ='events/listEvents.html'
 
 class EventCreate(LoginRequiredMixin,CreateView):
-    
+    	
+        permission_required = 'users.Gerente'	
         login_url = '/login/'
         redirect_field_name = '/login/'
         raise_exception = False
@@ -191,8 +201,9 @@ class EventCreate(LoginRequiredMixin,CreateView):
         template_name ='events/insertEvents.html'
         success_url = reverse_lazy('evento_listar')
 
-class EventUpdate(LoginRequiredMixin,UpdateView):
-
+class EventUpdate(LoginRequiredMixin,PermissionRequiredMixin,UpdateView):
+		
+        permission_required = 'users.Gerente'	
         login_url = '/login/'
         redirect_field_name = '/login/'
         raise_exception = False
