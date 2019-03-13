@@ -3,12 +3,23 @@
 {% block content %}
 <div class="w3-main" >
 	<header class="w3-container" >
+				<h5 class="black-color">
+					<b class="black-color">
+					<i class="fa fa-plus black-color"></i> Tipos de eventos</b>
+				</h5>
+	</header>
+	<a href="{% url 'tipo_evento_crear' %}" 
+		data-toggle="tooltip" 
+		title="Agregar tipo de evento ">
+		<button class="w3-button w3-dark-grey w3-padding w3-circle position">
+		<i class="fa fa-plus"></i></button>
+	</a>
+	<header class="w3-container" >
 		<h5 class="black-color">
 			<b class="black-color">
 			<i class="fa fa-plus black-color"></i> Insertar eventos</b>
 		</h5>
 	</header>
-	
 	<form method="post"> 
 		{% csrf_token %}
 	
@@ -78,14 +89,7 @@
             </div>
 		</div>
 	</form>
-	<div class="w3-quarter btnQuarter" >
-    	<a href="{% url 'tipo_evento_crear' %}" 
-			data-toggle="tooltip" 
-			title="Agregar tipo de evento ">
-			<button class="w3-button w3-dark-grey w3-padding w3-circle position">
-			<i class="fa fa-plus"></i></button>
-		</a>
-    </div>
+
 		
 	<br>
 	<br>

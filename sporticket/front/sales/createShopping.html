@@ -56,13 +56,19 @@
 			<div class="w3-container">
 				<div class="w3-show-inline-block">
 					<div class="w3-bar">
-						<button class="w3-button w3-padding w3-dark-grey w3-round-large" ><font color="orange"><i class="fa fa-plus"></i> Añadir boleto</font></button>
+						<button onclick='Ocultar()' class="w3-button w3-padding w3-dark-grey w3-round-large" ><font color="orange"><i class="fa fa-plus"></i> Añadir boleto</font></button>
 					</div>
 				</div>
 			</div>
 		</form>
+		<script>
+				function Ocultar(){
+					$('#boton_imprimir').hide();
+				}
+				
+			</script>
 		<button onclick="document.getElementById('id02').style.display='block'"  class="w3-button w3-padding w3-dark-grey w3-round-large"><font color="orange">Imprimir</font></button>
-
+		<button id='boton_imprimir' onclick="Ocultar()"  class="w3-button w3-padding w3-dark-grey w3-round-large"><font color="orange">Imprimir 2</font></button>
 		<div class="w3-container">
 			<table class="w3-table-all w3-hoverable ">
 			  	<thead >

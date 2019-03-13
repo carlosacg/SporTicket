@@ -9,6 +9,8 @@ from .models import Bill
 from apps.tickets.models import Ticket
 from django.contrib.auth.models import User
 from django.db import connection 
+from django.db.models import Count
+
 from .forms import BillForm, AddTicketsForm, BuyTicketsLocationForm
 import time
 from django.contrib.auth.decorators import permission_required
@@ -48,7 +50,6 @@ class BillCreate(CreateView):
 def listEvent(request):
 		create_bill(request)
 		event = Event.objects.filter(state="Activo")
-		print (event)
 		context = {'events':event}
 		return render(request,'sales/viewsEvent.html',context)
 
@@ -78,6 +79,7 @@ def createSale(request,id):
 
 def createShop(request,id):
 	event = Event.objects.get(id=id)
+	print(event) 
 	bill_id=Bill.objects.all().last()
 	if request.method=='POST':
 		form=BuyTicketsLocationForm(request.POST)
@@ -85,11 +87,11 @@ def createShop(request,id):
 			location=form['location'].value()
 			quantity=form['quantity'].value()
 			payment_method=form['payment'].value()
-			print(location)
 			bill_id=Bill.objects.all().last()
 			bill_id.payment_method=payment_method
 			bill_id.save()
 			avalible_tickets=get_avalible_tickets(id,location)
+			get_avalible_tickets_orm()
 			add_shopping(bill_id,avalible_tickets,quantity,len(avalible_tickets))
 
 	else:
@@ -97,6 +99,7 @@ def createShop(request,id):
 		form.query(event)
 	tickets=getListTicketsSolds(bill_id)
 	tickets_avalibles=getListTicketsAvalibles(event)
+	get_avalible_tickets_orm(str(event))
 	context = {'event':event,'form':form,'arrayTicket':tickets,'bill':bill_id,'avalibleTicket':tickets_avalibles}
 	return render(request,'sales/createShopping.html',context)
 
@@ -119,6 +122,12 @@ def getListTicketsAvalibles(event):
     connection.close()
     return rows
 
+def get_avalible_tickets_orm(event):
+	print(Location.objects.filter(event=event).select_related().values('name').values('cost'))
+	#print(Ticket.objects.select_related().values('name'))
+	#print(Location.objects.values('name').annotate(total=Count('name')))
+	
+
 def get_avalible_tickets(event,location):
 	cursor = connection.cursor()
 	instruction = "SELECT id FROM tickets_ticket WHERE event_id="+event+" AND location_id="+location+" AND state='Disponible';"
@@ -128,6 +137,7 @@ def get_avalible_tickets(event,location):
 	connection.commit()
 	connection.close()
 	return (list(row))
+
 
 def add_ticket_to_bill(bill,ticket):
 	ticket = Ticket.objects.get(id=ticket)
