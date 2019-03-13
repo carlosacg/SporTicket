@@ -10,7 +10,7 @@ from apps.tickets.models import Ticket
 from django.contrib.auth.models import User
 from django.db import connection 
 from django.db.models import Count
-
+from django.views.decorators.csrf import csrf_exempt,csrf_protect 
 from .forms import BillForm, AddTicketsForm, BuyTicketsLocationForm
 import time
 from django.contrib.auth.decorators import permission_required
@@ -65,17 +65,37 @@ def createSale(request,id):
 	hora = time.strftime("%c")
 	event = Event.objects.get(id=id)
 	if request.method=='POST':
-		form = BuyTicketsForm(request.POST)
+		#form = BuyTicketsForm(request.POST)
 		ubication=form['ubication'].value()
 		quantity=form['quantity'].value()
 		avalible_tickets = get_avalible_tickets(id,ubication)
-	else:
-		form = BuyTicketsForm()
+	#else:
+		#form = BuyTicketsForm()
 	#tickets=getListTicketsSolds(bill_id)
 	tickets_avalibles=getListTicketsAvalibles(event)
 	print (tickets_avalibles)
-	context = {'event':event,'form':form,'hora':hora,'avalibleTicket':tickets_avalibles}
+	context = {'event':event,'hora':hora,'avalibleTicket':tickets_avalibles}
 	return render(request,'sales/createSale.html',context)
+
+def createShopAjax(request,id):
+	if request.method == 'POST':
+		getShopAjax(request)
+	hora = time.strftime("%c")
+	event = Event.objects.get(id=id)
+	tickets_avalibles=getListTicketsAvalibles(event)
+	context = {'event':event,'hora':hora,'avalibleTicket':tickets_avalibles}
+	return render(request,'sales/createShop.html',context)
+
+def getShopAjax(request):
+	if request.is_ajax():
+		if request.method == 'POST':
+			info = '"%s"' % request
+			print('Solicitud post con ajax')
+			print(request)
+			print('INFO: ')
+			print(info)
+			print(request.POST.getlist('quantitys[]'))
+
 
 def createShop(request,id):
 	event = Event.objects.get(id=id)

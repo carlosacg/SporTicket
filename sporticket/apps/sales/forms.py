@@ -34,6 +34,7 @@ class AddTicketsForm(forms.ModelForm):
 			'id':forms.TextInput(attrs={'class':'form-control'}),
 		}
 
+
 class BuyTicketsLocationForm(forms.Form):
 	def query(self,event):
 		print(event)
