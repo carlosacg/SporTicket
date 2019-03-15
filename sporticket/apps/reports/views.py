@@ -59,9 +59,15 @@ def graphicsReport(request):
     return render(request, 'reports/graphicsReports.html')
 
 def dailyReport(request):
-    return render(request, 'reports/dailySales.html')
+
+    dailySales =  reportByDailySales()
+    context = {'sales':sales,'avalibles':avalibles,'dailySales':dailySales,'form':form}
+    return render(request, 'reports/dateRange.html',context)#A donde debo ir si gano 
+
 
 def sellerReport(request):
+
+    query = "SELECT  AUTH_USER.first_name, COUNT(SALES_BILL.ID_PROFILE_ID) FROM SALES_BILL NATURAL JOIN USERS_PROFILE NATURAL JOIN AUTH_USER GROUP BY FIRST_NAME, ID_PROFILE_ID;"
     return render(request, 'reports/sellerReport.html')
 
 @permission_required('users.Gerente' ,reverse_lazy('base'))
@@ -74,10 +80,6 @@ def reportByDateRange(request):
         dateInitial = form['dateInitial'].value()
         dateFinal = form['dateFinal'].value()
         print(dateInitial)
-        # avalibles =reportByEventAvalibles(int(selected_event))
-        # sales = reportByEventSale(int(selected_event))
-        # dailySales =  reportByDailySales()
-        # context = {'sales':sales,'avalibles':avalibles,'dailySales':dailySales,'form':form}
         return render(request, 'reports/dateRange.html')#A donde debo ir si gano 
 
     else:
