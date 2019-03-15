@@ -78,7 +78,11 @@ def createSale(request,id):
 
 def createShopAjax(request,id):
 	bill=Bill.objects.all().last()
-	bill_id=int(bill.id)+1
+	if bill == None:
+		bill_id=1
+	else:
+		bill_id=int(bill.id)+1
+		
 	hora = time.strftime("%c")
 	event = Event.objects.get(id=id)
 	tickets_avalibles=getListTicketsAvalibles(event)
@@ -88,7 +92,6 @@ def createShopAjax(request,id):
 class GetDataAjaxView(TemplateView):
 
 	def get(self,request, *args, **kwargs):
-		username = request.GET['username']
 		quantitys = json.loads(request.GET['jsonQuantitys'])
 		ubications = json.loads(request.GET['jsonUbications'])
 		event_id =request.GET['event_id']
@@ -100,8 +103,7 @@ class GetDataAjaxView(TemplateView):
 			avalible_tickets=get_avalible_tickets(event_id,str(location.id))
 			add_shopping(bill,avalible_tickets,quantitys[x],len(avalible_tickets))
 			x+=1
-		return HttpResponseRedirect(reverse('comprar_boletos', args=[event_id]))
-
+		return HttpResponse("data")
 
 
 def createBillAjax(request,payment_method):

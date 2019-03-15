@@ -78,7 +78,7 @@
 		<form>
 			{% csrf_token %}
 		</form>
-		<button onclick="finishShop()"  type="submit" class="w3-button w3-padding w3-dark-grey w3-round-large"><font color="orange">Finalizar Venta</font></button>
+		<button onclick="finishShopMain()"  type="submit" class="w3-button w3-padding w3-dark-grey w3-round-large"><font color="orange">Finalizar Venta</font></button>
 		<div class="w3-container">
 			<table id="bill_table" class="w3-table-all w3-hoverable ">
 			  	<thead >
@@ -301,7 +301,6 @@
             url:'/sales_ajax/',
             dataType: 'json',
             data: {
-                'username':'carlos',
 				'jsonUbications':jsonUbications,
 				'jsonQuantitys':jsonQuantitys,
 				'event_id':event_id,
@@ -316,6 +315,16 @@
             }
         });
     }
+
+	function reload(){
+		var url = 'sales/viewsEvent.html';
+		location.href=url;
+	}
+
+	function finishShopMain(){
+		finishShop();
+		reload();
+	}
 
     
 </script>
