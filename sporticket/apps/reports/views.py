@@ -5,6 +5,8 @@ from apps.sales.models import Bill
 import datetime
 from django.contrib.auth.decorators import login_required,permission_required
 from django.urls import reverse_lazy, reverse
+from django.db.models import Count
+from apps.users.models import *
 
 @permission_required('users.Gerente' ,reverse_lazy('base'))
 def index(request):
@@ -64,11 +66,13 @@ def dailyReport(request):
     context = {'sales':sales,'avalibles':avalibles,'dailySales':dailySales,'form':form}
     return render(request, 'reports/dateRange.html',context)#A donde debo ir si gano 
 
-
+#user_max = Bill.objects.all().annotate(total_sales=Count('id_profile')).first()
 def sellerReport(request):
 
-    query = "SELECT  AUTH_USER.first_name, COUNT(SALES_BILL.ID_PROFILE_ID) FROM SALES_BILL NATURAL JOIN USERS_PROFILE NATURAL JOIN AUTH_USER GROUP BY FIRST_NAME, ID_PROFILE_ID;"
-    return render(request, 'reports/sellerReport.html')
+    users = User.objects.annotate(total_sales=Count('my_bills')).order_by('-total_sales')    
+    bestUser = users.first().first_name
+    context = {'bestUser':bestUser}
+    return render(request, 'reports/sellerReport.html', context)
 
 @permission_required('users.Gerente' ,reverse_lazy('base'))
 def reportByDateRange(request):
