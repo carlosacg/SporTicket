@@ -23,23 +23,35 @@
 						{{form.date1}}	
 					</div>			
 					<div class="w3-third">		
-						Numero de boletos disponibles: 
-						<strong>{{avalibles}}</strong>
+						 <label for="{{form.ticketsAvailable.id_for_label}}"> {{form.ticketsAvailable.label}} </label>
+						<strong>{{form.ticketsAvailable}}</strong>	
 					</div>
 					<div class="w3-third">		
-						Numero de boletos vendidos: 
-						<strong>{{sales}}</strong>
+						 <label for="{{form.ticketsSold.id_for_label}}"> {{form.ticketsSold.label}} </label>
+						 <br>
+						<strong>{{form.ticketsSold}}</strong>
+					</div>					
+				</div>
+
+				<div class="w3-row-padding">
+					<br>
+					<button type="submit" 
+							class="w3-button w3-padding-16 w3-dark-grey w3-circle" >
+							<i class="fa fa-search"></i>
+					</button>
+				</div>
+				<br>
+				<div class="w3-row-padding">
+					<div class="w3-third">
+						<img class="imgRightPosition" src="{% static 'images/sales.png' %}" alt="imagen de ventas diarias">	
 					</div>
-					<div class="w3-third">		
+					<div class="w3-third w3-center">		
 						Ventas del dia:
 						<strong>{{dailySales}}</strong> 
 					</div>
-				</div>
-				<div class="w3-row-padding">
-					<button type="submit" 
-							class="w3-button w3-padding-16 w3-dark-grey w3-circle" >
-							<i class="fa fa-save"></i>
-					</button>
+					<div class="w3-third">	
+						<img class="imgLeftPosition" src="{% static 'images/sales.png' %}" alt="imagen de ventas diarias" >	
+					</div>
 				</div>
 			</form>
 			<br>

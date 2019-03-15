@@ -21,7 +21,7 @@ class UserForm(UserCreationForm):
 				'last_name': 'Apellido',
 				'email': 'Correo electronico',
 				'password1': 'Contraseña',
-				'password2': 'Confirmacion de contraseña',
+				'password2': 'Confirmación de contraseña',
 		}
 		widgets = {
 				'username':forms.TextInput(attrs={'class':'w3-input w3-border'}),
