@@ -9,6 +9,7 @@
         <h5 style="color: black;"><b style="color: black;"><i class="fa fa-shopping-cart" style="color: black;"></i> Seleccione los boletos a comprar del evento: {{event.name}}</b></h5>
 		<h5 style="color: black;">BOLETOS DISPONIBLES</h5>
 		<div class="w3-container">
+				<input id='event_id' value="{{event.id}}" style="display:none">
                 <form>
                     {% csrf_token %}
                 </form>
@@ -40,7 +41,7 @@
 	<hr>
 
 	<div class="w3-container w3-card-2" style="width: 70%; text-align: center; margin-left: 200px;">
-		<h3 style="color: black; text-align: center">Factura # {{bill.id}}</h3>
+		<h3 style="color: black; text-align: center">Compra #{{bill}}</h3>
 		
 			<div class="w3-row-padding">
 				<div class="w3-half">
@@ -58,6 +59,14 @@
 					<label>Cantidad de boletos</label><!--NO BORRAR NADA DEL FORM-->
 					<input type="number" name="cantidad" id="cantidad"/>
 				</div>
+				<div class="w3-half">
+						<label>Metodo de pago</label><!--NO BORRAR NADA DEL FORM-->
+						<select id='select_pago' name="select_pago">
+							<option id = "option_1" value="" disabled selected>Seleccione metodo de pago</option>
+							<option value="Tarjeta de credito">Tarjeta de credito</option>
+							<option value="Tarjeta de credito">Tarjeta de debito</option>
+						</select>
+					</div>
 			</div>
 			<div class="w3-container">
 				<div class="w3-show-inline-block">
@@ -185,6 +194,8 @@
 <script type="text/javascript">
     var ubications=[];
     var quantitys=[];
+	var event_id;
+	var pago;
 	function calcularTotal(){
 		var table=document.getElementById("bill_table");
  		var table_len=(table.rows.length)-1;
@@ -230,8 +241,12 @@
 	}
 	function addRow(){
 		var selectTribuna = document.getElementById('select_tribuna');
+		var selectPago = document.getElementById('select_pago');
 		var selectedOption = selectTribuna.options[selectTribuna.selectedIndex];
 		var cantidadBoletos = document.getElementById('cantidad').value;
+		var selectedPago = selectPago.options[selectPago.selectedIndex];
+		pago= selectedPago.text
+		event_id =  document.getElementById('event_id').value;
 		//console.log("Cantidad de boletos :"+cantidadBoletos);
 		//console.log(selectedOption.value + ': ' + selectedOption.text);
 		var table=document.getElementById("bill_table");
@@ -283,13 +298,14 @@
         console.log(quantitys)
         console.log(jsonUbications)
         $.ajax({
-            url:'',
-            type:'POST',
-            contentType: false,
-            headers: { "X-CSRFToken": getCookie("csrftoken") },
+            url:'/sales_ajax/',
+            dataType: 'json',
             data: {
-                'quantitys[]': JSON.stringify(quantitys),
-                'ubications[]': JSON.stringify(ubications),
+                'username':'carlos',
+				'jsonUbications':jsonUbications,
+				'jsonQuantitys':jsonQuantitys,
+				'event_id':event_id,
+				'pago':pago
             },
             beforeSend: function () {
                 console.log('Procesando')        
@@ -298,7 +314,7 @@
                 console.log(data);
                 alert(data);
             }
-        })
+        });
     }
 
     

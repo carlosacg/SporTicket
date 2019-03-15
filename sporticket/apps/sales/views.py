@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.views.generic import CreateView, View
-from django.urls import reverse_lazy
+from django.http import HttpResponse,HttpResponseRedirect
+from django.views.generic import CreateView, View, TemplateView
+from django.urls import reverse_lazy,reverse
 from django.dispatch import receiver
 from apps.events.models import *
 from apps.location.models import *
@@ -13,8 +13,8 @@ from django.db.models import Count
 from django.views.decorators.csrf import csrf_exempt,csrf_protect 
 from .forms import BillForm, AddTicketsForm, BuyTicketsLocationForm
 import time
+import json
 from django.contrib.auth.decorators import permission_required
-
 def index_sale(request):
     return render(request, 'sales/createSale.html')
 
@@ -48,7 +48,6 @@ class BillCreate(CreateView):
 			return self.render_to_response(self.get_context_data(form=form, form2=form2))
 
 def listEvent(request):
-		create_bill(request)
 		event = Event.objects.filter(state="Activo")
 		context = {'events':event}
 		return render(request,'sales/viewsEvent.html',context)
@@ -78,51 +77,40 @@ def createSale(request,id):
 	return render(request,'sales/createSale.html',context)
 
 def createShopAjax(request,id):
-	if request.method == 'POST':
-		getShopAjax(request)
+	bill=Bill.objects.all().last()
+	bill_id=int(bill.id)+1
 	hora = time.strftime("%c")
 	event = Event.objects.get(id=id)
 	tickets_avalibles=getListTicketsAvalibles(event)
-	context = {'event':event,'hora':hora,'avalibleTicket':tickets_avalibles}
+	context = {'event':event,'hora':hora,'avalibleTicket':tickets_avalibles,'bill':bill_id}
 	return render(request,'sales/createShop.html',context)
 
-def getShopAjax(request):
-	if request.is_ajax():
-		if request.method == 'POST':
-			info = '"%s"' % request
-			print('Solicitud post con ajax')
-			print(request)
-			print('INFO: ')
-			print(info)
-			print(request.POST.getlist('quantitys[]'))
+class GetDataAjaxView(TemplateView):
+
+	def get(self,request, *args, **kwargs):
+		username = request.GET['username']
+		quantitys = json.loads(request.GET['jsonQuantitys'])
+		ubications = json.loads(request.GET['jsonUbications'])
+		event_id =request.GET['event_id']
+		pago =request.GET['pago']
+		x=0
+		bill=createBillAjax(request,pago)
+		while x < int(len(ubications)):        
+			location=Location.objects.get(name=str(ubications[x]))
+			avalible_tickets=get_avalible_tickets(event_id,str(location.id))
+			add_shopping(bill,avalible_tickets,quantitys[x],len(avalible_tickets))
+			x+=1
+		return HttpResponseRedirect(reverse('comprar_boletos', args=[event_id]))
 
 
-def createShop(request,id):
-	event = Event.objects.get(id=id)
-	print(event) 
+
+def createBillAjax(request,payment_method):
+	create_bill(request)
 	bill_id=Bill.objects.all().last()
-	if request.method=='POST':
-		form=BuyTicketsLocationForm(request.POST)
-		if form.is_valid:
-			location=form['location'].value()
-			quantity=form['quantity'].value()
-			payment_method=form['payment'].value()
-			bill_id=Bill.objects.all().last()
-			bill_id.payment_method=payment_method
-			bill_id.save()
-			avalible_tickets=get_avalible_tickets(id,location)
-			get_avalible_tickets_orm()
-			add_shopping(bill_id,avalible_tickets,quantity,len(avalible_tickets))
-
-	else:
-		form=BuyTicketsLocationForm(request.POST)
-		form.query(event)
-	tickets=getListTicketsSolds(bill_id)
-	tickets_avalibles=getListTicketsAvalibles(event)
-	get_avalible_tickets_orm(str(event))
-	context = {'event':event,'form':form,'arrayTicket':tickets,'bill':bill_id,'avalibleTicket':tickets_avalibles}
-	return render(request,'sales/createShopping.html',context)
-
+	bill_id.payment_method=payment_method
+	bill_id.save()
+	print('CREO FACTURA')
+	return bill_id
 
 def getListTicketsSolds(bill):
     cursor = connection.cursor()
@@ -142,11 +130,6 @@ def getListTicketsAvalibles(event):
     connection.close()
     return rows
 
-def get_avalible_tickets_orm(event):
-	print(Location.objects.filter(event=event).select_related().values('name').values('cost'))
-	#print(Ticket.objects.select_related().values('name'))
-	#print(Location.objects.values('name').annotate(total=Count('name')))
-	
 
 def get_avalible_tickets(event,location):
 	cursor = connection.cursor()
