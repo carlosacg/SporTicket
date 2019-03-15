@@ -78,7 +78,7 @@
 		<form>
 			{% csrf_token %}
 		</form>
-		<button onclick="finishShopMain()"  type="submit" class="w3-button w3-padding w3-dark-grey w3-round-large"><font color="orange">Finalizar Venta</font></button>
+		<button  type="submit" class="w3-button w3-padding w3-dark-grey w3-round-large"><font color="orange">Ver Factura</font></button>
 		<div class="w3-container">
 			<table id="bill_table" class="w3-table-all w3-hoverable ">
 			  	<thead >
@@ -87,6 +87,9 @@
 						<th>Ubicación</th>
 						<th>Costo</th>
 						<th>SubTotal</th>
+						<th></th>
+						<th></th>
+						<th></th>
 					</tr>
 
 			  	</thead>
@@ -95,11 +98,16 @@
 			  			<div class="w3-threequarter w3-dark-grey">
 			  				<th style="text-align:right;" colspan="3">Total</th>
 			  			</div>
-			  			<th id="total_bill"></th>			  			
+						  <th id="total_bill"></th>	
+						  <th></th>
+						  <th></th>		 
+						  <th></th> 			
 			  		</tr>
 			  	</tbody>
 			</table>
-	  	</div>
+		  </div>
+		  <button onclick="finishShopMain()"  type="submit" class="w3-button w3-padding w3-dark-grey w3-round-large"><font color="orange">Finalizar Venta</font></button>
+
 	</div>
 	
 	<hr>
@@ -142,6 +150,9 @@
 											<th>Ubicación</th>
 											<th>Costo</th>
 											<th>SubTotal</th>
+											<th></th>
+											<th></th>
+											<th></th>
 										</tr>
 					
 									  </thead>
@@ -150,7 +161,7 @@
 											  <div class="w3-threequarter w3-dark-grey">
 												  <th style="text-align:right;" colspan="3">Total</th>
 											  </div>
-											  <th id="total_bill1"></th>			  			
+											  <th id="total_bill1"></th>		  			
 										  </tr>
 									  </tbody>
 								</table>
@@ -196,6 +207,7 @@
     var quantitys=[];
 	var event_id;
 	var pago;
+	var fila=0;
 	function calcularTotal(){
 		var table=document.getElementById("bill_table");
  		var table_len=(table.rows.length)-1;
@@ -255,10 +267,28 @@
         ubications.push(selectedOption.text)
         console.log("Cantidades : "+quantitys);
         console.log("ubicaciones : "+ubications);
- 		 var row = table.insertRow(table_len).outerHTML="<tr id='row_"+table_len+"'> <td id='cantidad_boletos_"+table_len+"'>"+cantidadBoletos+"</td> <td id='ubicacion_"+table_len+"'>"+selectedOption.text+"</td><td id='costo_"+table_len+"'>"+getCosto(selectedOption.text)+"</td><td id='subtotal_"+table_len+"'></td></tr>";
- 		 calcularSubotales();
- 		 calcularTotal();
+ 		var row = table.insertRow(table_len).outerHTML="<tr id='row_"+table_len+"'> <td id='cantidad_boletos_"+table_len+"'> <input style='display:none' id='cant_boletos_"+table_len+"' value='"+cantidadBoletos+"'>"+cantidadBoletos+"</td> <td id='ubicacion_"+table_len+"'>"+selectedOption.text+"</td><td id='costo_"+table_len+"'>"+getCosto(selectedOption.text)+"</td><td id='subtotal_"+table_len+"'></td> <td><a data-toggle='tooltip' title='Aumentar boletos'><button id='"+table_len+"' onclick='addTicket(this.id)' class='w3-button w3-padding-small w3-dark-grey w3-circle'><i class='fa fa-plus'></i></button></a></td>  <td><a data-toggle='tooltip' title='Disminuir boletos'><button id='"+table_len+"' onclick='minusTicket(this.id)' class='w3-button w3-padding-small w3-dark-grey w3-circle'><i class='fa fa-minus'></i></button></a></td> <td><a data-toggle='tooltip' title='Borrar registro'><button id='"+table_len+"' onclick='deleteTicket(this.id)' class='w3-button w3-padding-small w3-dark-grey w3-circle'><i class='fa fa-close'></i></button></a></td> </tr>";
+		calcularSubotales();
+ 		calcularTotal();
 	}
+
+	function addTicket(fila){
+		var cantidad=document.getElementById('cant_boletos_'+fila);
+		console.log(cantidad)
+		console.log(cantidad.value)
+		console.log(fila-1)
+	}
+
+	function minusTicket(fila){
+		console.log(fila-1)
+
+	}
+
+	function deleteTicket(fila){
+		console.log(fila-1)
+
+	}
+
 	function addRowF(){
 		var selectTribuna = document.getElementById('select_tribuna');
 		var selectedOption = selectTribuna.options[selectTribuna.selectedIndex];
@@ -269,7 +299,8 @@
  		var table_len=(table.rows.length)-1;
  		//console.log("tamaño de la tabla : "+table_len);
  		 var row = table.insertRow(table_len).outerHTML="<tr id='row_f_"+table_len+"'> <td id='cantidad_boletos_f_"+table_len+"'>"+cantidadBoletos+"</td> <td id='ubicacion_f_"+table_len+"'>"+selectedOption.text+"</td><td id='costo_f_"+table_len+"'>"+getCosto(selectedOption.text)+"</td><td id='subtotal_f_"+table_len+"'></td></tr>";
- 		 calcularSubotalesF();
+
+		  calcularSubotalesF();
  		 calcularTotalF();
 	}
 	function addRowMain(){
