@@ -102,9 +102,14 @@ img {
 	height: 350px;
 }
 
+.imgLeftPosition {
+	width: 50%; 
+}
+
 .imgLogin {
 	width: 100px;
 }
+
 
 .imgSaleEvent {
 	height: 350px;
@@ -112,6 +117,11 @@ img {
 	position: relative;
 	width: 100%; 
 	z-index: 1;   
+}
+
+.imgRightPosition {
+	margin-left: 200px;
+	width: 50%; 
 }
 
 .main {
