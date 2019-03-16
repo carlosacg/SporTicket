@@ -66,7 +66,6 @@ def dailyReport(request):
     context = {'sales':sales,'avalibles':avalibles,'dailySales':dailySales,'form':form}
     return render(request, 'reports/dateRange.html',context)#A donde debo ir si gano 
 
-#user_max = Bill.objects.all().annotate(total_sales=Count('id_profile')).first()
 def sellerReport(request):
 
     users = User.objects.annotate(total_sales=Count('my_bills')).order_by('-total_sales')    

@@ -6,9 +6,7 @@ from django.forms.fields import DateField
 
 class ByEventsForms(forms.Form):
     
-    events = forms.ModelChoiceField(Event.objects.all() , widget=forms.Select(attrs={'class':'w3-input w3-border'}), required=True)
-    ticketsAvailable = forms.DateField(widget=forms.NumberInput(attrs={'class':'w3-input w3-border','type':'hidden','value':'0'}))
-    ticketsSold = forms.DateField(widget=forms.NumberInput(attrs={'class':'w3-input w3-border','type':'hidden','value':'0'}))
+    events = forms.ModelChoiceField(Event.objects.all() , widget=Select2Widget, required=True)
     # users = forms.ModelChoiceField(queryset=User.objects.all().values('first_name'), widget=Select2Widget, required=True)
 
 
@@ -17,8 +15,6 @@ class ByEventsForms(forms.Form):
         
         self.fields['events'].widget.attrs.update({'placeholder':'Eventos', 'required':'required'})
         self.fields['events'].label = 'Seleccione su evento'
-        self.fields['ticketsAvailable'].label = 'Número de boletos disponibles:'
-        self.fields['ticketsSold'].label = 'Número de boletos vendidos:'
         # self.fields['users'].widget.attrs.update({'placeholder':'Usuarios', 'required':'required'})
         # self.fields['users'].label = 'Seleccione su usuario'
         
