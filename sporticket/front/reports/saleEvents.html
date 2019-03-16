@@ -29,17 +29,24 @@
 					<div class="w3-third">		
 						Numero de boletos vendidos: 
 						<strong>{{sales}}</strong>
-					</div>
-					<div class="w3-third">		
-						Ventas del dia:
-						<strong>{{dailySales}}</strong> 
-					</div>
+					</div>			
 				</div>
+
 				<div class="w3-row-padding">
+					<br>
 					<button type="submit" 
 							class="w3-button w3-padding-16 w3-dark-grey w3-circle" >
-							<i class="fa fa-save"></i>
+							<i class="fa fa-search"></i>
 					</button>
+				</div>
+				<br>
+				<div class="w3-row-padding">
+					<div class="w3-third">
+						<img class="imgRightPosition" src="{% static 'images/sales.png' %}" alt="imagen de ventas diarias">	
+					</div>
+					<div class="w3-third">	
+						<img class="imgLeftPosition" src="{% static 'images/sales.png' %}" alt="imagen de ventas diarias" >	
+					</div>
 				</div>
 			</form>
 			<br>

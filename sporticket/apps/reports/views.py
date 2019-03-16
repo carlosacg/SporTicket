@@ -22,11 +22,9 @@ def reportByEvents(request):
     if request.method == 'POST':
         form = ByEventsForms(request.POST)
         selected_event = form['events'].value()
-        print(selected_event)
         avalibles =reportByEventAvalibles(int(selected_event))
         sales = reportByEventSale(int(selected_event))
-        dailySales =  reportByDailySales()
-        context = {'sales':sales,'avalibles':avalibles,'dailySales':dailySales,'form':form}
+        context = {'sales':sales,'avalibles':avalibles,'form':form}
         return render(request, 'reports/saleEvents.html',context)#A donde debo ir si gano 
 
     else:
@@ -46,16 +44,12 @@ def reportByEventSale(event_id):
     print(ticket)
     return ticket
 
-@permission_required('users.Gerente' ,reverse_lazy('base'))
 def reportByDailySales():
 
     currentDate = datetime.datetime.now()
     currentDateFormat =  str(currentDate.year) +"-"+ str(currentDate.month)+"-"+str(currentDate.day)
     sales = Bill.objects.all().filter(date_bill__range=(currentDateFormat,currentDateFormat)).count()
-    # print(sales)
-    # context = {'sales': str(sales)}
-    # return render(request, 'reports/reports.html',context)
-    return str(sales)
+    return sales
 
 def graphicsReport(request):
     return render(request, 'reports/graphicsReports.html')
@@ -63,7 +57,7 @@ def graphicsReport(request):
 def dailyReport(request):
 
     dailySales =  reportByDailySales()
-    context = {'sales':sales,'avalibles':avalibles,'dailySales':dailySales,'form':form}
+    context = {'dailySales':dailySales}
     return render(request, 'reports/dateRange.html',context)#A donde debo ir si gano 
 
 def sellerReport(request):
@@ -83,7 +77,8 @@ def reportByDateRange(request):
         dateInitial = form['dateInitial'].value()
         dateFinal = form['dateFinal'].value()
         print(dateInitial)
-        return render(request, 'reports/dateRange.html')#A donde debo ir si gano 
+        context = {'dateInitial':dateInitial}
+        return render(request, 'reports/dateRange.html', context)#A donde debo ir si gano 
 
     else:
         return render(request, 'reports/dateRange.html',{'form': form})#El mismo lugar donde hice la peticion 

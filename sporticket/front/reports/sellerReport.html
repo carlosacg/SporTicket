@@ -15,14 +15,14 @@
 				{% csrf_token %}
 				<div class="w3-row-padding">
 					<div class="w3-third">		
-						<img src="">
+						<img class="imgRightPosition" src="{% static 'images/winSeller.jpg' %}" alt="imagen de vendedor del mes">	
 					</div>
-					<div class="w3-third">		
+					<div class="w3-third w3-center">		
 						El vendedor del mes es: 
-						<strong> !!! {{ bestUser }} !!! </strong>
+						<strong> !!! {{bestUser}} !!!</strong>
 					</div>
 					<div class="w3-third">		
-						<img src="">
+						<img class="imgLeftPosition" src="{% static 'images/winSeller.jpg' %}" alt="imagen de vendedor del mes">	
 					</div>
 				</div>
 			</form>

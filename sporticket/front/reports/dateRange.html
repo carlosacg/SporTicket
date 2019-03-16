@@ -11,6 +11,7 @@
 	</header>
 	<div class="w3-container">
 		<form  method="post">
+			{% csrf_token %}
 			<div class="w3-container w3-row-padding">
 				<div class="w3-third">		
 					<label for="{{form.dateInitial.id_for_label}}"> {{form.dateInitial.label}} </label>
@@ -21,12 +22,27 @@
 					{{form.dateFinal}}	
 				</div>
 				<div class="w3-third">
+					<br>
 					<button type="submit" 
 							class="w3-button w3-padding w3-dark-grey w3-circle" >
 							<i class="fa fa-save"></i>
 					</button>
 				</div>
 			</div>
+			<br>
+			<br>
+			<div class="w3-row-padding">
+					<div class="w3-third">
+						<img class="imgRightPosition" src="{% static 'images/ventasRango.jpg' %}" alt="imagen de ventas diarias">	
+					</div>
+					<div class="w3-third w3-center">		
+						Ventas del rango de fechas:
+						<strong>{{dailySales}}</strong> 
+					</div>
+					<div class="w3-third">	
+						<img class="imgLeftPosition" src="{% static 'images/ventasRango.jpg' %}" alt="imagen de ventas diarias" >	
+					</div>
+				</div>
 		</form>
 		
 		<br>
