@@ -119,28 +119,60 @@ class ProfileUpdate(LoginRequiredMixin,PermissionRequiredMixin, UpdateView):
 			else:
 				return HttpResponseRedirect(self.get_success_url())
 
-@permission_required('users.Gerente' ,reverse_lazy('listUser'))
-def changeState(id):
-	
+
+class ViewUpdate(LoginRequiredMixin,PermissionRequiredMixin, UpdateView):
+
+		permission_required = 'users.Gerente'	
 		login_url = '/login/'
 		redirect_field_name = '/login/'
 		raise_exception = False
-		cursor = connection.cursor()
-		instruction = "UPDATE auth_user SET is_active=\'FALSE\' WHERE id="+id+";"
-		cursor.execute(instruction)
-		connection.commit()
-		connection.close()
+
+		model = Profile
+		second_model = User
+		template_name = 'users/viewUsers.html'
+		form_class = ProfileForm
+		second_form_class = UserForm
+		success_url = reverse_lazy('listUser')
+
+		def get_context_data(self, **kwargs):
+			context = super(ViewUpdate, self).get_context_data(**kwargs)
+			pk = self.kwargs.get('pk',0)
+			profile = self.model.objects.get(id=pk)
+			user = self.second_model.objects.get(id=profile.user_id)
+			if 'form' not in context:
+				context['form'] = self.form_class()
+			if 'form2' not in context:
+				context['form2'] = self.second_form_class(instance=user)
+			context['id'] = pk
+			return context
+
+		def post(self, request, *args, **kwargs):
+			self.object = self.get_object
+			id_profile = kwargs['pk']
+			profile = self.model.objects.get(id=id_profile)
+			user = self.second_model.objects.get(id=profile.user_id)
+			form = self.form_class(request.POST, instance=profile)
+			form2 = self.second_form_class(request.POST, instance=user)
+			if form.is_valid() and form2.is_valid():
+				form.save()
+				form2.save()
+				return HttpResponseRedirect(self.get_success_url())
+			else:
+				return HttpResponseRedirect(self.get_success_url())		
 
 @permission_required('users.Gerente' ,reverse_lazy('listUser'))
 def deleteUsers(request ,id):
     user = User.objects.get(id=id)
-    print (user.id)
     if request.method=='POST':
         changeState(id)
-        print ('Se inhabilito un usuario')
         return redirect('listUser')
     return render(request,'users/deleteUsers.html',{'users':user})
 
+def changeState(id):
+	user = User.objects.get(id=id)
+	user.is_active = False
+	user.save()
+	
 
 def userLogin(request):
     context = {}

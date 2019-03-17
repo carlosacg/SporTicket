@@ -37,15 +37,18 @@
 					<td>{{profile.numAccount}}</td>
 					<td>{{profile.userType}}</td>
 					<td>{{profile.user.username}}</td>
-					<td><a href="#">
-						<button class="w3-button w3-padding-small w3-dark-grey w3-circle">
+					<td><a href="{% url 'viewUser' profile.id %}">
+						<button class="w3-button w3-padding-small w3-dark-grey w3-circle"data-toggle="tooltip" 
+						title="Ver usuario">
 						<i class="fa fa-eye"></i></button>
 					</a></td>
-					<td><a href="{% url 'editUser' profile.id %}">
+					<td><a href="{% url 'editUser' profile.id %}"data-toggle="tooltip" 
+						title="Editar usuario">
 						<button class="w3-button w3-padding-small w3-dark-grey w3-circle">
 						<i class="fa fa-pencil"></i></button>
 					</a></td>
-					<td><a href="{% url 'deleteUser' profile.id %}">
+					<td><a href="{% url 'deleteUser' profile.user.id %}"data-toggle="tooltip" 
+						title="Cancelar usuario">
 						<button class="w3-button w3-padding-small w3-dark-grey w3-circle">
 						<i class="fa fa-trash"></i></button>
 					</a></td>

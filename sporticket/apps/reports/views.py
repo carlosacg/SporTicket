@@ -58,14 +58,116 @@ def dailyReport(request):
 
     dailySales =  reportByDailySales()
     context = {'dailySales':dailySales}
-    return render(request, 'reports/dateRange.html',context)#A donde debo ir si gano 
+    return render(request, 'reports/dailySales.html',context)#A donde debo ir si gano 
 
 def sellerReport(request):
 
-    users = User.objects.annotate(total_sales=Count('my_bills')).order_by('-total_sales')    
-    bestUser = users.first().first_name
-    context = {'bestUser':bestUser}
-    return render(request, 'reports/sellerReport.html', context)
+    totalUsers = User.objects.all().count()
+    if totalUsers >= 5:
+                
+        users = User.objects.annotate(total_sales=Count('my_bills')).order_by('-total_sales')   
+
+        firstSallerN = users[0].first_name
+        firstSallerL = users[0].last_name
+        total_salesOne =  users[0].total_sales
+        fullDataOne = firstSallerN + " "+firstSallerL +" CON UN TOTAL DE VENTAS: " + str(total_salesOne)
+        secondSallerN = users[1].first_name
+        secondSallerL = users[1].last_name
+        total_salesTwo =  users[1].total_sales
+        fullDataTwo = secondSallerN + " " +secondSallerL +" CON UN TOTAL DE VENTAS: " + str(total_salesTwo)
+        threeSallerN = users[2].first_name
+        threeSallerL = users[2].last_name
+        total_salesThree =  users[2].total_sales
+        fullDataThree = threeSallerN + " " + threeSallerL +" CON UN TOTAL DE VENTAS: " + str(total_salesThree)
+        fourSallerN = users[3].first_name
+        fourSallerL = users[3].last_name
+        total_salesFour =  users[3].total_sales
+        fullDataFour = fourSallerN + " " + fourSallerL +" CON UN TOTAL DE VENTAS: " + str(total_salesFour)
+        fiveSallerN = users[4].first_name
+        fiveSallerL = users[4].last_name
+        total_salesFive =  users[4].total_sales
+        fullDataFive = fiveSallerN +  " " + fiveSallerL +" CON UN TOTAL DE VENTAS: " + str(total_salesFive)
+
+        context = {'fullDataOne':fullDataOne, 'fullDataTwo':fullDataTwo, 'fullDataThree':fullDataThree,  'fullDataFour':fullDataFour, 'fullDataFive':fullDataFive}
+        return render(request, 'reports/sellerReport.html', context)
+    
+    else:
+        if totalUsers == 4:
+
+            users = User.objects.annotate(total_sales=Count('my_bills')).order_by('-total_sales')   
+            firstSallerN = users[0].first_name
+            firstSallerL = users[0].last_name
+            total_salesOne =  users[0].total_sales
+            fullDataOne = firstSallerN + " "+firstSallerL +" CON UN TOTAL DE VENTAS: " +  str(total_salesOne)
+            secondSallerN = users[1].first_name
+            secondSallerL = users[1].last_name
+            total_salesTwo =  users[1].total_sales
+            fullDataTwo = secondSallerN + " " +secondSallerL +" CON UN TOTAL DE VENTAS: " +str(total_salesTwo)
+            threeSallerN = users[2].first_name
+            threeSallerL = users[2].last_name
+            total_salesThree =  users[2].total_sales
+            fullDataThree = threeSallerN + " " + threeSallerL +" CON UN TOTAL DE VENTAS: " + str(total_salesThree)
+            fourSallerN = users[3].first_name
+            fourSallerL = users[3].last_name
+            total_salesFour =  users[3].total_sales
+            fullDataFour = fourSallerN + " " + fourSallerL +" CON UN TOTAL DE VENTAS: " + str(total_salesFour)
+            context = {'fullDataOne':fullDataOne, 'fullDataTwo':fullDataTwo, 'fullDataThree':fullDataThree,  'fullDataFour':fullDataFour, 'fullDataFive':fullDataFive}
+            return render(request, 'reports/sellerReport.html', context)
+
+        else:
+            if totalUsers == 3:
+                
+                users = User.objects.annotate(total_sales=Count('my_bills')).order_by('-total_sales')   
+                firstSallerN = users[0].first_name
+                firstSallerL = users[0].last_name
+                total_salesOne =  users[0].total_sales
+                fullDataOne = firstSallerN + " "+firstSallerL +" CON UN TOTAL DE VENTAS: " + str(total_salesOne)
+                secondSallerN = users[1].first_name
+                secondSallerL = users[1].last_name
+                total_salesTwo =  users[1].total_sales
+                fullDataTwo = secondSallerN + " " +secondSallerL +" CON UN TOTAL DE VENTAS: " + str(total_salesTwo)
+                threeSallerN = users[2].first_name
+                threeSallerL = users[2].last_name
+                total_salesThree =  users[2].total_sales
+                fullDataThree = threeSallerN + " " + threeSallerL +" CON UN TOTAL DE VENTAS: " + str(total_salesThree)
+                fullDataFour = "No contamos con un cuarto vendedor"
+                fullDataFive = "No contamos con un cuarto vendedor"
+                context = {'fullDataOne':fullDataOne, 'fullDataTwo':fullDataTwo, 'fullDataThree':fullDataThree,  'fullDataFour':fullDataFour, 'fullDataFive':fullDataFive}
+                return render(request, 'reports/sellerReport.html', context)
+
+            else:
+                if totalUsers == 2:
+                    
+                    users = User.objects.annotate(total_sales=Count('my_bills')).order_by('-total_sales')   
+                    firstSallerN = users[0].first_name
+                    firstSallerL = users[0].last_name
+                    total_salesOne =  users[0].total_sales
+                    fullDataOne = firstSallerN + " "+firstSallerL +" CON UN TOTAL DE VENTAS: " + str(total_salesOne)
+                    secondSallerN = users[1].first_name
+                    secondSallerL = users[1].last_name
+                    total_salesTwo =  users[1].total_sales
+                    fullDataTwo = secondSallerN + " " +secondSallerL +" CON UN TOTAL DE VENTAS: " + str(total_salesTwo)
+                    fullDataThree = "No contamos con un tercero vendedor"
+                    fullDataFour = "No contamos con un cuarto vendedor"
+                    fullDataFive = "No contamos con un quinto vendedor"
+                    context = {'fullDataOne':fullDataOne, 'fullDataTwo':fullDataTwo, 'fullDataThree':fullDataThree,  'fullDataFour':fullDataFour, 'fullDataFive':fullDataFive}
+                    return render(request, 'reports/sellerReport.html', context)
+                
+                else:
+                    if totalUsers == 1:
+                        
+                        users = User.objects.annotate(total_sales=Count('my_bills')).order_by('-total_sales')   
+                        firstSallerN = users[0].first_name
+                        firstSallerL = users[0].last_name
+                        total_salesOne =  users[0].total_sales
+                        fullDataOne = firstSallerN + " "+firstSallerL +" CON UN TOTAL DE VENTAS: " + str(total_salesOne)
+                        fullDataTwo = "No contamos con un segundo vendedor"
+                        fullDataThree = "No contamos con un tercero vendedor"
+                        fullDataFour = "No contamos con un cuarto vendedor"
+                        fullDataFive = "No contamos con un quinto vendedor"
+                        context = {'fullDataOne':fullDataOne, 'fullDataTwo':fullDataTwo, 'fullDataThree':fullDataThree,  'fullDataFour':fullDataFour, 'fullDataFive':fullDataFive}
+                        return render(request, 'reports/sellerReport.html', context)
+
 
 @permission_required('users.Gerente' ,reverse_lazy('base'))
 def reportByDateRange(request):
@@ -78,7 +180,6 @@ def reportByDateRange(request):
         dateFinal = form['dateFinal'].value()
         print(dateInitial)
         context = {'dateInitial':dateInitial}
-        return render(request, 'reports/dateRange.html', context)#A donde debo ir si gano 
-
+        return render(request, 'reports/dateRange.html', context)
     else:
-        return render(request, 'reports/dateRange.html',{'form': form})#El mismo lugar donde hice la peticion 
+        return render(request, 'reports/dateRange.html',{'form': form}) 
