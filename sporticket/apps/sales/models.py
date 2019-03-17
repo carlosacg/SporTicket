@@ -9,6 +9,7 @@ class Bill(models.Model):
 	id_profile = models.ForeignKey(User, null=True, blank=False, on_delete=models.CASCADE, related_name='my_bills')
 	date_bill = models.DateField(default=timezone.now)
 	payment_method = models.CharField(null=True,max_length=30)
+	type_bill = models.CharField(null=True,max_length=30)
 
 def __str__(self):   #MUESTRA EL NOMBRE COMO LLAVE FORANEA
     return '{}'.format(self.id)

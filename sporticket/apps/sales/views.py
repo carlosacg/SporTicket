@@ -97,7 +97,7 @@ class GetDataAjaxView(TemplateView):
 		event_id =request.GET['event_id']
 		pago =request.GET['pago']
 		x=0
-		bill=createBillAjax(request,pago)
+		bill=createBillAjax(request,pago,'Compra')
 		while x < int(len(ubications)):        
 			location=Location.objects.get(name=str(ubications[x]))
 			avalible_tickets=get_avalible_tickets(event_id,str(location.id))
@@ -106,10 +106,11 @@ class GetDataAjaxView(TemplateView):
 		return HttpResponse("data")
 
 
-def createBillAjax(request,payment_method):
+def createBillAjax(request,payment_method,type_bill):
 	create_bill(request)
 	bill_id=Bill.objects.all().last()
 	bill_id.payment_method=payment_method
+	bill_id.type_bill=type_bill
 	bill_id.save()
 	print('CREO FACTURA')
 	return bill_id
