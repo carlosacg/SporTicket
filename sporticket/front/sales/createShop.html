@@ -234,39 +234,38 @@
 		var selectedOption = selectTribuna.options[selectTribuna.selectedIndex];
 		var cantidadBoletos = document.getElementById('cantidad').value;
 		var selectedPago = selectPago.options[selectPago.selectedIndex];
-
 		pago= selectedPago.text
 		event_id =  document.getElementById('event_id').value;
-
 		var table=document.getElementById("bill_table");
  		var table_len=(table.rows.length)-1;
+		if(parseInt(cantidadBoletos).toString() == 'NaN'){
+		}else{
 
-		for(var i=1; i<=table_len; i++){
-			if(!(document.getElementById("ubicacion_"+i)==null)){// Si la tabla no esta vacia
-				if(document.getElementById("ubicacion_"+i).innerHTML == selectedOption.text){ //Si la ubicacion insertada es igual a la de una fila
-					cantidadOld = parseInt(document.getElementById("cant_boletos_"+i).value);
-					cantidadNew= cantidadOld+parseInt(cantidadBoletos);
-					document.getElementById("cantidad_boletos_"+i).innerHTML="<input style='display:none' id='cant_boletos_"+i+"' value="+cantidadNew+">"+cantidadNew;
-					quantitys[i-1]=cantidadNew;
+			for(var i=1; i<=table_len; i++){
+				if(!(document.getElementById("ubicacion_"+i)==null)){// Si la tabla no esta vacia
+					if(document.getElementById("ubicacion_"+i).innerHTML == selectedOption.text){ //Si la ubicacion insertada es igual a la de una fila
+						cantidadOld = parseInt(document.getElementById("cant_boletos_"+i).value);
+						cantidadNew= cantidadOld+parseInt(cantidadBoletos);
+						document.getElementById("cantidad_boletos_"+i).innerHTML="<input style='display:none' id='cant_boletos_"+i+"' value="+cantidadNew+">"+cantidadNew;
+						quantitys[i-1]=cantidadNew;
+						break;
+					}
+				}else{// Si la tabla esta vacia inserto el registros
+					table.insertRow(table_len).outerHTML="<tr id='row_"+table_len+"'> <td id='cantidad_boletos_"+table_len+"'> <input style='display:none' id='cant_boletos_"+table_len+"' value='"+cantidadBoletos+"'>"+cantidadBoletos+"</td> <td id='ubicacion_"+table_len+"'>"+selectedOption.text+"</td><td id='costo_"+table_len+"'>"+getCosto(selectedOption.text)+"</td><td id='subtotal_"+table_len+"'></td> <td><a data-toggle='tooltip' title='Aumentar boletos'><button id='"+table_len+"' onclick='addTicket(this.id)' class='w3-button w3-padding-small w3-dark-grey w3-circle'><i class='fa fa-plus'></i></button></a></td>  <td><a data-toggle='tooltip' title='Disminuir boletos'><button id='"+table_len+"' onclick='minusTicket(this.id)' class='w3-button w3-padding-small w3-dark-grey w3-circle'><i class='fa fa-minus'></i></button></a></td> </tr>";
+					quantitys.push(cantidadBoletos)
+					ubications.push(selectedOption.text)
 					break;
 				}
-			}else{// Si la tabla esta vacia inserto el registros
-				table.insertRow(table_len).outerHTML="<tr id='row_"+table_len+"'> <td id='cantidad_boletos_"+table_len+"'> <input style='display:none' id='cant_boletos_"+table_len+"' value='"+cantidadBoletos+"'>"+cantidadBoletos+"</td> <td id='ubicacion_"+table_len+"'>"+selectedOption.text+"</td><td id='costo_"+table_len+"'>"+getCosto(selectedOption.text)+"</td><td id='subtotal_"+table_len+"'></td> <td><a data-toggle='tooltip' title='Aumentar boletos'><button id='"+table_len+"' onclick='addTicket(this.id)' class='w3-button w3-padding-small w3-dark-grey w3-circle'><i class='fa fa-plus'></i></button></a></td>  <td><a data-toggle='tooltip' title='Disminuir boletos'><button id='"+table_len+"' onclick='minusTicket(this.id)' class='w3-button w3-padding-small w3-dark-grey w3-circle'><i class='fa fa-minus'></i></button></a></td> </tr>";
-				quantitys.push(cantidadBoletos)
-				ubications.push(selectedOption.text)
-				break;
+				if(i==table_len){ //Si recorri toda la tabla y no hay ubicacion igual, inserto el registro
+					table.insertRow(table_len).outerHTML="<tr id='row_"+table_len+"'> <td id='cantidad_boletos_"+table_len+"'> <input style='display:none' id='cant_boletos_"+table_len+"' value='"+cantidadBoletos+"'>"+cantidadBoletos+"</td> <td id='ubicacion_"+table_len+"'>"+selectedOption.text+"</td><td id='costo_"+table_len+"'>"+getCosto(selectedOption.text)+"</td><td id='subtotal_"+table_len+"'></td> <td><a data-toggle='tooltip' title='Aumentar boletos'><button id='"+table_len+"' onclick='addTicket(this.id)' class='w3-button w3-padding-small w3-dark-grey w3-circle'><i class='fa fa-plus'></i></button></a></td>  <td><a data-toggle='tooltip' title='Disminuir boletos'><button id='"+table_len+"' onclick='minusTicket(this.id)' class='w3-button w3-padding-small w3-dark-grey w3-circle'><i class='fa fa-minus'></i></button></a></td> </tr>";
+					quantitys.push(cantidadBoletos)
+					ubications.push(selectedOption.text)
+				}
 			}
-			if(i==table_len){ //Si recorri toda la tabla y no hay ubicacion igual, inserto el registro
-				table.insertRow(table_len).outerHTML="<tr id='row_"+table_len+"'> <td id='cantidad_boletos_"+table_len+"'> <input style='display:none' id='cant_boletos_"+table_len+"' value='"+cantidadBoletos+"'>"+cantidadBoletos+"</td> <td id='ubicacion_"+table_len+"'>"+selectedOption.text+"</td><td id='costo_"+table_len+"'>"+getCosto(selectedOption.text)+"</td><td id='subtotal_"+table_len+"'></td> <td><a data-toggle='tooltip' title='Aumentar boletos'><button id='"+table_len+"' onclick='addTicket(this.id)' class='w3-button w3-padding-small w3-dark-grey w3-circle'><i class='fa fa-plus'></i></button></a></td>  <td><a data-toggle='tooltip' title='Disminuir boletos'><button id='"+table_len+"' onclick='minusTicket(this.id)' class='w3-button w3-padding-small w3-dark-grey w3-circle'><i class='fa fa-minus'></i></button></a></td> </tr>";
-				quantitys.push(cantidadBoletos)
-        		ubications.push(selectedOption.text)
-			}
+			calcularSubotales();
+			calcularTotal();
 		}
- 		//table.insertRow(table_len).outerHTML="<tr id='row_"+table_len+"'> <td id='cantidad_boletos_"+table_len+"'> <input style='display:none' id='cant_boletos_"+table_len+"' value='"+cantidadBoletos+"'>"+cantidadBoletos+"</td> <td id='ubicacion_"+table_len+"'>"+selectedOption.text+"</td><td id='costo_"+table_len+"'>"+getCosto(selectedOption.text)+"</td><td id='subtotal_"+table_len+"'></td> <td><a data-toggle='tooltip' title='Aumentar boletos'><button id='"+table_len+"' onclick='addTicket(this.id)' class='w3-button w3-padding-small w3-dark-grey w3-circle'><i class='fa fa-plus'></i></button></a></td>  <td><a data-toggle='tooltip' title='Disminuir boletos'><button id='"+table_len+"' onclick='minusTicket(this.id)' class='w3-button w3-padding-small w3-dark-grey w3-circle'><i class='fa fa-minus'></i></button></a></td> </tr>";
-		console.log(quantitys);
-		console.log(ubications);
-		calcularSubotales();
- 		calcularTotal();
+
 	}
 
 	function addTicket(fila){

@@ -112,7 +112,6 @@ def createBillAjax(request,payment_method,type_bill):
 	bill_id.payment_method=payment_method
 	bill_id.type_bill=type_bill
 	bill_id.save()
-	print('CREO FACTURA')
 	return bill_id
 
 def getListTicketsSolds(bill):
