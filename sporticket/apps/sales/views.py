@@ -115,16 +115,25 @@ def createBillAjax(request,payment_method,type_bill):
 	return bill_id
 
 def listShops(request):
+	user=User.objects.get(id=request.user.id)
+	print(user.id)
+	listShops=getMyShops(user.id)
+	print('LISTA COMPRAS')
+	print(listShops)
+	context = {'listShops':listShops}
 	return render(request,'sales/myShops.html',context)
 
-def getListTicketsSolds(bill):
-    cursor = connection.cursor()
-    instruction = "SELECT count(*),location_location.name,location_location.cost FROM tickets_ticket,location_location WHERE location_location.id=tickets_ticket.location_id AND id_bill_id="+str(bill.id)+" GROUP BY location_location.name,location_location.cost;"
-    cursor.execute(instruction)
-    rows = cursor.fetchall()
-    connection.commit()
-    connection.close()
-    return rows
+def getMyShops(user):
+	cursor = connection.cursor()
+	instruction= "SELECT count(*),sales_bill.id,events_event.name FROM events_event,tickets_ticket,sales_bill WHERE tickets_ticket.event_id=events_event.id AND tickets_ticket.id_bill_id=sales_bill.id AND sales_bill.type_bill='Compra' AND sales_bill.id_profile_id="+str(user)+" GROUP BY sales_bill.id,events_event.name;"
+	print(instruction)
+	cursor.execute(instruction)
+	rows = cursor.fetchall()
+	connection.commit()
+	connection.close()
+	print(rows)
+	return rows
+
 
 def getListTicketsAvalibles(event):
     cursor = connection.cursor()
