@@ -32,9 +32,11 @@ def insertEventType(request):
         form = EventTypeForm(request.POST)
         if form.is_valid():
             form.save()
-        return redirect('insertEvents.html')
+            messages.success(request,'Tipo de evento agregado')
+            form2 = EventForm()
+        return render(request, 'events/insertEvents.html',{'form':form2}) 
     else:
-        form = EventTypeForm()
+        form = EventTypeForm()   
     return render(request, 'events/insertEvenType.html',{'form':form}) 
 
 @permission_required('users.Gerente' ,reverse_lazy('indexEvents'))
@@ -47,7 +49,8 @@ def insertEvent(request):
             event = Event.objects.get(id=str(object.lastEventId()))
             event.image="./images/porDefecto.jpg"
             event.save()
-        return redirect('uploadImage.html'+str(object.lastEventId()))
+            messages.success(request,'Evento creado exitosamente')
+        return HttpResponseRedirect(reverse('evento_imagen', args=[object.lastEventId()]))
     else:
         form = EventForm()
     return render(request, 'events/insertEvents.html',{'form':form})
@@ -154,7 +157,8 @@ def uploadImage(request,id):
                 object = Event()
                 event = Event.objects.get(id=id)
                 event.image="./images/"+ruta
-                event.save()          
+                event.save()         
+                messages.success(request,'Imagen actualizada exitosamente')
             return HttpResponseRedirect(reverse('location_crear', args=[id]))
     else:
             formulario = UploadForm()
