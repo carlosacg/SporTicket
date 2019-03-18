@@ -49,9 +49,9 @@ class ProfileForm(forms.ModelForm):
 				'numAccount': 'Numero de cuenta',
 		}
 		widgets = {
-				'identification':forms.TextInput(attrs={'class':'w3-input w3-border'}),
+				'identification':forms.TextInput(attrs={'class':'w3-input w3-border','type':'number'}),
 				'userType':forms.TextInput(attrs={'class':'w3-input w3-border'}),
-				'phone':forms.TextInput(attrs={'class':'w3-input w3-border'}),
-				'numAccount':forms.TextInput(attrs={'class':'w3-input w3-border'}),
+				'phone':forms.TextInput(attrs={'class':'w3-input w3-border','type':'number'}),
+				'numAccount':forms.TextInput(attrs={'class':'w3-input w3-border','type':'number'}),
 		}
 

@@ -5,6 +5,9 @@
 
 {% block content %}
 <div class="w3-main" >
+		<div id="success" class="w3-panel w3-green" style= "margin-top:1 0px; display: none;">	
+				<p>¡Compra exitosa!</p>
+		</div> 
     <header class="w3-container">
         <h5 style="color: black;"><b style="color: black;"><i class="fa fa-shopping-cart" style="color: black;"></i> Seleccione los boletos a comprar del evento: {{event.name}}</b></h5>
 		<h5 style="color: black;">BOLETOS DISPONIBLES</h5>
@@ -331,8 +334,11 @@
     }
 
 	function reload(){
-		var url = 'sales/viewsEvent.html';
-		location.reload()
+		$(document).ready(function(){
+			$("#success").toggle(100);
+			$("#success").fadeOut(3500);
+		});
+		setTimeout(location.reload(), 5000);
 	}
 
 	function finishShopMain(){

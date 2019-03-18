@@ -9,6 +9,7 @@ import psycopg2
 from apps.events.models import Event
 from apps.tickets.models import Ticket
 from django.db import connection 
+from django.contrib import messages
 from django.urls import reverse_lazy,reverse
 
 
@@ -45,6 +46,7 @@ def insertLocationView(request,id):
         location_form = LocationForm(request.POST)
         if location_form.is_valid:
             addLocationView(request,event.id,location_form['name'].value(),location_form['cost'].value())
+            messages.success(request,'Localidad agregada exitosamente')
             return HttpResponseRedirect(reverse('location_crear', args=[id]))
     else:
         context = {'event':event,'location_form':location_form,'locations':locations}              
@@ -60,6 +62,10 @@ def renderGlobalTicket(request,id):
         if form.is_valid:
             addTicketLocationView(request, form['location'].value(), event, form['zone'].value())
             updateCapacityEvent( event.id ,int(form['zone'].value()))
+            location=Location.objects.get(id=int(form['location'].value()))
+            print(location)
+            print(location.name)
+            messages.success(request,'Boletos de la localidad '+location.name+' agregados exitosamente')
             return HttpResponseRedirect(reverse('ticket_crear', args=[id]))
     else:
         form = TicketLocationForm()
