@@ -326,21 +326,28 @@
             beforeSend: function () {
                 console.log('Procesando')        
             },
-            success: function(data) {
-                console.log(data);
-                alert(data);
-            }
+            success: succesRequest
         });
     }
 
 	function reload(){
 		var url = 'sales/viewsEvent.html';
-		location.href=url;
+		location.reload()
 	}
 
 	function finishShopMain(){
 		finishShop();
-		reload();
+		//reload();
+	}
+
+	function succesRequest(result){
+		if(result.status =='success'){
+			reload();
+		}else{
+			const interval = 2000;
+			window.setTimeout(finishShop,interval)
+		}
+
 	}
 
     

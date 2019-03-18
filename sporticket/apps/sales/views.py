@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse,HttpResponseRedirect
+from django.http import HttpResponse,HttpResponseRedirect, JsonResponse
 from django.views.generic import CreateView, View, TemplateView
 from django.urls import reverse_lazy,reverse
 from django.dispatch import receiver
@@ -103,7 +103,7 @@ class GetDataAjaxView(TemplateView):
 			avalible_tickets=get_avalible_tickets(event_id,str(location.id))
 			add_shopping(bill,avalible_tickets,quantitys[x],len(avalible_tickets))
 			x+=1
-		return HttpResponse("data")
+		return JsonResponse({'status':'success'})
 
 
 def createBillAjax(request,payment_method,type_bill):
@@ -113,6 +113,9 @@ def createBillAjax(request,payment_method,type_bill):
 	bill_id.type_bill=type_bill
 	bill_id.save()
 	return bill_id
+
+def listShops(request):
+	return render(request,'sales/myShops.html',context)
 
 def getListTicketsSolds(bill):
     cursor = connection.cursor()
