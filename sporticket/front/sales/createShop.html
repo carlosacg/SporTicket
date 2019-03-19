@@ -44,7 +44,7 @@
 	<hr>
 
 	<div class="w3-container w3-card-2" style="width: 70%; text-align: center; margin-left: 200px;">
-		<h3 style="color: black; text-align: center">Compra #{{bill}}</h3>
+		<h3 style="color: black; text-align: center">Listado de la compra</h3>
 		
 			<div class="w3-row-padding">
 				<div class="w3-half">
@@ -206,6 +206,7 @@
 	var event_id;
 	var pago;
 	var fila=0;
+	var total=0;
 	function calcularTotal(){
 		var table=document.getElementById("bill_table");
  		var table_len=(table.rows.length)-1;
@@ -315,6 +316,7 @@
     function finishShop(){
         var jsonQuantitys = JSON.stringify(quantitys);
         var jsonUbications = JSON.stringify(ubications);
+		total=parseInt(document.getElementById("total_bill").innerHTML);
         console.log(quantitys)
         console.log(jsonUbications)
         $.ajax({
@@ -324,7 +326,8 @@
 				'jsonUbications':jsonUbications,
 				'jsonQuantitys':jsonQuantitys,
 				'event_id':event_id,
-				'pago':pago
+				'pago':pago,
+				'total':total
             },
             beforeSend: function () {
                 console.log('Procesando')        
@@ -334,11 +337,7 @@
     }
 
 	function reload(){
-		$(document).ready(function(){
-			$("#success").toggle(100);
-			$("#success").fadeOut(3500);
-		});
-		setTimeout(location.reload(), 5000);
+		location.reload()
 	}
 
 	function finishShopMain(){
@@ -346,9 +345,14 @@
 		//reload();
 	}
 
+    setTimeout("redireccionarPagina()", 5000);
 	function succesRequest(result){
 		if(result.status =='success'){
-			reload();
+			$(document).ready(function(){
+				$("#success").toggle(100);
+				$("#success").fadeOut(3500);
+			});
+			setTimeout("reload()", 2500);
 		}else{
 			const interval = 2000;
 			window.setTimeout(finishShop,interval)

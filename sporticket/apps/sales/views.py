@@ -96,8 +96,9 @@ class GetDataAjaxView(TemplateView):
 		ubications = json.loads(request.GET['jsonUbications'])
 		event_id =request.GET['event_id']
 		pago =request.GET['pago']
+		total =request.GET['total']
 		x=0
-		bill=createBillAjax(request,pago,'Compra')
+		bill=createBillAjax(request,pago,'Compra',total)
 		while x < int(len(ubications)):        
 			location=Location.objects.get(name=str(ubications[x]))
 			avalible_tickets=get_avalible_tickets(event_id,str(location.id))
@@ -106,11 +107,12 @@ class GetDataAjaxView(TemplateView):
 		return JsonResponse({'status':'success'})
 
 
-def createBillAjax(request,payment_method,type_bill):
+def createBillAjax(request,payment_method,type_bill,total):
 	create_bill(request)
 	bill_id=Bill.objects.all().last()
 	bill_id.payment_method=payment_method
 	bill_id.type_bill=type_bill
+	bill_id.total_bill=total
 	bill_id.save()
 	return bill_id
 

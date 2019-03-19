@@ -45,9 +45,14 @@ def insertLocationView(request,id):
     if request.method == 'POST':
         location_form = LocationForm(request.POST)
         if location_form.is_valid:
-            addLocationView(request,event.id,location_form['name'].value(),location_form['cost'].value())
-            messages.success(request,'Localidad agregada exitosamente')
-            return HttpResponseRedirect(reverse('location_crear', args=[id]))
+            location_repeat=Location.objects.all().filter(event=event).filter(name=location_form['name'].value())
+            if location_repeat.first() == None:
+                addLocationView(request,event.id,location_form['name'].value(),location_form['cost'].value())
+                messages.success(request,'Localidad agregada exitosamente')
+                return HttpResponseRedirect(reverse('location_crear', args=[id]))
+            else:
+                messages.error(request,'Error, localidad repetida')
+                return HttpResponseRedirect(reverse('location_crear', args=[id]))
     else:
         context = {'event':event,'location_form':location_form,'locations':locations}              
     return render(request, 'tickets/generateLocations.html',context)   
