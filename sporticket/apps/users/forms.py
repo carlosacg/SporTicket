@@ -1,4 +1,6 @@
 from django import forms
+from django import forms
+from django_select2.forms import Select2MultipleWidget, Select2Widget
 from django.contrib.auth.forms  import UserCreationForm
 from django.contrib.auth.models import User
 from apps.users.models import Profile
@@ -35,7 +37,15 @@ class UserForm(UserCreationForm):
 class ProfileForm(forms.ModelForm):
 
 	class Meta:
+		
 		model = Profile
+
+		CHOICES= (
+        ('Vendedor', 'Vendedor'),
+        ('Gerente', 'Gerente'),
+        ('Externo', 'Externo'),
+        )
+
 		fields = [    
 				'identification',
 				'userType',
@@ -50,8 +60,26 @@ class ProfileForm(forms.ModelForm):
 		}
 		widgets = {
 				'identification':forms.TextInput(attrs={'class':'w3-input w3-border','type':'number'}),
-				'userType':forms.TextInput(attrs={'class':'w3-input w3-border'}),
+				'userType':forms.Select(choices=CHOICES,attrs={'class':'w3-input w3-border'}),
 				'phone':forms.TextInput(attrs={'class':'w3-input w3-border','type':'number'}),
 				'numAccount':forms.TextInput(attrs={'class':'w3-input w3-border','type':'number'}),
 		}
 
+class UserUpdateForm(forms.Form):
+
+		CHOICES= (
+		('Vendedor', 'Vendedor'),
+		('Gerente', 'Gerente'),
+		('Externo', 'Externo'),
+		)
+
+		userType = forms.ChoiceField(
+		required=False,
+		choices=CHOICES,
+	)
+		username = forms.CharField(widget=forms.TextInput(attrs={'class':'w3-input w3-border'}))
+		first_name = forms.CharField(widget=forms.TextInput(attrs={'class':'w3-input w3-border'}))
+		last_name = forms.CharField(widget=forms.TextInput(attrs={'class':'w3-input w3-border'}))
+		email = forms.CharField(widget=forms.TextInput(attrs={'class':'w3-input w3-border'}))
+		phone = forms.CharField(widget=forms.TextInput(attrs={'class':'w3-input w3-border','type':'number'}))
+		numAccount = forms.CharField(widget=forms.TextInput(attrs={'class':'w3-input w3-border','type':'number'}))

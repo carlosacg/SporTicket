@@ -42,7 +42,7 @@
 						title="Ver usuario">
 						<i class="fa fa-eye"></i></button>
 					</a></td>
-					<td><a href="{% url 'editUser' profile.id %}"data-toggle="tooltip" 
+					<td><a href="{% url 'editUsers' profile.user.id %}"data-toggle="tooltip" 
 						title="Editar usuario">
 						<button class="w3-button w3-padding-small w3-dark-grey w3-circle">
 						<i class="fa fa-pencil"></i></button>
@@ -66,5 +66,21 @@
 	<footer class="w3-container w3-padding-14 w3-grey">
     	<p>Powered by <a class="black-color">XSOFT</a></p>
 	</footer>
+	<script >
+		$(document).ready(function(){
+		  $("#messages").fadeOut(3500);
+		  })
+	</script>
+	<div style="color:white;" class="container">
+		{% if messages %}
+		<div class='row'>
+		<div class='col-sm-6 col-sm-offset-3'>
+		 {% for message in messages %}
+		  <li class="w3-panel w3-green"  id="messages" {% if message.tags == "success" %} class="alert alert-sucess "{% endif %}> {{ message }}</li>
+		 {% endfor %}
+		</div>
+	  </div>
+		 {% endif %}
+	  </div>
 </div>
 {% endblock %}

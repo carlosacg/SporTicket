@@ -6,7 +6,22 @@
 		 <footer class="w3-container w3-padding-14 w3-grey">
 		    <p>Powered by <a  >XSOFT</a></p>
   		</footer>
-
+		  <script >
+				$(document).ready(function(){
+				  $("#messages").fadeOut(3500);
+				  })
+			</script>
+			<div style="color:white;" class="container">
+				{% if messages %}
+				<div class='row'>
+				<div class='col-sm-6 col-sm-offset-3'>
+				 {% for message in messages %}
+				  <li class="w3-panel w3-green"  id="messages" {% if message.tags == "success" %} class="alert alert-sucess "{% endif %}> {{ message }}</li>
+				 {% endfor %}
+				</div>
+			  </div>
+				 {% endif %}
+			  </div>
   	</div>
 
   	
