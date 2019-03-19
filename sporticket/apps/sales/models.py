@@ -10,7 +10,7 @@ class Bill(models.Model):
 	date_bill = models.DateField(default=timezone.now)
 	payment_method = models.CharField(null=True,max_length=30)
 	type_bill = models.CharField(null=True,max_length=30)
-	total_bill = models.IntegerField(null=True)
+	total_bill = models.BigIntegerField(null=True)
 
 def __str__(self):   #MUESTRA EL NOMBRE COMO LLAVE FORANEA
     return '{}'.format(self.id)
