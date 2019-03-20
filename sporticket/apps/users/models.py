@@ -12,9 +12,14 @@ class Profile(models.Model):
 	phone = models.CharField(max_length=12)
 	numAccount = models.CharField(max_length=20)
 
-	def __str__(self):
-		return '{}'.format(self.identification)
 
+	def save_data(self,identification,userType,phone,numAccount,user):
+		newProfile = Profile(identification=identification,userType=userType,phone=phone,numAccount=numAccount,user=user)
+		newProfile.save()
+	
+		def __str__(self):
+			return '{}'.format(self.identification)
+        
 	class Meta:
 
 		permissions = {

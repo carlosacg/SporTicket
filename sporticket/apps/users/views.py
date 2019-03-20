@@ -236,6 +236,48 @@ def updateUser(request,id):
 			return render(request, 'users/editUsers.html',{'form': form})
 
 
+def updateProfile(request,id):
+	
+		user = User.objects.get(id=id)
+		form = UserUpdateForm()
+		if request.method == 'POST':
+
+			form = UserUpdateForm(request.POST)
+
+			first_name = form['first_name'].value()
+			last_name = form['last_name'].value()
+			username = form['username'].value()
+			email = form['email'].value()
+
+			user.first_name = first_name
+			user.last_name = last_name
+			user.username = username
+			user.email = email
+
+			user.save()
+			messages.success(request,'Usuario actualizado exitosamente!')
+			return render(request, 'users/listUsers.html')
+		else:
+			return render(request, 'users/editMyProfile.html',{'form': form})
+
+def createProfileSocial(request):
+	
+		form = UserUpdateForm()
+		if request.method == 'POST':
+			form = UserUpdateForm(request.POST)
+			identification =  form['identification'].value()
+			phone = form['phone'].value()
+			userType = 'Externo'
+			numAccount = form['numAccount'].value()	
+			print(identification+ " " +phone+" "+numAccount +" " +str(userType))
+			object = Profile()
+			newProfile = Profile(request.user.id,identification,userType,phone,numAccount)
+			newProfile.save()
+			messages.success(request,'Su perfil ha sido creado exitosamente!')
+			return render(request, 'users/listUsers.html')
+		else:
+			return render(request, 'users/createMyProfile.html',{'form': form})
+
 class CreateUser(CreateView):
 		model = Profile
 		template_name = 'users/createUser.html'

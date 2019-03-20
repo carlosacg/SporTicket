@@ -78,8 +78,11 @@ class UserUpdateForm(forms.Form):
 		choices=CHOICES,
 	)
 		username = forms.CharField(widget=forms.TextInput(attrs={'class':'w3-input w3-border'}))
+		identification = forms.CharField(widget=forms.TextInput(attrs={'class':'w3-input w3-border','type':'number'}))
 		first_name = forms.CharField(widget=forms.TextInput(attrs={'class':'w3-input w3-border'}))
 		last_name = forms.CharField(widget=forms.TextInput(attrs={'class':'w3-input w3-border'}))
+		password = forms.CharField(widget=forms.PasswordInput())
+		passwordConfirmation = forms.CharField(widget=forms.PasswordInput())
 		email = forms.CharField(widget=forms.TextInput(attrs={'class':'w3-input w3-border'}))
 		phone = forms.CharField(widget=forms.TextInput(attrs={'class':'w3-input w3-border','type':'number'}))
 		numAccount = forms.CharField(widget=forms.TextInput(attrs={'class':'w3-input w3-border','type':'number'}))
