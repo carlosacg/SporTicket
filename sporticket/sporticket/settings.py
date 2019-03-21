@@ -154,8 +154,7 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR,'static'),)
 
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = 'http://localhost:8000/sales/viewsEvent.html'
-LOGIN_REDIRECT_URL = 'indexEvents'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = 'http://localhost:8000/users/createProfile.html'
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '490350965101-28igg9n6je008vggfsqbtosldb04sfu8.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'dGMy1kGiHXLjY9xeDf5HNvUv'
 LOGIN_URL = '/login/'
