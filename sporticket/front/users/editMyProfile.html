@@ -13,7 +13,11 @@
 	</header>
 	<form method="post"> 
 		{% csrf_token %}
+
 		<div class="w3-row-padding">
+			<div class="w3-half">
+				<label for="{{ form.identification.id_for_label}}"> Identificacion </label> {{form.identification}}
+			</div>
 			<div class="w3-half">
 				<label for="{{ form.first_name.id_for_label}}"> Nombres </label> {{form.first_name}}
 			</div>
@@ -27,9 +31,18 @@
 			</div>
 		</div>
 		<div class="w3-row-padding">
+			<div class="w3-half"> 
+				<label for="{{ form.phone.id_for_label}}"> Numero de telefono o celular</label> {{form.phone}}
+			</div>
+			<div class="w3-half">
+				<label for="{{ form.numAccount.id_for_label}}"> Numero de cuenta </label> {{form.numAccount}}
+			</div>
+		</div>
+		<div class="w3-row-padding">
 			<div class="w3-half">
 				<label for="{{ form.username.id_for_label}}"> Nickname </label> {{form.username}}
 			</div>
+		
 			<br>
 			<br> <br/>
 			<div class="w3-show-inline-block">
