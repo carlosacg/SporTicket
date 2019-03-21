@@ -240,6 +240,7 @@ def updateProfile(request,id):
 	
 		user = User.objects.get(id=id)
 		form = UserUpdateForm()
+		profile = Profile.objects.get(user_id=id)
 		if request.method == 'POST':
 
 			form = UserUpdateForm(request.POST)
@@ -248,14 +249,21 @@ def updateProfile(request,id):
 			last_name = form['last_name'].value()
 			username = form['username'].value()
 			email = form['email'].value()
+			identification = form['identification'].value()
+			phone = form['phone'].value()
+			numAccount = form['numAccount'].value()
 
 			user.first_name = first_name
 			user.last_name = last_name
 			user.username = username
 			user.email = email
+			profile.identification = identification
+			profile.phone = phone
+			profile.numAccount = numAccount
 
 			user.save()
-			messages.success(request,'Usuario actualizado exitosamente!')
+			profile.save()
+			messages.success(request,'Su perfil ha sido actualizado exitosamente!')
 			return render(request, 'users/listUsers.html')
 		else:
 			return render(request, 'users/editMyProfile.html',{'form': form})
