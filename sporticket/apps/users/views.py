@@ -278,7 +278,7 @@ def createProfileSocial(request):
 					newProfile = Profile(1, request.user.id,identification,userType,phone,numAccount)
 					newProfile.save()
 					messages.success(request,'Su perfil ha sido creado exitosamente!')
-					return render(request, 'users/listUsers.html')
+					return render(request, 'sales/viewsEvent.html')
 				else:			
 					object = Profile()
 					idUser = lastProfile.id + 1
@@ -286,11 +286,12 @@ def createProfileSocial(request):
 					newProfile = Profile(idUser, request.user.id,identification,userType,phone,numAccount)
 					newProfile.save()
 					messages.success(request,'Su perfil ha sido creado exitosamente!')
-					return render(request, 'users/listUsers.html')
+					return render(request, 'sales/viewsEvent.html')
 			else:
 				return render(request, 'users/createMyProfile.html',{'form': form})
 		else:
 				return render(request, 'sales/viewsEvent.html')
+				
 class CreateUser(CreateView):
 		model = Profile
 		template_name = 'users/createUser.html'
