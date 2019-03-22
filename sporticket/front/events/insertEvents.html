@@ -1,19 +1,12 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
+<style>
+	#messages {
+		margin-top:1 0px; 
+	}
+</style>
 <div class="w3-main" >
-	<header class="w3-container" >
-				<h5 class="black-color">
-					<b class="black-color">
-					<i class="fa fa-plus black-color"></i> Tipos de eventos</b>
-				</h5>
-	</header>
-	<a href="{% url 'tipo_evento_crear' %}" 
-		data-toggle="tooltip" 
-		title="Agregar tipo de evento ">
-		<button class="w3-button w3-dark-grey w3-padding w3-circle position">
-		<i class="fa fa-plus"></i></button>
-	</a>
 	<header class="w3-container" >
 		<h5 class="black-color">
 			<b class="black-color">
@@ -50,13 +43,8 @@
 				{{form.initial_time}}
 			</div>
 			<div class="w3-half">
-				<div class="w3-threequarter" >
-					<div class="size" >
-						<label for="{{form.event_type.id_for_label}}" >{{form.event_type.label}}</label>
-						{{form.event_type}}
-					</div>
-					
-				</div>
+				<label for="{{form.event_type.id_for_label}}" >{{form.event_type.label}}</label>
+				{{form.event_type}}
 			</div>
 		</div>
 		<div class="w3-row-padding">
@@ -80,11 +68,6 @@
                     		class="w3-button w3-padding-16 w3-dark-grey w3-circle" >
                     		<i class="fa fa-save"></i>
                     </button>
-                    <a href="{% url 'evento_crear' %}">
-                    	<button class="w3-button w3-dark-grey w3-padding-16 w3-circle" >
-                    		<i class="fa fa-repeat"></i>
-                    	</button>
-                    </a>
                 </div>
             </div>
 		</div>
@@ -96,5 +79,21 @@
  	<footer class="w3-container w3-padding-14 w3-grey">
     	<p>Powered by <a class="black-color">XSOFT</a></p>
 	</footer>
+	<script >
+		$(document).ready(function(){
+		  $("#messages").fadeOut(3500);
+		  })
+	</script>
+	<div style="color:white;" class="container">
+		{% if messages %}
+		<div class='row'>
+		<div class='col-sm-6 col-sm-offset-3'>
+		 {% for message in messages %}
+		  <li class="w3-panel w3-green"  id="messages" {% if message.tags == "success" %} class="alert alert-sucess "{% endif %}> {{ message }}</li>
+		 {% endfor %}
+		</div>
+	  </div>
+		 {% endif %}
+	  </div>
 </div>
 {% endblock %}

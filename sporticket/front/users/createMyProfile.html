@@ -1,0 +1,55 @@
+{% extends 'base/base.html' %}
+{%load staticfiles %}
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+{% block content %}
+<div class="w3-main" >
+	<header class="w3-container" >
+		<h5 class="black-color">
+			<b class="black-color">
+			<i class="fa fa-plus black-color"></i> Crear mi perfil</b>
+		</h5>
+	</header>
+	<form method="post"> 
+		{% csrf_token %}
+		<div class="w3-row-padding">
+			<div class="w3-half">
+				<label for="{{ form.identification.id_for_label}}"> Identifcacion </label> {{form.identification}}
+			</div>
+		</div>
+		<div class="w3-row-padding">
+			<div class="w3-half"> 
+				<label for="{{ form.phone.id_for_label}}"> Numero o celular</label> {{form.phone}}
+			</div>
+			<div class="w3-half">
+				<label for="{{ form.numAccount.id_for_label}}"> Numero de cuenta </label> {{form.numAccount}}
+			</div>
+			<br>
+			<br> <br/>
+			<div class="w3-show-inline-block">
+                <div class="w3-bar">
+                    <a href="{% url 'crateUser' %}">
+                    	<button type="submit" 
+                    	class="w3-button w3-padding-16 w3-dark-grey w3-circle" 
+                    	id="save">
+                    	<i class="fa fa-save"></i></button>
+                    </a>
+				</div>
+            </div>
+		</div>
+	</form>
+	<br>
+	<br>
+ 	<footer class="w3-container w3-padding-14 w3-grey">
+    	<p>Powered by <a class="black-color">XSOFT</a></p>
+	</footer>	
+	<div id="success" class="w3-panel w3-green">		 
+		<p>Usuario creado!</p>
+	</div> 
+	  
+</div>
+<script src="{% static 'js/message.js' %}"></script>
+	
+{% endblock %}
+

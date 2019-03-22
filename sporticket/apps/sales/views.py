@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse,HttpResponseRedirect
+from django.http import HttpResponse,HttpResponseRedirect, JsonResponse
 from django.views.generic import CreateView, View, TemplateView
 from django.urls import reverse_lazy,reverse
 from django.dispatch import receiver
@@ -146,38 +146,50 @@ def createShopAjax(request,id):
 class GetDataAjaxView(TemplateView):
 
 	def get(self,request, *args, **kwargs):
-		username = request.GET['username']
 		quantitys = json.loads(request.GET['jsonQuantitys'])
 		ubications = json.loads(request.GET['jsonUbications'])
 		event_id =request.GET['event_id']
 		pago =request.GET['pago']
+		total =request.GET['total']
 		x=0
-		bill=createBillAjax(request,pago)
+		bill=createBillAjax(request,pago,'Compra',total)
 		while x < int(len(ubications)):        
 			location=Location.objects.get(name=str(ubications[x]))
 			avalible_tickets=get_avalible_tickets(event_id,str(location.id))
 			add_shopping(bill,avalible_tickets,quantitys[x],len(avalible_tickets))
 			x+=1
-		return HttpResponseRedirect(reverse('comprar_boletos', args=[event_id]))
+		return JsonResponse({'status':'success'})
 
 
-
-def createBillAjax(request,payment_method):
+def createBillAjax(request,payment_method,type_bill,total):
 	create_bill(request)
 	bill_id=Bill.objects.all().last()
 	bill_id.payment_method=payment_method
+	bill_id.type_bill=type_bill
+	bill_id.total_bill=total
 	bill_id.save()
-	print('CREO FACTURA')
 	return bill_id
 
-def getListTicketsSolds(bill):
-    cursor = connection.cursor()
-    instruction = "SELECT count(*),location_location.name,location_location.cost FROM tickets_ticket,location_location WHERE location_location.id=tickets_ticket.location_id AND id_bill_id="+str(bill.id)+" GROUP BY location_location.name,location_location.cost;"
-    cursor.execute(instruction)
-    rows = cursor.fetchall()
-    connection.commit()
-    connection.close()
-    return rows
+def listShops(request):
+	user=User.objects.get(id=request.user.id)
+	print(user.id)
+	listShops=getMyShops(user.id)
+	print('LISTA COMPRAS')
+	print(listShops)
+	context = {'listShops':listShops}
+	return render(request,'sales/myShops.html',context)
+
+def getMyShops(user):
+	cursor = connection.cursor()
+	instruction="SELECT count(*),sales_bill.id,events_event.name,sales_bill.total_bill,sales_bill.date_bill FROM events_event,tickets_ticket,sales_bill WHERE tickets_ticket.event_id=events_event.id AND tickets_ticket.id_bill_id=sales_bill.id AND sales_bill.type_bill='Compra' AND sales_bill.id_profile_id="+str(user)+" GROUP BY sales_bill.id,events_event.name,sales_bill.total_bill,sales_bill.date_bill;"
+	print(instruction)
+	cursor.execute(instruction)
+	rows = cursor.fetchall()
+	connection.commit()
+	connection.close()
+	print(rows)
+	return rows
+
 
 def getListTicketsAvalibles(event):
     cursor = connection.cursor()

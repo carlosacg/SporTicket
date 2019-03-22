@@ -7,16 +7,13 @@ from django.forms.fields import DateField
 class ByEventsForms(forms.Form):
     
     events = forms.ModelChoiceField(Event.objects.all() , widget=Select2Widget, required=True)
-    # users = forms.ModelChoiceField(queryset=User.objects.all().values('first_name'), widget=Select2Widget, required=True)
-
 
     def __init__(self, *args, **kwargs):
         super(ByEventsForms, self).__init__(*args, **kwargs)
         
         self.fields['events'].widget.attrs.update({'placeholder':'Eventos', 'required':'required'})
         self.fields['events'].label = 'Seleccione su evento'
-        # self.fields['users'].widget.attrs.update({'placeholder':'Usuarios', 'required':'required'})
-        # self.fields['users'].label = 'Seleccione su usuario'
+
         
 class ByDateRangeForms(forms.Form):
 

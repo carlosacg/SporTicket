@@ -5,6 +5,9 @@
 
 {% block content %}
 <div class="w3-main" >
+		<div id="success" class="w3-panel w3-green" style= "margin-top:1 0px; display: none;">	
+				<p>¡Compra exitosa!</p>
+		</div> 
     <header class="w3-container">
         <h5 style="color: black;"><b style="color: black;"><i class="fa fa-shopping-cart" style="color: black;"></i> Seleccione los boletos a comprar del evento: {{event.name}}</b></h5>
 		<h5 style="color: black;">BOLETOS DISPONIBLES</h5>
@@ -41,13 +44,12 @@
 	<hr>
 
 	<div class="w3-container w3-card-2" style="width: 70%; text-align: center; margin-left: 200px;">
-		<h3 style="color: black; text-align: center">Compra #{{bill}}</h3>
+		<h3 style="color: black; text-align: center">Listado de la compra</h3>
 		
 			<div class="w3-row-padding">
 				<div class="w3-half">
 					<label>Ubicación</label><!--NO BORRAR NADA DEL FORM-->
 					<select id='select_tribuna' name="select_tribuna">
-						<option id = "option_1" value="" disabled selected>Seleccione una tribuna...</option>
 						{% if avalibleTicket %}
 				  		{% for tickets_avalibles in avalibleTicket %}
 				  			<option value="{{tickets_avalibles.1}}">{{tickets_avalibles.1}}</option>
@@ -62,7 +64,6 @@
 				<div class="w3-half">
 						<label>Metodo de pago</label><!--NO BORRAR NADA DEL FORM-->
 						<select id='select_pago' name="select_pago">
-							<option id = "option_1" value="" disabled selected>Seleccione metodo de pago</option>
 							<option value="Tarjeta de credito">Tarjeta de credito</option>
 							<option value="Tarjeta de credito">Tarjeta de debito</option>
 						</select>
@@ -78,7 +79,7 @@
 		<form>
 			{% csrf_token %}
 		</form>
-		<button onclick="finishShop()"  type="submit" class="w3-button w3-padding w3-dark-grey w3-round-large"><font color="orange">Finalizar Venta</font></button>
+		<button  type="submit" class="w3-button w3-padding w3-dark-grey w3-round-large"><font color="orange">Ver Factura</font></button>
 		<div class="w3-container">
 			<table id="bill_table" class="w3-table-all w3-hoverable ">
 			  	<thead >
@@ -87,6 +88,8 @@
 						<th>Ubicación</th>
 						<th>Costo</th>
 						<th>SubTotal</th>
+						<th></th>
+						<th></th>
 					</tr>
 
 			  	</thead>
@@ -95,11 +98,15 @@
 			  			<div class="w3-threequarter w3-dark-grey">
 			  				<th style="text-align:right;" colspan="3">Total</th>
 			  			</div>
-			  			<th id="total_bill"></th>			  			
+						  <th id="total_bill"></th>	
+						  <th></th>
+						  <th></th>		 
 			  		</tr>
 			  	</tbody>
 			</table>
-	  	</div>
+		  </div>
+		  <button onclick="finishShopMain()"  type="submit" class="w3-button w3-padding w3-dark-grey w3-round-large"><font color="orange">Finalizar Venta</font></button>
+
 	</div>
 	
 	<hr>
@@ -142,6 +149,8 @@
 											<th>Ubicación</th>
 											<th>Costo</th>
 											<th>SubTotal</th>
+											<th></th>
+											<th></th>
 										</tr>
 					
 									  </thead>
@@ -150,7 +159,7 @@
 											  <div class="w3-threequarter w3-dark-grey">
 												  <th style="text-align:right;" colspan="3">Total</th>
 											  </div>
-											  <th id="total_bill1"></th>			  			
+											  <th id="total_bill1"></th>		  			
 										  </tr>
 									  </tbody>
 								</table>
@@ -189,13 +198,15 @@
 	<footer class="w3-container w3-padding-14 w3-grey">
     	<p>Powered by <a style="color: black;">XSOFT</a></p>
 	</footer>
-</div>
+	</div>
 
 <script type="text/javascript">
     var ubications=[];
     var quantitys=[];
 	var event_id;
 	var pago;
+	var fila=0;
+	var total=0;
 	function calcularTotal(){
 		var table=document.getElementById("bill_table");
  		var table_len=(table.rows.length)-1;
@@ -206,37 +217,19 @@
 		}
 		document.getElementById("total_bill").innerHTML=total;
 	}
-	function calcularTotalF(){
-		var table=document.getElementById("bill_table1");
- 		var table_len=(table.rows.length)-1;
- 		var total=0;
-		for (var i = 1; i < table_len; i++) {
-			var subtotal = parseInt(document.getElementById("subtotal_f_"+i).innerHTML);
-			total += subtotal;
-		}
-		document.getElementById("total_bill1").innerHTML=total;
-	}
+
 	function calcularSubotales(){
 		var table=document.getElementById("bill_table");
  		var table_len=(table.rows.length)-1;
 		for (var i = 1; i < table_len; i++) {
-			var cant = document.getElementById("cantidad_boletos_"+i).innerHTML;
-			var cost = document.getElementById("costo_"+i).innerHTML;
+			var cant = document.getElementById("cant_boletos_"+i).value;
+			var cost = parseInt(document.getElementById("costo_"+i).innerHTML);
 			document.getElementById("subtotal_"+i).innerHTML=(cant*cost);
 		}
 	}
-	function calcularSubotalesF(){
-		var table=document.getElementById("bill_table1");
- 		var table_len=(table.rows.length)-1;
-		for (var i = 1; i < table_len; i++) {
-			var cant = document.getElementById("cantidad_boletos_f_"+i).innerHTML;
-			var cost = document.getElementById("costo_f_"+i).innerHTML;
-			document.getElementById("subtotal_f_"+i).innerHTML=(cant*cost);
-		}
-	}
+
 	function getCosto(selectTribuna){
 		var costoTribuna = document.getElementById(selectTribuna+"_cost");
-		//console.log("costo tribuna : "+costoTribuna.firstChild.nodeValue);
 		return costoTribuna.innerHTML;
 	}
 	function addRow(){
@@ -247,34 +240,62 @@
 		var selectedPago = selectPago.options[selectPago.selectedIndex];
 		pago= selectedPago.text
 		event_id =  document.getElementById('event_id').value;
-		//console.log("Cantidad de boletos :"+cantidadBoletos);
-		//console.log(selectedOption.value + ': ' + selectedOption.text);
 		var table=document.getElementById("bill_table");
  		var table_len=(table.rows.length)-1;
-        quantitys.push(cantidadBoletos)
-        ubications.push(selectedOption.text)
-        console.log("Cantidades : "+quantitys);
-        console.log("ubicaciones : "+ubications);
- 		 var row = table.insertRow(table_len).outerHTML="<tr id='row_"+table_len+"'> <td id='cantidad_boletos_"+table_len+"'>"+cantidadBoletos+"</td> <td id='ubicacion_"+table_len+"'>"+selectedOption.text+"</td><td id='costo_"+table_len+"'>"+getCosto(selectedOption.text)+"</td><td id='subtotal_"+table_len+"'></td></tr>";
- 		 calcularSubotales();
- 		 calcularTotal();
+		if(parseInt(cantidadBoletos).toString() == 'NaN'){
+		}else{
+
+			for(var i=1; i<=table_len; i++){
+				if(!(document.getElementById("ubicacion_"+i)==null)){// Si la tabla no esta vacia
+					if(document.getElementById("ubicacion_"+i).innerHTML == selectedOption.text){ //Si la ubicacion insertada es igual a la de una fila
+						cantidadOld = parseInt(document.getElementById("cant_boletos_"+i).value);
+						cantidadNew= cantidadOld+parseInt(cantidadBoletos);
+						document.getElementById("cantidad_boletos_"+i).innerHTML="<input style='display:none' id='cant_boletos_"+i+"' value="+cantidadNew+">"+cantidadNew;
+						quantitys[i-1]=cantidadNew;
+						break;
+					}
+				}else{// Si la tabla esta vacia inserto el registros
+					table.insertRow(table_len).outerHTML="<tr id='row_"+table_len+"'> <td id='cantidad_boletos_"+table_len+"'> <input style='display:none' id='cant_boletos_"+table_len+"' value='"+cantidadBoletos+"'>"+cantidadBoletos+"</td> <td id='ubicacion_"+table_len+"'>"+selectedOption.text+"</td><td id='costo_"+table_len+"'>"+getCosto(selectedOption.text)+"</td><td id='subtotal_"+table_len+"'></td> <td><a data-toggle='tooltip' title='Aumentar boletos'><button id='"+table_len+"' onclick='addTicket(this.id)' class='w3-button w3-padding-small w3-dark-grey w3-circle'><i class='fa fa-plus'></i></button></a></td>  <td><a data-toggle='tooltip' title='Disminuir boletos'><button id='"+table_len+"' onclick='minusTicket(this.id)' class='w3-button w3-padding-small w3-dark-grey w3-circle'><i class='fa fa-minus'></i></button></a></td> </tr>";
+					quantitys.push(cantidadBoletos)
+					ubications.push(selectedOption.text)
+					break;
+				}
+				if(i==table_len){ //Si recorri toda la tabla y no hay ubicacion igual, inserto el registro
+					table.insertRow(table_len).outerHTML="<tr id='row_"+table_len+"'> <td id='cantidad_boletos_"+table_len+"'> <input style='display:none' id='cant_boletos_"+table_len+"' value='"+cantidadBoletos+"'>"+cantidadBoletos+"</td> <td id='ubicacion_"+table_len+"'>"+selectedOption.text+"</td><td id='costo_"+table_len+"'>"+getCosto(selectedOption.text)+"</td><td id='subtotal_"+table_len+"'></td> <td><a data-toggle='tooltip' title='Aumentar boletos'><button id='"+table_len+"' onclick='addTicket(this.id)' class='w3-button w3-padding-small w3-dark-grey w3-circle'><i class='fa fa-plus'></i></button></a></td>  <td><a data-toggle='tooltip' title='Disminuir boletos'><button id='"+table_len+"' onclick='minusTicket(this.id)' class='w3-button w3-padding-small w3-dark-grey w3-circle'><i class='fa fa-minus'></i></button></a></td> </tr>";
+					quantitys.push(cantidadBoletos)
+					ubications.push(selectedOption.text)
+				}
+			}
+			calcularSubotales();
+			calcularTotal();
+		}
+
 	}
-	function addRowF(){
-		var selectTribuna = document.getElementById('select_tribuna');
-		var selectedOption = selectTribuna.options[selectTribuna.selectedIndex];
-		var cantidadBoletos = document.getElementById('cantidad').value;
-		//console.log("Cantidad de boletos :"+cantidadBoletos);
-		//console.log(selectedOption.value + ': ' + selectedOption.text);
-		var table=document.getElementById("bill_table1");
- 		var table_len=(table.rows.length)-1;
- 		//console.log("tamaño de la tabla : "+table_len);
- 		 var row = table.insertRow(table_len).outerHTML="<tr id='row_f_"+table_len+"'> <td id='cantidad_boletos_f_"+table_len+"'>"+cantidadBoletos+"</td> <td id='ubicacion_f_"+table_len+"'>"+selectedOption.text+"</td><td id='costo_f_"+table_len+"'>"+getCosto(selectedOption.text)+"</td><td id='subtotal_f_"+table_len+"'></td></tr>";
- 		 calcularSubotalesF();
- 		 calcularTotalF();
+
+	function addTicket(fila){
+		var cantidad=document.getElementById('cant_boletos_'+fila).value;
+		var cantView=document.getElementById("cantidad_boletos_"+fila).innerHTML;
+		cantView=parseInt(cantidad)+1
+		document.getElementById("cantidad_boletos_"+fila).innerHTML="<input style='display:none' id='cant_boletos_"+fila+"' value="+cantView+">"+cantView;
+		quantitys[fila-1]=parseInt(cantidad)+1;
+		calcularSubotales();
+ 		calcularTotal();
 	}
+
+	function minusTicket(fila){
+		var cantidad=document.getElementById('cant_boletos_'+fila).value;
+		if(cantidad > 1){
+			var cantView=document.getElementById("cantidad_boletos_"+fila).innerHTML;
+			cantView=parseInt(cantidad)-1
+			document.getElementById("cantidad_boletos_"+fila).innerHTML="<input style='display:none' id='cant_boletos_"+fila+"' value="+cantView+">"+cantView;
+			quantitys[fila-1]=parseInt(cantidad)-1;
+			calcularSubotales();
+			calcularTotal();	
+		}
+	}
+
 	function addRowMain(){
 		addRow();
-		addRowF();
 	}
 
     function getCookie(c_name){
@@ -295,27 +316,49 @@
     function finishShop(){
         var jsonQuantitys = JSON.stringify(quantitys);
         var jsonUbications = JSON.stringify(ubications);
+		total=parseInt(document.getElementById("total_bill").innerHTML);
         console.log(quantitys)
         console.log(jsonUbications)
         $.ajax({
             url:'/sales_ajax/',
             dataType: 'json',
             data: {
-                'username':'carlos',
 				'jsonUbications':jsonUbications,
 				'jsonQuantitys':jsonQuantitys,
 				'event_id':event_id,
-				'pago':pago
+				'pago':pago,
+				'total':total
             },
             beforeSend: function () {
                 console.log('Procesando')        
             },
-            success: function(data) {
-                console.log(data);
-                alert(data);
-            }
+            success: succesRequest
         });
     }
+
+	function reload(){
+		location.reload()
+	}
+
+	function finishShopMain(){
+		finishShop();
+		//reload();
+	}
+
+    setTimeout("redireccionarPagina()", 5000);
+	function succesRequest(result){
+		if(result.status =='success'){
+			$(document).ready(function(){
+				$("#success").toggle(100);
+				$("#success").fadeOut(3500);
+			});
+			setTimeout("reload()", 2500);
+		}else{
+			const interval = 2000;
+			window.setTimeout(finishShop,interval)
+		}
+
+	}
 
     
 </script>

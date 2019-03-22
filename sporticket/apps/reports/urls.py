@@ -7,7 +7,6 @@ urlpatterns = [
 
 	url(r'^$', login_required(base), name='base'),
 	url(r'reports/reports.html', login_required(index), name='indexReports'),
-	url(r'sales/saleEvent.html', login_required(reportByDailySales), name='dailySales'),
 	url(r'reports/saleEvents.html', login_required(reportByEvents), name='reportEvent'),
 	url(r'reports/graphicsReports.html', login_required(graphicsReport), name='graphicsReport'),
 	url(r'reports/dailySales.html', login_required(dailyReport), name='dailyReport'),

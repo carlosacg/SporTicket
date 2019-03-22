@@ -8,7 +8,7 @@
 	<header class="w3-container" >
 		<h5 class="black-color">
 			<b class="black-color">
-			<i class="fa fa-plus black-color"></i> Insertar usuario</b>
+			<i class="fa fa-plus black-color"></i> Editar mi perfil</b>
 		</h5>
 	</header>
 	<form method="post"> 
@@ -16,42 +16,31 @@
 
 		<div class="w3-row-padding">
 			<div class="w3-half">
-				<label for="{{ form.identification.id_for_label}}"> {{form.identification.label}} </label> {{form.identification}}
+				<label for="{{ form.identification.id_for_label}}"> Identificacion </label> {{form.identification}}
 			</div>
 			<div class="w3-half">
-				<label for="{{ form2.first_name.id_for_label}}"> {{form2.first_name.label}} </label> {{form2.first_name}}
-			</div>
-		</div>
-		<div class="w3-row-padding">
-			<div class="w3-half">
-				<label for="{{ form2.last_name.id_for_label}}"> {{form2.last_name.label}} </label> {{form2.last_name}}
-			</div>
-			<div class="w3-half">
-				<label for="{{ form2.email.id_for_label}}"> {{form2.email.label}} </label> {{form2.email}}
+				<label for="{{ form.first_name.id_for_label}}"> Nombres </label> {{form.first_name}}
 			</div>
 		</div>
 		<div class="w3-row-padding">
 			<div class="w3-half">
-				<label for="{{ form2.password1.id_for_label}}"> {{form2.password1.label}} </label> {{form2.password1}}
+				<label for="{{ form.last_name.id_for_label}}"> Apellidos </label> {{form.last_name}}
 			</div>
 			<div class="w3-half">
-				<label for="{{ form2.password2.id_for_label}}"> {{form2.password2.label}} </label> {{form2.password2}}
+				<label for="{{ form.email.id_for_label}}"> Correo electronico </label> {{form.email}}
 			</div>
 		</div>
 		<div class="w3-row-padding">
 			<div class="w3-half"> 
-				<label for="{{ form.phone.id_for_label}}"> {{form.phone.label}} </label> {{form.phone}}
+				<label for="{{ form.phone.id_for_label}}"> Numero de telefono o celular</label> {{form.phone}}
 			</div>
 			<div class="w3-half">
-				<label for="{{ form.numAccount.id_for_label}}"> {{form.numAccount.label}} </label> {{form.numAccount}}
+				<label for="{{ form.numAccount.id_for_label}}"> Numero de cuenta </label> {{form.numAccount}}
 			</div>
 		</div>
 		<div class="w3-row-padding">
 			<div class="w3-half">
-				<label for="{{ form.userType.id_for_label}}"> {{form.userType.label}} </label> {{form.userType}}
-			</div>
-			<div class="w3-half">
-				<label for="{{ form2.username.id_for_label}}"> {{form2.username.label}} </label> {{form2.username}}
+				<label for="{{ form.username.id_for_label}}"> Nickname </label> {{form.username}}
 			</div>
 		
 			<br>
@@ -73,8 +62,12 @@
  	<footer class="w3-container w3-padding-14 w3-grey">
     	<p>Powered by <a class="black-color">XSOFT</a></p>
 	</footer>	
+	<div id="success" class="w3-panel w3-green">		 
+		<p>Usuario creado!</p>
+	</div> 
 	  
 </div>
+<script src="{% static 'js/message.js' %}"></script>
 	
 {% endblock %}
 

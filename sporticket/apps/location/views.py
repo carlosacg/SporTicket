@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from apps.location.models import Location
 from apps.location.models import Event
-
 # Create your views here.
 
 def insertLocation(request,event,name):

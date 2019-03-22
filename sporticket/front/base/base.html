@@ -46,7 +46,7 @@
          	       <!--
          	         IMAGEN USUARIO EXTRADA DE FACEBOOK
          	       -->
-         	       <img src="{% static 'images/Imagen1.png' %}" class="w3-circle w3-margin-right" alt="Imagen usuario">
+         	       <img src="{% static 'images/user2.png' %}" class="w3-circle w3-margin-right" alt="Imagen usuario">
          	   </div>
      	   <div class="w3-col s8 w3-bar">
      	       <span>  Bienvenido, <strong><br> {{user.last_name}} </strong></span><br>
@@ -77,10 +77,10 @@
                             class="w3-bar-item w3-button orange-color" >
                             <i class="fa fa-list fa-fw"></i> Listar
                         </a>
-                        <!--<a href="/events/uploadFile.html" 
+                        <a href="/events/insertEvenType.html" 
                             class="w3-bar-item w3-button orange-color">
-                            <i class="fa fa-repeat"></i> Cargar 
-                        </a>-->
+                            <i class="fa fa-plus fa-fw"></i> Insertar tipo de evento 
+                        </a>
                     </div>
                 <a href="/sales/saleEvent.html" 
                     class="w3-bar-item w3-button w3-padding" >
@@ -100,6 +100,10 @@
                             class="w3-bar-item w3-button orange-color">
                             <i class="fa fa-list fa-fw"></i> Listar
                         </a>
+                        <a href="{% url 'editUser' user.id%}" 
+                            class="w3-bar-item w3-button orange-color">
+                            <i class="fa fa-pencil fa-fw"></i> Editar mi perfil
+                        </a>
                     </div>
                <a href="/reports/reports.html" 
                     class="w3-bar-item w3-button w3-padding" >
@@ -107,7 +111,11 @@
                 </a>
                 <a href="/sales/viewsEvent.html" 
                     class="w3-bar-item w3-button orange-color">
-                    <i class="fa fa-shopping-cart"></i> Comprar 
+                    <i class="fa fa-shopping-cart"></i> Generar Compra 
+                </a>
+                <a href="/sales/myShops.html" 
+                    class="w3-bar-item w3-button orange-color">
+                    <i class="fa fa-shopping-cart"></i> Mis Compras 
                 </a>
 
             </div>
