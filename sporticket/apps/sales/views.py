@@ -15,6 +15,10 @@ from .forms import BillForm, AddTicketsForm, BuyTicketsLocationForm
 import time
 import json
 from django.contrib.auth.decorators import permission_required
+from apps.event_type.models import EventType
+from django.core.serializers.json import DjangoJSONEncoder
+from django.core import serializers
+from django.core.serializers import serialize
 def index_sale(request):
     return render(request, 'sales/createSale.html')
 
@@ -63,22 +67,76 @@ def listEvent1(request):
 def createSale(request,id):
 	hora = time.strftime("%c")
 	event = Event.objects.get(id=id)
-	if request.method=='POST':
-		#form = BuyTicketsForm(request.POST)
-		ubication=form['ubication'].value()
-		quantity=form['quantity'].value()
-		avalible_tickets = get_avalible_tickets(id,ubication)
-	#else:
-		#form = BuyTicketsForm()
-	#tickets=getListTicketsSolds(bill_id)
 	tickets_avalibles=getListTicketsAvalibles(event)
-	print (tickets_avalibles)
-	context = {'event':event,'hora':hora,'avalibleTicket':tickets_avalibles}
+	list_events_type=getListTypeEvents()
+	context = {'event':event,'hora':hora,'avalibleTicket':tickets_avalibles, 'eventType':list_events_type}
 	return render(request,'sales/createSale.html',context)
 
+def getListTypeEvents():
+	allTypeEvents = EventType.objects.all()
+	return allTypeEvents
+
+def getIdEventType(eventTypeName):
+	idEventType = EventType.objects.values('id').filter(name=eventTypeName)
+	return idEventType
+
+def getIdEventForName(eventName):
+	idEvent = Event.objects.values('id').filter(name=eventName)
+	return idEvent
+
+def getEventsForTypes(request):
+	eventTypeName = request.GET.get('select_buscar')
+	idEventType = getIdEventType(eventTypeName)[0]
+	eventsForTypes = Event.objects.all().filter(event_type=str(idEventType['id']))
+	eventsForTypes = [ event_serializer(eventForType) for eventForType in eventsForTypes]	
+	return HttpResponse(json.dumps(eventsForTypes,cls=DjangoJSONEncoder), content_type = "application/json")
+
+def event_serializer(event):
+	return {'id':event.id, 'name':event.name, 'initial_date':event.initial_date, 'capacity':event.capacity}
+
+def new_tickets_avalibles(tickets_avalibles):
+	print("DENTRO : "+str(tickets_avalibles))
+	#new_tickets_avalibles = tickets_avalibles[0]	
+	return {'count':tickets_avalibles[0], 'name':tickets_avalibles[1], 'cost':tickets_avalibles[2], 'id':tickets_avalibles[3]}
+
+def getNewEvent(request):
+	eventName = request.GET.get('get_event_selec')
+	print("Event name de request : "+str(eventName))
+	idEvent = getIdEventForName(eventName)[0]
+	print("id event : "+str(idEvent['id']))
+	event = event_serializer(Event.objects.get(id=str(idEvent['id'])))
+	tickets_avalibles=getListTicketsAvalibles(Event.objects.get(id=str(idEvent['id'])))
+	tickets_avalibles=[ new_tickets_avalibles(tickets_avalible) for tickets_avalible in tickets_avalibles ]
+	#list_events_type=getListTypeEvents()
+	contexto = {'event':event,'avalibleTicket':tickets_avalibles}	
+	return HttpResponse(json.dumps(contexto,cls=DjangoJSONEncoder), content_type = "application/json")
+
+def addTicketBill(ticketIn, Bill):
+	for i in range(int(ticketIn['cant'])):
+		ticket = Ticket.objects.filter(location_id=ticketIn['id_location'], state__exact="Disponible")[0]
+		ticket.id_bill = Bill
+		ticket.state = "Vendido"
+		ticket.save()
+
+def finishSale(request):
+	sale = eval(request.GET.get('post_venta_envio'))
+	print(sale)
+	newBill = Bill(total_bill= sale['total']) #FALTAN MAS CAMPOS
+	newBill.save()
+	tickets = sale['tickets']
+	for ticket in tickets:
+		addTicketBill(ticket, newBill)
+	return HttpResponse(json.dumps({'hola':'hola'}), content_type="application/json")
+
+
+#-----------------------------------------
 def createShopAjax(request,id):
 	bill=Bill.objects.all().last()
-	bill_id=int(bill.id)+1
+	if bill == None:
+		bill_id=1
+	else:
+		bill_id=int(bill.id)+1
+		
 	hora = time.strftime("%c")
 	event = Event.objects.get(id=id)
 	tickets_avalibles=getListTicketsAvalibles(event)
@@ -123,13 +181,12 @@ def getListTicketsSolds(bill):
 
 def getListTicketsAvalibles(event):
     cursor = connection.cursor()
-    instruction = "SELECT count(*),location_location.name,location_location.cost FROM tickets_ticket,location_location WHERE location_location.id=tickets_ticket.location_id AND state='Disponible' AND tickets_ticket.event_id="+str(event.id)+" GROUP BY location_location.name,location_location.cost;"
+    instruction = "SELECT count(*),location_location.name,location_location.cost, location_location.id FROM tickets_ticket,location_location WHERE location_location.id=tickets_ticket.location_id AND state='Disponible' AND tickets_ticket.event_id="+str(event.id)+" GROUP BY location_location.name,location_location.cost, location_location.id;"
     cursor.execute(instruction)
     rows = cursor.fetchall()
     connection.commit()
     connection.close()
     return rows
-
 
 def get_avalible_tickets(event,location):
 	cursor = connection.cursor()

@@ -6,89 +6,102 @@
 {% block content %}
 <div class="w3-main" >
     <header class="w3-container">
-        <h5 style="color: black;"><b style="color: black;"><i class="fa fa-shopping-cart" style="color: black;"></i> Seleccione los boletos a comprar del evento: {{event.name}}</b></h5>
-		<h5 style="color: black;">BOLETOS DISPONIBLES</h5>
-		<div class="w3-container">
-			<table id="main_table" class="w3-table-all w3-hoverable " style="width: 50%">
-				<thead >
-					<tr class="w3-dark-grey">
-						<th>Cantidad boletos</th>
-						 <th>Ubicación</th>
-						 <th>Costo</th>
-					</tr>
-				</thead>
-			 	<tbody>
-				  	{% if avalibleTicket %}
-				  	{% for tickets_avalibles in avalibleTicket %}
-				  	<tr id="{{tickets_avalibles.1}}" >
-					  	<td id = "{{tickets_avalibles.1}}_cant">{{tickets_avalibles.0}}</td>
-					  	<td id = "{{tickets_avalibles.1}}_ubi">{{tickets_avalibles.1}}</td>
-					  	<td id = "{{tickets_avalibles.1}}_cost" value="{{tickets_avalibles.2}}">{{tickets_avalibles.2}}</td>
-					</tr>
-			  	</tbody>
-				{% endfor %}
-				{% else %}
-				<h1 style="color: black;">No hay boletos disponibles en este evento</h1>
-				{% endif %}
-			</table>
-	  	</div>
+        <h5 class="black-color" ><b class="black-color"><i class="fa fa-shopping-cart" style="color: black;"></i> Seleccione los boletos a comprar del evento: </b><b style="color: black;" id="nombre_evento"> {{event.name}} </b></h5>
+        <br>
 	</header>
 
-	<hr>
-
-	<div class="w3-container w3-card-2" style="width: 70%; text-align: center; margin-left: 200px;">
-		<h3 style="color: black; text-align: center">Factura # {{bill.id}}</h3>
-		
-			<div class="w3-row-padding">
-				<div class="w3-half">
-					<label>Ubicación</label><!--NO BORRAR NADA DEL FORM-->
-					<select id='select_tribuna' name="select_tribuna">
-						<option id = "option_1" value="" disabled selected>Seleccione una tribuna...</option>
-						{% if avalibleTicket %}
-				  		{% for tickets_avalibles in avalibleTicket %}
-				  			<option value="{{tickets_avalibles.1}}">{{tickets_avalibles.1}}</option>
-						{% endfor %}
-						{% endif %}
-					</select>
-				</div>
-				<div class="w3-half">
-					<label>Cantidad de boletos</label><!--NO BORRAR NADA DEL FORM-->
-					<input type="number" name="cantidad" id="cantidad"/>
-				</div>
+	<div>
+		<div class="">
+			<div class="w3-quarter">
+				<table id="main_table" class="w3-table-all w3-hoverable " style="width: 50%">
+					<thead >
+						<tr class="w3-dark-grey">
+							<th>Boletos disponibles</th>
+							<th>Ubicación</th>
+							<th>Costo</th>
+						</tr>
+					</thead>
+				 	<tbody>
+					  	{% if avalibleTicket %}
+					  	{% for tickets_avalibles in avalibleTicket %}
+					  	<tr id="{{tickets_avalibles.1}}" >
+						  	<td id = "{{tickets_avalibles.1}}_cant">{{tickets_avalibles.0}}</td>
+						  	<td id = "{{tickets_avalibles.1}}_ubication">{{tickets_avalibles.1}}</td>
+						  	<td id = "{{tickets_avalibles.1}}_cost" value="{{tickets_avalibles.2}}">{{tickets_avalibles.2}}</td>
+						  	<td id='{{tickets_avalibles.1}}_id' style="display: none">{{tickets_avalibles.3}}</td>
+						</tr>
+				  	</tbody>
+					{% endfor %}
+					{% else %}
+					<h1 style="color: black;">No hay boletos disponibles en este evento</h1>
+					{% endif %}
+				</table>
+			</div>
+		</div>
+	  	<div class="w3-rest w3-card-2" style="width: 70%; text-align: center; margin-left: 200px;">
+			<h3 style="color: black; text-align: center">Factura # {{bill.id}}</h3>
+					
+			<div class="w3-half">
+				<label>Ubicación</label><!--NO BORRAR NADA DEL FORM-->
+				<select id='select_tribuna' name="select_tribuna">
+					<option id = "option_1" value="" disabled selected>Seleccione una tribuna...</option>
+					{% if avalibleTicket %}
+			  		{% for tickets_avalibles in avalibleTicket %}
+			  			<option value="{{tickets_avalibles.1}}">{{tickets_avalibles.1}}</option>
+					{% endfor %}
+					{% endif %}
+				</select>
+				
+			</div>
+			<div class="w3-half">
+				<label>Cantidad de boletos</label><!--NO BORRAR NADA DEL FORM-->
+				<input type="number" name="cantidad" id="cantidad" value="" />
 			</div>
 			<div class="w3-container">
 				<div class="w3-show-inline-block">
 					<div class="w3-bar">
-						<button onclick="addRowMain()"  class="w3-button w3-padding w3-dark-grey w3-round-large" ><font color="orange"><i class="fa fa-plus"></i> Añadir boleto</font></button>
+						<button onclick="comprobar()"  class="w3-button w3-padding w3-dark-grey w3-round-large" ><font color="orange"><i class="fa fa-plus"></i> Añadir boleto</font></button>
+						<button onclick="document.getElementById('id03').style.display='block'"  type="submit" class="w3-button w3-padding w3-dark-grey w3-round-large"><font color="orange">Escoger otro Evento</font></button>
+						<button onclick="createJson()"  type="submit" class="w3-button w3-padding w3-dark-grey w3-round-large"><font color="orange">PRUEBA</font></button>
 					</div>
 				</div>
 			</div>
 		<form>
 			{% csrf_token %}
 		</form>
+		<form method="GET" action="/sales/finishSale/" id="post_venta">
+			{% csrf_token %}
+			<input type="text" name="post_venta_envio" id="post_venta_envio" style="display: none">
+			<input type="submit" value="Finalizar Venta">
+		</form>
 		<button onclick="document.getElementById('id02').style.display='block'"  type="submit" class="w3-button w3-padding w3-dark-grey w3-round-large"><font color="orange">Finalizar Venta</font></button>
 		<div class="w3-container">
 			<table id="bill_table" class="w3-table-all w3-hoverable ">
 			  	<thead >
 					<tr class="w3-dark-grey">
+						<th style="display: none">id</th>
+						<th>Evento</th>
 						<th>Cant.</th>
 						<th>Ubicación</th>
 						<th>Costo</th>
-						<th>SubTotal</th>
+						<th id= headsubtotal>SubTotal</th>
 					</tr>
 
 			  	</thead>
 			  	<tbody>
 			  		<tr>
 			  			<div class="w3-threequarter w3-dark-grey">
-			  				<th style="text-align:right;" colspan="3">Total</th>
+			  				<th style="text-align:right;" colspan="4">Total</th>
 			  			</div>
 			  			<th id="total_bill"></th>			  			
 			  		</tr>
 			  	</tbody>
 			</table>
+			<br>
 	  	</div>
 	</div>
+	</div>
+	
 	
 	<hr>
 
@@ -126,6 +139,7 @@
 								<table id="bill_table1" class="w3-table-all w3-hoverable ">
 									  <thead >
 										<tr class="w3-dark-grey">
+											<th>Evento</th>
 											<th>Cant.</th>
 											<th>Ubicación</th>
 											<th>Costo</th>
@@ -136,7 +150,7 @@
 									  <tbody>
 										  <tr>
 											  <div class="w3-threequarter w3-dark-grey">
-												  <th style="text-align:right;" colspan="3">Total</th>
+												  <th style="text-align:right;" colspan="4">Total</th>
 											  </div>
 											  <th id="total_bill1"></th>			  			
 										  </tr>
@@ -166,10 +180,62 @@
 						  <br>
 						  <div class="w3-show-inline-block">
 							<div class="w3-bar">
-								<button type="submit" class="w3-button w3-padding-16 w3-dark-grey w3-circle" ><i class="fa fa-print"></i></button>
+								<button type="submit" class="w3-button w3-padding-16 w3-dark-grey w3-circle" >Confirmar Venta</button>
 							</div>
 						</div>
 					  </div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Seccion de coger otro evento>-->
+
+		<div id="id03" class="w3-modal">
+				<div class="w3-modal-content">
+				  <header > 
+					<span onclick="document.getElementById('id03').style.display='none'" 
+					class="w3-button w3-display-topright">&times;</span>
+						<a class= "w3-display-topmiddle" >
+							<h6 class= "w3-margin-left " style="color: black; font-weight:bold; left: 200px;">Selecciona el evento que deseas agregar</h6>
+					  </a> 
+					</header>
+					<div class="w3-row-padding">
+						
+						<div class="w3-container">
+							<form method="GET" action="/sales/getEventsForTypes/" id="get-events">
+								<div>
+									<label>Escoga el tipo de evento para buscar</label>
+									<select id='select_buscar' name="select_buscar">
+									<option id = "option_buscar" value="" disabled selected>Seleccione un tipo de evento...</option>
+									{% if eventType %}
+							  		{% for list_events_type in eventType %}
+							  			<option value="{{list_events_type}}">{{list_events_type}}</option>
+									{% endfor %}
+									{% endif %}
+									</select>
+									<input type="submit" value="Buscar">
+								</div>
+							</form>
+							<form method="GET" action="/sales/getNewEvent/" id="get-new-event">
+								<input type="text" name="get_event_selec" id="get_event_selec" style="display: none">							
+								<table id="search_table" class="w3-table-all w3-hoverable ">
+									  <thead >
+										<tr class="w3-dark-grey">
+											<th style="display: none">id</th>
+											<th>Evento</th>
+											<th>Capacidad</th>
+											<th>Fecha</th>
+											<th>Acción</th>
+										</tr>
+									  </thead>
+									  <tbody>
+									  </tbody>
+								</table>
+							</form>	
+								
+							  </div>
+					  <hr>
+					  <hr>
 				</div>
 			</div>
 		</div>
@@ -179,6 +245,98 @@
 	</footer>
 </div>
 <script type="text/javascript">
+	function prueba(){
+		console.log("hola : ");
+		//var x = document.getElementById("main_table").rows[1].cells.namedItem("Oeste_id").innerHTML;
+		//console.log("this is : "+x);
+		//console.log("</td><td id='"+obj_avaliables_tickets['name']+"_id' style='display:none'>");
+	}
+	function createJson(){
+		var jsonFinal={};
+		var user="";
+		var total = parseInt(document.getElementById("total_bill").innerHTML);		
+		jsonFinal.user = user;
+		jsonFinal.total = total;
+		jsonFinal.tickets = [];
+		var table=document.getElementById("bill_table");
+		var table_len=(table.rows.length)-1;
+		for (var i = 1; i < table_len; i++) {
+			var ticketsIn = {};
+			var id_location = document.getElementById('id_location_'+i).innerHTML;
+			var event_name = document.getElementById('evento_'+i).innerHTML;
+			var cant = document.getElementById('cantidad_boletos_'+i).innerHTML;
+			ticketsIn = {'id_location':id_location, 'event_name':event_name, 'cant':cant};
+			jsonFinal['tickets'].push(ticketsIn);
+		}
+		//console.log(jsonFinal);
+		//console.log(JSON.stringify(jsonFinal))
+		return JSON.stringify(jsonFinal);
+		//return jsonFinal;
+	}
+	function getIdLocation(numRow,location){
+		console.log("FUNTION getIdLocation() numRow : "+numRow);
+		console.log("FUNTION getIdLocation() location : "+location);
+		var idLocation = document.getElementById("main_table").rows[numRow].cells.namedItem(location+"_id").innerHTML;
+		return idLocation;
+	}
+	function comprobarCantidadBoletos(tribuna,cantidad){
+		var prueb = parseInt(document.getElementById(tribuna+'_cant').innerHTML);
+		if(prueb>=cantidad){
+			//console.log("La cantidad ingresada puede pasar");
+			return true;
+		} else {
+			alert("La cantidad ingresada supera la disponibilidad");
+			return false;
+		}
+	}
+
+	function limpiarInputs(){
+		document.getElementById('select_tribuna').selectedIndex="0";
+		document.getElementById('cantidad').min=0;
+		document.getElementById('cantidad').value="";
+	}
+	function comprobar(){
+		if (document.getElementById('cantidad').value=="") {alert("No a escogido la cantidad de boletos")} else {
+			if (document.getElementById('select_tribuna').selectedIndex==0) {alert("No a seleccionado la tribuna")} else{
+				var nombre_evento=document.getElementById('nombre_evento').innerHTML;
+				var table=document.getElementById("bill_table");
+				var table_len=(table.rows.length)-1;
+				if (table_len==1) {
+					addRowMain();
+				} else {
+					var selectTribuna = document.getElementById('select_tribuna');
+					var selectedOption = selectTribuna.options[selectTribuna.selectedIndex];
+					var cantidadBoletos = document.getElementById('cantidad').value;
+					var cantidadFinal =0;
+					for (var i = 1; i < table_len; i++) {
+						var ubicacionRow = document.getElementById("ubicacion_"+i).innerHTML;
+						var eventoRow = document.getElementById("evento_"+i).innerHTML;
+						//console.log("evento.ROW : "+eventoRow);
+						//console.log("evento.name : "+nombre_evento);
+						//console.log("selectedOption : "+selectedOption.text);
+						//console.log("ubicacion.ROW : "+ubicacionRow);
+						if ((selectedOption.text == ubicacionRow)&&(nombre_evento==eventoRow)) {
+							console.log("Paso");
+							var cantidadRow = document.getElementById("cantidad_boletos_"+i).innerHTML;
+							cantidadFinal = parseInt(cantidadRow)+parseInt(cantidadBoletos);
+							console.log(cantidadFinal);
+							if (comprobarCantidadBoletos(ubicacionRow,cantidadFinal)) {
+								document.getElementById("cantidad_boletos_"+i).innerHTML=cantidadFinal;	
+					 			calcularSubotales();
+					 			calcularTotal();
+					 			calcularSubotalesF();
+					 			calcularTotalF();
+					 			limpiarInputs();
+					 			break;
+							}			 		
+						} else{
+							if (i==(table_len-1)) {addRowMain();}		
+						}
+					}
+				}
+			}
+		}		
+	}
 	function calcularTotal(){
 		var table=document.getElementById("bill_table");
  		var table_len=(table.rows.length)-1;
@@ -223,34 +381,149 @@
 		return costoTribuna.innerHTML;
 	}
 	function addRow(){
+		var nombre_evento=document.getElementById('nombre_evento').innerHTML;
 		var selectTribuna = document.getElementById('select_tribuna');
 		var selectedOption = selectTribuna.options[selectTribuna.selectedIndex];
 		var cantidadBoletos = document.getElementById('cantidad').value;
+		//console.log("aqui estoy probando")
 		//console.log("Cantidad de boletos :"+cantidadBoletos);
-		//console.log(selectedOption.value + ': ' + selectedOption.text);
-		var table=document.getElementById("bill_table");
- 		var table_len=(table.rows.length)-1;
- 		//console.log("tamaño de la tabla : "+table_len);
- 		 var row = table.insertRow(table_len).outerHTML="<tr id='row_"+table_len+"'> <td id='cantidad_boletos_"+table_len+"'>"+cantidadBoletos+"</td> <td id='ubicacion_"+table_len+"'>"+selectedOption.text+"</td><td id='costo_"+table_len+"'>"+getCosto(selectedOption.text)+"</td><td id='subtotal_"+table_len+"'></td></tr>";
- 		 calcularSubotales();
- 		 calcularTotal();
+		//consol//e.log(selectedOption.value + ': ' + selectedOption.text);
+		console.log("AQUI POSIBLE ERROR : "+selectedOption.text+" -- "+cantidadBoletos);
+		if (comprobarCantidadBoletos(selectedOption.text,cantidadBoletos)){
+			var table=document.getElementById("bill_table");
+	 		var table_len=(table.rows.length)-1;	 		
+	 		//console.log("tamaño de la tabla ADDROW : "+(table_len+1));
+	 		 var row = table.insertRow(table_len).outerHTML="<tr id='row_"+table_len+"'> <td id ='id_event_"+table_len+"' style='display:none'></td><td id='evento_"+table_len+"'>"+nombre_evento+"</td><td id='cantidad_boletos_"+table_len+"'>"+cantidadBoletos+"</td> <td id='ubicacion_"+table_len+"'>"+selectedOption.text+"</td><td id='costo_"+table_len+"'>"+getCosto(selectedOption.text)+"</td><td id='subtotal_"+table_len+"'></td><td id='id_location_"+table_len+"' style='display:none'>"+getIdLocation(selectTribuna.selectedIndex,selectedOption.text)+"</td></tr>";
+	 		 calcularSubotales();
+	 		 calcularTotal();
+	 		 var table_len1=(table.rows.length)-1;
+	 		 return true;
+		} else {
+			return false;
+		}
+		
 	}
 	function addRowF(){
+		var nombre_evento=document.getElementById('nombre_evento').innerHTML;
 		var selectTribuna = document.getElementById('select_tribuna');
 		var selectedOption = selectTribuna.options[selectTribuna.selectedIndex];
 		var cantidadBoletos = document.getElementById('cantidad').value;
 		//console.log("Cantidad de boletos :"+cantidadBoletos);
 		//console.log(selectedOption.value + ': ' + selectedOption.text);
 		var table=document.getElementById("bill_table1");
- 		var table_len=(table.rows.length)-1;
- 		//console.log("tamaño de la tabla : "+table_len);
- 		 var row = table.insertRow(table_len).outerHTML="<tr id='row_f_"+table_len+"'> <td id='cantidad_boletos_f_"+table_len+"'>"+cantidadBoletos+"</td> <td id='ubicacion_f_"+table_len+"'>"+selectedOption.text+"</td><td id='costo_f_"+table_len+"'>"+getCosto(selectedOption.text)+"</td><td id='subtotal_f_"+table_len+"'></td></tr>";
- 		 calcularSubotalesF();
- 		 calcularTotalF();
+	 	var table_len=(table.rows.length)-1;
+	 	//console.log("tamaño de la tabla : "+table_len);
+	 	var row = table.insertRow(table_len).outerHTML="<tr id='row_f_"+table_len+"'> <td 'evento_"+table_len+"'>"+nombre_evento+"</td><td id='cantidad_boletos_f_"+table_len+"'>"+cantidadBoletos+"</td> <td id='ubicacion_f_"+table_len+"'>"+selectedOption.text+"</td><td id='costo_f_"+table_len+"'>"+getCosto(selectedOption.text)+"</td><td id='subtotal_f_"+table_len+"'></td></tr>";
+	 	calcularSubotalesF();
+	 	calcularTotalF();	
+	 		
 	}
 	function addRowMain(){
-		addRow();
-		addRowF();
+		if(addRow()){
+			addRowF();
+		}		
+		limpiarInputs();
 	}
+
+	
+	$("#get-events").submit(function(e){
+		e.preventDefault();
+		$.ajax({
+			url:$(this).attr('action'),
+			type:$(this).attr('method'),
+			data:$(this).serialize(),
+			success: function(json){
+				console.log(json);
+				var table=document.getElementById("search_table");
+				var table_len=(table.rows.length);
+				if (table_len!=1){
+					for (var i = 1; i <table_len; i++) {
+						document.getElementById("search_table").deleteRow(1);
+					}					
+				}
+				table_len=1;
+				//console.log("TAMAÑO DE JSON :"+json.length)
+				var len = table_len;
+				for (var i = 0;  i<json.length; i++) {
+					var obj_event = json[i];
+					var row = table.insertRow(len).outerHTML="<tr id='row_st_"+len+"'> <td id='event_s_"+len+"'>"+obj_event['name']+"</td> <td id='capacidad_s_"+len+"'>"+obj_event['capacity']+"</td><td id='fecha_s_"+len+"'>"+obj_event['initial_date']+"</td><td id='selec_"+len+"'><input type='submit' value='Seleccionar' onclick='selectNewEvent("+len+")'></td></tr>";
+					len += 1;
+				}			
+			}
+		});
+	});
+
+	$("#get-new-event").submit(function(e){
+		e.preventDefault();
+		document.getElementById('id03').style.display='none';
+		$.ajax({
+			url:$(this).attr('action'),
+			type:$(this).attr('method'),
+			data:$(this).serialize(),
+			success: function(json){
+				//console.log("recien horneado : ");
+				//console.log(json);
+				document.getElementById("nombre_evento").innerHTML=json.event['name']
+				//console.log(json.event['name']);
+				//console.log(json.avalibleTicket);
+				//console.log(json.avalibleTicket.length);
+				var table=document.getElementById("main_table");
+				var table_len=(table.rows.length);
+				if (table_len!=1){
+					for (var i = 1; i <table_len; i++) {
+						document.getElementById("main_table").deleteRow(1);
+					}					
+				}
+				table_len=1;
+				var len = table_len;
+				for (var i = 0;  i<json.avalibleTicket.length; i++) {
+					var obj_avaliables_tickets = json.avalibleTicket[i];
+					//console.log("SUPER PROBA : "+obj_avaliables_tickets['name']+"_cant = "+obj_avaliables_tickets['count']);
+					//console.log("SUPER PROBA : "+obj_avaliables_tickets['name']+"_id ="+obj_avaliables_tickets['id']);
+					console.log("</td><td id='"+obj_avaliables_tickets['name']+"_id' style='display:none'>");
+					var row = table.insertRow(len).outerHTML="<tr id='row_ticktet_"+len+"'> <td id='"+obj_avaliables_tickets['name']+"_cant'>"+obj_avaliables_tickets['count']+"</td> <td id='"+obj_avaliables_tickets['name']+"_ubication'>"+obj_avaliables_tickets['name']+"</td><td id='"+obj_avaliables_tickets['name']+"_cost'>"+obj_avaliables_tickets['cost']+"</td><td id='"+obj_avaliables_tickets['name']+"_id' style='display:none'>"+obj_avaliables_tickets['id']+"</td></tr>";
+					len += 1;
+				}
+				var select_tribuna = document.getElementById("select_tribuna");
+				var tamaño = select_tribuna.length;
+				for (var i = 1; i < tamaño; i++) {
+					select_tribuna.remove(1);					
+				}
+				for (var i = 0; i <json.avalibleTicket.length; i++) {
+					var obj_avaliables_tickets = json.avalibleTicket[i];
+					var optionNew=document.createElement("option");
+					optionNew.text=obj_avaliables_tickets['name'];
+					select_tribuna.add(optionNew);
+				}
+				
+			}
+		});
+	});
+
+	$("#post_venta").submit(function(e){
+		e.preventDefault();
+		document.getElementById("post_venta_envio").value = createJson();
+		console.log("ANTES DEL AJAX")
+		console.log(document.getElementById("post_venta_envio").value);
+		$.ajax({
+			url:$(this).attr('action'),
+			type:$(this).attr('method'),
+			data:$(this).serialize(),
+			success: function(json){
+				alert("Venta realizada correctamente")
+				//csrfmiddlewaretoken: '{{ csrf_token }}'
+			}
+		});
+
+	});
+
+	function selectNewEvent(rowNum){		
+		document.getElementById("get_event_selec").value = document.getElementById("event_s_"+rowNum).innerHTML;
+		console.log("Mostrar en tabla : "+document.getElementById("event_s_"+rowNum).innerHTML);
+		console.log("Mostrar seleccionado : "+document.getElementById("get_event_selec").value);
+	}
+
+
+	
 </script>
 {% endblock %}
