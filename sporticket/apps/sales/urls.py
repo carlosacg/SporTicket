@@ -13,6 +13,9 @@ urlpatterns = [
     url(r'^sales_ajax/$', login_required(GetDataAjaxView.as_view()), name='get_data_ajax' ),
     url(r'^sales/createShopping/(?P<id>\d+)/$', login_required(createShopAjax), name='comprar_boletos' ),
     url(r'sales/createSale/(?P<id>\d+)/$', login_required(createSale), name='realizar_venta' ),
+    url(r'getEventsForTypes/', login_required(getEventsForTypes), name='getEventsForTypes' ),
+    url(r'getNewEvent/', login_required(getNewEvent), name='getNewEvent' ),
+    url(r'finishSale/', login_required(finishSale), name='finishSale' ),
     url(r'sales/saleEvent.html', login_required(listEvent1), name='evento_venta' ),
 
 

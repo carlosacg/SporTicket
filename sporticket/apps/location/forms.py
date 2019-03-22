@@ -9,16 +9,19 @@ class LocationForm(forms.ModelForm):
         fields = [
             'event',
             'name',
-            'cost'
+            'cost',
+            'capacity'
 
         ]
         labels ={
             'event':'event',
             'name':'Nombre localidad',
-            'cost':'Precio localidad'
+            'cost':'Precio localidad',
+            'capacity':'Capacidad localidad'
         }
         widgets ={
             'event': forms.TextInput(attrs={'class':'w3-input w3-border','type':'hidden','value':'-'}),
             'name': forms.TextInput(attrs={'class':'w3-input w3-border'}),
             'cost': forms.NumberInput(attrs={'class':'w3-input w3-border'}),
+            'capacity': forms.NumberInput(attrs={'class':'w3-input w3-border'}),
         }
