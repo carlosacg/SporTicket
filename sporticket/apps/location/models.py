@@ -7,7 +7,6 @@ class Location(models.Model):
     name = models.CharField(max_length=200)
     cost = models.IntegerField(null=True)
     capacity = models.IntegerField(null=True, default=0)
-
     event = models.name = models.ForeignKey(Event, on_delete=models.CASCADE)
 
     def __str__(self):   #MUESTRA EL NOMBRE COMO LLAVE FORANEA

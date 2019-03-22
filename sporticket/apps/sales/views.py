@@ -143,19 +143,28 @@ def createShopAjax(request,id):
 	context = {'event':event,'hora':hora,'avalibleTicket':tickets_avalibles,'bill':bill_id}
 	return render(request,'sales/createShop.html',context)
 
+def createShop(request,id):
+	hora = time.strftime("%c")
+	event = Event.objects.get(id=id)
+	tickets_avalibles=getListTicketsAvalibles(event)
+	list_events_type=getListTypeEvents()
+	context = {'event':event,'hora':hora,'avalibleTicket':tickets_avalibles, 'eventType':list_events_type}
+	return render(request,'sales/createShopping.html',context)
+
 class GetDataAjaxView(TemplateView):
 
 	def get(self,request, *args, **kwargs):
 		quantitys = json.loads(request.GET['jsonQuantitys'])
 		ubications = json.loads(request.GET['jsonUbications'])
-		event_id =request.GET['event_id']
 		pago =request.GET['pago']
+		print('METODO PAGO: '+pago)
 		total =request.GET['total']
+		print('TOTAL: '+total)
 		x=0
 		bill=createBillAjax(request,pago,'Compra',total)
 		while x < int(len(ubications)):        
-			location=Location.objects.get(name=str(ubications[x]))
-			avalible_tickets=get_avalible_tickets(event_id,str(location.id))
+			location=Location.objects.get(id=ubications[x])
+			avalible_tickets=get_avalible_tickets(str(location.event),str(location.id))
 			add_shopping(bill,avalible_tickets,quantitys[x],len(avalible_tickets))
 			x+=1
 		return JsonResponse({'status':'success'})
