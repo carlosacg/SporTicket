@@ -69,7 +69,7 @@
 		<form>
 			{% csrf_token %}
 		</form>
-		<form method="GET" action="/sales/finishSale/" id="post_venta">
+		<form method="POST" action="/sales/createSale/{{event.id}}/" id="post_venta">
 			{% csrf_token %}
 			<input type="text" name="post_venta_envio" id="post_venta_envio" style="display: none">
 			<input type="submit" value="Finalizar Venta">
@@ -505,12 +505,18 @@
 		document.getElementById("post_venta_envio").value = createJson();
 		console.log("ANTES DEL AJAX")
 		console.log(document.getElementById("post_venta_envio").value);
+		var prueba = $('#post_venta_envio').val()
+		console.log("CON JQUERY : "+prueba)
+		console.log(typeof prueba)
 		$.ajax({
 			url:$(this).attr('action'),
 			type:$(this).attr('method'),
-			data:$(this).serialize(),
+			data:{
+				csrfmiddlewaretoken: '{{ csrf_token }}',
+				post_venta_envio: $('#post_venta_envio').val()
+			},
 			success: function(json){
-				alert("Venta realizada correctamente")
+				alert("Venta realizada correctamente");
 				//csrfmiddlewaretoken: '{{ csrf_token }}'
 			}
 		});
