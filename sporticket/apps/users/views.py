@@ -83,38 +83,6 @@ class ProfileList(LoginRequiredMixin,PermissionRequiredMixin, ListView):
 		model = Profile
 		template_name = 'users/listUsers.html'
 
-class ProfileUpdate(LoginRequiredMixin, UpdateView):
-
-		model = Profile
-		second_model = User
-		template_name = 'users/editMyProfile.html'
-		form_class = ProfileForm
-		second_form_class = UserForm
-		success_url = reverse_lazy('listUser')
-
-		def get_context_data(self, **kwargs):
-			context = super(ProfileUpdate, self).get_context_data(**kwargs)
-			pk = self.kwargs.get('pk',0)
-			user = self.second_model.objects.get(id=request.user.id)
-			if 'form2' not in context:
-				context['form2'] = self.second_form_class(instance=user)
-			context['id'] = pk
-			return context
-
-		def post(self, request, *args, **kwargs):
-			self.object = self.get_object
-			id_profile = kwargs['pk']
-			profile = self.model.objects.get(id=id_profile)
-			user = self.second_model.objects.get(id=profile.user_id)
-			form = self.form_class(request.POST, instance=profile)
-			form2 = self.second_form_class(request.POST, instance=user)
-			if form.is_valid() and form2.is_valid():
-				form.save()
-				form2.save()
-				return HttpResponseRedirect(self.get_success_url())
-			else:
-				return HttpResponseRedirect(self.get_success_url())
-
 
 class ViewUpdate(LoginRequiredMixin,PermissionRequiredMixin, UpdateView):
 
@@ -285,7 +253,6 @@ def createProfileSocial(request):
 					object = Profile()
 					newProfile = Profile(1, request.user.id,identification,userType,phone,numAccount)
 					newProfile.save()
-					messages.success(request,'Su perfil ha sido creado exitosamente!')
 					return render(request, 'sales/viewsEvent.html')
 				else:			
 					object = Profile()
@@ -293,17 +260,42 @@ def createProfileSocial(request):
 					print (idUser)
 					newProfile = Profile(idUser, request.user.id,identification,userType,phone,numAccount)
 					newProfile.save()
-					messages.success(request,'Su perfil ha sido creado exitosamente!')
 					return render(request, 'sales/viewsEvent.html')
 			else:
 				return render(request, 'users/createMyProfile.html',{'form': form})
 		else:
 				return render(request, 'sales/viewsEvent.html')
-				
+
 class CreateUser(CreateView):
+		print("entre")
 		model = Profile
 		template_name = 'users/createUser.html'
 		form_class = ProfileForm
 		second_form_class = UserForm
 		success_url = reverse_lazy('userLogin')
+
+		def get_context_data(self, **kwargs):
+			context = super(CreateUser, self).get_context_data(**kwargs)
+			if 'form'  not in context:
+				context['form'] = self.form_class(self.request.GET)
+			if 'form2' not in context:
+				context['form2'] = self.second_form_class(self.request.GET)
+			return context
+
+		def post(self, request, *args , **kwargs):
+			self.object = self.get_object
+			form = self.form_class(request.POST)		
+			print("entre2")
+			form2 =  self.second_form_class(request.POST)
+			if form.is_valid() and form2.is_valid():
+				print("into for no valid")
+				profile = form.save(commit=False)
+				profile.user = form2.save()
+				print("voy aqui")
+				profile.save()
+				print("izi")
+				messages.success(request,'Usuario comprador creado exitosamente!')
+				return HttpResponseRedirect(self.get_success_url())
+			else:
+				return self.render_to_response(self.get_context_data(form=form, form2=form2))
 
