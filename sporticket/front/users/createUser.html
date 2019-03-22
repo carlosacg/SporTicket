@@ -44,33 +44,44 @@
 
                 <div class="w3-row-padding">
                     <div class="w3-half">
-                        <label><b class="black-color">Identificación</b></label>
-                        <input class="w3-input w3-border w3-margin-bottom" type="text" required>
+                        <label for="{{ form.identification.id_for_label}}"> {{form.identification.label}} </label> {{form.identification}}
                     </div>
                     <div class="w3-half">
-                        <label><b class="black-color">Nombre</b></label>
-                        <input class="w3-input w3-border" type="password"  required>
+                        <label for="{{ form2.first_name.id_for_label}}"> {{form2.first_name.label}} </label> {{form2.first_name}}
                     </div>
                 </div>
                 <div class="w3-row-padding">
                     <div class="w3-half">
-                        <label><b class="black-color" >Apellido</b></label>
-                        <input class="w3-input w3-border w3-margin-bottom" type="text" required>              
+                        <label for="{{ form2.last_name.id_for_label}}"> {{form2.last_name.label}} </label> {{form2.last_name}}
                     </div>
                     <div class="w3-half">
-                        <label><b class="black-color">Correo</b></label>
-                        <input class="w3-input w3-border w3-margin-bottom" type="text" required>
+                        <label for="{{ form2.email.id_for_label}}"> {{form2.email.label}} </label> {{form2.email}}
                     </div>
                 </div>
                 <div class="w3-row-padding">
                     <div class="w3-half">
-                        <label><b class="black-color">Contraseña</b></label>
-                        <input class="w3-input w3-border w3-margin-bottom" type="text" required>
+                        <label for="{{ form2.password1.id_for_label}}"> {{form2.password1.label}} </label> {{form2.password1}}
                     </div>
                     <div class="w3-half">
-                        <label><b class="black-color">Confirmar contraseña</b></label>
-                        <input class="w3-input w3-border w3-margin-bottom" type="text" required>
+                        <label for="{{ form2.password2.id_for_label}}"> {{form2.password2.label}} </label> {{form2.password2}}
                     </div>
+                </div>
+                <div class="w3-row-padding">
+                    <div class="w3-half"> 
+                        <label for="{{ form.phone.id_for_label}}"> {{form.phone.label}} </label> {{form.phone}}
+                    </div>
+                    <div class="w3-half">
+                        <label for="{{ form.numAccount.id_for_label}}"> {{form.numAccount.label}} </label> {{form.numAccount}}
+                    </div>
+                </div>
+                <div class="w3-row-padding">
+                    <div class="w3-half">
+                        <label for="{{ form.userType.id_for_label}}"> {{form.userType.label}} </label> {{form.userType}}
+                    </div>
+                    <div class="w3-half">
+                        <label for="{{ form2.username.id_for_label}}"> {{form2.username.label}} </label> {{form2.username}}
+                    </div>
+              
                 </div>
                 <div class="w3-row-padding">
                     <div class="w3-third">
