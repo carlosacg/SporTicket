@@ -64,13 +64,25 @@ def listEvent1(request):
 		return render(request,'sales/saleEvent.html',context)
 
 @permission_required('users.Vendedor' ,reverse_lazy('evento_listar_compras'))
+@csrf_exempt
 def createSale(request,id):
 	hora = time.strftime("%c")
 	event = Event.objects.get(id=id)
 	tickets_avalibles=getListTicketsAvalibles(event)
 	list_events_type=getListTypeEvents()
+	if request.is_ajax:
+		if request.method == "POST":
+			sale = eval(request.POST.get('post_venta_envio'))
+			newBill = Bill(total_bill= sale['total']) #FALTAN MAS CAMPOS
+			newBill.save()
+			tickets = sale['tickets']
+			for ticket in tickets:
+				addTicketBill(ticket, newBill)
+			#return HttpResponse(json.dumps({'hola':'hola'}), content_type="application/json")
+			return HttpResponseRedirect('http://127.0.0.1:8000/sales/saleEvent.html/')
 	context = {'event':event,'hora':hora,'avalibleTicket':tickets_avalibles, 'eventType':list_events_type}
 	return render(request,'sales/createSale.html',context)
+
 
 def getListTypeEvents():
 	allTypeEvents = EventType.objects.all()
@@ -112,21 +124,31 @@ def getNewEvent(request):
 	return HttpResponse(json.dumps(contexto,cls=DjangoJSONEncoder), content_type = "application/json")
 
 def addTicketBill(ticketIn, Bill):
-	for i in range(int(ticketIn['cant'])):
+	contador = int(ticketIn['cant'])
+	print("contadot : "+str(contador))
+	for i in range(contador):
 		ticket = Ticket.objects.filter(location_id=ticketIn['id_location'], state__exact="Disponible")[0]
 		ticket.id_bill = Bill
 		ticket.state = "Vendido"
 		ticket.save()
+		print("FOR en add : "+str(i))
+		print("Ticker cantidad "+str(ticketIn['cant']))
 
 def finishSale(request):
-	sale = eval(request.GET.get('post_venta_envio'))
-	print(sale)
-	newBill = Bill(total_bill= sale['total']) #FALTAN MAS CAMPOS
-	newBill.save()
-	tickets = sale['tickets']
-	for ticket in tickets:
-		addTicketBill(ticket, newBill)
-	return HttpResponse(json.dumps({'hola':'hola'}), content_type="application/json")
+	if request.is_ajax:
+		sale = eval(request.POST.get('post_venta_envio'))
+		newBill = Bill(total_bill= sale['total']) #FALTAN MAS CAMPOS
+		newBill.save()
+		tickets = sale['tickets']
+		x=0
+		for ticket in tickets:
+			x=x+1
+			print("FOR EN FINISH SALE : "+str(x))
+			addTicketBill(ticket, newBill)
+		#return HttpResponse(json.dumps({'hola':'hola'}), content_type="application/json")
+		return HttpResponseRedirect('http://127.0.0.1:8000/sales/saleEvent.html/')
+	
+
 
 
 #-----------------------------------------
