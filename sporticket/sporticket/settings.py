@@ -21,7 +21,7 @@ MESSAGE_TAGS = {
     messages.WARNING: 'alert-warning',
     messages.ERROR: 'alert-danger',
 }
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)style="display:none"
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -104,9 +104,9 @@ WSGI_APPLICATION = 'sporticket.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'sport_db',
-        'USER' : 'andres',
-        'PASSWORD': '',
+        'NAME': 'hoy',
+        'USER' : 'postgres',
+        'PASSWORD': '24603759',
         'HOST' : 'localhost',
         'PORT' : 5432,    
     } 
