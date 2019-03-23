@@ -4,6 +4,9 @@
 
 {% block content %}
 <div class="w3-main" >
+		<div id="success" class="w3-panel w3-green" style= "margin-top:1 0px; display: none;">	
+				<p>¡Compra exitosa!</p>
+		</div> 
     <header class="w3-container">
         <h5 class="black-color" ><b class="black-color"><i class="fa fa-shopping-cart" style="color: black;"></i> Seleccione los boletos a comprar del evento: </b><b style="color: black;" id="nombre_evento"> {{event.name}} </b></h5>
         <br>
@@ -542,7 +545,7 @@
         });
     }
 	function reload(){
-		//location.reload()
+		location.reload()
 	}
 
 	function succesRequest(result){
