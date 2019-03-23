@@ -250,7 +250,7 @@ def getEventsJSON(request):
             event_type = i['event_type']
             print(event_type)
             object = Event()
-            newEvent = Event(name=name,initial_date=date,initial_time=hour,place=place,url=url,state=state,capacity=capacity,visitor=visitor,local=local,event_type_id=event_type)
+            newEvent = Event(name=name,initial_date=date,initial_time=hour,place=place,url='http://localhost:8001/events/?format=json',state=state,capacity=capacity,visitor=visitor,local=local,event_type_id=event_type)
             newEvent.save()
             print("Interopere")
         
