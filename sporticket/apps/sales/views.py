@@ -73,7 +73,8 @@ def createSale(request,id):
 	if request.is_ajax:
 		if request.method == "POST":
 			sale = eval(request.POST.get('post_venta_envio'))
-			newBill = Bill(total_bill= sale['total']) #FALTAN MAS CAMPOS
+			user=User.objects.get(id=request.user.id)
+			newBill = Bill(total_bill= sale['total'], id_profile= user, payment_method= sale['metodo_pago'], type_bill='Venta') 
 			newBill.save()
 			tickets = sale['tickets']
 			for ticket in tickets:

@@ -265,11 +265,9 @@
 	}
 	function createJson(){
 		var jsonFinal={};
-		var user="";
 		var total = parseInt(document.getElementById("total_bill").innerHTML);
 		var metodo_pago = document.getElementById("select_metodo_pago")
-		var selectedOption = metodo_pago.options[metodo_pago.selectedIndex];		
-		jsonFinal.user = user;
+		var selectedOption = metodo_pago.options[metodo_pago.selectedIndex];
 		jsonFinal.total = total;
 		jsonFinal.metodo_pago = selectedOption.text;
 		jsonFinal.tickets = [];
