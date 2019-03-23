@@ -1,7 +1,22 @@
-{% extends 'base/base.html' %}
 {%load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="es">
 <head>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <title>SporTicket</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/w3.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/css.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/window.css' %}">
+    <link rel="icon"  href="{% static 'images/sporticket.png' %}">
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/morris.css' %}">
+    <script src="{% static 'js/morris.min.js' %}" charset="utf-8"></script>
+    
 </head>
 {% block content %}
 <div class="w3-main" >
@@ -11,39 +26,38 @@
 			<i class="fa fa-plus black-color"></i> Crear mi perfil</b>
 		</h5>
 	</header>
-	<form method="post"> 
+	<div class="w3-half ">
+		<img  class="imgLogin width-image" src="{% static 'images/sporticket.png' %} " alt="Logo SporTicket">
+		<strong class="black-color textMyProfile">Para ingresar a la aplicación termina tu registro llenando los campos</strong>
+	</div>
+	<div class="w3-half w3-container positionMyProfile">
+		<form method="post"> 
 		{% csrf_token %}
-		<div class="w3-row-padding">
-			<div class="w3-half">
-				<label for="{{ form.identification.id_for_label}}"> Identifcacion </label> {{form.identification}}
+			<div class="w3-row-padding">
+				<label class="black-color" for="{{ form.identification.id_for_label}}"> Identificación </label> {{form.identification}}
 			</div>
-		</div>
-		<div class="w3-row-padding">
-			<div class="w3-half"> 
-				<label for="{{ form.phone.id_for_label}}"> Numero o celular</label> {{form.phone}}
+			<div class="w3-row-padding">
+				<label class="black-color" for="{{ form.phone.id_for_label}}"> Número o celular</label> {{form.phone}}
+			<div class="w3-row">	
+				<label class="black-color" for="{{ form.numAccount.id_for_label}}"> Número de cuenta </label> {{form.numAccount}}
 			</div>
-			<div class="w3-half">
-				<label for="{{ form.numAccount.id_for_label}}"> Numero de cuenta </label> {{form.numAccount}}
+				<br> 
+				<div class="w3-show-inline-block">
+	                <div class="w3-bar">
+	                    <a href="{% url 'crateUser' %}" 
+	                    	data-toggle="tooltip" 
+	                    	title="Guardar registro">
+	                    	<button class="w3-button w3-block w3-green w3-section w3-padding" type="submit">Registrar</button>
+	                    </a>
+					</div>
+	            </div>
 			</div>
-			<br>
-			<br> <br/>
-			<div class="w3-show-inline-block">
-                <div class="w3-bar">
-                    <a href="{% url 'crateUser' %}">
-                    	<button type="submit" 
-                    	class="w3-button w3-padding-16 w3-dark-grey w3-circle" 
-                    	id="save">
-                    	<i class="fa fa-save"></i></button>
-                    </a>
-				</div>
-            </div>
-		</div>
-	</form>
+		</form>
+	</div>
+	
 	<br>
 	<br>
- 	<footer class="w3-container w3-padding-14 w3-grey">
-    	<p>Powered by <a class="black-color">XSOFT</a></p>
-	</footer>	
+ 	
 	<div id="success" class="w3-panel w3-green">		 
 		<p>Usuario creado!</p>
 	</div> 
