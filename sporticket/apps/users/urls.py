@@ -16,5 +16,7 @@ urlpatterns = [
 	url(r'users/deleteUsers/(?P<id>\d+)/$', login_required(deleteUsers) , name='deleteUser'),
     url(r'users/editUsersAdmin/(?P<id>\d+)/$', login_required(updateUser) , name='editUsers'),
     url(r'users/createUser.html', CreateUser.as_view() , name='createUser'),
+	url(r'^password/recovery/$', auth_views.PasswordResetView.as_view(
+        template_name = 'auth/passwordResetForm.html', html_email_template_name = 'auth/passwordResetEmail.html'), name='passwordReset'),  
 
 ]
