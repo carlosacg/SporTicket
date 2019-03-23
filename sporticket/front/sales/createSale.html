@@ -474,7 +474,10 @@
 	
 	$("#get-events").submit(function(e){
 		e.preventDefault();
-		$.ajax({
+		if(document.getElementById('select_buscar').selectedIndex==0){
+			alert("No a seleccionado un tipo de evento");
+		} else {
+			$.ajax({
 			url:$(this).attr('action'),
 			type:$(this).attr('method'),
 			data:$(this).serialize(),
@@ -496,7 +499,8 @@
 					len += 1;
 				}			
 			}
-		});
+			});
+		}		
 	});
 
 	$("#get-new-event").submit(function(e){
