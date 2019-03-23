@@ -78,8 +78,7 @@ def createSale(request,id):
 			tickets = sale['tickets']
 			for ticket in tickets:
 				addTicketBill(ticket, newBill)
-			#return HttpResponse(json.dumps({'hola':'hola'}), content_type="application/json")
-			return HttpResponseRedirect('http://127.0.0.1:8000/sales/saleEvent.html/')
+			return HttpResponse(json.dumps({'status':'success'}), content_type="application/json")
 	context = {'event':event,'hora':hora,'avalibleTicket':tickets_avalibles, 'eventType':list_events_type}
 	return render(request,'sales/createSale.html',context)
 
@@ -125,14 +124,11 @@ def getNewEvent(request):
 
 def addTicketBill(ticketIn, Bill):
 	contador = int(ticketIn['cant'])
-	print("contadot : "+str(contador))
 	for i in range(contador):
 		ticket = Ticket.objects.filter(location_id=ticketIn['id_location'], state__exact="Disponible")[0]
 		ticket.id_bill = Bill
 		ticket.state = "Vendido"
 		ticket.save()
-		print("FOR en add : "+str(i))
-		print("Ticker cantidad "+str(ticketIn['cant']))
 
 def finishSale(request):
 	if request.is_ajax:

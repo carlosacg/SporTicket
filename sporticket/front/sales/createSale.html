@@ -57,6 +57,15 @@
 				<label>Cantidad de boletos</label><!--NO BORRAR NADA DEL FORM-->
 				<input type="number" name="cantidad" id="cantidad" value="" />
 			</div>
+			<div class="w3-half">
+				<label>Metodo de Pago</label><!--NO BORRAR NADA DEL FORM-->
+				<select id='select_metodo_pago' name="select_metodo_pago">
+					<option id = "option_1" value="" disabled selected>Seleccione un metodo de pago...</option>
+					<option value="Efectivo">Efectivo</option>
+					<option value="Credito">Credito</option>
+					<option value="Debito">Debito</option>
+				</select>				
+			</div>
 			<div class="w3-container">
 				<div class="w3-show-inline-block">
 					<div class="w3-bar">
@@ -254,9 +263,12 @@
 	function createJson(){
 		var jsonFinal={};
 		var user="";
-		var total = parseInt(document.getElementById("total_bill").innerHTML);		
+		var total = parseInt(document.getElementById("total_bill").innerHTML);
+		var metodo_pago = document.getElementById("select_metodo_pago")
+		var selectedOption = metodo_pago.options[metodo_pago.selectedIndex];		
 		jsonFinal.user = user;
 		jsonFinal.total = total;
+		jsonFinal.metodo_pago = selectedOption.text;
 		jsonFinal.tickets = [];
 		var table=document.getElementById("bill_table");
 		var table_len=(table.rows.length)-1;
@@ -274,8 +286,6 @@
 		//return jsonFinal;
 	}
 	function getIdLocation(numRow,location){
-		console.log("FUNTION getIdLocation() numRow : "+numRow);
-		console.log("FUNTION getIdLocation() location : "+location);
 		var idLocation = document.getElementById("main_table").rows[numRow].cells.namedItem(location+"_id").innerHTML;
 		return idLocation;
 	}
@@ -503,6 +513,7 @@
 	$("#post_venta").submit(function(e){
 		e.preventDefault();
 		document.getElementById("post_venta_envio").value = createJson();
+		document.getElementById('select_metodo_pago').selectedIndex="0";
 		console.log("ANTES DEL AJAX")
 		console.log(document.getElementById("post_venta_envio").value);
 		var prueba = $('#post_venta_envio').val()
