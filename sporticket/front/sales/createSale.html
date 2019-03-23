@@ -5,6 +5,9 @@
 
 {% block content %}
 <div class="w3-main" >
+	<div id="success" class="w3-panel w3-green" style= "margin-top:1 0px; display: none;">	
+		<p>Venta realizada de manera exitosa</p>
+	</div>
     <header class="w3-container">
         <h5 class="black-color" ><b class="black-color"><i class="fa fa-shopping-cart" style="color: black;"></i> Seleccione los boletos a comprar del evento: </b><b style="color: black;" id="nombre_evento"> {{event.name}} </b></h5>
         <br>
@@ -39,7 +42,7 @@
 			</div>
 		</div>
 	  	<div class="w3-rest w3-card-2" style="width: 70%; text-align: center; margin-left: 200px;">
-			<h3 style="color: black; text-align: center">Factura # {{bill.id}}</h3>
+			<h3 style="color: black; text-align: center">Listado de Venta</h3>
 					
 			<div class="w3-half">
 				<label>Ubicación</label><!--NO BORRAR NADA DEL FORM-->
@@ -511,7 +514,7 @@
 	});
 
 	$("#post_venta").submit(function(e){
-		e.preventDefault();
+		e.preventDefault();			
 		document.getElementById("post_venta_envio").value = createJson();
 		document.getElementById('select_metodo_pago').selectedIndex="0";
 		console.log("ANTES DEL AJAX")
@@ -526,13 +529,24 @@
 				csrfmiddlewaretoken: '{{ csrf_token }}',
 				post_venta_envio: $('#post_venta_envio').val()
 			},
-			success: function(json){
-				alert("Venta realizada correctamente");
-				//csrfmiddlewaretoken: '{{ csrf_token }}'
-			}
+			success: succesRequest
 		});
 
 	});
+
+	function redirect(){
+		location.href="http://127.0.0.1:8000/sales/saleEvent.html/";
+	}
+
+	function succesRequest(result){
+		if(result.status =='success'){
+			$(document).ready(function(){
+				$("#success").toggle(100);
+				$("#success").fadeOut(3500);
+			});
+			setTimeout("redirect()", 2500);
+		}
+	}
 
 	function selectNewEvent(rowNum){		
 		document.getElementById("get_event_selec").value = document.getElementById("event_s_"+rowNum).innerHTML;
