@@ -4,7 +4,7 @@ from django.views.generic import ListView, CreateView , UpdateView
 from apps.users.models import Profile, Seller, Manager, Buyer
 from django.contrib.auth.models import User
 from apps.users.models import Profile
-from apps.users.forms import ProfileForm, UserForm, UserUpdateForm
+from apps.users.forms import ProfileForm, UserForm, UserUpdateForm, ProfileExternForm
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.forms  import UserCreationForm
 import psycopg2
@@ -239,7 +239,6 @@ def updateProfile(request,id):
 def createProfileSocial(request):
 
 		person = Profile.objects.all().filter(user_id=request.user.id).exists()
-		print(person)
 		form = UserUpdateForm()
 		if person == False:
 			if request.method == 'POST':
@@ -257,7 +256,6 @@ def createProfileSocial(request):
 				else:			
 					object = Profile()
 					idUser = lastProfile.id + 1
-					print (idUser)
 					newProfile = Profile(idUser, request.user.id,identification,userType,phone,numAccount)
 					newProfile.save()
 					return render(request, 'sales/viewsEvent.html')
@@ -267,10 +265,9 @@ def createProfileSocial(request):
 				return render(request, 'sales/viewsEvent.html')
 
 class CreateUser(CreateView):
-		print("entre")
 		model = Profile
 		template_name = 'users/createUser.html'
-		form_class = ProfileForm
+		form_class = ProfileExternForm
 		second_form_class = UserForm
 		success_url = reverse_lazy('userLogin')
 
@@ -285,15 +282,11 @@ class CreateUser(CreateView):
 		def post(self, request, *args , **kwargs):
 			self.object = self.get_object
 			form = self.form_class(request.POST)		
-			print("entre2")
 			form2 =  self.second_form_class(request.POST)
 			if form.is_valid() and form2.is_valid():
-				print("into for no valid")
 				profile = form.save(commit=False)
 				profile.user = form2.save()
-				print("voy aqui")
 				profile.save()
-				print("izi")
 				messages.success(request,'Usuario comprador creado exitosamente!')
 				return HttpResponseRedirect(self.get_success_url())
 			else:

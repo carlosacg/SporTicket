@@ -64,6 +64,27 @@ class ProfileForm(forms.ModelForm):
 				'phone':forms.TextInput(attrs={'class':'w3-input w3-border','type':'number'}),
 				'numAccount':forms.TextInput(attrs={'class':'w3-input w3-border','type':'number'}),
 		}
+class ProfileExternForm(forms.ModelForm):
+
+	class Meta:
+		
+		model = Profile
+
+		fields = [    
+				'identification',
+				'phone',
+				'numAccount',
+		]
+		labels = {
+				'identification': 'Identificacion',
+				'phone': 'Telefono o celular',
+				'numAccount': 'Numero de cuenta',
+		}
+		widgets = {
+				'identification':forms.TextInput(attrs={'class':'w3-input w3-border','type':'number'}),
+				'phone':forms.TextInput(attrs={'class':'w3-input w3-border','type':'number'}),
+				'numAccount':forms.TextInput(attrs={'class':'w3-input w3-border','type':'number'}),
+		}
 
 class UserUpdateForm(forms.Form):
 
