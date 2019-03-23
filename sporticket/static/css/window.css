@@ -147,6 +147,10 @@ img {
 	margin-top: 17px;
 }
 
+.positionMyProfile {
+	margin-left: -100px;
+}
+
 .separators {
     border-top: 1px solid white;
 }
@@ -194,6 +198,10 @@ img {
 	color: black; 
 	font-weight: bold; 
 	left: 200px;
+}
+
+.textMyProfile {
+	margin-left: 90px;
 }
 
 .textTh {
