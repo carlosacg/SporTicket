@@ -208,7 +208,7 @@ def listShops(request):
 
 def getMyShops(user):
 	cursor = connection.cursor()
-	instruction="SELECT count(*),sales_bill.id,events_event.name,sales_bill.total_bill,sales_bill.date_bill FROM events_event,tickets_ticket,sales_bill WHERE tickets_ticket.event_id=events_event.id AND tickets_ticket.id_bill_id=sales_bill.id AND sales_bill.type_bill='Compra' AND sales_bill.id_profile_id="+str(user)+" GROUP BY sales_bill.id,events_event.name,sales_bill.total_bill,sales_bill.date_bill;"
+	instruction="SELECT count(*),sales_bill.id,sales_bill.total_bill,sales_bill.date_bill FROM events_event,tickets_ticket,sales_bill WHERE tickets_ticket.event_id=events_event.id AND tickets_ticket.id_bill_id=sales_bill.id AND sales_bill.type_bill='Compra' AND sales_bill.id_profile_id="+str(user)+" GROUP BY sales_bill.id,sales_bill.total_bill,sales_bill.date_bill;"
 	print(instruction)
 	cursor.execute(instruction)
 	rows = cursor.fetchall()
