@@ -97,6 +97,7 @@
 						<th>Ubicación</th>
 						<th>Costo</th>
 						<th id= headsubtotal>SubTotal</th>
+						<th>Acciones</th>
 					</tr>
 
 			  	</thead>
@@ -391,6 +392,41 @@
 		//console.log("costo tribuna : "+costoTribuna.firstChild.nodeValue);
 		return costoTribuna.innerHTML;
 	}
+
+	function addTicket(fila){
+		var cantView=parseInt(document.getElementById('cantidad_boletos_'+fila).innerHTML);
+		var cant=cantView+1;
+		document.getElementById("cantidad_boletos_"+fila).innerHTML=cant;
+		document.getElementById("cantidad_boletos_f_"+fila).innerHTML=cant;
+		calcularSubotales();
+ 		calcularTotal();
+		calcularSubotalesF();
+		calcularTotalF();
+	}
+
+	function minusTicket(fila){
+		var cantView=parseInt(document.getElementById('cantidad_boletos_'+fila).innerHTML);
+		if(cantView > 1){
+			var cant=cantView-1;
+			document.getElementById("cantidad_boletos_"+fila).innerHTML=cant;
+			document.getElementById("cantidad_boletos_f_"+fila).innerHTML=cant;
+			calcularSubotales();
+			calcularTotal();	
+			calcularSubotalesF();
+			calcularTotalF();
+		} else {
+			deleteRow(fila);
+		}
+	}
+
+	function deleteRow(row){
+		var rest = parseInt(document.getElementById('subtotal_'+row).innerHTML);
+		document.getElementById('total_bill').innerHTML = parseInt(document.getElementById('total_bill').innerHTML)-rest;
+		document.getElementById('total_bill1').innerHTML = parseInt(document.getElementById('total_bill').innerHTML);
+		document.getElementById("bill_table").deleteRow(row);
+		document.getElementById("bill_table1").deleteRow(row);
+	}
+
 	function addRow(){
 		var nombre_evento=document.getElementById('nombre_evento').innerHTML;
 		var selectTribuna = document.getElementById('select_tribuna');
@@ -399,12 +435,11 @@
 		//console.log("aqui estoy probando")
 		//console.log("Cantidad de boletos :"+cantidadBoletos);
 		//consol//e.log(selectedOption.value + ': ' + selectedOption.text);
-		console.log("AQUI POSIBLE ERROR : "+selectedOption.text+" -- "+cantidadBoletos);
+		//console.log("AQUI POSIBLE ERROR : "+selectedOption.text+" -- "+cantidadBoletos);
 		if (comprobarCantidadBoletos(selectedOption.text,cantidadBoletos)){
 			var table=document.getElementById("bill_table");
-	 		var table_len=(table.rows.length)-1;	 		
-	 		//console.log("tamaño de la tabla ADDROW : "+(table_len+1));
-	 		 var row = table.insertRow(table_len).outerHTML="<tr id='row_"+table_len+"'> <td id ='id_event_"+table_len+"' style='display:none'></td><td id='evento_"+table_len+"'>"+nombre_evento+"</td><td id='cantidad_boletos_"+table_len+"'>"+cantidadBoletos+"</td> <td id='ubicacion_"+table_len+"'>"+selectedOption.text+"</td><td id='costo_"+table_len+"'>"+getCosto(selectedOption.text)+"</td><td id='subtotal_"+table_len+"'></td><td id='id_location_"+table_len+"' style='display:none'>"+getIdLocation(selectTribuna.selectedIndex,selectedOption.text)+"</td></tr>";
+	 		var table_len=(table.rows.length)-1;
+	 		 var row = table.insertRow(table_len).outerHTML="<tr id='row_"+table_len+"'> <td id ='id_event_"+table_len+"' style='display:none'></td><td id='evento_"+table_len+"'>"+nombre_evento+"</td><td id='cantidad_boletos_"+table_len+"'>"+cantidadBoletos+"</td> <td id='ubicacion_"+table_len+"'>"+selectedOption.text+"</td><td id='costo_"+table_len+"'>"+getCosto(selectedOption.text)+"</td><td id='subtotal_"+table_len+"'></td><td><a data-toggle='tooltip' title='Aumentar boletos'><button id='"+table_len+"' onclick='addTicket(this.id)' class='w3-button w3-padding-small w3-dark-grey w3-circle'><i class='fa fa-plus'></i></button></a> <a data-toggle='tooltip' title='Disminuir boletos'><button id='"+table_len+"' onclick='minusTicket(this.id)' class='w3-button w3-padding-small w3-dark-grey w3-circle'><i class='fa fa-minus'></i></button></a> <a data-toggle='tooltip' title='Eliminar fila'><button id='"+table_len+"' onclick='deleteRow(this.id)' class='w3-button w3-padding-small w3-dark-grey w3-circle'>X</button></a></td> <td id='id_location_"+table_len+"' style='display:none'>"+getIdLocation(selectTribuna.selectedIndex,selectedOption.text)+"</td></tr>";
 	 		 calcularSubotales();
 	 		 calcularTotal();
 	 		 var table_len1=(table.rows.length)-1;
