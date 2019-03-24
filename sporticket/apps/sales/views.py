@@ -172,25 +172,18 @@ def finishSale(request):
 
 
 #-----------------------------------------
-def createShopAjax(request,id):
-	bill=Bill.objects.all().last()
-	if bill == None:
-		bill_id=1
-	else:
-		bill_id=int(bill.id)+1
-		
-	hora = time.strftime("%c")
-	event = Event.objects.get(id=id)
-	tickets_avalibles=getListTicketsAvalibles(event)
-	context = {'event':event,'hora':hora,'avalibleTicket':tickets_avalibles,'bill':bill_id}
-	return render(request,'sales/createShop.html',context)
-
 def createShop(request,id):
 	hora = time.strftime("%c")
 	event = Event.objects.get(id=id)
 	tickets_avalibles=getListTicketsAvalibles(event)
 	list_events_type=getListTypeEvents()
-	context = {'event':event,'hora':hora,'avalibleTicket':tickets_avalibles, 'eventType':list_events_type}
+	bill_id = 0
+	bill=Bill.objects.all().last()
+	if bill == None:
+		bill_id=1
+	else:
+		bill_id=int(bill.id)+1
+	context = {'event':event,'hora':hora,'avalibleTicket':tickets_avalibles, 'eventType':list_events_type,'bill':bill_id}
 	if event.url == "http://localhost:8001/events/?format=json":
 		return render(request,'sales/eventRefer.html')
 	else:
