@@ -83,6 +83,13 @@ def bill_serializer(bill):
 @permission_required('users.Vendedor' ,reverse_lazy('evento_listar_compras'))
 @csrf_exempt
 def createSale(request,id):
+	user=User.objects.get(id=request.user.id)
+	bill_id = 0
+	bill=Bill.objects.all().last()
+	if bill == None:
+		bill_id=1
+	else:
+		bill_id=int(bill.id)+1
 	hora = time.strftime("%c")
 	event = Event.objects.get(id=id)
 	tickets_avalibles=getListTicketsAvalibles(event)
@@ -90,14 +97,13 @@ def createSale(request,id):
 	if request.is_ajax:
 		if request.method == "POST":
 			sale = eval(request.POST.get('post_venta_envio'))
-			user=User.objects.get(id=request.user.id)
 			newBill = Bill(total_bill= sale['total'], id_profile= user, payment_method= sale['metodo_pago'], type_bill='Venta') 
 			newBill.save()
 			tickets = sale['tickets']
 			for ticket in tickets:
 				addTicketBill(ticket, newBill)
 			return HttpResponse(json.dumps({'status':'success'}), content_type="application/json")
-	context = {'event':event,'hora':hora,'avalibleTicket':tickets_avalibles, 'eventType':list_events_type}
+	context = {'event':event,'hora':hora,'avalibleTicket':tickets_avalibles, 'eventType':list_events_type, 'bill':bill_id}
 	return render(request,'sales/createSale.html',context)
 
 

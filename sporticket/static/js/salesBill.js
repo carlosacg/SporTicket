@@ -317,11 +317,22 @@ function redirect(){
 
 function succesRequest(result){
     if(result.status =='success'){
+        document.getElementById('id02').style.display='none'
         $(document).ready(function(){
             $("#success").toggle(100);
             $("#success").fadeOut(3500);
         });
         setTimeout("redirect()", 2500);
+    }
+}
+
+function showBill(){
+     var table=document.getElementById("bill_table");
+    var table_len=(table.rows.length);
+    if (table_len == 2){
+        alert("No a añadido ningun boleto");
+    } else {
+        document.getElementById('id02').style.display='block';
     }
 }
 

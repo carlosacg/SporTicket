@@ -103,11 +103,11 @@
 											<font color="orange"> 
 											<i class="fa fa-list"></i> Escoger otro evento</font>
 							</button>
-							<button onclick="document.getElementById('id02').style.display='block'"  
+							<button onclick="showBill()"  
 											type="submit" 
 											class="w3-button w3-padding w3-dark-grey w3-round-large">
 											<font color="orange">
-											<i class="fa fa-check"></i> Finalizar venta</font>
+											<i class="fa fa-check"></i> Facturar</font>
 							</button>
 						</div>
 					</div>
@@ -115,14 +115,7 @@
 			<form>
 				{% csrf_token %}
 			</form>
-			<form method="POST" action="/sales/createSale/{{event.id}}/" id="post_venta">
-				{% csrf_token %}
-				<input type="text" 
-								name="post_venta_envio" 
-								id="post_venta_envio" 
-								style="display: none">
-				<input type="submit" value="Finalizar Venta">
-			</form>
+			
 			<div class="w3-container">
 				<table id="bill_table" class="w3-table-all w3-hoverable ">
 						<thead >
@@ -174,7 +167,7 @@
 							  <br>
 							  <p>NIT: 0000000-0</p>
 							  <p>Régimen común</p>
-							  <p>Factura # {{bill.id}}</p>
+							  <p>Factura #{{bill}}</p>
 						  </div>
 						  <div class="w3-third w3-center">				
 							  <p> Fecha y Hora</p>
@@ -229,10 +222,14 @@
 						  <br>
 						  <div class="w3-show-inline-block">
 							<div class="w3-bar">
-								<button type="submit" 
-												class="w3-button w3-padding-16 w3-dark-grey w3-circle" >
-												<i class="fa fa-check"> Confirmar venta</i>
-								</button>
+								<form method="POST" action="/sales/createSale/{{event.id}}/" id="post_venta">
+									{% csrf_token %}
+									<input type="text" 
+													name="post_venta_envio" 
+													id="post_venta_envio" 
+													style="display: none">
+									<input type="submit" class="w3-button w3-padding w3-dark-grey w3-round-large"  value="Finalizar Venta">
+								</form>
 							</div>
 						</div>
 					  </div>
