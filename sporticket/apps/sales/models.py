@@ -16,7 +16,7 @@ class Bill(models.Model):
 def __str__(self):   #MUESTRA EL NOMBRE COMO LLAVE FORANEA
     return '{}'.format(self.id)
 
-class detailsSale(models.Model):
+class detailsBill(models.Model):
 	id = models.AutoField(primary_key=True)
 	id_bill = models.ForeignKey(Bill, null=False, blank=False, on_delete=models.CASCADE)
 	id_location = models.ForeignKey(Location, null=False, blank=False, on_delete=models.CASCADE)

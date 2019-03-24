@@ -82,10 +82,10 @@ def bill_serializer(bill):
 
 def getIdBillLast():
 	bill=Bill.objects.all().last()
-		if bill == None:
-			return 1
-		else:
-			return int(bill.id)+1
+	if bill == None:
+		return 1
+	else:
+		return int(bill.id)+1
 
 @permission_required('users.Vendedor' ,reverse_lazy('evento_listar_compras'))
 @csrf_exempt
@@ -154,6 +154,8 @@ def addTicketBill(ticketIn, Bill):
 		ticket.id_bill = Bill
 		ticket.state = "Vendido"
 		ticket.save()
+
+def addDetailsBill(ticketIn, Bill):
 
 def finishSale(request):
 	if request.is_ajax:
