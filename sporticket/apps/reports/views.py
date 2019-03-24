@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required,permission_required
 from django.urls import reverse_lazy, reverse
 from django.db.models import Count
 from apps.users.models import *
+from django.db.models import Avg, Max, Min, Sum
 
 @permission_required('users.Gerente' ,reverse_lazy('base'))
 def index(request):
@@ -44,20 +45,37 @@ def reportByEventSale(event_id):
     print(ticket)
     return ticket
 
-def reportByDailySales():
-
-    currentDate = datetime.datetime.now()
-    currentDateFormat =  str(currentDate.year) +"-"+ str(currentDate.month)+"-"+str(currentDate.day)
-    sales = Bill.objects.all().filter(date_bill__range=(currentDateFormat,currentDateFormat)).count()
-    return sales
-
 def graphicsReport(request):
     return render(request, 'reports/graphicsReports.html')
 
 def dailyReport(request):
 
-    dailySales =  reportByDailySales()
-    context = {'dailySales':dailySales}
+    currentDate = datetime.datetime.now()
+    currentDateFormat =  str(currentDate.year) +"-"+ str(currentDate.month)+"-"+str(currentDate.day)
+    dailySales = Bill.objects.all().filter(date_bill__range=(currentDateFormat,currentDateFormat)).count()
+
+    average = Bill.objects.all().filter(date_bill__range=(currentDateFormat,currentDateFormat)).aggregate(Avg('total_bill'))  
+    maxAverageStr = str(average)
+    wordsAverage = maxAverageStr.split() 
+    valueAverage = wordsAverage[1]
+    lastChartAverage = len(valueAverage)
+    chartsAverage = valueAverage[:lastChartAverage - 1]
+
+    plus = Bill.objects.all().filter(date_bill__range=(currentDateFormat,currentDateFormat)).aggregate(Sum('total_bill'))
+    maxPlusStr = str(plus)
+    wordsPlus = maxPlusStr.split() 
+    valuePlus = wordsPlus[1]
+    lastChartPlus = len(valuePlus)
+    chartsPlus = valuePlus[:lastChartPlus - 1]
+    
+    maxSalle = Bill.objects.all().filter(date_bill__range=(currentDateFormat,currentDateFormat)).aggregate(Max('total_bill'))
+    maxSalleStr = str(maxSalle)
+    wordsSeller = maxSalleStr.split() 
+    valueSeller = wordsSeller[1]
+    lastChartSeller = len(valueSeller)
+    charts = valueSeller[:lastChartSeller - 1]
+
+    context = {'dailySales':dailySales, 'chartsAverage':chartsAverage,'chartsPlus':chartsPlus,'charts':charts}
     return render(request, 'reports/dailySales.html',context)#A donde debo ir si gano 
 
 def sellerReport(request):
@@ -179,7 +197,29 @@ def reportByDateRange(request):
         dateInitial = form['dateInitial'].value()
         dateFinal = form['dateFinal'].value()
         print(dateInitial)
-        context = {'dateInitial':dateInitial}
-        return render(request, 'reports/dateRange.html', context)
+        dailySales = Bill.objects.all().filter(date_bill__range=(dateInitial,dateFinal)).count()
+            
+        average = Bill.objects.all().filter(date_bill__range=(dateInitial,dateFinal)).aggregate(Avg('total_bill'))  
+        maxAverageStr = str(average)
+        wordsAverage = maxAverageStr.split() 
+        valueAverage = wordsAverage[1]
+        lastChartAverage = len(valueAverage)
+        chartsAverage = valueAverage[:lastChartAverage - 1]
+
+        plus = Bill.objects.all().filter(date_bill__range=(dateInitial,dateFinal)).aggregate(Sum('total_bill'))
+        maxPlusStr = str(plus)
+        wordsPlus = maxPlusStr.split() 
+        valuePlus = wordsPlus[1]
+        lastChartPlus = len(valuePlus)
+        chartsPlus = valuePlus[:lastChartPlus - 1]
+        
+        maxSalle = Bill.objects.all().filter(date_bill__range=(dateInitial,dateFinal)).aggregate(Max('total_bill'))
+        maxSalleStr = str(maxSalle)
+        wordsSeller = maxSalleStr.split() 
+        valueSeller = wordsSeller[1]
+        lastChartSeller = len(valueSeller)
+        charts = valueSeller[:lastChartSeller - 1]
+        context = {'dailySales':dailySales, 'chartsAverage':chartsAverage,'chartsPlus':chartsPlus,'charts':charts}
+        return render(request, 'reports/dateRange.html',context)#A donde debo ir si gano 
     else:
         return render(request, 'reports/dateRange.html',{'form': form}) 
