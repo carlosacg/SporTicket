@@ -1,0 +1,59 @@
+{% extends 'base/base.html' %}
+{%load staticfiles %}
+{% block content %}
+	
+<div class="w3-main" >
+	<header class="w3-container">
+		<h5 class="black-color">
+			<b class="black-color">
+			<i class="fa fa-repeat black-color"></i> Cargar URL</b>
+		</h5>
+	</header>
+	<div class="w3-container" >
+		<form >
+			<div class="w3-quarter">
+				<label>Insertar URL</label>
+				<input class="w3-input w3-border">
+			</div>
+				
+			<div class="w3-row-padding">
+				<br>
+				<button type='submit' 
+					class="w3-button w3-dark-grey w3-padding-16 w3-circle" 
+					data-toggle="tooltip" 
+					title="Cargar URL">
+					<i class="fa fa-check"> Aceptar</i>
+				</button>
+				<button type='submit' 
+						class="w3-button w3-dark-grey w3-padding-16 w3-circle" 
+						data-toggle="tooltip" 
+						title="Omitir proceso">
+						<i class="fa fa-remove"> Omitir</i>
+				</button>
+			</div>             
+		</form>
+	</div>
+	<hr>
+	<footer class="w3-container w3-padding-14 w3-grey">
+		<p>Powered by <a  class="black-color">XSOFT</a></p>
+	</footer>
+	
+	<script src="{% static 'js/message.js' %}"></script>
+
+	<div  class="container white-color">
+		{% if messages %}
+		<div class='row'>
+			<div class='col-sm-6 col-sm-offset-3'>
+				{% for message in messages %}
+				<li class="w3-panel w3-green" 
+					id="messages" {% if message.tags == "success" %} 
+					class="alert alert-sucess "{% endif %}> 
+					{{ message }}</li>
+				{% endfor %}
+			</div>
+		</div>
+		{% endif %}
+	</div>
+
+</div>
+{% endblock %}

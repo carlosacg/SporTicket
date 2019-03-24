@@ -252,12 +252,14 @@ def createProfileSocial(request):
 					object = Profile()
 					newProfile = Profile(1, request.user.id,identification,userType,phone,numAccount)
 					newProfile.save()
+					messages.success(request,'Su perfil ha sido creado exitosamente!')
 					return render(request, 'sales/viewsEvent.html')
 				else:			
 					object = Profile()
 					idUser = lastProfile.id + 1
 					newProfile = Profile(idUser, request.user.id,identification,userType,phone,numAccount)
 					newProfile.save()
+					messages.success(request,'Su perfil ha sido creado exitosamente!')
 					return render(request, 'sales/viewsEvent.html')
 			else:
 				return render(request, 'users/createMyProfile.html',{'form': form})

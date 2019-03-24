@@ -185,7 +185,10 @@ def createShop(request,id):
 	tickets_avalibles=getListTicketsAvalibles(event)
 	list_events_type=getListTypeEvents()
 	context = {'event':event,'hora':hora,'avalibleTicket':tickets_avalibles, 'eventType':list_events_type}
-	return render(request,'sales/createShopping.html',context)
+	if event.url == "http://localhost:8001/events/?format=json":
+		return render(request,'sales/eventRefer.html')
+	else:
+		return render(request,'sales/createShopping.html',context)
 
 class GetDataAjaxView(TemplateView):
 

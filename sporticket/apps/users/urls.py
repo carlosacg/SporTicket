@@ -16,5 +16,6 @@ urlpatterns = [
 	url(r'users/deleteUsers/(?P<id>\d+)/$', login_required(deleteUsers) , name='deleteUser'),
     url(r'users/editUsersAdmin/(?P<id>\d+)/$', login_required(updateUser) , name='editUsers'),
     url(r'users/createUser.html', CreateUser.as_view() , name='createUser'),
+	 
 
 ]

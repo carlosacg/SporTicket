@@ -1,11 +1,7 @@
 {% extends 'base/base.html' %}
-
+{%load staticfiles %}
 {% block content %}
-	<style>
-		#messages {
-			margin-top:1 0px; 
-		}
-	</style>
+	
 	<div class="w3-main" >
 		<header class="w3-container">
 			<h5 class="black-color">
@@ -19,21 +15,28 @@
 					enctype="multipart/form-data">{% csrf_token %}
 				{{ form.as_p }}
 				<button type='submit' 
-						class="w3-button w3-dark-grey w3-padding-16 w3-circle" >
-						<i class="fa fa-check"></i>
+								class="w3-button w3-dark-grey w3-padding-16 w3-circle" 
+								data-toggle="tooltip" 
+            		title="Cargar imagen">
+								<i class="fa fa-check"> Aceptar</i>
+				</button>
+				<button type='submit' 
+							class="w3-button w3-dark-grey w3-padding-16 w3-circle" 
+							data-toggle="tooltip" 
+            	title="Omitir proceso">
+							<i class="fa fa-remove"> Omitir</i>
 				</button>
 			</form>
+			
 		</div>
 		<hr>
 		 <footer class="w3-container w3-padding-14 w3-grey">
 		    <p>Powered by <a  class="black-color">XSOFT</a></p>
-		  </footer>
-		<script >
-			$(document).ready(function(){
-			  $("#messages").fadeOut(3500);
-			  })
-		</script>
-        <div style="color:white;" class="container">
+			</footer>
+			
+			<script src="{% static 'js/message.js' %}"></script>
+
+        <div  class="container white-color">
             {% if messages %}
             <div class='row'>
             <div class='col-sm-6 col-sm-offset-3'>

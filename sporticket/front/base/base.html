@@ -6,36 +6,33 @@
     <title>SporTicket</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/w3.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/css.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/window.css' %}">
-    <link rel="icon"  href="{% static 'images/sporticket.png' %}">
-    
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/w3.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/morris.css' %}">
-    <script src="{% static 'js/morris.min.js' %}" charset="utf-8"></script>
-    
+    <link rel="stylesheet" href="{% static 'css/css.css' %}">
+    <link rel="stylesheet" href="{% static 'css/window.css' %}">
+    <link rel="icon"  href="{% static 'images/sporticket.png' %}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">  
 </head>
 <body class="w3-light-grey">
     {% block header %}
-        <div class="w3-bar w3-top w3-dark-grey w3-padding-15">
-           <button type="submit" 
-                    class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey orange-color" 
-                    onclick="w3_open();return false" >
-                    <i class="fa fa-bars"></i>  Menú</button>
-     	   <form >
-     	         <a class= "w3-display-middle" >
-     	           <img src="{% static 'images/logo.png' %}" class="w3-round w3-margin-right" alt="Logo SporTicket">
-     	           SporTicket
-     	         </a> 
-     	         <a href="{% url 'userLogout' %}" 
-                    class="w3-bar-item w3-button w3-light-gray w3-right w3-large w3-circle ">
-                    <i class="fa fa-sign-out black-color"></i>
-                </a>
-     	   </form>
-       </div>
+    <div class="w3-bar w3-top w3-dark-grey w3-padding-15">
+        <button type="submit" 
+                class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey orange-color" 
+                onclick="w3_open();return false" >
+                <i class="fa fa-bars"></i>  Menú</button>
+        <form >
+            <a class= "w3-display-middle" >
+            <img src="{% static 'images/logo.png' %}" class="w3-round w3-margin-right" alt="Logo SporTicket">
+            SporTicket
+            </a> 
+            <a href="{% url 'userLogout' %}" 
+            class="w3-bar-item w3-button w3-light-gray w3-right w3-large w3-circle ">
+            <i class="fa fa-sign-out black-color"></i>
+            </a>
+        </form>
+    </div>
     
     {% endblock %}
 
@@ -48,9 +45,9 @@
          	       -->
          	       <img src="{% static 'images/user2.png' %}" class="w3-circle w3-margin-right" alt="Imagen usuario">
          	   </div>
-     	   <div class="w3-col s8 w3-bar">
-     	       <span>  Bienvenido, <strong><br> {{user.last_name}} </strong></span><br>
-     	   </div>
+                <div class="w3-col s8 w3-bar">
+                    <span>  Bienvenido, <strong><br> {{user.last_name}} </strong></span><br>
+                </div>
      	   </div>
      	   <hr>
      	   <div class="w3-container">
@@ -68,20 +65,24 @@
                         <i class="fa fa-calendar fa-fw"></i> Eventos 
                         <i class="w3-right fa fa-caret-down"></i>
                 </button>
-                    <div id="Demo1" class="w3-hide w3-dark-grey w3-card">
-                 	   <a href="/events/insertEvents.html" 
-                            class="w3-bar-item w3-button orange-color" >
-                            <i class="fa fa-plus fa-fw"></i> Insertar
-                        </a>
-             	       <a href="/events/listEvents.html" 
-                            class="w3-bar-item w3-button orange-color" >
-                            <i class="fa fa-list fa-fw"></i> Listar
-                        </a>
-                        <a href="/events/insertEvenType.html" 
-                            class="w3-bar-item w3-button orange-color">
-                            <i class="fa fa-plus fa-fw"></i> Insertar tipo de evento 
-                        </a>
-                    </div>
+                <div id="Demo1" class="w3-hide w3-dark-grey w3-card">
+                    <a href="/events/insertEvents.html" 
+                        class="w3-bar-item w3-button orange-color" >
+                        <i class="fa fa-plus fa-fw"></i> Insertar
+                    </a>
+                    <a href="/events/listEvents.html" 
+                        class="w3-bar-item w3-button orange-color" >
+                        <i class="fa fa-list fa-fw"></i> Listar
+                    </a>
+                    <a href="/events/insertEvenType.html" 
+                        class="w3-bar-item w3-button orange-color">
+                        <i class="fa fa-plus fa-fw"></i> Insertar tipo de evento 
+                    </a>
+                    <a href="/events/loadReferredEvents.html" 
+                        class="w3-bar-item w3-button orange-color">
+                        <i class="fa fa-repeat fa-fw"></i> Cargar eventos referidos
+                    </a>
+                </div>
                 <a href="/sales/saleEvent.html" 
                     class="w3-bar-item w3-button w3-padding" >
                     <i class="fa fa-shopping-cart fa-fw"></i> Ventas
@@ -91,32 +92,39 @@
                         <i class="fa fa-users  fa-fw"></i> Usuarios 
                         <i class="w3-right fa fa-caret-down"></i>
                 </button>
-                    <div id="Demo2" class="w3-hide w3-dark-grey w3-card">
-                        <a href="/users/insertUsers.html" 
-                            class="w3-bar-item w3-button orange-color">
-                            <i class="fa fa-plus fa-fw"></i> Insertar
-                        </a>
-             	       <a href="/users/listUsers.html" 
-                            class="w3-bar-item w3-button orange-color">
-                            <i class="fa fa-list fa-fw"></i> Listar
-                        </a>
-                        <a href="{% url 'editUser' user.id%}" 
-                            class="w3-bar-item w3-button orange-color">
-                            <i class="fa fa-pencil fa-fw"></i> Editar mi perfil
-                        </a>
-                    </div>
+                <div id="Demo2" class="w3-hide w3-dark-grey w3-card">
+                    <a href="/users/insertUsers.html" 
+                        class="w3-bar-item w3-button orange-color">
+                        <i class="fa fa-plus fa-fw"></i> Insertar
+                    </a>
+                    <a href="/users/listUsers.html" 
+                        class="w3-bar-item w3-button orange-color">
+                        <i class="fa fa-list fa-fw"></i> Listar
+                    </a>
+                    <a href="{% url 'editUser' user.id%}" 
+                        class="w3-bar-item w3-button orange-color">
+                        <i class="fa fa-pencil fa-fw"></i> Editar mi perfil
+                    </a>
+                </div>                
                <a href="/reports/reports.html" 
                     class="w3-bar-item w3-button w3-padding" >
                     <i class="fa fa-bar-chart fa-fw"></i>  Reportes
                 </a>
-                <a href="/sales/viewsEvent.html" 
-                    class="w3-bar-item w3-button orange-color">
-                    <i class="fa fa-shopping-cart"></i> Generar Compra 
-                </a>
-                <a href="/sales/myShops.html" 
-                    class="w3-bar-item w3-button orange-color">
-                    <i class="fa fa-shopping-cart"></i> Mis Compras 
-                </a>
+                <button onclick="myFunction('Demo3')" 
+                        class="w3-button w3-block w3-left-align" >
+                        <i class="fa fa-shopping-cart fa-fw"></i> Compras 
+                        <i class="w3-right fa fa-caret-down"></i>
+                </button>
+                <div id="Demo3" class="w3-hide w3-dark-grey w3-card">
+                    <a href="/sales/viewsEvent.html"
+                        class="w3-bar-item w3-button orange-color">
+                        <i class="fa fa-shopping-cart"></i> Generar Compra 
+                    </a>
+                    <a href="/sales/myShops.html" 
+                        class="w3-bar-item w3-button orange-color">
+                        <i class="fa fa-shopping-cart"></i> Mis Compras 
+                    </a>
+                </div>
 
             </div>
         </nav>
@@ -130,7 +138,9 @@
     <script src="{% static 'js/w3.js' %}"></script>
     <script src="{% static 'js/function.js' %}"></script>
     <script src="{% static 'js/grafico.js' %}" charset="utf-8"></script>
-    <script src="{% static 'js/function.js' %}"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/raphael-min.js' %}"></script>
+    <script src="{% static 'js/morris.min.js' %}" charset="utf-8"></script>
 </body>
 </html>
 

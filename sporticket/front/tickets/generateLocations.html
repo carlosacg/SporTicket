@@ -1,117 +1,112 @@
 {% extends 'base/base.html' %}
+{%load staticfiles %}
+{% block content %}
 
-    {% block content %}
-    <style>
-        #messages {
-            margin-top:1 0px; 
-        }
-    </style>
-    <div class="w3-main" >
-        <header class="w3-container" >
-            <h5 class="black-color" >
-                <b class="black-color">
-                <i class="fa fa-plus black-color"></i> Generador de localidades para el evento: {{event.name}}</b>
-            </h5>
-        </header>
-        <form method="post">
-            {% csrf_token %}
-                <div class="w3-row-padding">
+<div class="w3-main" >
+    <header class="w3-container" >
+        <h5 class="black-color" >
+            <b class="black-color">
+            <i class="fa fa-plus black-color"></i> Generador de localidades para el evento: {{event.name}}</b>
+        </h5>
+    </header>
+    <form method="post">
+        {% csrf_token %}
+            <div class="w3-row-padding">
 
-                    <div class="w3-container">
-                        <table class="w3-table-all w3-hoverable table">
-                            <thead >
-                                <tr class="w3-dark-grey">
-                                <th>Nombre localidad</th>
-                                <th>Precio localidad</th>
-                                <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>{{location_form.name}}</td>
-                                    <td>{{location_form.cost}}</td>
-                                    <td><a href="{% url 'location_crear' id=event.id  %}" 
-                                        data-toggle="tooltip" 
-                                        title="Guardar localidad">
-                                        <button type="submit" class="w3-button w3-padding w3-dark-grey w3-circle">
-                                        <i class="fa fa-save"></i></button>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </form>
-            <div class="w3-container">
-                <div class="w3-show-inline-block">
-                    <div class="w3-bar">
-                        <a href="{% url 'ticket_crear' id=event.id %}"
-                            data-toggle="tooltip" 
-                            title="Generar boletos">
-                            <button class="w3-button w3-padding-16 w3-dark-grey w3-circle" ><i class=" fa fa-save fa fa-ticket"></i></button>
-                        </a>
-                    </div>
+                <div class="w3-container">
+                    <table class="w3-table-all w3-hoverable table">
+                        <thead >
+                            <tr class="w3-dark-grey">
+                            <th>Nombre localidad</th>
+                            <th>Precio localidad</th>
+                            <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{location_form.name}}</td>
+                                <td>{{location_form.cost}}</td>
+                                <td><a href="{% url 'location_crear' id=event.id  %}" 
+                                    data-toggle="tooltip" 
+                                    title="Guardar localidad">
+                                    <button type="submit" class="w3-button w3-padding w3-dark-grey w3-circle">
+                                    <i class="fa fa-save"></i></button>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        <header class="w3-container">
-            <h5 class="black-color">
-                <b class="black-color">
-                <i class="fa fa-list black-color"></i> Localidades generadas</b>
-            </h5>
-        </header>
-    
+        </form>
         <div class="w3-container">
-              <table class="w3-table-all w3-hoverable table">
-                <thead >
-                      <tr class="w3-dark-grey">
-                        <th>Nombre</th>
-                        <th>Precio</th>
-                        <th></th>
-                      </tr>
-                </thead>
-                <tbody>
-                    {% if locations %}
-                    {% for locations in locations %}
-                    <tr id="registro_item" >
-                        <td>{{locations.name}}</td>	
-                        <td>{{locations.cost}}</td>
-                        <td><a href="{% url 'location_delete' event=event.id id=locations.id %}" 
-                                data-toggle="tooltip" 
-                                title="Eliminar localidad">
-                                <button class="w3-button w3-padding-small w3-dark-grey w3-circle">
-                                <i class="fa fa-close"></i></button>
-                            </a>
-                        </td>
-                    </tr>
-                </tbody>
-                {% endfor %}
-                {% else %}
-                <h1 class="black-color">No hay registros de localidades</h1>
-                {% endif %}
-              </table>
-        </div>
-    
-        <hr>
-        <footer class="w3-container w3-padding-14 w3-grey">
-            <p>Powered by <a class="black-color">XSOFT</a></p>
-        </footer>
-        <script >
-			$(document).ready(function(){
-			  $("#messages").fadeOut(3500);
-			  })
-        </script>
-        
-        <div style="color:white;" class="container">
-            {% if messages %}
-            <div class='row'>
-            <div class='col-sm-6 col-sm-offset-3'>
-             {% for message in messages %}
-              <li class="w3-panel w3-green" id="messages" {% if message.tags == "success" %} class="alert alert-sucess "{% endif %}> {{ message }}</li>
-             {% endfor %}
+            <div class="w3-show-inline-block">
+                <div class="w3-bar">
+                    <a href="{% url 'ticket_crear' id=event.id %}"
+                        data-toggle="tooltip" 
+                        title="Generar boletos">
+                        <button class="w3-button w3-padding-16 w3-dark-grey w3-circle" >
+                            <i class=" fa fa-save fa fa-ticket"> Generar</i>
+                        </button>
+                    </a>
+                </div>
             </div>
-          </div>
-             {% endif %}
-          </div>
+        </div>
+    <header class="w3-container">
+        <h5 class="black-color">
+            <b class="black-color">
+            <i class="fa fa-list black-color"></i> Localidades generadas</b>
+        </h5>
+    </header>
+
+    <div class="w3-container">
+        <table class="w3-table-all w3-hoverable table">
+            <thead >
+                <tr class="w3-dark-grey">
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if locations %}
+                {% for locations in locations %}
+                <tr id="registro_item" >
+                    <td>{{locations.name}}</td>	
+                    <td>{{locations.cost}}</td>
+                    <td><a href="{% url 'location_delete' event=event.id id=locations.id %}" 
+                            data-toggle="tooltip" 
+                            title="Eliminar localidad">
+                            <button class="w3-button w3-padding-small w3-dark-grey w3-circle">
+                            <i class="fa fa-close"></i></button>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+            {% endfor %}
+            {% else %}
+            <h1 class="black-color">No hay registros de localidades</h1>
+            {% endif %}
+        </table>
     </div>
-    {% endblock %}
+
+    <hr>
+    <footer class="w3-container w3-padding-14 w3-grey">
+        <p>Powered by <a class="black-color">XSOFT</a></p>
+    </footer>
+
+    <script src="{% static 'js/message.js' %}"></script>
+    
+    <div class="container white-color">
+        {% if messages %}
+        <div class='row'>
+            <div class='col-sm-6 col-sm-offset-3'>
+                {% for message in messages %}
+                <li class="w3-panel w3-green" id="messages" {% if message.tags == "success" %} class="alert alert-sucess "{% endif %}> {{ message }}</li>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

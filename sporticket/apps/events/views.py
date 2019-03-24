@@ -34,7 +34,7 @@ def insertEventType(request):
             form.save()
             messages.success(request,'Tipo de evento agregado')
             form2 = EventForm()
-        return render(request, 'events/insertEvents.html',{'form':form2}) 
+        return HttpResponseRedirect(reverse('evento_crear'))
     else:
         form = EventTypeForm()   
     return render(request, 'events/insertEvenType.html',{'form':form}) 
@@ -250,7 +250,9 @@ def getEventsJSON(request):
             event_type = i['event_type']
             print(event_type)
             object = Event()
-            newEvent = Event(name=name,initial_date=date,initial_time=hour,place=place,url=url,state=state,capacity=capacity,visitor=visitor,local=local,event_type_id=event_type)
+            newEvent = Event(name=name,initial_date=date,initial_time=hour,place=place,url='http://localhost:8001/events/?format=json',state=state,capacity=capacity,visitor=visitor,local=local,event_type_id=event_type)
             newEvent.save()
             print("Interopere")
         
+def referredEvents(request):
+    return render(request, 'events/loadReferredEvents.html')

@@ -31,7 +31,7 @@ class AddTicketsForm(forms.ModelForm):
 			'id':'ID Boleto',
 		}
 		widgets = {
-			'id':forms.TextInput(attrs={'class':'form-control'}),
+			'id':forms.TextInput(attrs={'class':'form-control',}),
 		}
 
 
@@ -45,7 +45,7 @@ class BuyTicketsLocationForm(forms.Form):
         ('Tarjeta de debito', 'Tarjeta de debito'),
         )
 	location = forms.ModelChoiceField(Location.objects.all(), required=True)   
-	quantity = forms.IntegerField(label='Cantidad boletos',required=False)
+	quantity = forms.IntegerField(label='Cantidad boletos',required=False, )
 	payment = forms.ChoiceField(
 		required=False,
 		choices=CHOICES,

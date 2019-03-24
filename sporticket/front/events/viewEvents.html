@@ -6,105 +6,105 @@
 </head>
 
 {% block content %}
-	<div class="w3-main" >
-		<header class="w3-container" >
-			<h5 class="black-color">
-				<b class="black-color">
-				<i class="fa fa-eye black-color"></i> Visualizar Evento</b>
-			</h5>
-		</header>
-		<div class="w3-container">
-			<form method="post"> 
-				<div class="w3-container">
-					{% csrf_token %}
-					<div class="w3-half">
-						<div class="w3-row-padding">
-						<label for="{{form.name.id_for_label}}"> {{form.name.label}}</label>
+<div class="w3-main" >
+	<header class="w3-container" >
+		<h5 class="black-color">
+			<b class="black-color">
+			<i class="fa fa-eye black-color"></i> Visualizar Evento</b>
+		</h5>
+	</header>
+	<div class="w3-container">
+		<form method="post"> 
+			<div class="w3-container">
+				{% csrf_token %}
+				<div class="w3-half">
+					<div class="w3-row-padding">
+					<label for="{{form.name.id_for_label}}"> {{form.name.label}}</label>
+					<input class="w3-input w3-border" 
+							type=”text” 
+							value="{{event.name}}"
+							readonly=”readonly” />
+					</div>
+					<div class="w3-row-padding">
+						<label for="{{form.initial_date.id_for_label}}">{{form.initial_date.label}}</label>
 						<input class="w3-input w3-border" 
 								type=”text” 
-								value="{{event.name}}"
+								value="{{event.initial_date}}"
 								readonly=”readonly” />
-						</div>
-						<div class="w3-row-padding">
-							<label for="{{form.initial_date.id_for_label}}">{{form.initial_date.label}}</label>
-							<input class="w3-input w3-border" 
-									type=”text” 
-									value="{{event.initial_date}}"
-									readonly=”readonly” />
-						</div>
-						<div class="w3-row-padding">
-							<label for="{{form.event_type.id_for_label}}">{{form.event_type.label}}</label>
-							<input class="w3-input w3-border" 
-									type=”text” 
-									value="{{event.event_type}}"
-									readonly=”readonly” />
-						</div>
-						<div class="w3-row-padding">
-							<label for="{{form.local.id_for_label}}">{{form.local.label}}</label>
-							<input class="w3-input w3-border" 
-									type=”text” 
-									value="{{event.local}}"
-									readonly=”readonly” />
-						</div>
-						<div class="w3-row-padding">
-							<label for="{{form.place.id_for_label}}">{{form.place.label}}</label>
-							<input class="w3-input w3-border" 
-									type=”text” 
-									value="{{event.place}}"
-									readonly=”readonly” />
-						</div>
-						<div class="w3-row-padding">
-							<label for="{{form.visitor.id_for_label}}">{{form.visitor.label}}</label>
-							<input class="w3-input w3-border" 
-									type=”text” 
-									value="{{event.visitor}}"
-									readonly=”readonly” />
-						</div>
 					</div>
-		
-					<div class="w3-half">
-						<div class="w3-center">
-							{% if event %}
-							<img src="../../../static/{{event.image}}" class="imgEvent" alt="Imagen evento">
-							{% endif %}
-						</div>
-						
-						<div >
-							{{form.url}}
-						</div>
-					</div>
-				</div>
-				<div class="w3-container content">
 					<div class="w3-row-padding">
-						<div class="w3-half">
-							<label for="{{form.capacity.id_for_label}}"> {{form.capacity.label}} </label>
-							<input class="w3-input w3-border" 
-									type=”text” 
-									value="{{event.capacity}}"
-									readonly=”readonly” />
-						</div>
-						<div class="w3-half">
-							<label for="{{form.local.id_for_label}}">{{form.state.label}}</label>
-							<input class="w3-input w3-border" 
-									type=”text” 
-									value="{{event.state}}"
-									readonly=”readonly” />
-						</div>
+						<label for="{{form.event_type.id_for_label}}">{{form.event_type.label}}</label>
+						<input class="w3-input w3-border" 
+								type=”text” 
+								value="{{event.event_type}}"
+								readonly=”readonly” />
+					</div>
+					<div class="w3-row-padding">
+						<label for="{{form.local.id_for_label}}">{{form.local.label}}</label>
+						<input class="w3-input w3-border" 
+								type=”text” 
+								value="{{event.local}}"
+								readonly=”readonly” />
+					</div>
+					<div class="w3-row-padding">
+						<label for="{{form.place.id_for_label}}">{{form.place.label}}</label>
+						<input class="w3-input w3-border" 
+								type=”text” 
+								value="{{event.place}}"
+								readonly=”readonly” />
+					</div>
+					<div class="w3-row-padding">
+						<label for="{{form.visitor.id_for_label}}">{{form.visitor.label}}</label>
+						<input class="w3-input w3-border" 
+								type=”text” 
+								value="{{event.visitor}}"
+								readonly=”readonly” />
 					</div>
 				</div>
+	
+				<div class="w3-half">
+					<div class="w3-center">
+						{% if event %}
+						<img src="../../../static/{{event.image}}" class="imgEvent" alt="Imagen evento">
+						{% endif %}
+					</div>
 					
-				<br> 
-				<div class="w3-show-inline-block">
-					<div class="w3-bar">
-						<button class="w3-button w3-padding-16 w3-dark-grey w3-circle" ><i class="fa fa-check fa-fw"></i></button>
+					<div >
+						{{form.url}}
 					</div>
 				</div>
-			</form>
-		</div>
-		
-		<br>
-	 	<footer class="w3-container w3-padding-14 w3-grey">
-	    	<p>Powered by <a class="black-color">XSOFT</a></p>
-		</footer>
+			</div>
+			<div class="w3-container content">
+				<div class="w3-row-padding">
+					<div class="w3-half">
+						<label for="{{form.capacity.id_for_label}}"> {{form.capacity.label}} </label>
+						<input class="w3-input w3-border" 
+								type=”text” 
+								value="{{event.capacity}}"
+								readonly=”readonly” />
+					</div>
+					<div class="w3-half">
+						<label for="{{form.local.id_for_label}}">{{form.state.label}}</label>
+						<input class="w3-input w3-border" 
+								type=”text” 
+								value="{{event.state}}"
+								readonly=”readonly” />
+					</div>
+				</div>
+			</div>
+				
+			<br> 
+			<div class="w3-show-inline-block">
+				<div class="w3-bar">
+					<button class="w3-button w3-padding-16 w3-dark-grey w3-circle" ><i class="fa fa-check fa-fw"></i></button>
+				</div>
+			</div>
+		</form>
 	</div>
+	
+	<br>
+	<footer class="w3-container w3-padding-14 w3-grey">
+		<p>Powered by <a class="black-color">XSOFT</a></p>
+	</footer>
+</div>
 {% endblock %}
