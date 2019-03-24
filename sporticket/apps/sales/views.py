@@ -64,6 +64,23 @@ def listEvent1(request):
 		return render(request,'sales/saleEvent.html',context)
 
 @permission_required('users.Vendedor' ,reverse_lazy('evento_listar_compras'))
+def viewSales(request):	
+	return render(request, 'sales/viewSales.html')
+
+def getDailySales(request):
+	if request.is_ajax:
+		if request.method == 'GET':
+			user = User.objects.get(id=request.user.id)
+			date = request.GET.get('dateO')
+			print("fecha : "+date)
+			bills = Bill.objects.all().filter(id_profile=request.user.id, date_bill=date)
+			bills = [ bill_serializer(bill) for bill in bills]
+			return HttpResponse(json.dumps(bills,cls=DjangoJSONEncoder), content_type = "application/json")
+
+def bill_serializer(bill):
+	return {'id': bill.id, 'metodo_pago': bill.payment_method, 'total': bill.total_bill}
+
+@permission_required('users.Vendedor' ,reverse_lazy('evento_listar_compras'))
 @csrf_exempt
 def createSale(request,id):
 	hora = time.strftime("%c")

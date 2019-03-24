@@ -78,9 +78,6 @@
 					</div>
 				</div>
 			</div>
-		<form>
-			{% csrf_token %}
-		</form>
 		<form method="POST" action="/sales/createSale/{{event.id}}/" id="post_venta">
 			{% csrf_token %}
 			<input type="text" name="post_venta_envio" id="post_venta_envio" style="display: none">

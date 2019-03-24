@@ -1,0 +1,85 @@
+{% extends 'base/base.html' %}
+{%load staticfiles %}
+
+{% block content %}
+    <header class="w3-container">
+        <h5 class="black-color" ><b class="black-color"><i class="fa fa-shopping-cart" style="color: black;"></i> Ventas por Dia</b><b style="color: black;" id="nombre_evento"> {{event.name}} </b></h5>
+        <br>
+	</header>
+	<form method="GET" action="/sales/getDailySales" id="get_sales_for_date">
+		<div class="w3-half">
+			<label>Selecciona la fecha a buscar</label>
+			<input type="date" name="dateO" id="dateO" value="" />
+			<input type="text" name="post_venta_envio" id="post_venta_envio" style="display: none">
+			<input type="submit" value="Buscar">
+		</div>
+			
+	</form>
+
+	<div class="w3-container">
+		<table id="sale_table" class="w3-table-all w3-hoverable " style="display: none">
+		  	<thead >
+				<tr class="w3-dark-grey">
+					<th style="display: none">id</th>
+					<th>#Factura</th>
+					<th>Metodo de Pago</th>
+					<th>Costo Total</th>
+					<th>Acciones</th>
+				</tr>
+
+		  	</thead>
+		  	<tbody>
+		  	</tbody>
+		</table>
+		<br>
+	</div>
+	
+
+	<footer class="w3-container w3-padding-14 w3-grey">
+    	<p>Powered by <a style="color: black;">XSOFT</a></p>
+	</footer>
+</div>
+<script type="text/javascript">
+	$("#get_sales_for_date").submit(function(e){
+		e.preventDefault();
+		if (document.getElementById("dateO").value == "") {
+			alert("Seleccione primero la fecha")
+		} else {
+			$.ajax({
+				url:$(this).attr('action'),
+				type:$(this).attr('method'),
+				data:$(this).serialize(),
+				success: function(json){
+					console.log(json);
+					fillTable(json);
+				}
+			});
+		}
+		
+				
+	});
+	function cleanTable(){
+		var table=document.getElementById("sale_table");
+		var table_len=(table.rows.length);
+		if (table_len != 1) {
+			for (var i = 1; i < table_len; i++){
+				document.getElementById("sale_table").deleteRow(i);
+			}
+		}
+		
+	}
+	function fillTable(json) {
+		cleanTable()
+		var table=document.getElementById("sale_table");
+		for (var i = 0; i < json.length; i++) {
+			var table_len=(table.rows.length);
+			var row = table.insertRow(table_len).outerHTML="<tr id='row_'"+table_len+"> <td id='factura_"+table_len+"'>"+json[i]['id']+"</td><td id='metodo_pago_"+table_len+"'>"+json[i]['metodo_pago']+"</td><td id='total_"+table_len+"'>"+json[i]['total']+"</td><td><a data-toggle='tooltip' title='Ver Factura'><button id='"+table_len+"' onclick='showBill(this.id)'>Ver Factura</button></a></td></tr>"
+		}
+		document.getElementById("sale_table").style.display='block';	
+	}
+
+	function showBill(row){
+
+	}
+</script>
+{% endblock %}
