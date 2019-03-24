@@ -312,7 +312,7 @@ $("#post_venta").submit(function(e){
 });
 
 function redirect(){
-    location.href="http://127.0.0.1:8000/sales/saleEvent.html/";
+    location.href="/sales/saleEvent.html";
 }
 
 function succesRequest(result){
