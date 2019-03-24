@@ -17,6 +17,7 @@ urlpatterns = [
     url(r'getDailySales/', login_required(getDailySales), name='getDailySales' ),
     url(r'getEventsForTypes/', login_required(getEventsForTypes), name='getEventsForTypes' ),
     url(r'getNewEvent/', login_required(getNewEvent), name='getNewEvent' ),
+    url(r'getBill/', login_required(getBill), name='getBill' ),
     url(r'finishSale/', login_required(finishSale), name='finishSale' ),
     url(r'sales/saleEvent.html', login_required(listEvent1), name='evento_venta' ),
 

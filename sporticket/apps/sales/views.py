@@ -5,7 +5,7 @@ from django.urls import reverse_lazy,reverse
 from django.dispatch import receiver
 from apps.events.models import *
 from apps.location.models import *
-from .models import Bill
+from .models import Bill, DetailsBill
 from apps.tickets.models import Ticket
 from django.contrib.auth.models import User
 from django.db import connection 
@@ -104,6 +104,7 @@ def createSale(request,id):
 			tickets = sale['tickets']
 			for ticket in tickets:
 				addTicketBill(ticket, newBill)
+				addDetailsBill(ticket, newBill)
 			return HttpResponse(json.dumps({'status':'success'}), content_type="application/json")
 	context = {'event':event,'hora':hora,'avalibleTicket':tickets_avalibles, 'eventType':list_events_type, 'bill':bill_id}
 	return render(request,'sales/createSale.html',context)
@@ -156,6 +157,30 @@ def addTicketBill(ticketIn, Bill):
 		ticket.save()
 
 def addDetailsBill(ticketIn, Bill):
+	detailsBill = DetailsBill(id_location=getLocation(ticketIn['id_location']), eventName=ticketIn['event_name'], cant=ticketIn['cant'], subtotal=ticketIn['subtotal'])
+	detailsBill.id_bill = Bill
+	detailsBill.save()
+
+def getBill(request):
+	idBill = request.GET.get('get_bill')
+	print("Show id : "+idBill)
+	bill = Bill.objects.get(id=idBill)
+	detailsBills = DetailsBill.objects.filter(id_bill=idBill)
+	detailsBills=[ detailsBill_serializer(detailsBill) for detailsBill in detailsBills ]
+	return HttpResponse(json.dumps({'id':bill.id, 'date':bill.date_bill,'total':bill.total_bill,'detailsBills':detailsBills},cls=DjangoJSONEncoder), content_type = "application/json")
+
+def detailsBill_serializer(detailsBill):
+	costo = (detailsBill.subtotal/detailsBill.cant)
+	print("LOCATION : "+str(detailsBill.id_location))
+	return {'eventName': detailsBill.eventName, 'cant': detailsBill.cant, 'locationName': str(detailsBill.id_location), 'costo': costo, 'subtotal': detailsBill.subtotal}
+
+def getLocationName(idLocation):
+	name = Location.objects.values('name').filter(id=idLocation)
+	return name[0]['name']
+
+def getLocation(idLocation):
+	location = Location.objects.get(id=idLocation)
+	return location
 
 def finishSale(request):
 	if request.is_ajax:

@@ -16,10 +16,10 @@ class Bill(models.Model):
 def __str__(self):   #MUESTRA EL NOMBRE COMO LLAVE FORANEA
     return '{}'.format(self.id)
 
-class detailsBill(models.Model):
+class DetailsBill(models.Model):
 	id = models.AutoField(primary_key=True)
 	id_bill = models.ForeignKey(Bill, null=False, blank=False, on_delete=models.CASCADE)
 	id_location = models.ForeignKey(Location, null=False, blank=False, on_delete=models.CASCADE)
-	eventName = models.CharField(max_length=50)
+	eventName = models.CharField(null=True,max_length=50)
 	cant = models.IntegerField()
 	subtotal = models.IntegerField()

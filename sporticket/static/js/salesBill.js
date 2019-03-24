@@ -19,7 +19,8 @@ function createJson(){
         var id_location = document.getElementById('id_location_'+i).innerHTML;
         var event_name = document.getElementById('evento_'+i).innerHTML;
         var cant = document.getElementById('cantidad_boletos_'+i).innerHTML;
-        ticketsIn = {'id_location':id_location, 'event_name':event_name, 'cant':cant};
+        var subtotal = document.getElementById('subtotal_'+i).innerHTML;
+        ticketsIn = {'id_location':id_location, 'event_name':event_name, 'cant':cant, 'subtotal':subtotal};
         jsonFinal['tickets'].push(ticketsIn);
     }
     //console.log(jsonFinal);
