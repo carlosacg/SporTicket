@@ -1,23 +1,19 @@
 {%load staticfiles %}
 
-<!DOCTYPE html>
-<html lang="es">
 <head>
     <title>SporTicket</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/w3.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/css.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/window.css' %}">
-    <link rel="icon"  href="{% static 'images/sporticket.png' %}">
-    
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/w3.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/css.css' %}">
+    <link rel="stylesheet" href="{% static 'css/window.css' %}">
     <link rel="stylesheet" href="{% static 'css/morris.css' %}">
-    <script src="{% static 'js/morris.min.js' %}" charset="utf-8"></script>
-    
+    <link rel="icon"  href="{% static 'images/sporticket.png' %}">
+       
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
+
 {% block content %}
 <div class="w3-main" >
 	<header class="w3-container" >
@@ -27,7 +23,9 @@
 		</h5>
 	</header>
 	<div class="w3-half ">
-		<img  class="imgLogin width-image" src="{% static 'images/sporticket.png' %} " alt="Logo SporTicket">
+		<img  class="imgLogin width-image" 
+			  src="{% static 'images/sporticket.png' %} " 
+			  alt="Logo SporTicket">
 		<strong class="black-color textMyProfile">Para ingresar a la aplicación termina tu registro llenando los campos</strong>
 	</div>
 	<div class="w3-half w3-container positionMyProfile">
@@ -38,32 +36,31 @@
 			</div>
 			<div class="w3-row-padding">
 				<label class="black-color" for="{{ form.phone.id_for_label}}"> Número o celular</label> {{form.phone}}
-			<div class="w3-row">	
-				<label class="black-color" for="{{ form.numAccount.id_for_label}}"> Número de cuenta </label> {{form.numAccount}}
-			</div>
+				<div class="w3-row">	
+					<label class="black-color" for="{{ form.numAccount.id_for_label}}"> Número de cuenta </label> {{form.numAccount}}
+				</div>
 				<br> 
 				<div class="w3-show-inline-block">
 	                <div class="w3-bar">
 	                    <a href="{% url 'crateUser' %}" 
 	                    	data-toggle="tooltip" 
-	                    	title="Guardar registro">
-	                    	<button class="w3-button w3-block w3-green w3-section w3-padding" type="submit">Registrar</button>
+	                    	title="Guardar registro"
+	                    	class="underlined ">
+	                    	<button class="w3-button w3-center w3-green w3-section w3-padding" 
+	                    	type="submit">Registrar</button>
 	                    </a>
 					</div>
 	            </div>
 			</div>
 		</form>
 	</div>
-	
-	<br>
-	<br>
- 	
-	<div id="success" class="w3-panel w3-green">		 
-		<p>Usuario creado!</p>
-	</div> 
-	  
 </div>
-<script src="{% static 'js/message.js' %}"></script>
+<script src="{% static 'js/w3.js' %}"></script>
+<script src="{% static 'js/function.js' %}"></script>
+<script src="{% static 'js/grafico.js' %}" charset="utf-8"></script>
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/raphael-min.js' %}"></script>
+<script src="{% static 'js/morris.min.js' %}" charset="utf-8"></script>
 	
 {% endblock %}
 

@@ -1,44 +1,44 @@
 {% extends 'base/base.html' %}
 
-    {% block content %}
-    <div class="w3-main" >
-        <header class="w3-container" >
-            <h5 class="black-color" >
-                <b class="black-color">
-                <i class="fa fa-plus black-color"></i> Generador de tipos de eventos</b>
-            </h5>
-        </header>
-        <form method="post">
-            {% csrf_token %}
-                <div class="w3-row-padding">
+{% block content %}
+<div class="w3-main" >
+    <header class="w3-container" >
+        <h5 class="black-color" >
+            <b class="black-color">
+            <i class="fa fa-plus black-color"></i> Generador de tipos de eventos</b>
+        </h5>
+    </header>
+    <form method="post">
+        {% csrf_token %}
+            <div class="w3-row-padding">
 
-                    <div class="w3-container">
-                        <table class="w3-table-all w3-hoverable table" >
-                            <thead >
-                                <tr class="w3-dark-grey">
-                                <th>Nombre del tipo de evento</th>
-                                <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>{{form.name}}</td>
-                                    <td class="w3-center"><a href="#" 
-                                        data-toggle="tooltip" 
-                                        title="Guardar tipo de evento">
-                                        <button type="submit" class="w3-button w3-padding w3-dark-grey w3-circle ">
-                                        <i class="fa fa-save"></i></button>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="w3-container">
+                    <table class="w3-table-all w3-hoverable table" >
+                        <thead >
+                            <tr class="w3-dark-grey">
+                            <th>Nombre del tipo de evento</th>
+                            <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{form.name}}</td>
+                                <td class="w3-center"><a href="#" 
+                                    data-toggle="tooltip" 
+                                    title="Guardar tipo de evento">
+                                    <button type="submit" class="w3-button w3-padding w3-dark-grey w3-circle ">
+                                    <i class="fa fa-save"></i></button>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-            </form>
-        <hr>
-        <footer class="w3-container w3-padding-14 w3-grey">
-            <p>Powered by <a class="black-color">XSOFT</a></p>
-        </footer>
-    </div>
-    {% endblock %}
+            </div>
+        </form>
+    <hr>
+    <footer class="w3-container w3-padding-14 w3-grey">
+        <p>Powered by <a class="black-color">XSOFT</a></p>
+    </footer>
+</div>
+{% endblock %}

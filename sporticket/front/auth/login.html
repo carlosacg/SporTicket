@@ -5,10 +5,10 @@
 	<title>SporTicket</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/w3.css' %}">
+	<link rel="stylesheet" href="{% static 'css/w3.css' %}">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/css.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/window.css' %}">
+	<link rel="stylesheet" href="{% static 'css/css.css' %}">
+	<link rel="stylesheet" href="{% static 'css/window.css' %}">
 	<link rel="icon" href="{% static 'images/sporticket.png' %}">
 	
 </head>
@@ -44,7 +44,10 @@
                                             id="password" 
                                             required>
                                     <span class="w3-right w3-padding w3-hide-small"><a href="#">Se te olvidó tu contraseña?</a></span>
-                                    <button class="w3-button w3-block w3-green w3-section w3-padding" type="submit" data-toggle="tooltip" title="Iniciar sesión">Login</button>
+                                    <button class="w3-button w3-block w3-green w3-section w3-padding" 
+                                            type="submit" 
+                                            data-toggle="tooltip" 
+                                            title="Iniciar sesión">Login</button>
                                     <hr class="separators">
                                     <a class="google btn" 
                                         href="{% url 'social:begin' 'google-oauth2' %}"
@@ -73,25 +76,26 @@
         <div class="w3-third">
             <img src=""> 
             <a href="/users/createUser.html" 
-            class="w3-button w3-right w3-gray w3-section w3-padding" 
-            type="submit">Registrarse</a>
+                class="w3-button w3-right w3-gray w3-section w3-padding" 
+                type="submit"
+                data-toggle="tooltip" 
+              	title="Registrarse">Registrarse</a>
         </div>
-        <script >
-            $(document).ready(function(){
-              $("#messages").fadeOut(3500);
-              })
-        </script>
-        <div style="color:white;" class="container">
+        <script src="{% static 'js/message.js' %}"></script>
+        <div class="container white-color">
             {% if messages %}
             <div class='row'>
-            <div class='col-sm-6 col-sm-offset-3'>
-             {% for message in messages %}
-              <li class="w3-panel w3-green"  id="messages" {% if message.tags == "success" %} class="alert alert-sucess "{% endif %}> {{ message }}</li>
-             {% endfor %}
+                <div class='col-sm-6 col-sm-offset-3'>
+                    {% for message in messages %}
+                    <li class="w3-panel w3-green"  
+                        id="messages" {% if message.tags == "success" %} 
+                        class="alert alert-sucess "{% endif %}> 
+                        {{ message }}</li>
+                    {% endfor %}
+                </div>
             </div>
-          </div>
-             {% endif %}
-          </div>
+            {% endif %}
+        </div>
     </div>
 
 </body>

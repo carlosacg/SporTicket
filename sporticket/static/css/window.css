@@ -110,7 +110,6 @@ img {
 	width: 100px;
 }
 
-
 .imgSaleEvent {
 	height: 350px;
 	margin-left: -10px;
@@ -127,6 +126,14 @@ img {
 .main {
 	margin-left: 200px;
 	margin-top: 43px;
+}
+
+#messages {
+	display: none;
+	margin-left: 800px;
+	margin-top: -600px;
+	text-align: left;
+	width: 35%; 
 }
 
 #myfirstchart {
@@ -172,12 +179,19 @@ img {
 
 #success {
 	display: none;
-	margin-top:1 0px; 
+	margin-left: 800px;
+	margin-top: -600px;
+	text-align: left;
+	width: 35%; 
 }
 
 .table {
 	margin-left: 200px;
 	width: 60%; 
+}
+
+.tableBill {
+	margin-top: -20px;
 }
 
 .tableXS {
@@ -208,8 +222,16 @@ img {
 	text-align: right;
 }
 
+.tickets {
+	display: none;
+}
+
 th {
 	color: orange;
+}
+
+.underlined {
+	text-decoration: none;
 }
 
 .view {
@@ -251,6 +273,10 @@ th {
 
 .w3-container {
 	padding-top: 22px;
+}
+
+.white-color {
+	color: white;
 }
 
 .width-card {

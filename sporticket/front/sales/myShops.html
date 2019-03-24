@@ -1,51 +1,54 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
-	<div class="w3-main" >
-		<header class="w3-container">
-			<h5 style="color: black;"><b style="color: black;"><i class="fa fa-shopping-cart" style="color: black;"></i> Mis Compras</b></h5>
-        </header>
-        <div class="w3-row-padding">
-            {% if listShops %}
-            {% for listShops in listShops %}
-            <div class="w3-container w3-half">
-                <div class="w3-card-4" style="width:100%">
-                    <header class="w3-container w3-dark-grey w3-center w3-padding-small">
-                      <p style="color: orange; font-size: 20px">Factura #{{listShops.1}}</p>
-                    </header>
-                    <div class="w3-container">
-                        <div class="w3-half">
-                            <div class="w3-row-padding">
-                                <p>Fecha de compra: </p>
-                                <input class="w3-input w3-border-0" value="{{listShops.3}}" disabled style="width: 90%; margin-top: -10px;">
-                            </div>
-                        </div>
-                        <div class="w3-row-padding" style="margin-left:-8px; margin-top:-18px">
-                            <div class="w3-half">
-                                <p>Boletos comprados:</p>
-                                <input class="w3-input w3-border-0" value="{{listShops.0}}" disabled style="width: 90%; margin-top: -10px;">
-                            </div>
-                        </div>
-                        <div class="w3-row-padding" style="margin-left:-8px; margin-top:-18px">
-                            <div class="w3-half">
-                                <p>Total pagado: </p>
-                                <input class="w3-input w3-border-0" value="{{listShops.2}}" disabled style="width: 90%; margin-top: -10px;">
-                            </div>
+<div class="w3-main" >
+    <header class="w3-container">
+        <h5 class="black-color">
+            <b class="black-color">
+            <i class="fa fa-shopping-cart black-color"></i> Mis Compras</b>
+        </h5>
+    </header>
+    <div class="w3-row-padding">
+        {% if listShops %}
+        {% for listShops in listShops %}
+        <div class="w3-container w3-half">
+            <div class="w3-card-4 card">
+                <header class="w3-container w3-dark-grey w3-center w3-padding-small">
+                    <p class="text">Factura #{{listShops.1}}</p>
+                </header>
+                <div class="w3-container">
+                    <div class="w3-half">
+                        <div class="w3-row-padding">
+                            <p>Fecha de compra: </p>
+                            <input class="w3-input w3-border-0 sizeInput" value="{{listShops.3}}" disabled >
                         </div>
                     </div>
-                    <br>
+                    <div class="w3-row-padding content" >
+                        <div class="w3-half">
+                            <p>Boletos comprados:</p>
+                            <input class="w3-input w3-border-0 sizeInput" value="{{listShops.0}}" disabled >
+                        </div>
+                    </div>
+                    <div class="w3-row-padding content" >
+                        <div class="w3-half">
+                            <p>Total pagado: </p>
+                            <input class="w3-input w3-border-0 sizeInput" value="{{listShops.2}}" disabled >
+                        </div>
+                    </div>
                 </div>
                 <br>
             </div>
-            {% endfor %}
-            {% else %}
-            <h1 style="color: black;">Aun no ha realizado compras</h1>
-            {% endif %}
+            <br>
         </div>
-        
-        <hr>
-		<footer class="w3-container w3-padding-14 w3-grey">
-	    	<p>Powered by <a style="color: black;">XSOFT</a></p>
-		</footer>
-	</div>
+        {% endfor %}
+        {% else %}
+        <h1 class="black-color">Aún no ha realizado compras</h1>
+        {% endif %}
+    </div>
+    
+    <hr>
+    <footer class="w3-container w3-padding-14 w3-grey">
+        <p>Powered by <a class="black-color">XSOFT</a></p>
+    </footer>
+</div>
 {% endblock %}

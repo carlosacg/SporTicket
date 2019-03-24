@@ -1,11 +1,7 @@
 {% extends 'base/base.html' %}
-
+{%load staticfiles %}
 {% block content %}
-<style>
-	#messages {
-		margin-top:1 0px; 
-	}
-</style>
+
 <div class="w3-main" >
 	<header class="w3-container" >
 		<h5 class="black-color">
@@ -63,37 +59,35 @@
 			<br>
 			<br> <br/>
 			<div class="w3-show-inline-block">
-                <div class="w3-bar">
-                    <button type="submit" 
-                    		class="w3-button w3-padding-16 w3-dark-grey w3-circle" >
-                    		<i class="fa fa-save"></i>
-                    </button>
-                </div>
-            </div>
+				<div class="w3-bar">
+					<button type="submit" 
+							class="w3-button w3-padding-16 w3-dark-grey w3-circle" 
+							data-toggle="tooltip" 
+              				title="Guardar evento">
+							<i class="fa fa-save"> Guardar</i>
+					</button>
+				</div>
+			</div>
 		</div>
-	</form>
-
-		
+	</form>		
 	<br>
 	<br>
  	<footer class="w3-container w3-padding-14 w3-grey">
     	<p>Powered by <a class="black-color">XSOFT</a></p>
 	</footer>
-	<script >
-		$(document).ready(function(){
-		  $("#messages").fadeOut(3500);
-		  })
-	</script>
-	<div style="color:white;" class="container">
+	
+	<script src="{% static 'js/message.js' %}"></script>
+
+	<div class="container white-color w3-padding-small">
 		{% if messages %}
 		<div class='row'>
-		<div class='col-sm-6 col-sm-offset-3'>
-		 {% for message in messages %}
-		  <li class="w3-panel w3-green"  id="messages" {% if message.tags == "success" %} class="alert alert-sucess "{% endif %}> {{ message }}</li>
-		 {% endfor %}
-		</div>
+			<div class='col-sm-6 col-sm-offset-3'>
+			{% for message in messages %}
+				<li class="w3-panel w3-green"  id="messages" {% if message.tags == "success" %} class="alert alert-sucess "{% endif %}> {{ message }}</li>
+			{% endfor %}
+			</div>
 	  </div>
 		 {% endif %}
-	  </div>
+	</div>
 </div>
 {% endblock %}

@@ -254,3 +254,5 @@ def getEventsJSON(request):
             newEvent.save()
             print("Interopere")
         
+def referredEvents(request):
+    return render(request, 'events/loadReferredEvents.html')

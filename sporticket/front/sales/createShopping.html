@@ -4,18 +4,22 @@
 
 {% block content %}
 <div class="w3-main" >
-		<div id="success" class="w3-panel w3-green" style= "margin-top:1 0px; display: none;">	
+		<div id="success" class="w3-panel w3-green">	
 				<p>¡Compra exitosa!</p>
 		</div> 
     <header class="w3-container">
-        <h5 class="black-color" ><b class="black-color"><i class="fa fa-shopping-cart" style="color: black;"></i> Seleccione los boletos a comprar del evento: </b><b style="color: black;" id="nombre_evento"> {{event.name}} </b></h5>
+        <h5 class="black-color" >
+					<b class="black-color">
+					<i class="fa fa-shopping-cart black-color"></i> Seleccione los boletos a comprar del evento:</b>
+					<b class="black-color" id="nombre_evento"> {{event.name}} </b>
+				</h5>
         <br>
-	</header>
+		</header>
 
 	<div>
 		<div class="">
 			<div class="w3-quarter">
-				<table id="main_table" class="w3-table-all w3-hoverable " style="width: 50%">
+				<table id="main_table" class="w3-table-all w3-hoverable tableXS" >
 					<thead >
 						<tr class="w3-dark-grey">
 							<th>Boletos disponibles</th>
@@ -24,24 +28,24 @@
 						</tr>
 					</thead>
 				 	<tbody>
-					  	{% if avalibleTicket %}
-					  	{% for tickets_avalibles in avalibleTicket %}
-					  	<tr id="{{tickets_avalibles.1}}" >
-						  	<td id = "{{tickets_avalibles.1}}_cant">{{tickets_avalibles.0}}</td>
-						  	<td id = "{{tickets_avalibles.1}}_ubication">{{tickets_avalibles.1}}</td>
-						  	<td id = "{{tickets_avalibles.1}}_cost" value="{{tickets_avalibles.2}}">{{tickets_avalibles.2}}</td>
-						  	<td id='{{tickets_avalibles.1}}_id' style="display: none">{{tickets_avalibles.3}}</td>
+						{% if avalibleTicket %}
+						{% for tickets_avalibles in avalibleTicket %}
+						<tr id="{{tickets_avalibles.1}}" >
+							<td id = "{{tickets_avalibles.1}}_cant">{{tickets_avalibles.0}}</td>
+							<td id = "{{tickets_avalibles.1}}_ubication">{{tickets_avalibles.1}}</td>
+							<td id = "{{tickets_avalibles.1}}_cost" value="{{tickets_avalibles.2}}">{{tickets_avalibles.2}}</td>
+							<td class="tickets" id='{{tickets_avalibles.1}}_id' style="display:none;">{{tickets_avalibles.3}}</td>
 						</tr>
-				  	</tbody>
+				  </tbody>
 					{% endfor %}
 					{% else %}
-					<h1 style="color: black;">No hay boletos disponibles en este evento</h1>
+					<h1 class="black-color">No hay boletos disponibles en este evento</h1>
 					{% endif %}
 				</table>
 			</div>
 		</div>
-	  	<div class="w3-rest w3-card-2" style="width: 70%; text-align: center; margin-left: 200px;">
-			<h3 style="color: black; text-align: center">Listado de compra</h3>
+	  <div class="w3-rest w3-card-2 cardSize" >
+			<h3 class="textBill">Listado de compra</h3>
 					
 			<div class="w3-half">
 				<label>Ubicación</label><!--NO BORRAR NADA DEL FORM-->
@@ -50,17 +54,17 @@
 					{% if avalibleTicket %}
 			  		{% for tickets_avalibles in avalibleTicket %}
 			  			<option value="{{tickets_avalibles.1}}">{{tickets_avalibles.1}}</option>
-					{% endfor %}
+						{% endfor %}
 					{% endif %}
 				</select>
-            </div>
-            <div class="w3-half">
-                <label>Metodo de pago</label><!--NO BORRAR NADA DEL FORM-->
-                <select id='select_pago' name="select_pago">
-										<option value="Credito">Credito</option>
-										<option value="Debito">Debito</option>
-                </select>
-            </div>
+      </div>
+			<div class="w3-half">
+					<label>Metodo de pago</label><!--NO BORRAR NADA DEL FORM-->
+					<select id='select_pago' name="select_pago">
+						<option value="Credito">Credito</option>
+						<option value="Debito">Debito</option>
+					</select>
+			</div>
 			<div class="w3-half">
 				<label>Cantidad de boletos</label><!--NO BORRAR NADA DEL FORM-->
 				<input type="number" name="cantidad" id="cantidad" value="" />
@@ -68,49 +72,64 @@
 			<div class="w3-container">
 				<div class="w3-show-inline-block">
 					<div class="w3-bar">
-						<button onclick="comprobar()"  class="w3-button w3-padding w3-dark-grey w3-round-large" ><font color="orange"><i class="fa fa-plus"></i> Añadir boleto</font></button>
-						<button onclick="document.getElementById('id03').style.display='block'"  type="submit" class="w3-button w3-padding w3-dark-grey w3-round-large"><font color="orange">Escoger otro Evento</font></button>
+						<button onclick="comprobar()"  
+										class="w3-button w3-padding w3-dark-grey w3-round-large" >
+										<font color="orange">
+											<i class="fa fa-plus"></i> Añadir boleto</font>
+						</button>
+						<button onclick="document.getElementById('id03').style.display='block'"  
+										type="submit" 
+										class="w3-button w3-padding w3-dark-grey w3-round-large">
+										<font color="orange">Escoger otro Evento</font>
+						</button>
 					</div>
 				</div>
 			</div>
-		<form>
-			{% csrf_token %}
-		</form>
-		<form method="GET" action="/sales/finishSale/" id="post_venta">
-			{% csrf_token %}
-			<input type="text" name="post_venta_envio" id="post_venta_envio" style="display: none">
-        </form>
-		<button onclick="document.getElementById('id02').style.display='block'"  type="submit" class="w3-button w3-padding w3-dark-grey w3-round-large"><font color="orange">Finalizar Venta</font></button>
-		<div class="w3-container">
-			<table id="bill_table" class="w3-table-all w3-hoverable ">
-			  	<thead >
-					<tr class="w3-dark-grey">
-						<th style="display: none">id</th>
-						<th>Evento</th>
-						<th>Cant.</th>
-						<th>Ubicación</th>
-						<th>Costo</th>
-						<th id= headsubtotal>SubTotal</th>
-						<th>Acciones</th>
-					</tr>
-
-			  	</thead>
-			  	<tbody>
-			  		<tr>
-			  			<div class="w3-threequarter w3-dark-grey">
-			  				<th style="text-align:right;" colspan="4">Total</th>
-			  			</div>
-						  <th id="total_bill"></th>
-						  <th></th>
-			  		</tr>
-			  	</tbody>
-			</table>
-			<br>
-	  	</div>
+			<form>
+				{% csrf_token %}
+			</form>
+			<form method="GET" 
+						action="/sales/finishSale/" 
+						id="post_venta">
+				{% csrf_token %}
+				<input type="text" 
+							name="post_venta_envio" 
+							id="post_venta_envio" 
+							class="tickets">
+			</form>
+			<button onclick="document.getElementById('id02').style.display='block'"  
+							type="submit" 
+							class="w3-button w3-padding w3-dark-grey w3-round-large">
+							<font color="orange">Finalizar Venta</font>
+			</button>
+			<div class="w3-container">
+				<table id="bill_table" class="w3-table-all w3-hoverable ">
+					<thead >
+						<tr class="w3-dark-grey">
+							<th class="tickets" style="display: none;">id</th>
+							<th>Evento</th>
+							<th>Cant.</th>
+							<th>Ubicación</th>
+							<th>Costo</th>
+							<th id= headsubtotal>SubTotal</th>
+							<th>Acciones</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<div class="w3-threequarter w3-dark-grey">
+								<th class="textTh"colspan="4">Total</th>
+							</div>
+							<th id="total_bill"></th>
+							<th></th>
+						</tr>
+					</tbody>
+				</table>
+				<br>
+			</div>
+		</div>
 	</div>
-	</div>
-	
-	
+		
 	<hr>
 
 	<div class="w3-container">
@@ -118,10 +137,11 @@
 				<div class="w3-modal-content">
 				  <header > 
 					<span onclick="document.getElementById('id02').style.display='none'" 
-					class="w3-button w3-display-topright">&times;</span>
+								class="w3-button w3-display-topright">&times;</span>
 						<a class= "w3-display-topmiddle" >
-							<img src="{% static 'images/logo.png' %}" class="w3-round w3-display-topmiddle w3-margin-right" style="left: -30px;">
-							<h6 class= "w3-margin-left" style="color: black; font-weight:bold; left: 200px;">SporTicket</h6>
+							<img src="{% static 'images/logo.png' %}" 
+									class="w3-round w3-display-topmiddle w3-margin-right imgBill">
+							<h6 class= "w3-margin-left textBillTitle" >SporTicket</h6>
 					  </a> 
 					  <div class="w3-row-padding">
 						  <br>
@@ -144,27 +164,26 @@
 						<p>Vendedor:{{user.last_name}}</p>
 						<p>Cond. Pago: CONTADO</p>
 						<div class="w3-container">
-								<table id="bill_table1" class="w3-table-all w3-hoverable ">
-									  <thead >
-										<tr class="w3-dark-grey">
-											<th>Evento</th>
-											<th>Cant.</th>
-											<th>Ubicación</th>
-											<th>Costo</th>
-											<th>SubTotal</th>
+							<table id="bill_table1" class="w3-table-all w3-hoverable ">
+								<thead >
+									<tr class="w3-dark-grey">
+										<th>Evento</th>
+										<th>Cant.</th>
+										<th>Ubicación</th>
+										<th>Costo</th>
+										<th>SubTotal</th>
+									</tr>				
+								</thead>
+								<tbody>
+										<tr>
+											<div class="w3-threequarter w3-dark-grey">
+												<th class="textTh " colspan="4">Total</th>
+											</div>
+											<th id="total_bill1"></th>			  			
 										</tr>
-					
-									  </thead>
-									  <tbody>
-										  <tr>
-											  <div class="w3-threequarter w3-dark-grey">
-												  <th style="text-align:right;" colspan="4">Total</th>
-											  </div>
-											  <th id="total_bill1"></th>			  			
-										  </tr>
-									  </tbody>
-								</table>
-							  </div>
+								</tbody>
+							</table>
+						</div>
 					  <hr>
 					  <div class="w3-row-padding">
 						  <p class="w3-center">INFORMACIÓN TRIBUTARIA</p>
@@ -187,11 +206,14 @@
 					  <div class="w3-row-padding">
 						  <br>
 						  <div class="w3-show-inline-block">
-							<div class="w3-bar">
-								<button onclick='finishShop()' type="submit" class="w3-button w3-padding-16 w3-dark-grey w3-circle" >Confirmar Venta</button>
-							</div>
+								<div class="w3-bar">
+									<button onclick='finishShop()' 
+													type="submit" 
+													class="w3-button w3-padding-16 w3-dark-grey w3-circle" ><i class="fa fa-check">Confirmar venta</i>
+									</button>
+								</div>
 						</div>
-					  </div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -201,11 +223,11 @@
 		<div id="id03" class="w3-modal">
 				<div class="w3-modal-content">
 				  <header > 
-					<span onclick="document.getElementById('id03').style.display='none'" 
-					class="w3-button w3-display-topright">&times;</span>
-						<a class= "w3-display-topmiddle" >
-							<h6 class= "w3-margin-left " style="color: black; font-weight:bold; left: 200px;">Selecciona el evento que deseas agregar</h6>
-					  </a> 
+						<span onclick="document.getElementById('id03').style.display='none'" 
+									class="w3-button w3-display-topright">&times;</span>
+							<a class= "w3-display-topmiddle" >
+								<h6 class= "w3-margin-left textBillTitle">Selecciona el evento que deseas agregar</h6>
+							</a> 
 					</header>
 					<br>
 					<br>
@@ -227,11 +249,11 @@
 								</div>
 							</form>
 							<form method="GET" action="/sales/getNewEvent/" id="get-new-event">
-								<input type="text" name="get_event_selec" id="get_event_selec" style="display: none">							
+								<input type="text" name="get_event_selec" id="get_event_selec" class="tickets">							
 								<table id="search_table" class="w3-table-all w3-hoverable ">
 									  <thead >
 										<tr class="w3-dark-grey">
-											<th style="display: none">id</th>
+											<th class="tickets">id</th>
 											<th>Evento</th>
 											<th>Capacidad</th>
 											<th>Fecha</th>
@@ -251,7 +273,7 @@
 		</div>
 
 	<footer class="w3-container w3-padding-14 w3-grey">
-    	<p>Powered by <a style="color: black;">XSOFT</a></p>
+    	<p>Powered by <a class="black-color"SOFT></a></p>
 	</footer>
 </div>
 <script type="text/javascript">
