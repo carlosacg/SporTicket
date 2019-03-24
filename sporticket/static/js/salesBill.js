@@ -291,10 +291,15 @@ $("#get-new-event").submit(function(e){
     });
 });
 
+function isFillMetodoPago(){
+    if ((document.getElementById('select_metodo_pago').selectedIndex) == 0)
+        console.log("No");
+        return 0;
+}
+
 $("#post_venta").submit(function(e){
     e.preventDefault();			
     document.getElementById("post_venta_envio").value = createJson();
-    document.getElementById('select_metodo_pago').selectedIndex="0";
     console.log("ANTES DEL AJAX")
     console.log(document.getElementById("post_venta_envio").value);
     var prueba = $('#post_venta_envio').val()
@@ -333,7 +338,12 @@ function showBill(){
     if (table_len == 2){
         alert("No a añadido ningun boleto");
     } else {
-        document.getElementById('id02').style.display='block';
+        if ((document.getElementById('select_metodo_pago').selectedIndex) == 0){
+            alert("No a selecionado ningun metodo de pago");
+        } else {
+            document.getElementById('id02').style.display='block';
+        }
+        
     }
 }
 
