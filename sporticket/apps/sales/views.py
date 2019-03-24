@@ -142,7 +142,6 @@ def getNewEvent(request):
 	event = event_serializer(Event.objects.get(id=str(idEvent['id'])))
 	tickets_avalibles=getListTicketsAvalibles(Event.objects.get(id=str(idEvent['id'])))
 	tickets_avalibles=[ new_tickets_avalibles(tickets_avalible) for tickets_avalible in tickets_avalibles ]
-	#list_events_type=getListTypeEvents()
 	contexto = {'event':event,'avalibleTicket':tickets_avalibles}	
 	return HttpResponse(json.dumps(contexto,cls=DjangoJSONEncoder), content_type = "application/json")
 
@@ -200,13 +199,19 @@ class GetDataAjaxView(TemplateView):
 		print('TOTAL: '+total)
 		x=0
 		bill=createBillAjax(request,pago,'Compra',total)
-		while x < int(len(ubications)):        
+		while x < int(len(ubications)):    
 			location=Location.objects.get(id=ubications[x])
-			avalible_tickets=get_avalible_tickets(str(location.event),str(location.id))
-			add_shopping(bill,avalible_tickets,quantitys[x],len(avalible_tickets))
+			addShopping(location.id,quantitys[x],bill)    
 			x+=1
 		return JsonResponse({'status':'success'})
 
+def addShopping(id_location,cantidad, Bill):
+	contador = int(cantidad)
+	for i in range(contador):
+		ticket = Ticket.objects.filter(location_id=id_location, state__exact="Disponible")[0]
+		ticket.id_bill = Bill
+		ticket.state = "Vendido"
+		ticket.save()
 
 def createBillAjax(request,payment_method,type_bill,total):
 	create_bill(request)
@@ -247,16 +252,6 @@ def getListTicketsAvalibles(event):
     connection.close()
     return rows
 
-def get_avalible_tickets(event,location):
-	cursor = connection.cursor()
-	instruction = "SELECT id FROM tickets_ticket WHERE event_id="+event+" AND location_id="+location+" AND state='Disponible';"
-	print(instruction)
-	cursor.execute(instruction)
-	row = cursor.fetchall()
-	connection.commit()
-	connection.close()
-	return (list(row))
-
 
 def add_ticket_to_bill(bill,ticket):
 	ticket = Ticket.objects.get(id=ticket)
@@ -270,49 +265,6 @@ def create_bill(request):
 	print(user.id)
 	bill = Bill(id_profile=user)
 	bill.save()
-		
-def add_shopping(bill,ticket,quantity,avalibles):
-		print("Factura: "+str(bill)+" TICKETS DISPONIBLES: "+str(ticket)+" CANTIDAD SOLICITADA: "+str(quantity)+" DISPONIBLES: "+str(avalibles))
-		x=0
-		if str(quantity) != '':
-			if int(quantity) < int(avalibles): 
-				while x < int(quantity):
-					if int(len(str(ticket[x])))==4:
-						add_ticket_to_bill(bill,str(ticket[x])[1:2])
-					if int(len(str(ticket[x])))==5:
-						add_ticket_to_bill(bill,str(ticket[x])[1:3])
-					if int(len(str(ticket[x])))==6:
-						add_ticket_to_bill(bill,str(ticket[x])[1:4])
-					if int(len(str(ticket[x])))==7:
-						add_ticket_to_bill(bill,str(ticket[x])[1:5])
-					if int(len(str(ticket[x])))==8:
-						add_ticket_to_bill(bill,str(ticket[x])[1:6])
-					if int(len(str(ticket[x])))==9:
-						add_ticket_to_bill(bill,str(ticket[x])[1:7])
-					if int(len(str(ticket[x])))==10:
-						add_ticket_to_bill(bill,str(ticket[x])[1:8])
-					if int(len(str(ticket[x])))==11:
-						add_ticket_to_bill(bill,str(ticket[x])[1:9])
-					x+=1
-			else:
-				while x < int(avalibles):
-					if int(len(str(ticket[x])))==4:
-						add_ticket_to_bill(bill,str(ticket[x])[1:2])
-					if int(len(str(ticket[x])))==5:
-						add_ticket_to_bill(bill,str(ticket[x])[1:3])
-					if int(len(str(ticket[x])))==6:
-						add_ticket_to_bill(bill,str(ticket[x])[1:4])
-					if int(len(str(ticket[x])))==7:
-						add_ticket_to_bill(bill,str(ticket[x])[1:5])
-					if int(len(str(ticket[x])))==8:
-						add_ticket_to_bill(bill,str(ticket[x])[1:6])
-					if int(len(str(ticket[x])))==9:
-						add_ticket_to_bill(bill,str(ticket[x])[1:7])
-					if int(len(str(ticket[x])))==10:
-						add_ticket_to_bill(bill,str(ticket[x])[1:8])
-					if int(len(str(ticket[x])))==11:
-						add_ticket_to_bill(bill,str(ticket[x])[1:9])
-					x+=1
 
 def calculate(ubications, event, quantity):	
 	if str(quantity) != '':
