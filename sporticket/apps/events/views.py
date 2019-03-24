@@ -34,7 +34,7 @@ def insertEventType(request):
             form.save()
             messages.success(request,'Tipo de evento agregado')
             form2 = EventForm()
-        return render(request, 'events/insertEvents.html',{'form':form2}) 
+        return HttpResponseRedirect(reverse('evento_crear'))
     else:
         form = EventTypeForm()   
     return render(request, 'events/insertEvenType.html',{'form':form}) 
