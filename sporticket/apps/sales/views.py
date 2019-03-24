@@ -80,16 +80,18 @@ def getDailySales(request):
 def bill_serializer(bill):
 	return {'id': bill.id, 'metodo_pago': bill.payment_method, 'total': bill.total_bill}
 
+def getIdBillLast():
+	bill=Bill.objects.all().last()
+		if bill == None:
+			return 1
+		else:
+			return int(bill.id)+1
+
 @permission_required('users.Vendedor' ,reverse_lazy('evento_listar_compras'))
 @csrf_exempt
 def createSale(request,id):
 	user=User.objects.get(id=request.user.id)
-	bill_id = 0
-	bill=Bill.objects.all().last()
-	if bill == None:
-		bill_id=1
-	else:
-		bill_id=int(bill.id)+1
+	bill_id = getIdBillLast()
 	hora = time.strftime("%c")
 	event = Event.objects.get(id=id)
 	tickets_avalibles=getListTicketsAvalibles(event)

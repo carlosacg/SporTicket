@@ -104,7 +104,7 @@ WSGI_APPLICATION = 'sporticket.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'sport_db',
+        'NAME': 'hoy',
         'USER' : 'postgres',
         'PASSWORD': '12345',
         'HOST' : 'localhost',
