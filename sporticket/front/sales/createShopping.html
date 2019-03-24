@@ -152,7 +152,7 @@
 							  <br>
 							  <p>NIT: 0000000-0</p>
 							  <p>Régimen común</p>
-							  <p>Factura # {{bill.id}}</p>
+							  <p>Factura #{{bill}}</p>
 						  </div>
 						  <div class="w3-third w3-center">				
 							  <p> Fecha y Hora</p>
@@ -590,7 +590,7 @@
         });
     }
 	function reload(){
-		//location.reload()
+		location.href="/sales/viewsEvent.html";
 	}
 
 	function succesRequest(result){
