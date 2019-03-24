@@ -63,7 +63,7 @@
 					  </div>
 					  </header>
 					<div class="w3-row-padding">
-						<p>Vendedor:{{user.last_name}}</p>
+						<p id="nombre"></p>
 						<p>Cond. Pago: CONTADO</p>
 						<div class="w3-container">
 								<table id="bill_table1" class="w3-table-all w3-hoverable ">
@@ -154,6 +154,7 @@
 				fillTableBill(detailsBills, json['total']);
 				document.getElementById("numFactura").innerHTML="Factura #"+json['id']
 				document.getElementById("fecha").innerHTML=""+json['date']
+				document.getElementById("nombre").innerHTML="VENDEDOR: "+json['name']
 				document.getElementById("id02").style.display='block';
 			}
 		});			

@@ -162,12 +162,12 @@ def addDetailsBill(ticketIn, Bill):
 	detailsBill.save()
 
 def getBill(request):
+	fullName = request.user.first_name + request.user.last_name
 	idBill = request.GET.get('get_bill')
-	print("Show id : "+idBill)
 	bill = Bill.objects.get(id=idBill)
 	detailsBills = DetailsBill.objects.filter(id_bill=idBill)
 	detailsBills=[ detailsBill_serializer(detailsBill) for detailsBill in detailsBills ]
-	return HttpResponse(json.dumps({'id':bill.id, 'date':bill.date_bill,'total':bill.total_bill,'detailsBills':detailsBills},cls=DjangoJSONEncoder), content_type = "application/json")
+	return HttpResponse(json.dumps({'id':bill.id, 'date':bill.date_bill, 'name':fullName, 'total':bill.total_bill,'detailsBills':detailsBills},cls=DjangoJSONEncoder), content_type = "application/json")
 
 def detailsBill_serializer(detailsBill):
 	costo = (detailsBill.subtotal/detailsBill.cant)
