@@ -160,7 +160,7 @@ def uploadImage(request,id):
                 messages.success(request,'Imagen actualizada exitosamente')
             return HttpResponseRedirect(reverse('location_crear', args=[id]))
     else:
-            formulario = UploadForm()
+            formulario = ImageForm()
     return render(request, "events/imageEvents.html",{'form': formulario})
     
 def insertTickets(quantity,ubication,event,cost):
