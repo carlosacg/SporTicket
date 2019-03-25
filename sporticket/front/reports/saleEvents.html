@@ -3,55 +3,71 @@
 
 {% block content %}
 <div class="w3-main" >
+	<div class="w3-container">
+		<a href="/reports/reports.html" 
+			class="w3-button w3-padding w3-dark-grey w3-circle w3-left grey-color" 
+			type="submit">
+			<i class="fa fa-angle-left orange-color" > Volver</i> 
+		</a>
+	</div>	
 	<header class="w3-container">
 		<h5 class="black-color">
 			<b class="black-color">
-			<i class="fa fa-bar-chart fa-fw black-color"></i> Reporte por ventas</b>
+			<i class="fa fa-bar-chart fa-fw black-color"></i> Reporte por eventos</b>
 		</h5>
 	</header>
-	<div class="w3-container">
-		<div class="w3-container">
-			<form method="post"> 
-				{% csrf_token %}
-				<div class="w3-row-padding">
-					<div class="w3-third">		
-						<label for="{{form.events.id_for_label}}"> {{form.events.label}} </label>
-						{{form.events}}	
-					</div>
-					<div class="w3-third">		
-						<label for="{{form.events.id_for_label}}"></label>
-						{{form.date1}}	
-					</div>			
-					<div class="w3-third">		
-						Numero de boletos disponibles: 
-						<strong>{{avalibles}}</strong>
-					</div>
-					<div class="w3-third">		
-						Numero de boletos vendidos: 
-						<strong>{{sales}}</strong>
-					</div>			
+	<form method="post"> 
+		{% csrf_token %}
+		<div class="w3-row-padding">
+			<div class="w3-quarter">		
+				<img src="" alt="">
+			</div>
+			<div class="w3-half cardSmall ">	
+				<div class="w3-half">
+					<label for="{{form.events.id_for_label}}"> {{form.events.label}} </label>
+					{{form.events}}		
+					<label for="{{form.events.id_for_label}}"></label>
+					{{form.date1}}							
 				</div>
-
-				<div class="w3-row-padding">
-					<br>
+				<div class=" w3-half w3-container ">
 					<button type="submit" 
-							class="w3-button w3-padding-16 w3-dark-grey w3-circle" >
-							<i class="fa fa-search"></i>
+						class="w3-button w3-padding w3-dark-grey w3-circle" 
+						data-toggle="tooltip" 
+							title="Buscar">
+						<i class="fa fa-search"> Buscar</i>
 					</button>
-				</div>
+				</div>					
+			</div>	
+			<div class="w3-quarter">
+				<img src="" alt="">					
+			</div>							
+		</div>		
+		<br>
+		<div class="w3-row-padding">
+			<div class="w3-third">
+				<img class="imgRightPosition" 
+					src="{% static 'images/sales.png' %}" 
+					alt="imagen de ventas por evento">	
+			</div>
+			<div class="w3-third w3-center w3-lobster">	
 				<br>
-				<div class="w3-row-padding">
-					<div class="w3-third">
-						<img class="imgRightPosition" src="{% static 'images/sales.png' %}" alt="imagen de ventas diarias">	
-					</div>
-					<div class="w3-third">	
-						<img class="imgLeftPosition" src="{% static 'images/sales.png' %}" alt="imagen de ventas diarias" >	
-					</div>
-				</div>
-			</form>
-			<br>
-		</div>	
-  	</div>
+				<label class="w3-xlarge">Número de boletos disponibles:</label>  
+				<strong class="w3-xlarge"> {{avalibles}}</strong>
+				<br>
+				<label class="w3-xlarge">Número de boletos vendidos: </label> 						
+				<strong class="w3-xlarge"> {{sales}}</strong>
+				<br>
+				<label class="w3-xlarge">Número total de ventas diarias del evento: </label> 						
+				<strong class="w3-xlarge">##</strong>
+			</div>
+			<div class="w3-third">
+				<img class="imgLeftPosition" 
+					src="{% static 'images/sales.png' %}" 
+					alt="imagen de ventas por evento" >	
+			</div>
+		</div>
+	</form>
+	<br>
 	<footer class="w3-container w3-padding-14 w3-grey">
     	<p>Powered by <a class="black-color">XSOFT</a></p>
 	</footer>

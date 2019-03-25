@@ -113,6 +113,14 @@ img {
 	width: 50%; 
 }
 
+.imgLeftPositionM {
+	width: 70%; 
+}
+
+.imgLeftPositionL {
+	width: 100%; 
+}
+
 .imgLogin {
 	width: 100px;
 }
@@ -128,6 +136,15 @@ img {
 .imgRightPosition {
 	margin-left: 200px;
 	width: 50%; 
+}
+
+.imgRightPositionM {
+	margin-left: 130px;
+	width: 70%; 
+}
+
+.imgRightPositionL {
+	width: 100%; 
 }
 
 .main {
@@ -261,6 +278,10 @@ th {
 
 .w3-hide .w3-dark-grey .w3-card {
 	color: orange;
+}
+
+.w3-lobster {
+  font-family: "Lobster", serif;
 }
 
 .w3-overlay .w3-hide-large .w3-animate-opacity {

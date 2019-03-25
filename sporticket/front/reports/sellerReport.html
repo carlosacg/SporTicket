@@ -3,6 +3,13 @@
 
 {% block content %}
 <div class="w3-main" >
+	<div class="w3-container">
+		<a href="/reports/reports.html" 
+			class="w3-button w3-padding w3-dark-grey w3-circle w3-left grey-color" 
+			type="submit">
+			<i class="fa fa-angle-left orange-color" > Volver</i> 
+		</a>
+	</div>
 	<header class="w3-container">
 		<h5 class="black-color">
 			<b class="black-color">
@@ -10,40 +17,40 @@
 		</h5>
 	</header>
 	<div class="w3-container">
-		<div class="w3-container">
-			<form method="post"> 
-				{% csrf_token %}
-				<div class="w3-row-padding">
-					<div class="w3-third">		
-						<img class="imgRightPosition" src="{% static 'images/winSeller.jpg' %}" alt="imagen de vendedor del mes">	
-					</div>
-					<div class="w3-third w3-center">		
-						El mejor vendedor  es: 
-						<strong> !!! {{fullDataOne}} !!!</strong>
-					</div>
-					<div class="w3-third w3-center">		
-						El segundo mejor vendedor  es: 
-						<strong> !!! {{fullDataTwo}} !!!</strong>
-					</div>
-					<div class="w3-third w3-center">		
-						El tercer mejor vendedor  es:  
-						<strong> !!! {{fullDataThree}} !!!</strong>
-					</div>
-					<div class="w3-third w3-center">		
-						El cuarto mejor vendedor  es:  
-						<strong> !!! {{fullDataFour}} !!!</strong>
-					</div>
-					<div class="w3-third w3-center">		
-						El quinto mejor vendedor  es: 
-						<strong> !!! {{fullDataFive}} !!!</strong>
-					</div>
-					<div class="w3-third">		
-						<img class="imgLeftPosition" src="{% static 'images/winSeller.jpg' %}" alt="imagen de vendedor del mes">	
-					</div>
+		<form method="post"> 
+			{% csrf_token %}
+			<div class="w3-row-padding">
+				<div class="w3-third">	
+					<br>	
+					<img class="imgRightPositionL" 
+						src="{% static 'images/winSeller.png' %}" 
+						alt="imagen de vendedor del mes" >	
 				</div>
-			</form>
-			<br>
-		</div>	
+				<div class="w3-third w3-center w3-lobster">		
+					<label class="w3-xlarge">El mejor vendedor  es: </label>
+					<strong class="w3-xlarge"> {{fullDataOne}} </strong>
+					<br>
+					<label class="w3-xlarge">El segundo mejor vendedor es: </label>
+					<strong class="w3-xlarge"> {{fullDataTwo}} </strong>
+					<br>
+					<label class="w3-xlarge">El tercer mejor vendedor  es:</label>  
+					<strong class="w3-xlarge"> {{fullDataThree}} </strong>
+					<br>
+					<label class="w3-xlarge">El cuarto mejor vendedor  es:</label>  
+					<strong class="w3-xlarge"> {{fullDataFour}} </strong>
+					<br>
+					<label class="w3-xlarge">El quinto mejor vendedor  es:</label> 
+					<strong class="w3-xlarge"> {{fullDataFive}} </strong>
+				</div>					
+				<div class="w3-third">	
+					<br>	
+					<img class="imgLeftPositionL" 
+						src="{% static 'images/winSeller.png' %}" 
+						alt="imagen de vendedor del mes" >	
+				</div>
+			</div>
+		</form>
+		<br>
   	</div>
 	<footer class="w3-container w3-padding-14 w3-grey">
     	<p>Powered by <a class="black-color">XSOFT</a></p>

@@ -11,29 +11,23 @@
     <div class="w3-row-padding">
         {% if listShops %}
         {% for listShops in listShops %}
-        <div class="w3-container w3-half">
-            <div class="w3-card-4 card">
-                <header class="w3-container w3-dark-grey w3-center w3-padding-small">
+        <div class="w3-container w3-quarter w3-left" style=" margin-right: -30px;">
+            <div class="w3-card-4 " style="width: 85%">
+                <header class=" w3-dark-grey w3-center w3-padding-small">
                     <p class="text">Factura #{{listShops.1}}</p>
                 </header>
-                <div class="w3-container">
-                    <div class="w3-half">
-                        <div class="w3-row-padding">
-                            <p>Fecha de compra: </p>
-                            <input class="w3-input w3-border-0 sizeInput" value="{{listShops.3}}" disabled >
-                        </div>
+                <div class="w3-container w3-center">                
+                    <div class="w3-row-padding w3-container content">
+                        <p class="w3-left">Fecha de compra: </p>
+                        <input class="w3-input w3-border-0 sizeInput" value="{{listShops.3}}" disabled >
                     </div>
-                    <div class="w3-row-padding content" >
-                        <div class="w3-half">
-                            <p>Boletos comprados:</p>
-                            <input class="w3-input w3-border-0 sizeInput" value="{{listShops.0}}" disabled >
-                        </div>
+                    <div class="w3-row-padding w3-container content" >                        
+                        <p class="w3-left">Boletos comprados:</p>
+                        <input class="w3-input w3-border-0 sizeInput" value="{{listShops.0}}" disabled >                        
                     </div>
-                    <div class="w3-row-padding content" >
-                        <div class="w3-half">
-                            <p>Total pagado: </p>
-                            <input class="w3-input w3-border-0 sizeInput" value="{{listShops.2}}" disabled >
-                        </div>
+                    <div class="w3-row-padding w3-container content" >                       
+                        <p class="w3-left" >Total pagado: </p>
+                        <input class="w3-input w3-border-0 sizeInput" value="{{listShops.2}}" disabled >                        
                     </div>
                 </div>
                 <br>

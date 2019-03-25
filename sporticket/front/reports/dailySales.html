@@ -3,6 +3,13 @@
 
 {% block content %}
 <div class="w3-main" >
+	<div class="w3-container">
+		<a href="/reports/reports.html" 
+			class="w3-button w3-padding w3-dark-grey w3-circle w3-left grey-color" 
+			type="submit">
+			<i class="fa fa-angle-left orange-color" > Volver</i> 
+		</a>
+	</div>
 	<header class="w3-container">
 		<h5 class="black-color">
 			<b class="black-color">
@@ -13,29 +20,28 @@
 		<div class="w3-container">
 			<form method="post"> 
 				{% csrf_token %}
-				<div class="w3-row-padding">
-					<div class="w3-third">		
-						<img src="">
-					</div>
-					<div class="w3-third">		
-						Total de ventas en el dia: 
-						<strong> $$$ {{dailySales}} </strong>
-					</div>
-					<div class="w3-third">		
-						Venta mas grande del dia: 
-						<strong> $$$ {{charts}} </strong>
-					</div>
-					<div class="w3-third">		
-						Valor total de ventas en el dia: 
-						<strong> $$$ {{chartsPlus}} </strong>
-					</div>
-					<div class="w3-third">		
-						Promedio total de ventas en el dia: 
-						<strong> $$$ {{chartsAverage}} </strong>
-					</div>
-					<div class="w3-third">		
-						<img src="">
-					</div>
+				<div class="w3-third">		
+					<img class="imgRightPositionM" 
+						src="{% static 'images/ventasDiarias.png' %}" 
+						alt="imagen de ventas diarias" >	
+				</div>
+				<div class="w3-third w3-center w3-lobster">		
+					<label class="w3-xlarge">Total de ventas en el día:</label> 
+					<strong class="w3-xlarge"> {{dailySales}} </strong>
+					<br>
+					<label class="w3-xlarge">Venta más grande del día: </label>
+					<strong class="w3-xlarge"> {{charts}} </strong>
+					<br>
+					<label class="w3-xlarge">Valor total de ventas en el día: </label>
+					<strong class="w3-xlarge"> {{chartsPlus}} </strong>
+					<br>
+					<label class="w3-xlarge">Promedio total de ventas en el día:</label> 
+					<strong class="w3-xlarge"> {{chartsAverage}} </strong>
+				</div>
+				<div class="w3-third">		
+					<img class="imgLeftPositionM" 
+						src="{% static 'images/ventasDiarias.png' %}" 
+						alt="imagen de ventas diarias" >	
 				</div>
 			</form>
 			<br>

@@ -3,47 +3,42 @@
 
 {% block content %}
 <div class="w3-main" >
+		<div class="w3-container">
+			<a href="/reports/reports.html" 
+				class="w3-button w3-padding w3-dark-grey w3-circle w3-left grey-color" 
+				type="submit">
+				<i class="fa fa-angle-left orange-color" > Volver</i> 
+			</a>
+		</div>
 	<header class="w3-container">
 		<h5 class="black-color">
 			<b class="black-color">
 			<i class="fa fa-bar-chart fa-fw black-color"></i> Reporte total de ventas</b>
 		</h5>
 	</header>
-	<div class="w3-container">
-		<div class="w3-container w3-row-padding">
-			<div class="w3-third">
-				<label>Fecha inicial</label>
-				{{form.dateInitial}}
+	<div class="w3-container">			
+		<div class="w3-row-padding">
+			<div class="w3-bar">
 			</div>
-			<div class="w3-third">
-				<label>Fecha final</label>
-			</div>
-			<div class="w3-third">
-				<label>Evento</label>
-			</div>
-  			<div class="w3-row-padding">
-				<div class="w3-bar">
+			<div class="w3-half w3-center">
+				<header class="w3-container ">
+					<h4>
+				<b class="black-color"> Reporte de compras en el mes</b>
+					</h4>
+				</header>
+				<div class="w3-center" >
+					<div id="myfirstchart"></div>
 				</div>
-			    <div class="w3-half w3-center">
-			      <header class="w3-container ">
-			        <h4>
-						<b class="black-color"> Reporte de compras en el mes</b>
-			        </h4>
-			      </header>
-			      <div class="w3-center" >
-			        <div id="myfirstchart"></div>
-			      </div>
-			    </div>
+			</div>
 
-			    <div class="w3-half w3-center">
-			      <header class="w3-container">
-			        <h4><b class="black-color"> Reporte de ventas en el mes</b></h4>
-			      </header>
-			      <div class="w3-center" >
-			        <div id="graph"></div>
-			      </div>
-			    </div>
-		  	</div>
+			<div class="w3-half w3-center">
+				<header class="w3-container">
+					<h4><b class="black-color"> Reporte de ventas en el mes</b></h4>
+				</header>
+				<div class="w3-center" >
+					<div id="graph"></div>
+				</div>
+			</div>
 		</div>
 	</div>
 

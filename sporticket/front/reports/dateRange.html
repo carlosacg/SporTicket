@@ -3,25 +3,35 @@
 
 {% block content %}
 <div class="w3-main" >
+	<div class="w3-container">
+		<a href="/reports/reports.html" 
+			class="w3-button w3-padding w3-dark-grey w3-circle w3-left grey-color" 
+			type="submit">
+			<i class="fa fa-angle-left orange-color" > Volver</i> 
+		</a>
+	</div>
 	<header class="w3-container">
 		<h5 class="black-color">
 			<b class="black-color">
 			<i class="fa fa-bar-chart fa-fw black-color"></i> Reporte por rango de fechas</b>
 		</h5>
 	</header>
-	<div class="w3-container">
-		<form  method="post">
-			{% csrf_token %}
-			<div class="w3-container w3-row-padding">
-				<div class="w3-third">		
+	<form  method="post">			
+		{% csrf_token %}
+		<div class="w3-row-padding">
+			<div class="w3-quarter " >
+				<img src="" alt="">
+			</div>
+			<div class="w3-half cardSmall" >
+				<div class="w3-third w3-container">		
 					<label for="{{form.dateInitial.id_for_label}}"> {{form.dateInitial.label}} </label>
 					{{form.dateInitial}}	
 				</div>
-				<div class="w3-third">		
+				<div class="w3-third w3-container">		
 					<label for="{{form.dateFinal.id_for_label}}"> {{form.dateFinal.label}} </label>
 					{{form.dateFinal}}	
 				</div>
-				<div class="w3-third">
+				<div class="w3-third w3-container">
 					<br>
 					<button type="submit" 
 							class="w3-button w3-padding w3-dark-grey w3-circle" >
@@ -29,36 +39,36 @@
 					</button>
 				</div>
 			</div>
-			<br>
-			<br>
-			<div class="w3-row-padding">
-					<div class="w3-third">
-						<img class="imgRightPosition" src="{% static 'images/ventasRango.jpg' %}" alt="imagen de ventas diarias">	
-					</div>
-					<div class="w3-third w3-center">		
-						Ventas del rango de fechas:
-						<strong>{{dailySales}}</strong> 
-					</div>
-					<div class="w3-third">		
-						Venta mas grande del dia: 
-						<strong> $$$ {{charts}} </strong>
-					</div>
-					<div class="w3-third">		
-						Valor total de ventas en el dia: 
-						<strong> $$$ {{chartsPlus}} </strong>
-					</div>
-					<div class="w3-third">		
-						Promedio total de ventas en el dia: 
-						<strong> $$$ {{chartsAverage}} </strong>
-					</div>
-					<div class="w3-third">	
-						<img class="imgLeftPosition" src="{% static 'images/ventasRango.jpg' %}" alt="imagen de ventas diarias" >	
-					</div>
-				</div>
-		</form>
-		
+			<div class="w3-quarter">
+				<img src="" alt="">
+			</div>
+			
+		</div>
 		<br>
-	</div>
+		<br>
+		<div class="w3-row-padding">
+				<div class="w3-third">
+					<img class="imgRightPosition" src="{% static 'images/ventasRango.png' %}" alt="imagen rango de fechas">	
+				</div>
+				<div class="w3-third w3-center w3-lobster">		
+					<label class="w3-xlarge">Ventas del rango de fechas:</label>
+					<strong class="w3-xlarge">{{dailySales}}</strong> 
+					<br>		
+					<label class="w3-xlarge">Venta mas grande del día:</label> 
+					<strong class="w3-xlarge"> {{charts}} </strong>
+					<br>		
+					<label class="w3-xlarge">Valor total de ventas en el día:</label> 
+					<strong class="w3-xlarge"> {{chartsPlus}} </strong>
+					<br>		
+					<label class="w3-xlarge">Promedio total de ventas en el día:</label> 
+					<strong class="w3-xlarge"> {{chartsAverage}} </strong>
+				</div>
+				<div class="w3-third">	
+					<img class="imgLeftPosition" src="{% static 'images/ventasRango.png' %}" alt="imagen rango de fechas" >	
+				</div>
+			</div>
+	</form>		
+	<br>
 
 	<footer class="w3-container w3-padding-14 w3-grey">
     	<p>Powered by <a class="black-color">XSOFT</a></p>
