@@ -91,6 +91,7 @@ def getIdBillLast():
 @csrf_exempt
 def createSale(request,id):
 	user=User.objects.get(id=request.user.id)
+	userFullName = user.first_name + " " + user.last_name
 	bill_id = getIdBillLast()
 	hora = time.strftime("%c")
 	event = Event.objects.get(id=id)
@@ -106,7 +107,7 @@ def createSale(request,id):
 				addTicketBill(ticket, newBill)
 				addDetailsBill(ticket, newBill)
 			return HttpResponse(json.dumps({'status':'success'}), content_type="application/json")
-	context = {'event':event,'hora':hora,'avalibleTicket':tickets_avalibles, 'eventType':list_events_type, 'bill':bill_id}
+	context = {'event':event,'hora':hora,'avalibleTicket':tickets_avalibles, 'eventType':list_events_type, 'bill':bill_id , 'userFullName':userFullName}
 	return render(request,'sales/createSale.html',context)
 
 
@@ -193,7 +194,6 @@ def finishSale(request):
 			x=x+1
 			print("FOR EN FINISH SALE : "+str(x))
 			addTicketBill(ticket, newBill)
-		#return HttpResponse(json.dumps({'hola':'hola'}), content_type="application/json")
 		return HttpResponseRedirect('http://127.0.0.1:8000/sales/saleEvent.html/')
 	
 
