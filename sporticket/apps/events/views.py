@@ -48,6 +48,7 @@ def insertEvent(request):
             object = Event()
             event = Event.objects.get(id=str(object.lastEventId()))
             event.image="./images/porDefecto.jpg"
+            event.url="http://localhost:8000"
             event.save()
             messages.success(request,'Evento creado exitosamente')
         return HttpResponseRedirect(reverse('evento_imagen', args=[object.lastEventId()]))
