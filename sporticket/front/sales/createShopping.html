@@ -71,13 +71,13 @@
 			</div>
 			<div class="w3-row-padding">
 				<div class="w3-half">
-						<label class="w3-left">Método de pago</label><!--NO BORRAR NADA DEL FORM-->
-						<select class="w3-input w3-border" 
-										id='select_pago' 
-										name="select_pago">
-							<option value="Credito">Crédito</option>
-							<option value="Debito">Débito</option>
-						</select>
+					<label class="w3-left">Método de pago</label><!--NO BORRAR NADA DEL FORM-->
+					<select class="w3-input w3-border" 
+									id='select_pago' 
+									name="select_pago">
+						<option value="Credito">Crédito</option>
+						<option value="Debito">Débito</option>
+					</select>
 				</div>
 				<div class="w3-half">
 					<img src="" alt="">
@@ -179,8 +179,7 @@
 					  </div>
 					  </header>
 					<div class="w3-row-padding">
-						<p>Usuario:{{user.first_name}} + " " +{{user.last_name}}</p>
-						<p>Cond. Pago: CONTADO</p>
+						<p>Usuario:{{user.first_name}} {{user.last_name}}</p>
 						<div class="w3-container">
 							<table id="bill_table1" class="w3-table-all w3-hoverable ">
 								<thead >
