@@ -1,7 +1,11 @@
 $("#get_sales_for_date").submit(function(e){
 	e.preventDefault();
 	if (document.getElementById("dateO").value == "") {
-		alert("Seleccione primero la fecha")
+		document.getElementById("alerta").innerHTML="Seleccione una fecha";
+        $(document).ready(function(){
+            $("#alert").toggle(100);
+            $("#alert").fadeOut(3500);
+        });
 	} else {
 		$.ajax({
 			url:$(this).attr('action'),
@@ -13,7 +17,12 @@ $("#get_sales_for_date").submit(function(e){
 					fillTable(json);
 				} else{
 					cleanTable();
-					alert("La fecha seleccionada no contiene ventas");
+					document.getElementById("sale_table").style.display='none';
+					document.getElementById("alerta").innerHTML="La fecha seleccionada no contiene ventas";
+			        $(document).ready(function(){
+			            $("#alert").toggle(100);
+			            $("#alert").fadeOut(3500);
+			        });
 				}
 				//
 			}
