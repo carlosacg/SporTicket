@@ -1,0 +1,109 @@
+{%load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>SporTicket</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/w3.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/morris.css' %}">
+    <link rel="stylesheet" href="{% static 'css/css.css' %}">
+    <link rel="stylesheet" href="{% static 'css/window.css' %}">
+    <link rel="icon"  href="{% static 'images/sporticket.png' %}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lobster">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/morris.css' %}">
+    <script src="{% static 'js/morris.min.js' %}" charset="utf-8"></script>  
+</head>
+<body class="w3-light-grey">
+    {% block header %}
+    <div class="w3-bar w3-top w3-dark-grey w3-padding-15">
+        <button type="submit" 
+                class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey orange-color" 
+                onclick="w3_open();return false" >
+                <i class="fa fa-bars"></i>  Menú</button>
+        <form >
+            <a class= "w3-display-middle" >
+            <img src="{% static 'images/logo.png' %}" class="w3-round w3-margin-right" alt="Logo SporTicket">
+            SporTicket
+            </a> 
+            <a href="{% url 'userLogout' %}" 
+            class="w3-bar-item w3-button w3-light-gray w3-right w3-large w3-circle ">
+            <i class="fa fa-sign-out black-color"></i>
+            </a>
+        </form>
+    </div>
+    
+    {% endblock %}
+
+    {% block nav %}
+        <nav class="w3-sidebar w3-collapse w3-dark-grey w3-animate-left"  id="mySidebar"><br>
+     	   <div class="w3-container w3-row">
+         	   <div class="w3-col s4">
+         	       <!--
+         	         IMAGEN USUARIO EXTRADA DE FACEBOOK
+         	       -->
+         	       <img src="{% static 'images/user2.png' %}" class="w3-circle w3-margin-right" alt="Imagen usuario">
+         	   </div>
+                <div class="w3-col s8 w3-bar">
+                    <span>  Bienvenido, <strong><br> {{user.last_name}} </strong></span><br>
+                </div>
+     	   </div>
+     	   <hr>
+     	   <div class="w3-container">
+     	     <h5>General</h5>
+     	   </div>
+     	   <div class="w3-bar-block" >
+         	   <a type="submit" 
+                    class="w3-bar-item w3-button w3-padding w3-hide-large w3-dark-grey w3-hover-gray" 
+                    onclick="w3_close()" 
+                    title="close menu" >
+                    <i class="fa fa-remove fa-fw" ></i>Cerrar Menú
+                </a>         	   
+                <button onclick="myFunction('Demo4')" 
+                        class="w3-button w3-block w3-left-align">
+                        <i class="fa fa-shopping-cart fa-fw"></i> Ventas 
+                        <i class="w3-right fa fa-caret-down"></i>
+                </button>
+                <div id="Demo4" class="w3-hide w3-dark-grey w3-card">
+                    <a href="/sales/saleEvent.html" 
+                        class="w3-bar-item w3-button w3-padding orange-color" >
+                        <i class="fa fa-shopping-cart fa-fw"></i> Vender boletos
+                    </a>
+                    <a href="/sales/listEventsSale.html" 
+                        class="w3-bar-item w3-button w3-padding orange-color" >
+                        <i class="fa fa-shopping-cart fa-fw"></i> Vender boletos 1
+                    </a>
+                    <a href="/sales/viewSales.html" 
+                        class="w3-bar-item w3-button w3-padding orange-color" >
+                        <i class="fa fa-shopping-cart fa-fw"></i> Ventas diarias
+                    </a>
+                </div>               
+                <a href="{% url 'editUser' user.id%}" 
+                    class="w3-bar-item w3-button orange-color">
+                    <i class="fa fa-pencil fa-fw"></i> Editar mi perfil
+                </a>
+            </div>
+        </nav>
+        <button class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()">Close &times;</button>
+    {% endblock %}
+
+    {% block content %}
+        
+    {% endblock %}
+
+    <script src="{% static 'js/w3.js' %}"></script>
+    <script src="{% static 'js/function.js' %}"></script>
+    <script src="{% static 'js/grafico.js' %}" charset="utf-8"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/raphael-min.js' %}"></script>
+    <script src="{% static 'js/morris.min.js' %}" charset="utf-8"></script>
+</body>
+</html>
+
+
