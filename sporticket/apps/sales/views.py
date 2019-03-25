@@ -59,7 +59,6 @@ def listEvent(request):
 @permission_required('users.Vendedor' ,reverse_lazy('evento_listar_compras'))
 def listEvent1(request):
 		event = Event.objects.filter(state="Activo")
-		print (event)
 		context = {'events':event}
 		return render(request,'sales/saleEvent.html',context)
 
@@ -212,10 +211,10 @@ def createShop(request,id):
 	else:
 		bill_id=int(bill.id)+1
 	context = {'event':event,'hora':hora,'avalibleTicket':tickets_avalibles, 'eventType':list_events_type,'bill':bill_id}
-	if event.url == "http://localhost:8001/events/?format=json":
-		return render(request,'sales/eventRefer.html')
-	else:
+	if event.url == "http://localhost:8000":
 		return render(request,'sales/createShopping.html',context)
+	else:
+		return render(request,'sales/eventRefer.html')
 
 class GetDataAjaxView(TemplateView):
 
@@ -223,9 +222,7 @@ class GetDataAjaxView(TemplateView):
 		quantitys = json.loads(request.GET['jsonQuantitys'])
 		ubications = json.loads(request.GET['jsonUbications'])
 		pago =request.GET['pago']
-		print('METODO PAGO: '+pago)
 		total =request.GET['total']
-		print('TOTAL: '+total)
 		x=0
 		bill=createBillAjax(request,pago,'Compra',total)
 		while x < int(len(ubications)):    

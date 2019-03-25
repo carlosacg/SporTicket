@@ -38,7 +38,12 @@ function comprobarCantidadBoletos(tribuna,cantidad){
         //console.log("La cantidad ingresada puede pasar");
         return true;
     } else {
-        alert("La cantidad ingresada supera la disponibilidad");
+        //alert("La cantidad ingresada supera la disponibilidad");
+        document.getElementById("alerta").innerHTML="La cantidad ingresada supera la disponibilidad";
+        $(document).ready(function(){
+            $("#alert").toggle(100);
+            $("#alert").fadeOut(3500);
+        });
         return false;
     }
 }
@@ -49,8 +54,22 @@ function limpiarInputs(){
     document.getElementById('cantidad').value="";
 }
 function comprobar(){
-    if (document.getElementById('cantidad').value=="") {alert("No a escogido la cantidad de boletos")} else {
-        if (document.getElementById('select_tribuna').selectedIndex==0) {alert("No a seleccionado la tribuna")} else{
+    if (document.getElementById('cantidad').value=="") {
+        //alert("No a escogido la cantidad de boletos")
+        document.getElementById("alerta").innerHTML="No a escogido la cantidad de boletos";
+        $(document).ready(function(){
+            $("#alert").toggle(100);
+            $("#alert").fadeOut(3500);
+        });
+    } else {
+        if (document.getElementById('select_tribuna').selectedIndex==0) {
+            //alert("No a seleccionado la tribuna")
+            document.getElementById("alerta").innerHTML="No a seleccionado la tribuna";
+            $(document).ready(function(){
+                $("#alert").toggle(100);
+                $("#alert").fadeOut(3500);
+            });
+        } else{
             var nombre_evento=document.getElementById('nombre_evento').innerHTML;
             var table=document.getElementById("bill_table");
             var table_len=(table.rows.length)-1;
@@ -216,7 +235,12 @@ function addRowMain(){
 $("#get-events").submit(function(e){
     e.preventDefault();
     if(document.getElementById('select_buscar').selectedIndex==0){
-        alert("No a seleccionado un tipo de evento");
+        document.getElementById("alerta").innerHTML="No a seleccionado un tipo de evento";
+        $(document).ready(function(){
+            $("#alert").toggle(100);
+            $("#alert").fadeOut(3500);
+        });
+        //alert("No a seleccionado un tipo de evento");
     } else {
         $.ajax({
         url:$(this).attr('action'),
@@ -336,10 +360,20 @@ function showBill(){
      var table=document.getElementById("bill_table");
     var table_len=(table.rows.length);
     if (table_len == 2){
-        alert("No a añadido ningun boleto");
+        document.getElementById("alerta").innerHTML="No a añadido ningun boleto";
+        $(document).ready(function(){
+            $("#alert").toggle(100);
+            $("#alert").fadeOut(3500);
+        });
+        //alert("No a añadido ningun boleto");
     } else {
         if ((document.getElementById('select_metodo_pago').selectedIndex) == 0){
-            alert("No a selecionado ningun metodo de pago");
+            document.getElementById("alerta").innerHTML="No a seleccionado ningun metodo de pago";
+            $(document).ready(function(){
+                $("#alert").toggle(100);
+                $("#alert").fadeOut(3500);
+            });
+            //alert("No a selecionado ningun metodo de pago");
         } else {
             document.getElementById('id02').style.display='block';
         }
