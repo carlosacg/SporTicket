@@ -10,10 +10,11 @@
 		</h5>
 	</header>
 	<div class="w3-container" >
-		<form >
+		<form method="post">
+			{% csrf_token %}
 			<div class="w3-quarter">
-				<label>Insertar URL</label>
-				<input class="w3-input w3-border">
+				<label for="{{form.url.id_for_label}}"> Insertar URL </label>
+				{{form.url}}	
 			</div>
 				
 			<div class="w3-row-padding">
@@ -23,12 +24,6 @@
 					data-toggle="tooltip" 
 					title="Cargar URL">
 					<i class="fa fa-check"> Aceptar</i>
-				</button>
-				<button type='submit' 
-						class="w3-button w3-dark-grey w3-padding-16 w3-circle" 
-						data-toggle="tooltip" 
-						title="Omitir proceso">
-						<i class="fa fa-remove"> Omitir</i>
 				</button>
 			</div>             
 		</form>

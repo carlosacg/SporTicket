@@ -112,7 +112,6 @@ def updateEvent(request,id):
 def viewEvent(request,id):
     event = Event.objects.get(id=id)
     if request.method =='GET':
-        getEventsJSON('GET')
         form= ViewEvent(instance=event)
     else:
         form = ViewEvent(request.POST, instance=event)
@@ -216,24 +215,19 @@ class EventUpdate(LoginRequiredMixin,PermissionRequiredMixin,UpdateView):
         template_name = 'events/insertEvents.html'
         success_url = reverse_lazy('evento_listar')
 
-class EventsSerialList(LoginRequiredMixin, generics.ListCreateAPIView):
+class EventsSerialList(generics.ListCreateAPIView):
 
-        login_url = '/login/'
-        redirect_field_name = '/login/'
-        raise_exception = False
+
         queryset = Event.objects.all()
         serializer_class = EventSerializers
 
-class EventsSerialDetail(LoginRequiredMixin, generics.RetrieveUpdateDestroyAPIView):
+class EventsSerialDetail(generics.RetrieveUpdateDestroyAPIView):
 
-        login_url = '/login/'
-        redirect_field_name = '/login/'
-        raise_exception = False
         queryset = Event.objects.all()
         serializer_class = EventSerializers
 
-def getEventsJSON(request):
-    response = requests.get('http://localhost:8001/events/?format=json') 
+def getEventsJSON(request, urls):
+    response = requests.get(urls) 
     if response.status_code == 200:
         payload = response.json()
         for i in payload:
@@ -248,11 +242,20 @@ def getEventsJSON(request):
             local = i['local']
             image = i['image']
             event_type = i['event_type']
-            print(event_type)
             object = Event()
-            newEvent = Event(name=name,initial_date=date,initial_time=hour,place=place,url='http://localhost:8001/events/?format=json',state=state,capacity=capacity,visitor=visitor,local=local,event_type_id=event_type)
+            newEvent = Event(name=name,initial_date=date,initial_time=hour,place=place,url='http://localhost:8001/',state=state,capacity=capacity,visitor=visitor,local=local,event_type_id=event_type)
             newEvent.save()
-            print("Interopere")
+    else:
+        print("no interoperer")
+
         
 def referredEvents(request):
-    return render(request, 'events/loadReferredEvents.html')
+
+    form = UploadForm()
+    if request.method == 'POST':
+        form = UploadForm(request.POST)
+        url = form['url'].value()
+        getEventsJSON('GET', url)
+        return render(request, 'events/listEvents.html') 
+    else:
+        return render(request, 'events/loadReferredEvents.html',{'form': form})

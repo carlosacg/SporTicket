@@ -13,7 +13,7 @@ from django.contrib.auth.decorators import login_required,permission_required
 from django.db import connection 
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
-from django.contrib.auth.models import Group 
+from django.contrib.auth.models import Group, Permission
 
 # Create your views here.
 
@@ -51,23 +51,26 @@ class ProfileCreate(LoginRequiredMixin,PermissionRequiredMixin,CreateView):
 				print(typeUser)
 				profile.save()
 				if str(typeUser) == "Vendedor":
+					currentUser = User.objects.all().last()
 					Seller.objects.create(profile=Profile.objects.all().last())
-					my_group = Group.objects.get(name='Vendedores') 
-					my_group.user_set.add(User.objects.all().last())
+					permission = Permission.objects.get(codename='Vendedor') 
+					currentUser.user_permissions.add(permission)
 					return HttpResponseRedirect(self.get_success_url())
 					messages.success(request,'Usuario Vendedor creado exitosamente!')
 				if str(typeUser) == "Gerente":
+					currentUser = User.objects.all().last()
 					Manager.objects.create(profile=Profile.objects.all().last())
-					my_group = Group.objects.get(name='Vendedores') 
-					my_group.user_set.add(User.objects.all().last())
-					my_group = Group.objects.get(name='Gerentes') 
-					my_group.user_set.add(User.objects.all().last())
+					permission = Permission.objects.get(codename='Vendedores') 
+					currentUser.user_permissions.add(permission)
+					permission = Permission.objects.get(codename='Gerente') 
+					currentUser.user_permissions.add(permission)
 					messages.success(request,'Usuario Gerente creado exitosamente!')
 					return HttpResponseRedirect(self.get_success_url())
 				if str(typeUser) == "Externo":
+					currentUser = User.objects.all().last()
 					Manager.objects.create(profile=Profile.objects.all().last())
-					my_group = Group.objects.get(name='Externo') 
-					my_group.user_set.add(User.objects.all().last())
+					permission = Permission.objects.get(codename='Externo') 
+					currentUser.user_permissions.add(permission)
 					messages.success(request,'Usuario comprador creado exitosamente!')
 					return HttpResponseRedirect(self.get_success_url())
 			else:
