@@ -300,3 +300,6 @@ def calculate(ubications, event, quantity):
 		ticket = Ticket.objects.all().filter(event_id=event, ubication=ubications).first()	
 		quantityTickets =  int(quantity)
 		cost = ticket.cost * quantityTickets
+
+def newSales(request):
+	return render(request,'sales/listEventsSale.html')

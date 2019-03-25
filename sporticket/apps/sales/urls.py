@@ -20,5 +20,5 @@ urlpatterns = [
     url(r'getBill/', login_required(getBill), name='getBill' ),
     url(r'finishSale/', login_required(finishSale), name='finishSale' ),
     url(r'sales/saleEvent.html', login_required(listEvent1), name='evento_venta' ),
-
+    url(r'sales/listEventsSale.html', login_required(newSales), name='listar_ventas1' ),
 ]
