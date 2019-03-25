@@ -2,10 +2,7 @@
 {%load staticfiles %}
 
 {% block content %}
-<div class="w3-main" >
-	<div id="success" class="w3-panel w3-green" >	
-		<p>Venta realizada de manera exitosa</p>
-	</div>
+<div class="w3-main" >	
 	<header class="w3-container">
 		<h5 class="black-color" >
 			<b class="black-color">
@@ -19,106 +16,112 @@
 		<div class="w3-quarter " >
 			<div class="w3-container tableBill">
 				<table id="main_table" class="w3-table-all w3-hoverable tableXS">
-						<thead >
-							<tr class="w3-dark-grey">
-								<th>Boletos disponibles</th>
-								<th>Ubicación</th>
-								<th>Costo</th>
-							</tr>
-						</thead>
-						<tbody>
-							{% if avalibleTicket %}
-							{% for tickets_avalibles in avalibleTicket %}
-							<tr id="{{tickets_avalibles.1}}" >
-								<td id = "{{tickets_avalibles.1}}_cant">{{tickets_avalibles.0}}</td>
-								<td id = "{{tickets_avalibles.1}}_ubication">{{tickets_avalibles.1}}</td>
-								<td id = "{{tickets_avalibles.1}}_cost" value="{{tickets_avalibles.2}}">{{tickets_avalibles.2}}</td>
-								<td id='{{tickets_avalibles.1}}_id' style="display: none">{{tickets_avalibles.3}}</td>
-							</tr>
-						</tbody>
-						{% endfor %}
-						{% else %}
-						<h1 class="black-color">No hay boletos disponibles en este evento</h1>
-						{% endif %}
-					</table>
+					<thead >
+						<tr class="w3-dark-grey">
+							<th>Boletos disponibles</th>
+							<th>Ubicación</th>
+							<th>Costo</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% if avalibleTicket %}
+						{% for tickets_avalibles in avalibleTicket %}
+						<tr id="{{tickets_avalibles.1}}" >
+							<td id = "{{tickets_avalibles.1}}_cant">{{tickets_avalibles.0}}</td>
+							<td id = "{{tickets_avalibles.1}}_ubication">{{tickets_avalibles.1}}</td>
+							<td id = "{{tickets_avalibles.1}}_cost" value="{{tickets_avalibles.2}}">{{tickets_avalibles.2}}</td>
+							<td id='{{tickets_avalibles.1}}_id' style="display: none">{{tickets_avalibles.3}}</td>
+						</tr>
+					</tbody>
+					{% endfor %}
+					{% else %}
+					<h1 class="black-color">No hay boletos disponibles en este evento</h1>
+					{% endif %}
+				</table>
 			</div>			
 		</div>
 		<div class="w3-rest w3-card-2 cardSize">
-				<h3 class="textBill">Listado de Venta</h3>
-				
-				<div class="w3-row-padding">
-					<div class="w3-half">
-						<label class="w3-left">Ubicación</label><!--NO BORRAR NADA DEL FORM-->
-						<select id='select_tribuna' 
-										name="select_tribuna" 
-										class="w3-input w3-border'">
-							<option  id = "option_1" value="" disabled selected>Seleccione una tribuna...</option>
-							{% if avalibleTicket %}
-								{% for tickets_avalibles in avalibleTicket %}
-									<option value="{{tickets_avalibles.1}}">{{tickets_avalibles.1}}</option>
-								{% endfor %}
-							{% endif %}
-						</select>		
-					</div>
+			<h3 class="textBill">Listado de Venta</h3>
 			
-					<div class="w3-half">
-						<label class="w3-left">Cantidad de boletos</label><!--NO BORRAR NADA DEL FORM-->
-						<input class="w3-input w3-border" 
-										type="number" 
-										name="cantidad" 
-										id="cantidad"
-										value="" />
-					</div>
+			<div class="w3-row-padding">
+				<div class="w3-half">
+					<label class="w3-left">Ubicación</label><!--NO BORRAR NADA DEL FORM-->
+					<select id='select_tribuna' 
+									name="select_tribuna" 
+									class="w3-input w3-border">
+						<option  id = "option_1" value="" disabled selected>Seleccione una tribuna...</option>
+						{% if avalibleTicket %}
+							{% for tickets_avalibles in avalibleTicket %}
+								<option value="{{tickets_avalibles.1}}">{{tickets_avalibles.1}}</option>
+							{% endfor %}
+						{% endif %}
+					</select>		
 				</div>
+		
+				<div class="w3-half">
+					<label class="w3-left">Cantidad de boletos</label><!--NO BORRAR NADA DEL FORM-->
+					<input class="w3-input w3-border" 
+							type="number" 
+							name="cantidad" 
+							id="cantidad"
+							value="" />
+				</div>
+			</div>
 				
-				<div class="w3-row-padding">
-					<div class="w3-half">
-						<label class="w3-left">Método de Pago</label><!--NO BORRAR NADA DEL FORM-->
-						<select class="w3-input w3-border"
-										id='select_metodo_pago' 
-										name="select_metodo_pago">
-							<option id = "option_1" value="" disabled selected>Seleccione un método de pago...</option>
-							<option value="Efectivo">Efectivo</option>
-							<option value="Credito">Crédito</option>
-							<option value="Debito">Débito</option>
-						</select>				
-					</div>
-	
-					<div class="w3-half">
-						<img src="" alt="">
-					</div>
+			<div class="w3-row-padding">
+				<div class="w3-half">
+					<label class="w3-left">Método de Pago</label><!--NO BORRAR NADA DEL FORM-->
+					<select class="w3-input w3-border"
+							id='select_metodo_pago' 
+							name="select_metodo_pago">
+						<option id = "option_1" value="" disabled selected>Seleccione un método de pago...</option>
+						<option value="Efectivo">Efectivo</option>
+						<option value="Credito">Crédito</option>
+						<option value="Debito">Débito</option>
+					</select>				
 				</div>
+
+				<div class="w3-half">
+					<img src="" alt="">
+				</div>
+			</div>
 				
-				<div class="w3-container">
-					<div class="w3-show-inline-block">
-						<div class="w3-bar">
-							<button onclick="comprobar()"  
-											class="w3-button w3-padding w3-dark-grey w3-round-large" >
-											<font color="orange">
-											<i class="fa fa-plus"></i> Añadir boleto</font>
-							</button>
-							<button onclick="document.getElementById('id03').style.display='block'"  
-											type="submit" 
-											class="w3-button w3-padding w3-dark-grey w3-round-large">
-											<font color="orange"> 
-											<i class="fa fa-list"></i> Escoger otro evento</font>
-							</button>
-							<button onclick="showBill()"  
-											type="submit" 
-											class="w3-button w3-padding w3-dark-grey w3-round-large">
-											<font color="orange">
-											<i class="fa fa-check"></i> Facturar</font>
-							</button>
-						</div>
+			<div class="w3-container">
+				<div class="w3-show-inline-block">
+					<div class="w3-bar">
+						<button onclick="comprobar()"  
+								class="w3-button w3-padding w3-dark-grey w3-round-large" 
+								data-toggle="tooltip" 
+								title="Añadir boleto">
+								<font color="orange">
+								<i class="fa fa-plus"></i> Añadir boleto</font>
+						</button>
+						<button onclick="document.getElementById('id03').style.display='block'"  
+								type="submit" 
+								class="w3-button w3-padding w3-dark-grey w3-round-large"
+								data-toggle="tooltip" 
+								title="Seleccionar otro evento">
+								<font color="orange"> 
+								<i class="fa fa-list"></i> Escoger otro evento</font>
+						</button>
+						<button onclick="showBill()"  
+								type="submit" 
+								class="w3-button w3-padding w3-dark-grey w3-round-large"
+								data-toggle="tooltip" 
+								title="Finalizar venta">
+								<font color="orange">
+								<i class="fa fa-check"></i> Facturar</font>
+						</button>
 					</div>
 				</div>
+			</div>
 			<form>
 				{% csrf_token %}
 			</form>
 			
 			<div class="w3-container">
 				<table id="bill_table" class="w3-table-all w3-hoverable ">
-						<thead >
+					<thead >
 						<tr class="w3-dark-grey">
 							<th style="display: none">id</th>
 							<th>Evento</th>
@@ -128,111 +131,114 @@
 							<th id= headsubtotal>SubTotal</th>
 							<th>Acciones</th>
 						</tr>
-	
-						</thead>
-						<tbody>
-							<tr>
-								<div class="w3-threequarter w3-dark-grey">
-									<th class="textTh" colspan="4">Total</th>
-								</div>
-								<th id="total_bill"></th>
-								<th></th>			  			
-							</tr>
-						</tbody>
+					</thead>
+					<tbody>
+						<tr>
+							<div class="w3-threequarter w3-dark-grey">
+								<th class="textTh" colspan="4">Total</th>
+							</div>
+							<th id="total_bill"></th>
+							<th></th>			  			
+						</tr>
+					</tbody>
 				</table>
 				<br>
-				</div>
-
+			</div>
+		</div>
 	</div>
-	
 	<hr>
 
 	<div class="w3-container">
-			<div id="id02" class="w3-modal">
-				<div class="w3-modal-content">
-				  <header > 
+		<div id="id02" class="w3-modal">
+			<div class="w3-modal-content">
+				<header > 
 					<span onclick="document.getElementById('id02').style.display='none'" 
-								class="w3-button w3-display-topright">&times;</span>
-						<a class= "w3-display-topmiddle" >
-							<img src="{% static 'images/logo.png' %}" 
-									class="w3-round w3-display-topmiddle w3-margin-right imgBill">
-							<h6 class= "w3-margin-left textBillTitle" >SporTicket</h6>
-					  </a> 
-					  <div class="w3-row-padding">
-						  <br>
-						  <div class="w3-third">
-							  <img src="">
-						  </div>
-						  <div class="w3-third w3-center">
-							  <br>
-							  <p>NIT: 0000000-0</p>
-							  <p>Régimen común</p>
-							  <p>Factura #{{bill}}</p>
-						  </div>
-						  <div class="w3-third w3-center">				
-							  <p> Fecha y Hora</p>
-							  <p>{{hora}}</p>
-						  </div>
-					  </div>
-					  </header>
+							class="w3-button w3-display-topright">&times;</span>
+					<a class= "w3-display-topmiddle" >
+						<img src="{% static 'images/logo.png' %}" 
+							class="w3-round w3-display-topmiddle w3-margin-right imgBill">
+						<h6 class= "w3-margin-left textBillTitle" >SporTicket</h6>
+					</a> 
 					<div class="w3-row-padding">
-						<p>Vendedor:{{user.last_name}}</p>
-						<p>Cond. Pago: CONTADO</p>
-						<div class="w3-container">
-								<table id="bill_table1" class="w3-table-all w3-hoverable ">
-									  <thead >
-										<tr class="w3-dark-grey">
-											<th>Evento</th>
-											<th>Cant.</th>
-											<th>Ubicación</th>
-											<th>Costo</th>
-											<th>SubTotal</th>
-										</tr>					
-									  </thead>
-									  <tbody>
-										  <tr>
-											  <div class="w3-threequarter w3-dark-grey">
-												  <th class="textTh black-color" colspan="4">Total</th>
-											  </div>
-											  <th class="black-color" id="total_bill1"></th>			  			
-										  </tr>
-									  </tbody>
-								</table>
-							  </div>
-					  <hr>
-					  <div class="w3-row-padding">
-						  <p class="w3-center">INFORMACIÓN TRIBUTARIA</p>
-						  <div class="w3-third">
-							  <img src="">
-						  </div>
-					  </div>
-					  <hr>
-					  <div class="w3-row-padding">
-						  <div class="w3-third">
-							  <img src="">
-						  </div>
-						  <div class="w3-third w3-center">
-							  <p>RESOLUCIÓN DIAN NO. 500 046612 DE  1200 HASTA 5000</p>
-						  </div>
-						  <div class="w3-third">
-							  <img src="">
-						  </div>
-					  </div>
-					  <div class="w3-row-padding">
-						  <br>
-						  <div class="w3-show-inline-block">
+						<br>
+						<div class="w3-third">
+							<img src="">
+						</div>
+						<div class="w3-third w3-center">
+							<br>
+							<p>NIT: 0000000-0</p>
+							<p>Régimen común</p>
+							<p>Factura #{{bill}}</p>
+						</div>
+						<div class="w3-third w3-center">				
+							<p> Fecha y Hora</p>
+							<p>{{hora}}</p>
+						</div>
+					</div>
+				</header>
+				<div class="w3-row-padding">
+					<p>Vendedor:{{user.last_name}}</p>
+					<p>Cond. Pago: CONTADO</p>
+					<div class="w3-container">
+						<table id="bill_table1" class="w3-table-all w3-hoverable ">
+							<thead >
+								<tr class="w3-dark-grey">
+									<th>Evento</th>
+									<th>Cant.</th>
+									<th>Ubicación</th>
+									<th>Costo</th>
+									<th>SubTotal</th>
+								</tr>					
+							</thead>
+							<tbody>
+								<tr>
+									<div class="w3-threequarter w3-dark-grey">
+										<th class="textTh black-color" colspan="4">Total</th>
+									</div>
+									<th class="black-color" id="total_bill1"></th>			  			
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<hr>
+					<div class="w3-row-padding">
+						<p class="w3-center">INFORMACIÓN TRIBUTARIA</p>
+						<div class="w3-third">
+							<img src="">
+						</div>
+					</div>
+					<hr>
+					<div class="w3-row-padding">
+						<div class="w3-third">
+							<img src="">
+						</div>
+						<div class="w3-third w3-center">
+							<p>RESOLUCIÓN DIAN NO. 500 046612 DE  1200 HASTA 5000</p>
+						</div>
+						<div class="w3-third">
+							<img src="">
+						</div>
+					</div>
+					<div class="w3-row-padding">
+						<br>
+						<div class="w3-show-inline-block">
 							<div class="w3-bar">
 								<form method="POST" action="/sales/createSale/{{event.id}}/" id="post_venta">
 									{% csrf_token %}
 									<input type="text" 
-													name="post_venta_envio" 
-													id="post_venta_envio" 
-													style="display: none">
-									<input type="submit" class="w3-button w3-padding w3-dark-grey w3-round-large"  value="Finalizar Venta">
+											name="post_venta_envio" 
+											id="post_venta_envio" 
+											style="display: none">
+									<button type="submit" 
+											class="w3-button w3-padding w3-dark-grey w3-round-large"
+											data-toggle="tooltip" 
+											title="Finalizar venta">
+											<i class="fa fa-check"> Finalizar Venta</i>
+									</button>
 								</form>
 							</div>
 						</div>
-					  </div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -240,72 +246,80 @@
 		<!-- Seccion de coger otro evento>-->
 
 		<div id="id03" class="w3-modal">
-				<div class="w3-modal-content">
-				  <header > 
+			<div class="w3-modal-content">
+				<header > 
 					<span onclick="document.getElementById('id03').style.display='none'" 
-								class="w3-button w3-display-topright">&times;</span>
-						<a class= "w3-display-topmiddle" >
-							<h6 class= "w3-margin-left textBillTitle" >Selecciona el evento que deseas agregar</h6>
-							<br>
-					  </a> 
-					</header>
-					<div class="w3-row-padding">
-						
-						<div class="w3-container">
-							<br>
-							<form method="GET" action="/sales/getEventsForTypes/" id="get-events">
-								<div>
-									<div class="w3-half">										
-										<label>Escoga el tipo de evento para buscar</label>
-										<select class="w3-input w3-border" id='select_buscar' name="select_buscar">
-											<option id = "option_buscar" value="" disabled selected>Seleccione un tipo de evento...</option>
-											{% if eventType %}
-												{% for list_events_type in eventType %}
-													<option value="{{list_events_type}}">{{list_events_type}}</option>
+						class="w3-button w3-display-topright">&times;</span>
+					<a class= "w3-display-topmiddle" >
+						<h6 class= "w3-margin-left textBillTitle" >Selecciona el evento que deseas agregar</h6>
+						<br>
+					</a> 
+				</header>
+				<div class="w3-row-padding">
+					<div class="w3-container">
+						<br>
+						<form method="GET" action="/sales/getEventsForTypes/" id="get-events">
+							<div>
+								<div class="w3-half">										
+									<label>Escoja el tipo de evento para buscar</label>
+									<select class="w3-input w3-border" id='select_buscar' name="select_buscar">
+										<option id = "option_buscar" value="" disabled selected>Seleccione un tipo de evento...</option>
+										{% if eventType %}
+											{% for list_events_type in eventType %}
+												<option value="{{list_events_type}}">{{list_events_type}}</option>
 											{% endfor %}
-											{% endif %}
-										</select>
-									</div>
-									<div class="w3-half w3-container">
-										<label> </label>
-										<button type="submit" 
-														class="w3-button w3-padding w3-dark-grey w3-circle" >
-														<i class="fa fa-search"> Buscar</i>
-										</button>
-									</div>
+										{% endif %}
+									</select>
+									<br>
 								</div>
-							</form>
-							<form method="GET" 
-										action="/sales/getNewEvent/" 
-										id="get-new-event">
-								<input type="text" 
-											 name="get_event_selec" 
-											 id="get_event_selec" 
-											 style="display: none">														
-								<table id="search_table" class="w3-table-all w3-hoverable ">
-									  <thead >
-										<tr class="w3-dark-grey">
-											<th style="display: none">id</th>
-											<th>Evento</th>
-											<th>Capacidad</th>
-											<th>Fecha</th>
-											<th>Acción</th>
-										</tr>
-									  </thead>
-									  <tbody>
-									  </tbody>
-								</table>
-							</form>	
-								
-							  </div>
-					  <hr>
+								<div class="w3-half w3-container">
+									<label> </label>
+									<button type="submit" 
+											class="w3-button w3-padding w3-dark-grey w3-round" 
+											data-toggle="tooltip" 
+											title="Buscar eventos">
+											<i class="fa fa-search"> Buscar</i>
+									</button>
+									<br>
+								</div>
+							</div>
+						</form>
+						<form method="GET" 
+								action="/sales/getNewEvent/" 
+								id="get-new-event">
+							<input type="text" 
+									name="get_event_selec" 
+									id="get_event_selec" 
+									style="display: none">														
+							<table id="search_table" class="w3-table-all w3-hoverable ">
+								<thead >
+									<tr class="w3-dark-grey">
+										<th style="display: none">id</th>
+										<th>Evento</th>
+										<th>Capacidad</th>
+										<th>Fecha</th>
+										<th>Acción</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</form>									
+					</div>
+					<hr>
 				</div>
 			</div>
 		</div>
-
+	</div>
 	<footer class="w3-container w3-padding-14 w3-grey">
     	<p>Powered by <a class="black-color">XSOFT</a></p>
 	</footer>
+	<div id="success" class="w3-panel w3-green white-color w3-padding-small" style="display: none;">	<!--cuando necesites verlo le quitas el style y para que quede alto cambiar el valor margin-top -450px-->
+		<p>Venta realizada de manera exitosa</p>
+	</div>
+	<div id="alert" class="w3-panel w3-yellow white-color w3-padding-small" style="display: none;">	
+		<p>Alerta!</p>
+	</div>
 </div>
 <script src="{% static 'js/jquery.min.js' %}"></script>
 <script src="{% static 'js/salesBill.js' %}"></script>

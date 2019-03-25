@@ -1,3 +1,10 @@
+#alert {
+	margin-left: 800px;
+	margin-top: -45px;
+	text-align: left;
+	width: 35%; 
+}
+
 .black-color {
 	color: black;
 }
@@ -96,10 +103,10 @@ img {
 }
 
 .imgEvent {
-	position: relative; 
-	z-index: 1; 
-	width: 450px; 
 	height: 350px;
+	position: relative; 
+	width: 450px; 
+	z-index: 1; 
 }
 
 .imgLeftPosition {
@@ -129,9 +136,8 @@ img {
 }
 
 #messages {
-	display: none;
 	margin-left: 800px;
-	margin-top: -600px;
+	margin-top: -450px;
 	text-align: left;
 	width: 35%; 
 }
@@ -178,9 +184,8 @@ img {
 }
 
 #success {
-	display: none;
 	margin-left: 800px;
-	margin-top: -600px;
+	margin-top: -450px;
 	text-align: left;
 	width: 35%; 
 }

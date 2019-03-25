@@ -8,7 +8,7 @@
 	<header class="w3-container" >
 		<h5 class="black-color">
 			<b class="black-color">
-			<i class="fa fa-plus black-color"></i> Editar mi perfil</b>
+			<i class="fa fa-pencil black-color"></i> Editar mi perfil</b>
 		</h5>
 	</header>
 	<form method="post"> 
@@ -16,7 +16,7 @@
 
 		<div class="w3-row-padding">
 			<div class="w3-half">
-				<label for="{{ form.identification.id_for_label}}"> Identificacion </label> {{form.identification}}
+				<label for="{{ form.identification.id_for_label}}"> Identificación </label> {{form.identification}}
 			</div>
 			<div class="w3-half">
 				<label for="{{ form.first_name.id_for_label}}"> Nombres </label> {{form.first_name}}
@@ -27,15 +27,15 @@
 				<label for="{{ form.last_name.id_for_label}}"> Apellidos </label> {{form.last_name}}
 			</div>
 			<div class="w3-half">
-				<label for="{{ form.email.id_for_label}}"> Correo electronico </label> {{form.email}}
+				<label for="{{ form.email.id_for_label}}"> Correo electrónico </label> {{form.email}}
 			</div>
 		</div>
 		<div class="w3-row-padding">
 			<div class="w3-half"> 
-				<label for="{{ form.phone.id_for_label}}"> Numero de telefono o celular</label> {{form.phone}}
+				<label for="{{ form.phone.id_for_label}}"> Número de teléfono o celular</label> {{form.phone}}
 			</div>
 			<div class="w3-half">
-				<label for="{{ form.numAccount.id_for_label}}"> Numero de cuenta </label> {{form.numAccount}}
+				<label for="{{ form.numAccount.id_for_label}}"> Número de cuenta </label> {{form.numAccount}}
 			</div>
 		</div>
 		<div class="w3-row-padding">
@@ -50,8 +50,10 @@
                     <a href="{% url 'crateUser' %}">
                     	<button type="submit" 
                     	class="w3-button w3-padding-16 w3-dark-grey w3-circle" 
-                    	id="save">
-                    	<i class="fa fa-save"></i></button>
+						id="save"
+						data-toggle="tooltip" 
+              			title="Guardar cambios">
+                    	<i class="fa fa-save"> Guardar</i></button>
                     </a>
 				</div>
             </div>

@@ -21,7 +21,7 @@ class UserForm(UserCreationForm):
 				'username': 'Nick',
 				'first_name': 'Nombre',
 				'last_name': 'Apellido',
-				'email': 'Correo electronico',
+				'email': 'Correo electrónico',
 				'password1': 'Contraseña',
 				'password2': 'Confirmación de contraseña',
 		}
@@ -53,10 +53,10 @@ class ProfileForm(forms.ModelForm):
 				'numAccount',
 		]
 		labels = {
-				'identification': 'Identificacion',
+				'identification': 'Identificación',
 				'userType': 'Tipo de usuario',
-				'phone': 'Telefono o celular',
-				'numAccount': 'Numero de cuenta',
+				'phone': 'Teléfono o celular',
+				'numAccount': 'Número de cuenta',
 		}
 		widgets = {
 				'identification':forms.TextInput(attrs={'class':'w3-input w3-border','type':'number'}),
@@ -76,9 +76,9 @@ class ProfileExternForm(forms.ModelForm):
 				'numAccount',
 		]
 		labels = {
-				'identification': 'Identificacion',
-				'phone': 'Telefono o celular',
-				'numAccount': 'Numero de cuenta',
+				'identification': 'Identificación',
+				'phone': 'Teléfono o celular',
+				'numAccount': 'Número de cuenta',
 		}
 		widgets = {
 				'identification':forms.TextInput(attrs={'class':'w3-input w3-border','type':'number'}),
@@ -97,6 +97,7 @@ class UserUpdateForm(forms.Form):
 		userType = forms.ChoiceField(
 		required=False,
 		choices=CHOICES,
+		widget=forms.Select(attrs={'class':'w3-input w3-border'})
 	)
 		username = forms.CharField(widget=forms.TextInput(attrs={'class':'w3-input w3-border'}))
 		identification = forms.CharField(widget=forms.TextInput(attrs={'class':'w3-input w3-border','type':'number'}))
@@ -107,3 +108,4 @@ class UserUpdateForm(forms.Form):
 		email = forms.CharField(widget=forms.TextInput(attrs={'class':'w3-input w3-border'}))
 		phone = forms.CharField(widget=forms.TextInput(attrs={'class':'w3-input w3-border','type':'number'}))
 		numAccount = forms.CharField(widget=forms.TextInput(attrs={'class':'w3-input w3-border','type':'number'}))
+		
