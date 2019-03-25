@@ -134,14 +134,18 @@ def deleteUsers(request ,id):
 		user = User.objects.get(id=id)
 		if request.method=='POST':
 			changeState(id)
-			messages.success(request,'Usuario deshabilitado exitosamente!')
+			messages.success(request,'Cambio de estado exitosamente!')
 			return HttpResponseRedirect(reverse('listUser'))
 		return render(request,'users/deleteUsers.html',{'users':user})
 
 def changeState(id):
 	user = User.objects.get(id=id)
-	user.is_active = False
-	user.save()
+	if user.is_active == True:
+		user.is_active = False
+		user.save()
+	else:
+		user.is_active = True
+		user.save()
 
 def userLogin(request):
 	
