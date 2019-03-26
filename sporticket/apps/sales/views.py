@@ -212,9 +212,11 @@ def createShop(request,id):
 		bill_id=int(bill.id)+1
 	context = {'event':event,'hora':hora,'avalibleTicket':tickets_avalibles, 'eventType':list_events_type,'bill':bill_id}
 	if event.url == "http://localhost:8000":
+		context = {'event':event,'hora':hora,'avalibleTicket':tickets_avalibles, 'eventType':list_events_type,'bill':bill_id}
 		return render(request,'sales/createShopping.html',context)
 	else:
-		return render(request,'sales/eventRefer.html')
+		context = {'event':event}
+		return render(request,'sales/eventRefer.html',context)
 
 class GetDataAjaxView(TemplateView):
 
