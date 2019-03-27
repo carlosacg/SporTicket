@@ -60,7 +60,7 @@ class ProfileCreate(LoginRequiredMixin,PermissionRequiredMixin,CreateView):
 				if str(typeUser) == "Gerente":
 					currentUser = User.objects.all().last()
 					Manager.objects.create(profile=Profile.objects.all().last())
-					permission = Permission.objects.get(codename='Vendedores') 
+					permission = Permission.objects.get(codename='Vendedor') 
 					currentUser.user_permissions.add(permission)
 					permission = Permission.objects.get(codename='Gerente') 
 					currentUser.user_permissions.add(permission)
