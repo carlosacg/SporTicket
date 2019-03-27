@@ -179,7 +179,6 @@ def getLocation(idLocation):
 	location = Location.objects.get(id=idLocation)
 	return location
 
-#-----------------------------------------
 def createShop(request,id):
 	hora = time.strftime("%c")
 	event = Event.objects.get(id=id)
@@ -233,10 +232,7 @@ def createBillAjax(request,payment_method,type_bill,total):
 
 def listShops(request):
 	user=User.objects.get(id=request.user.id)
-	print(user.id)
 	listShops=getMyShops(user.id)
-	print('LISTA COMPRAS')
-	print(listShops)
 	context = {'listShops':listShops}
 	return render(request,'sales/myShops.html',context)
 
