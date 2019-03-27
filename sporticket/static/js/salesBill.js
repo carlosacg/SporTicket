@@ -1,9 +1,3 @@
-function prueba(){
-    console.log("hola : ");
-    //var x = document.getElementById("main_table").rows[1].cells.namedItem("Oeste_id").innerHTML;
-    //console.log("this is : "+x);
-    //console.log("</td><td id='"+obj_avaliables_tickets['name']+"_id' style='display:none'>");
-}
 function createJson(){
     var jsonFinal={};
     var total = parseInt(document.getElementById("total_bill").innerHTML);
@@ -23,10 +17,7 @@ function createJson(){
         ticketsIn = {'id_location':id_location, 'event_name':event_name, 'cant':cant, 'subtotal':subtotal};
         jsonFinal['tickets'].push(ticketsIn);
     }
-    //console.log(jsonFinal);
-    //console.log(JSON.stringify(jsonFinal))
     return JSON.stringify(jsonFinal);
-    //return jsonFinal;
 }
 function getIdLocation(numRow,location){
     var idLocation = document.getElementById("main_table").rows[numRow].cells.namedItem(location+"_id").innerHTML;
@@ -35,10 +26,8 @@ function getIdLocation(numRow,location){
 function comprobarCantidadBoletos(tribuna,cantidad){
     var prueb = parseInt(document.getElementById(tribuna+'_cant').innerHTML);
     if(prueb>=cantidad){
-        //console.log("La cantidad ingresada puede pasar");
         return true;
     } else {
-        //alert("La cantidad ingresada supera la disponibilidad");
         document.getElementById("alerta").innerHTML="La cantidad ingresada supera la disponibilidad";
         $(document).ready(function(){
             $("#alert").toggle(100);
@@ -55,7 +44,6 @@ function limpiarInputs(){
 }
 function comprobar(){
     if (document.getElementById('cantidad').value=="") {
-        //alert("No a escogido la cantidad de boletos")
         document.getElementById("alerta").innerHTML="No a escogido la cantidad de boletos";
         $(document).ready(function(){
             $("#alert").toggle(100);
@@ -63,7 +51,6 @@ function comprobar(){
         });
     } else {
         if (document.getElementById('select_tribuna').selectedIndex==0) {
-            //alert("No a seleccionado la tribuna")
             document.getElementById("alerta").innerHTML="No a seleccionado la tribuna";
             $(document).ready(function(){
                 $("#alert").toggle(100);
@@ -83,15 +70,9 @@ function comprobar(){
                 for (var i = 1; i < table_len; i++) {
                     var ubicacionRow = document.getElementById("ubicacion_"+i).innerHTML;
                     var eventoRow = document.getElementById("evento_"+i).innerHTML;
-                    //console.log("evento.ROW : "+eventoRow);
-                    //console.log("evento.name : "+nombre_evento);
-                    //console.log("selectedOption : "+selectedOption.text);
-                    //console.log("ubicacion.ROW : "+ubicacionRow);
                     if ((selectedOption.text == ubicacionRow)&&(nombre_evento==eventoRow)) {
-                        console.log("Paso");
                         var cantidadRow = document.getElementById("cantidad_boletos_"+i).innerHTML;
                         cantidadFinal = parseInt(cantidadRow)+parseInt(cantidadBoletos);
-                        console.log(cantidadFinal);
                         if (comprobarCantidadBoletos(ubicacionRow,cantidadFinal)) {
                             document.getElementById("cantidad_boletos_"+i).innerHTML=cantidadFinal;	
                              calcularSubotales();
@@ -149,7 +130,6 @@ function calcularSubotalesF(){
 }
 function getCosto(selectTribuna){
     var costoTribuna = document.getElementById(selectTribuna+"_cost");
-    //console.log("costo tribuna : "+costoTribuna.firstChild.nodeValue);
     return costoTribuna.innerHTML;
 }
 
@@ -192,10 +172,6 @@ function addRow(){
     var selectTribuna = document.getElementById('select_tribuna');
     var selectedOption = selectTribuna.options[selectTribuna.selectedIndex];
     var cantidadBoletos = document.getElementById('cantidad').value;
-    //console.log("aqui estoy probando")
-    //console.log("Cantidad de boletos :"+cantidadBoletos);
-    //consol//e.log(selectedOption.value + ': ' + selectedOption.text);
-    //console.log("AQUI POSIBLE ERROR : "+selectedOption.text+" -- "+cantidadBoletos);
     if (comprobarCantidadBoletos(selectedOption.text,cantidadBoletos)){
         var table=document.getElementById("bill_table");
          var table_len=(table.rows.length)-1;
@@ -214,11 +190,8 @@ function addRowF(){
     var selectTribuna = document.getElementById('select_tribuna');
     var selectedOption = selectTribuna.options[selectTribuna.selectedIndex];
     var cantidadBoletos = document.getElementById('cantidad').value;
-    //console.log("Cantidad de boletos :"+cantidadBoletos);
-    //console.log(selectedOption.value + ': ' + selectedOption.text);
     var table=document.getElementById("bill_table1");
      var table_len=(table.rows.length)-1;
-     //console.log("tamaño de la tabla : "+table_len);
      var row = table.insertRow(table_len).outerHTML="<tr id='row_f_"+table_len+"'> <td 'evento_"+table_len+"'>"+nombre_evento+"</td><td id='cantidad_boletos_f_"+table_len+"'>"+cantidadBoletos+"</td> <td id='ubicacion_f_"+table_len+"'>"+selectedOption.text+"</td><td id='costo_f_"+table_len+"'>"+getCosto(selectedOption.text)+"</td><td id='subtotal_f_"+table_len+"'></td></tr>";
      calcularSubotalesF();
      calcularTotalF();	
@@ -240,14 +213,12 @@ $("#get-events").submit(function(e){
             $("#alert").toggle(100);
             $("#alert").fadeOut(3500);
         });
-        //alert("No a seleccionado un tipo de evento");
     } else {
         $.ajax({
         url:$(this).attr('action'),
         type:$(this).attr('method'),
         data:$(this).serialize(),
         success: function(json){
-            console.log(json);
             var table=document.getElementById("search_table");
             var table_len=(table.rows.length);
             if (table_len!=1){
@@ -256,7 +227,6 @@ $("#get-events").submit(function(e){
                 }					
             }
             table_len=1;
-            //console.log("TAMAÑO DE JSON :"+json.length)
             var len = table_len;
             for (var i = 0;  i<json.length; i++) {
                 var obj_event = json[i];
@@ -276,12 +246,7 @@ $("#get-new-event").submit(function(e){
         type:$(this).attr('method'),
         data:$(this).serialize(),
         success: function(json){
-            //console.log("recien horneado : ");
-            //console.log(json);
-            document.getElementById("nombre_evento").innerHTML=json.event['name']
-            //console.log(json.event['name']);
-            //console.log(json.avalibleTicket);
-            //console.log(json.avalibleTicket.length);
+            document.getElementById("nombre_evento").innerHTML=json.event['name'];
             var table=document.getElementById("main_table");
             var table_len=(table.rows.length);
             if (table_len!=1){
@@ -293,9 +258,6 @@ $("#get-new-event").submit(function(e){
             var len = table_len;
             for (var i = 0;  i<json.avalibleTicket.length; i++) {
                 var obj_avaliables_tickets = json.avalibleTicket[i];
-                //console.log("SUPER PROBA : "+obj_avaliables_tickets['name']+"_cant = "+obj_avaliables_tickets['count']);
-                //console.log("SUPER PROBA : "+obj_avaliables_tickets['name']+"_id ="+obj_avaliables_tickets['id']);
-                console.log("</td><td id='"+obj_avaliables_tickets['name']+"_id' style='display:none'>");
                 var row = table.insertRow(len).outerHTML="<tr id='row_ticktet_"+len+"'> <td id='"+obj_avaliables_tickets['name']+"_cant'>"+obj_avaliables_tickets['count']+"</td> <td id='"+obj_avaliables_tickets['name']+"_ubication'>"+obj_avaliables_tickets['name']+"</td><td id='"+obj_avaliables_tickets['name']+"_cost'>"+obj_avaliables_tickets['cost']+"</td><td id='"+obj_avaliables_tickets['name']+"_id' style='display:none'>"+obj_avaliables_tickets['id']+"</td></tr>";
                 len += 1;
             }
@@ -317,18 +279,12 @@ $("#get-new-event").submit(function(e){
 
 function isFillMetodoPago(){
     if ((document.getElementById('select_metodo_pago').selectedIndex) == 0)
-        console.log("No");
         return 0;
 }
 
 $("#post_venta").submit(function(e){
     e.preventDefault();			
     document.getElementById("post_venta_envio").value = createJson();
-    console.log("ANTES DEL AJAX")
-    console.log(document.getElementById("post_venta_envio").value);
-    var prueba = $('#post_venta_envio').val()
-    console.log("CON JQUERY : "+prueba)
-    console.log(typeof prueba)
     $.ajax({
         url:$(this).attr('action'),
         type:$(this).attr('method'),
@@ -365,7 +321,6 @@ function showBill(){
             $("#alert").toggle(100);
             $("#alert").fadeOut(3500);
         });
-        //alert("No a añadido ningun boleto");
     } else {
         if ((document.getElementById('select_metodo_pago').selectedIndex) == 0){
             document.getElementById("alerta").innerHTML="No a seleccionado ningun metodo de pago";
@@ -373,18 +328,14 @@ function showBill(){
                 $("#alert").toggle(100);
                 $("#alert").fadeOut(3500);
             });
-            //alert("No a selecionado ningun metodo de pago");
         } else {
             document.getElementById('id02').style.display='block';
-        }
-        
+        }        
     }
 }
 
 function selectNewEvent(rowNum){		
     document.getElementById("get_event_selec").value = document.getElementById("event_s_"+rowNum).innerHTML;
-    console.log("Mostrar en tabla : "+document.getElementById("event_s_"+rowNum).innerHTML);
-    console.log("Mostrar seleccionado : "+document.getElementById("get_event_selec").value);
 }
 
 

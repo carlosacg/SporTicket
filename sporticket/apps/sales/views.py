@@ -71,7 +71,6 @@ def getDailySales(request):
 		if request.method == 'GET':
 			user = User.objects.get(id=request.user.id)
 			date = request.GET.get('dateO')
-			print("fecha : "+date)
 			bills = Bill.objects.all().filter(id_profile=request.user.id, date_bill=date)
 			bills = [ bill_serializer(bill) for bill in bills]
 			return HttpResponse(json.dumps(bills,cls=DjangoJSONEncoder), content_type = "application/json")
@@ -122,6 +121,7 @@ def getIdEventForName(eventName):
 	idEvent = Event.objects.values('id').filter(name=eventName)
 	return idEvent
 
+@permission_required('users.Vendedor' ,reverse_lazy('evento_listar_compras'))
 def getEventsForTypes(request):
 	eventTypeName = request.GET.get('select_buscar')
 	idEventType = getIdEventType(eventTypeName)[0]
@@ -133,15 +133,12 @@ def event_serializer(event):
 	return {'id':event.id, 'name':event.name, 'initial_date':event.initial_date, 'capacity':event.capacity}
 
 def new_tickets_avalibles(tickets_avalibles):
-	print("DENTRO : "+str(tickets_avalibles))
-	#new_tickets_avalibles = tickets_avalibles[0]	
 	return {'count':tickets_avalibles[0], 'name':tickets_avalibles[1], 'cost':tickets_avalibles[2], 'id':tickets_avalibles[3]}
 
+@permission_required('users.Vendedor' ,reverse_lazy('evento_listar_compras'))
 def getNewEvent(request):
 	eventName = request.GET.get('get_event_selec')
-	print("Event name de request : "+str(eventName))
 	idEvent = getIdEventForName(eventName)[0]
-	print("id event : "+str(idEvent['id']))
 	event = event_serializer(Event.objects.get(id=str(idEvent['id'])))
 	tickets_avalibles=getListTicketsAvalibles(Event.objects.get(id=str(idEvent['id'])))
 	tickets_avalibles=[ new_tickets_avalibles(tickets_avalible) for tickets_avalible in tickets_avalibles ]
@@ -161,6 +158,7 @@ def addDetailsBill(ticketIn, Bill):
 	detailsBill.id_bill = Bill
 	detailsBill.save()
 
+@permission_required('users.Vendedor' ,reverse_lazy('evento_listar_compras'))
 def getBill(request):
 	fullName = request.user.first_name + request.user.last_name
 	idBill = request.GET.get('get_bill')
@@ -171,7 +169,6 @@ def getBill(request):
 
 def detailsBill_serializer(detailsBill):
 	costo = (detailsBill.subtotal/detailsBill.cant)
-	print("LOCATION : "+str(detailsBill.id_location))
 	return {'eventName': detailsBill.eventName, 'cant': detailsBill.cant, 'locationName': str(detailsBill.id_location), 'costo': costo, 'subtotal': detailsBill.subtotal}
 
 def getLocationName(idLocation):
@@ -181,22 +178,6 @@ def getLocationName(idLocation):
 def getLocation(idLocation):
 	location = Location.objects.get(id=idLocation)
 	return location
-
-def finishSale(request):
-	if request.is_ajax:
-		sale = eval(request.POST.get('post_venta_envio'))
-		newBill = Bill(total_bill= sale['total']) #FALTAN MAS CAMPOS
-		newBill.save()
-		tickets = sale['tickets']
-		x=0
-		for ticket in tickets:
-			x=x+1
-			print("FOR EN FINISH SALE : "+str(x))
-			addTicketBill(ticket, newBill)
-		return HttpResponseRedirect('http://127.0.0.1:8000/sales/saleEvent.html/')
-	
-
-
 
 #-----------------------------------------
 def createShop(request,id):

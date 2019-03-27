@@ -38,7 +38,6 @@ $("#get-bill").submit(function(e){
 		data:$(this).serialize(),
 		success: function(json){
 			cleanBillTable();
-			console.log(json);
 			detailsBills = json['detailsBills'];
 			fillTableBill(detailsBills, json['total']);
 			document.getElementById("numFactura").innerHTML="Factura #"+json['id']
