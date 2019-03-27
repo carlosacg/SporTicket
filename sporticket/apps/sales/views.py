@@ -121,7 +121,6 @@ def getIdEventForName(eventName):
 	idEvent = Event.objects.values('id').filter(name=eventName)
 	return idEvent
 
-@permission_required('users.Vendedor' ,reverse_lazy('evento_listar_compras'))
 def getEventsForTypes(request):
 	eventTypeName = request.GET.get('select_buscar')
 	idEventType = getIdEventType(eventTypeName)[0]
@@ -135,7 +134,6 @@ def event_serializer(event):
 def new_tickets_avalibles(tickets_avalibles):
 	return {'count':tickets_avalibles[0], 'name':tickets_avalibles[1], 'cost':tickets_avalibles[2], 'id':tickets_avalibles[3]}
 
-@permission_required('users.Vendedor' ,reverse_lazy('evento_listar_compras'))
 def getNewEvent(request):
 	eventName = request.GET.get('get_event_selec')
 	idEvent = getIdEventForName(eventName)[0]
