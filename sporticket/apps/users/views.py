@@ -55,8 +55,8 @@ class ProfileCreate(LoginRequiredMixin,PermissionRequiredMixin,CreateView):
 					Seller.objects.create(profile=Profile.objects.all().last())
 					permission = Permission.objects.get(codename='Vendedor') 
 					currentUser.user_permissions.add(permission)
-					return HttpResponseRedirect(self.get_success_url())
 					messages.success(request,'Usuario Vendedor creado exitosamente!')
+					return HttpResponseRedirect(self.get_success_url())
 				if str(typeUser) == "Gerente":
 					currentUser = User.objects.all().last()
 					Manager.objects.create(profile=Profile.objects.all().last())
@@ -157,9 +157,7 @@ def userLogin(request):
 			if user:
 				login(request, user)
 				if request.GET.get('next', None):
-					messages.success(request,'Bienvenido a SporTicket!')	
 					return HttpResponseRedirect(request.GET['next'])
-					messages.success(request,'Bienvenido a SporTicket!')							
 				return HttpResponseRedirect(reverse('indexUser'))
 			else:
 				context["error"] = "Provide valid credentials !!"

@@ -6,7 +6,15 @@ from django.forms.fields import DateField
 
 class ByEventsForms(forms.Form):
     
-    events = forms.ModelChoiceField(Event.objects.all() , widget=forms.Select(attrs={'class':'w3-input w3-border'}), required=True)
+    def getNameEvents():
+        events = Event.objects.all().values('name')   
+        myList = []
+        for event in events:  
+            name = event['name']
+            myList.append(name)         
+        return myList
+
+    events = forms.ModelChoiceField(Event.objects.all().values('name') , widget=forms.Select(attrs={'class':'w3-input w3-border'}), required=True)
 
     def __init__(self, *args, **kwargs):
         super(ByEventsForms, self).__init__(*args, **kwargs)

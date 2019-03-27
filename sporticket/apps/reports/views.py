@@ -60,6 +60,8 @@ def dailyReport(request):
     valueAverage = wordsAverage[1]
     lastChartAverage = len(valueAverage)
     chartsAverage = valueAverage[:lastChartAverage - 1]
+    if chartsAverage == "None":
+        chartsAverage = "No hay datos actualmente"
 
     plus = Bill.objects.all().filter(date_bill__range=(currentDateFormat,currentDateFormat)).aggregate(Sum('total_bill'))
     maxPlusStr = str(plus)
@@ -67,6 +69,8 @@ def dailyReport(request):
     valuePlus = wordsPlus[1]
     lastChartPlus = len(valuePlus)
     chartsPlus = valuePlus[:lastChartPlus - 1]
+    if chartsPlus == "None":
+        chartsPlus = "No hay datos actualmente"
     
     maxSalle = Bill.objects.all().filter(date_bill__range=(currentDateFormat,currentDateFormat)).aggregate(Max('total_bill'))
     maxSalleStr = str(maxSalle)
@@ -74,6 +78,8 @@ def dailyReport(request):
     valueSeller = wordsSeller[1]
     lastChartSeller = len(valueSeller)
     charts = valueSeller[:lastChartSeller - 1]
+    if charts == "None":
+        charts = "No hay datos actualmente"
 
     context = {'dailySales':dailySales, 'chartsAverage':chartsAverage,'chartsPlus':chartsPlus,'charts':charts}
     return render(request, 'reports/dailySales.html',context)#A donde debo ir si gano 
@@ -196,7 +202,6 @@ def reportByDateRange(request):
         form = ByDateRangeForms(request.POST)
         dateInitial = form['dateInitial'].value()
         dateFinal = form['dateFinal'].value()
-        print(dateInitial)
         dailySales = Bill.objects.all().filter(date_bill__range=(dateInitial,dateFinal)).count()
             
         average = Bill.objects.all().filter(date_bill__range=(dateInitial,dateFinal)).aggregate(Avg('total_bill'))  
@@ -205,6 +210,8 @@ def reportByDateRange(request):
         valueAverage = wordsAverage[1]
         lastChartAverage = len(valueAverage)
         chartsAverage = valueAverage[:lastChartAverage - 1]
+        if chartsAverage == "None":
+            chartsAverage = "No hay datos actualmente"
 
         plus = Bill.objects.all().filter(date_bill__range=(dateInitial,dateFinal)).aggregate(Sum('total_bill'))
         maxPlusStr = str(plus)
@@ -212,6 +219,8 @@ def reportByDateRange(request):
         valuePlus = wordsPlus[1]
         lastChartPlus = len(valuePlus)
         chartsPlus = valuePlus[:lastChartPlus - 1]
+        if chartsPlus == "None":
+            chartsPlus = "No hay datos actualmente"
         
         maxSalle = Bill.objects.all().filter(date_bill__range=(dateInitial,dateFinal)).aggregate(Max('total_bill'))
         maxSalleStr = str(maxSalle)
@@ -219,6 +228,8 @@ def reportByDateRange(request):
         valueSeller = wordsSeller[1]
         lastChartSeller = len(valueSeller)
         charts = valueSeller[:lastChartSeller - 1]
+        if charts == "None":
+            charts = "No hay datos actualmente"
         context = {'dailySales':dailySales, 'chartsAverage':chartsAverage,'chartsPlus':chartsPlus,'charts':charts}
         return render(request, 'reports/dateRange.html',context)#A donde debo ir si gano 
     else:
